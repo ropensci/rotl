@@ -20,19 +20,13 @@ tol_about <- function() {
 ##' @return the MRCA
 ##' @author Francois Michonneau
 ##' @examples
-##' test1 <- tol_mrca(ott_ids=c(412129, 536234)))
-##' test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
+##' test1 <- tol_mrca(ott_ids=list("ott_ids" = c(412129, 536234)))
+##' test2 <- tol_mrca(ott_ids=list("ott_ids" = c(415255)), node_ids=c(341556))
 ##' @export
 tol_mrca <- function(ott_ids, node_ids) {
-    if (missing(node_ids) && !missing(ott_ids)) {
-        q <- list(ott_ids=ott_ids)
-    }
-    if (!missing(node_ids) && missing(ott_ids)) {
-        q <- list(node_ids=node_ids)
-    }
-    if (!missing(node_ids) && !missing(ott_ids)) {
-        q <- c(list(ott_ids=ott_ids, node_ids=node_ids))
-    }
+    if (missing(node_ids) && !missing(ott_ids)) q <- ott_ids
+    if (!missing(node_ids) && missing(ott_ids)) q <- node_ids
+    if (!missing(node_ids) && !missing(ott_ids)) q <- c(ott_ids, node_ids)
     otl_POST(path="tree_of_life/mrca", body=q)
 }
 
@@ -94,17 +88,11 @@ tol_subtree <- function(node_id, ott_id, tree_id) {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @examples
-##' tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' {"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]}
 ##' @export
 tol_induced_subtree <- function(node_ids, ott_ids) {
-    if (missing(node_ids) && !missing(ott_ids)) {
-        q <- list(ott_ids=ott_ids)
-    }
-    if (!missing(node_ids) && missing(ott_ids)) {
-        q <- list(node_ids=node_ids)
-    }
-    if (!missing(node_ids) && !missing(ott_ids)) {
-        q <- c(list(ott_ids=ott_ids, node_ids=node_ids))
-    }
+    if (missing(node_ids) && !missing(ott_ids)) q <- ott_ids
+    if (!missing(node_ids) && missing(ott_ids)) q <- node_ids
+    if (!missing(node_ids) && !missing(ott_ids)) q <- c(ott_ids, node_ids)
     otl_POST("tree_of_life/induced_subtree", body=q)
 }
