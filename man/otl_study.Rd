@@ -3,7 +3,7 @@
 \alias{otl_study}
 \title{study}
 \usage{
-otl_study(study = "pj_719")
+otl_study(study = "pg_719")
 }
 \arguments{
 \item{study}{}

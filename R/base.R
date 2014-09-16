@@ -42,8 +42,8 @@ otl_POST <- function(path, body, ...) {
 ##' @return Some JSON
 ##' @author Francois Michonneau
 ##' @export
-otl_about <- function() {
-    otl_POST("tree_of_life/about", list())
+tol_about <- function() {
+    otl_POST(path="tree_of_life/about", body=list())
 }
 
 ##' Reurns the MRCA
