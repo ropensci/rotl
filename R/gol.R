@@ -11,7 +11,7 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' @export
 gol_about <- function(study_list=FALSE) {
 	if (!is.logical(study_list)) {
-		stop("Argument study_list should be logical")
+		stop("Argument \'study_list\' should be logical")
 	}
 	q <- list(study_list=study_list)
     otl_POST(path="graph/about", body=q)
@@ -31,7 +31,7 @@ gol_about <- function(study_list=FALSE) {
 ##' @export
 gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     if (any(is.null(c(study_id, tree_id, git_sha)))) {
-    	    stop("Must supply all arguments: study_id, tree_id, git_sha")
+    	    stop("Must supply all arguments: \'study_id\', \'tree_id\', \'git_sha\'")
     }
     q <- list(study_id=study_id, tree_id=tree_id, git_sha=git_sha)
     
@@ -51,13 +51,13 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @export
 gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
     if (!is.null(node_id) && !is.null(ott_id)) {
-        stop("Use only node_id OR ott_id")
+        stop("Use only \'node_id\' OR \'ott_id\'")
     }
     if (is.null(node_id) && is.null(ott_id)) {
-        stop("Must supply a node_id OR ott_id")
+        stop("Must supply a \'node_id\' OR \'ott_id\'")
     }
     if (!is.logical(include_lineage)) {
-		stop("Argument include_lineage should be logical")
+		stop("Argument \'include_lineage\' should be logical")
 	}
     if (!is.null(ott_id)) {
         q <- list(ott_id = ott_id, include_lineage=include_lineage)
