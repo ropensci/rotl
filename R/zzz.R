@@ -1,0 +1,2 @@
+
+.ROTL <- new.env()
