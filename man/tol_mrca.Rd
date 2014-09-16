@@ -20,8 +20,8 @@ Reurns the MRCA
 Most recent common ancestor
 }
 \examples{
-test1 <- tol_mrca(ott_ids=c(412129, 536234)))
-test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
+test1 <- tol_mrca(ott_ids=list("ott_ids" = c(412129, 536234)))
+test2 <- tol_mrca(ott_ids=list("ott_ids" = c(415255)), node_ids=c(341556))
 }
 \author{
 Francois Michonneau
