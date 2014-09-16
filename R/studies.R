@@ -4,6 +4,8 @@
 ##' @param property character, the property to be searched on
 ##' @param value character, the property-value  to be searched on
 ##' @param verbose Boolean, include all metadata (default=FALSE)
+##' @seealso \code{\link{studies_properties}} which lists properties against
+##' which the studies can be searched
 ##' @export
 ##' @examples
 ##' req <- studies_find_studies(property="ot:studyId", value="pg_719")
@@ -28,6 +30,8 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 ##' @param value character, the property-value  to be searched on
 ##' @param verbose Boolean, include all metadata (default=FALSE)
 ##' @param exact Boolean, exact matching (default = FALSE)
+##' @seealso \code{\link{studies_properties}} which lists properties against
+##' which the studies can be searched
 ##' @export
 ##' @examples
 ##' req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
@@ -63,38 +67,56 @@ studies_properties <- function(){
 ##' @return some study
 ##' @author Francois Michonneau
 ##' @export
-get_study <- function(study="pg_719") {
+##' @examples
+## that_one_study <- get_study(study="pg_719")
+##
+
+get_study <- function(study) {
     otl_GET(path=paste("study", study, sep="/"))
 }
 
-##TODO: Tree functions takes several optional args, as discussed
-## https://github.com/OpenTreeOfLife/phylesystem-api/blob/docv2/docs/README.md#fine-grained-access-via-get
 ##' returns specific treee from a study
 ##'
 ##' @title Study Tree
 ##' @param study char study id
 ##" @param tree tree id
 ##' @param format char Tree format (default = json)
-##' @return A tree in desired format
+##' @return A tree file in desired format
 ##' @examples
-##  nexson_Ttr <- get_study_tree(study="pg_1144", tree="tree2324")
+##  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
 ##
 
 
-
-
-get_study_tree <- function(study, tree){
+get_study_tree <- function(study, tree, format){
     tree_file <- paste(tree, otl_formats(format), sep="")
     otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
 }
 
+##' Retrieve metadata about a study in the Open Tree of Life datastor
+##' @title Study Metadata
+##' @param study character, study id
+##' @return httr::request containing a json file with metadata
+##' @examples 
+## req <- get_study_meta("pg_719")
+## req_list <- httr::context(req)
+## req_lsit$nexml$`^ot:studyPublication`
 
 get_study_meta <- function(study){
     otl_GET(path= paste("study", study, "meta", sep="/"))
 }
 
+##' Retrieve subtree from a specific tree in the Open Tree of Life data store
+##' @param study character, study id
+##' @param tree character, tree_id
+##' @param subtree_id, either a node id that specifies a subtree or "ingroup"
+##' which returns the ingroup is for this subtree, a 400 error otherwise
+##' @examples
+## small_tr <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="node552052")
+## ingroup  <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="ingroup")
 
 get_study_subtree <- function(study, tree, subtree_id){
+    url_stem <- paste("study", study, "tree", tree, sep="/")
+    otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
 }
 
 get_study_otu <- function(study, otu=NULL){
