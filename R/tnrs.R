@@ -44,6 +44,10 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
         if (length(ids) != length(taxon_names))
             stop("\'ids\' and \'taxon_names\' must be of the same length.")
     }
+    if (!is.logical(do_approximate_matching)) stop("Argument \'do_approximate_matching\' should be logical")
+	if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
+	if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
+    
     q <- list(names = taxon_names, context_name = context_name,
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
               ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
