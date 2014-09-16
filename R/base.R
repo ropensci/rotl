@@ -10,14 +10,14 @@ otl_parse <- function(req) {
 }
 
 otl_check <- function(req) {
-    if (req$status_code < 400) return(otl_parse(req))
+    if (req$status_code < 400) return(invisible())
 
     msg <- otl_parse(req)$message
-    stop("HTTP failure: ", req$status_code, "\n", message, call. = FALSE)
+    stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
 }
 
 otl_GET <- function(path, ...) {
-    req <- httr::GET(otl_url(), path=paste(otl_version(), path, sep="/"), , ...)
+    req <- httr::GET(otl_url(), path=paste(otl_version(), path, sep="/"), ...)
     otl_check(req)
     req
 }
@@ -25,7 +25,7 @@ otl_GET <- function(path, ...) {
 otl_POST <- function(path, body, ...) {
     stopifnot(is.list(body))
 
-    body_json <- jsonlite::toJSON(body)
+    body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
     req <- httr::POST(otl_url(), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
     otl_check(req)
