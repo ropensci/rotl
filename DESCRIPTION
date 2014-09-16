@@ -1,0 +1,13 @@
+Package: rotl
+Title: Interface to the Open Tree of Life API
+Version: 0.1
+Authors@R: person("Francois", "Michonneau", role=c("aut", "cre"),
+    email="francois.michonneau@gmail.com")
+Description: Interface to the Open Tree of Life API
+Depends:
+    R (>= 3.1.1)
+Imports:
+    httr,
+    jsonlite
+License: GPL (>= 2)
+LazyData: true
