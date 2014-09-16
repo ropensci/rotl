@@ -33,7 +33,7 @@ names or (for nodes not corresponding directly to named taxa) node
 ids.
 }
 \examples{
-{"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]}
+tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 }
 \author{
 Francois Michonneau
