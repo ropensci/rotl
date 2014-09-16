@@ -70,6 +70,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     summary_match <- data.frame(summary_match)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "number_matches", "is_synonym", "is_deprecated")
+    assign("last_tnrs_match_names", res, envir=.ROTL)
     summary_match
 }
 
