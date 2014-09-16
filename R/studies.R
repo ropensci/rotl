@@ -8,11 +8,17 @@
 ##' all_s <- studies_find_studies()
 ##' length(all_s$
 
-studies_find_studies <- function(property, value, verbose=FALSE, exact=FALSE){
-    otl_POST(path="studies/find_studies/", body=list(property=property,
-                                                     value=value,
-                                                     verbose=otl_bool(verbose),
-                                                     exact=otl_bool(exact)))
+studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
+    req_body <- list()
+    if(!is.null(property)){
+        req_body$property <- property
+    }
+    if(!is.null(value)){
+        req_body$value <- value
+    }
+    otl_POST(path="studies/find_studies/", body=c(req_body, 
+                                                  otl_bool(verbose),
+                                                  otl_bool(exact)))
 }
 
 #studies_find_tree
