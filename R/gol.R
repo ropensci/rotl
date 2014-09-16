@@ -12,7 +12,6 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' req <- gol_about()
 ##' @export
 gol_about <- function() {
-	
     otl_POST(path="graph/about", body=list())
 }
 
@@ -33,7 +32,8 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     if (any(is.null(c(study_id, tree_id, git_sha)))) {
     	    stop("Must supply all arguments: \'study_id\', \'tree_id\', \'git_sha\'")
     }
-    q <- list(study_id=study_id, tree_id=tree_id, git_sha=git_sha)
+    q <- list(study_id=jsonlite::unbox(study_id), tree_id=jsonlite::unbox(tree_id), 
+        git_sha=jsonlite::unbox(git_sha))
     
     otl_POST(path="graph/source_tree", body=q)
 }
@@ -41,7 +41,7 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 
 ##' Summary information about a queried node, including 1) whether it is in the graph DB,
 ##' 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of 
-##' descendant tip taxa.
+##' descendant tip taxa, etc.
 ##'
 ##' node info
 ##' @title Get summary information about a node in the graph
@@ -64,9 +64,9 @@ gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
 		stop("Argument \'include_lineage\' should be logical")
 	}
     if (!is.null(ott_id)) {
-        q <- list(ott_id = ott_id, include_lineage=include_lineage)
+        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     } else {
-    	q <- list(node_id = node_id, include_lineage=include_lineage)
+    	    q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
     }
     otl_POST(path="graph/node_info", body=q)
 }
