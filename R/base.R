@@ -33,4 +33,4 @@ otl_POST <- function(path, body, ...) {
     req
 }
 
-olt_bool <- function(bool) ifelse(bool, true, false)
+otl_bool <- function(bool) ifelse(bool, "true", "false")
