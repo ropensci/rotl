@@ -1,3 +1,26 @@
+##' Return a list of studes that match a given properties
+##' @title find_study
+##' @param exact Boolean, exact matching (default = FALSE)
+##' @param property character, the property to be searched on
+##' @param value character, the property-value  to be searched on
+##' @param verbose Boolean, include all metadata (default=FALSE)
+##' @examples
+##' all_s <- studies_find_studies()
+##' length(all_s$
+
+studies_find_studies <- function(property, value, verbose=FALSE, exact=FALSE){
+    otl_POST(path="studies/find_studies/", body=list(property=property,
+                                                     value=value,
+                                                     verbose=otl_bool(verbose),
+                                                     exact=otl_bool(exact)))
+}
+
+#studies_find_tree
+#studies_properties
+
+
+
+
 ##' returns study for given ID
 ##'
 ##' study
