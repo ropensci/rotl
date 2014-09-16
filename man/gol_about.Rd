@@ -3,10 +3,7 @@
 \alias{gol_about}
 \title{Information about the tree of life}
 \usage{
-gol_about(study_list = FALSE)
-}
-\arguments{
-\item{study_list}{Boolean. Whether to return the list of source studies. Default = FALSE.}
+gol_about()
 }
 \value{
 Some JSON
@@ -19,6 +16,6 @@ Returns summary information about the entire graph database, including identifie
 taxonomy and source trees used to build it.
 }
 \examples{
-gol_about()
+req <- gol_about()
 }
 

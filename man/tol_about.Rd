@@ -3,7 +3,10 @@
 \alias{tol_about}
 \title{Information about the tree of life}
 \usage{
-tol_about()
+tol_about(study_list = FALSE)
+}
+\arguments{
+\item{study_list}{Boolean. Whether to return the list of source studies. Default = FALSE.}
 }
 \value{
 Some JSON
