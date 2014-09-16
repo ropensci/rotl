@@ -9,6 +9,8 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' @title Information about the tree of life
 ##' @param study_list Boolean. Whether to return the list of source studies. Default = FALSE.
 ##' @return Some JSON
+##' @examples
+##' req <- gol_about()
 ##' @export
 gol_about <- function(study_list=FALSE) {
 	if (!is.logical(study_list)) {
@@ -41,7 +43,9 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 }
 
 
-##' Summary information about a node in the graph
+##' Summary information about a queried node, including 1) whether it is in the graph DB,
+##' 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of 
+##' descendant tip taxa.
 ##'
 ##' node info
 ##' @title Get summary information about a node in the graph
@@ -49,7 +53,7 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @param node_id The idenitifer of the node in the graph.
 ##' @param include_lineage Boolean. Whether to return the lineage of the node from the synthetic tree.
 ##' Default = FALSE.
-##' @return a list of information about the node
+##' @return A list of information about the node
 ##' @examples
 ##' req <- gol_node_info(ott_id=81461)
 ##' @export
