@@ -55,6 +55,9 @@ gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
     if (is.null(node_id) && is.null(ott_id)) {
         stop("Must supply a node_id OR ott_id")
     }
+    if (!is.logical(include_lineage)) {
+		stop("Argument include_lineage should be logical")
+	}
     if (!is.null(ott_id)) {
         q <- list(ott_id = ott_id, include_lineage=include_lineage)
     } else {
