@@ -4,10 +4,10 @@
 ##' @param property character, the property to be searched on
 ##' @param value character, the property-value  to be searched on
 ##' @param verbose Boolean, include all metadata (default=FALSE)
+##' @export
 ##' @examples
 ##' req <- studies_find_studies(property="ot:studyId", value="pg_719")
 ##' httr::content(req)
-
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
     req_body <- list()
@@ -22,8 +22,37 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
                                                   otl_bool(exact)))
 }
 
-#studies_find_tree
-#studies_properties
+##' Return a list of trees that match a given properties
+##' @title find trees
+##' @param property character, the property to be searched on
+##' @param value character, the property-value  to be searched on
+##' @param verbose Boolean, include all metadata (default=FALSE)
+##' @param exact Boolean, exact matching (default = FALSE)
+##' @export
+##' @examples
+##' req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
+##' httr::content(req)
+
+
+studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
+    req_body <- list()
+    if(!is.null(property)){
+        req_body$property <- property
+    }
+    if(!is.null(value)){
+        req_body$value <- value
+    }
+    otl_POST(path="studies/find_trees/",   body=c(req_body, 
+                                                  otl_bool(verbose),
+                                                  otl_bool(exact)))
+}
+
+
+##' returns properties on which studies and study-trees can be searched
+##' @value
+studies_properties <- function(){
+    otl_POST(path="studies/properties/", body=list())
+}
 
 
 
