@@ -16,7 +16,7 @@ otl_check <- function(req) {
 
 otl_GET <- function(path, ...) {
     ur <- paste0(otl_url(), paste(path, collapse="/"))
-    req <- GET(ur, ...)
+    req <- httr::GET(ur, ...)
     otl_check(req)
     req
 }
@@ -26,7 +26,7 @@ otl_POST <- function(path, body, ...) {
 
     body_json <- jsonlite::toJSON(body)
 
-    req <- POST(paste0(otl_url(), paste(path, collapse="/")), body=body_json, ...)
+    req <- httr::POST(paste0(otl_url(), paste(path, collapse="/")), body=body_json, ...)
     otl_check(req)
 
     req
