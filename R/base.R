@@ -25,12 +25,10 @@ otl_GET <- function(path, ...) {
 otl_POST <- function(path, body, ...) {
     stopifnot(is.list(body))
 
-    body_json <- ifelse(length(body), jsonlite::toJSON(body, auto_unbox=TRUE), "")
+    body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
     req <- httr::POST(otl_url(), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
     otl_check(req)
 
     req
 }
-
-otl_bool <- function(bool) ifelse(bool, "true", "false")

@@ -45,9 +45,9 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
             stop("\'ids\' and \'taxon_names\' must be of the same length.")
     }
     q <- list(names = taxon_names, context_name = context_name,
-              do_approximate_matching = do_approximate_matching,
-              ids = ids, include_deprecated = include_deprecated,
-              include_dubious = include_dubious)
+              do_approximate_matching = jsonlite::unbox(do_approximate_matching),
+              ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
+              include_dubious = jsonlite::unbox(include_dubious))
     toKeep <- sapply(q, is.null)
     q <- q[!toKeep]
 

@@ -17,9 +17,9 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
     if(!is.null(value)){
         req_body$value <- value
     }
-    otl_POST(path="studies/find_studies/", body=c(req_body, 
-                                                  otl_bool(verbose),
-                                                  otl_bool(exact)))
+    otl_POST(path="studies/find_studies/", body=c(req_body,
+                                                  jsonlite::unbox(verbose),
+                                                  jsonlite::unbox(exact)))
 }
 
 ##' Return a list of trees that match a given properties
@@ -42,9 +42,9 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
     if(!is.null(value)){
         req_body$value <- value
     }
-    otl_POST(path="studies/find_trees/",   body=c(req_body, 
-                                                  otl_bool(verbose),
-                                                  otl_bool(exact)))
+    otl_POST(path="studies/find_trees/",   body=c(req_body,
+                                                  jsonlite::unbox(verbose),
+                                                  jsonlite::unbox(exact)))
 }
 
 
