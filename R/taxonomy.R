@@ -15,9 +15,10 @@ taxonomy_about <- function () {
 ##' @title taxon
 ##' @param ott_id The OTT id of the taxon of interest.
 ##' @return Some JSON
-##' @example ott_id=515698
+##' @examples
+##' req <- taxonomy_taxon(ott_id=515698)
 ##' @export
-taxonomy_infer_context <- function (ott_id=NULL) {
+taxonomy_taxon <- function (ott_id=NULL) {
 	if (is.null(ott_id)) {
 		stop("Must supply an \'ott_id\' argument")
 	}
@@ -32,7 +33,8 @@ taxonomy_infer_context <- function (ott_id=NULL) {
 ##' @title taxon
 ##' @param ott_id The OTT id of the taxon of interest.
 ##' @return Some JSON
-##' @example ott_id=515698
+##' @examples
+##' req <- taxonomy_subtree(ott_id=515698)
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL) {
 	if (is.null(ott_id)) {
@@ -51,7 +53,8 @@ taxonomy_subtree <- function (ott_id=NULL) {
 ##' @title lica
 ##' @param ott_ids The vector of ott ids for the taxa whose LICA is to be found.
 ##' @return Some JSON
-##' @example ott_ids=c(515698,590452,409712,643717)
+##' @examples
+##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' @export
 taxonomy_lica <- function (ott_ids=NULL) {
 	if (is.null(ott_ids)) {

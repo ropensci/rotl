@@ -27,7 +27,8 @@ gol_about <- function(study_list=FALSE) {
 ##' @param git_sha The git SHA identifying a particular source version.
 ##' @param format The name of the return format. The only currently supported format is newick.
 ##' @return a newick tree
-##' @example "study_id"="pg_420", "tree_id"="522", "git_sha"="a2c48df995ddc9fd208986c3d4225112550c8452"
+##' @examples
+##' req <- gol_source_tree(study_id="pg_420", tree_id="522", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452")
 ##' @export
 gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     if (any(is.null(c(study_id, tree_id, git_sha)))) {
@@ -47,7 +48,8 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @param node_id The idenitifer of the node in the graph.
 ##' @param include_lineage Whether to return the lineage of the node from the synthetic tree.
 ##' @return a list of information about the node
-##' @example ott_id=81461
+##' @examples
+##' req <- gol_node_info(ott_id=81461)
 ##' @export
 gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
     if (!is.null(node_id) && !is.null(ott_id)) {

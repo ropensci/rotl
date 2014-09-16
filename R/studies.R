@@ -49,7 +49,7 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 
 
 ##' returns properties on which studies and study-trees can be searched
-##' @value
+
 studies_properties <- function(){
     otl_POST(path="studies/properties/", body=list())
 }
