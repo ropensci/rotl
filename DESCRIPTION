@@ -9,5 +9,5 @@ Depends:
 Imports:
     httr,
     jsonlite
-License: GPL (>= 2)
+License: MIT
 LazyData: true
