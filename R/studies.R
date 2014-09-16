@@ -53,6 +53,11 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 
 
 ##' returns properties on which studies and study-trees can be searched
+##'@ examples
+## all_the_properties <- studies_properties()
+## prop_list = httr::content(all_the_properties)
+## unlist(prop_list$tree_properties)
+
 
 studies_properties <- function(){
     otl_POST(path="studies/properties/", body=list())
@@ -75,7 +80,7 @@ get_study <- function(study) {
     otl_GET(path=paste("study", study, sep="/"))
 }
 
-##' returns specific treee from a study
+##' returns specific tree from a study
 ##'
 ##' @title Study Tree
 ##' @param study char study id
@@ -131,6 +136,4 @@ get_study_otumap <- function(study){
     otl_GET(path=paste("study", study,"otumap", sep="/"))
 
 }
-
-
 
