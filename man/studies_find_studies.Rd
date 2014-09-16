@@ -22,4 +22,8 @@ Return a list of studes that match a given properties
 req <- studies_find_studies(property="ot:studyId", value="pg_719")
 httr::content(req)
 }
+\seealso{
+\code{\link{studies_properties}} which lists properties against
+which the studies can be searched
+}
 

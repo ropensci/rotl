@@ -22,4 +22,8 @@ Return a list of trees that match a given properties
 req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 httr::content(req)
 }
+\seealso{
+\code{\link{studies_properties}} which lists properties against
+which the studies can be searched
+}
 

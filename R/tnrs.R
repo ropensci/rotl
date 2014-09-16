@@ -80,7 +80,7 @@ inspect_match_names <- function(i) {
         stop("Need to use tnrs_match_names first")
     } else {
         res <- get("last_tnrs_match_names", envir=.ROTL)
-        summary_match <- do.call("rbind", lapply(content(res)$results[[i]]$match, function(x) {
+        summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
             searchStr <- x$search_string
             uniqNames <- x$unique_name
             approxMatch <- x$is_approximate_match
@@ -102,7 +102,7 @@ list_synonyms_match_names <- function(i) {
         stop("Need to use tnrs_match_names first")
     } else {
         res <-  get("last_tnrs_match_names", envir=.ROTL)
-        list_synonyms <- lapply(content(res)$results[[i]]$match, function(x) {
+        list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
             paste(unlist(x$synonyms), collapse=", ")
         })
         list_synonyms

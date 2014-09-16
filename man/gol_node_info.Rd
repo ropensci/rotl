@@ -19,7 +19,7 @@ A list of information about the node
 \description{
 Summary information about a queried node, including 1) whether it is in the graph DB,
 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of
-descendant tip taxa.
+descendant tip taxa, etc.
 }
 \details{
 node info
