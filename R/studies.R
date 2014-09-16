@@ -12,10 +12,10 @@
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
     req_body <- list()
     if(!is.null(property)){
-        req_body$property <- property
+        req_body$property <- jsonlite::unbox(property)
     }
     if(!is.null(value)){
-        req_body$value <- value
+        req_body$value <- jsonlite::unbox(value)
     }
     otl_POST(path="studies/find_studies/", body=c(req_body,
                                                   jsonlite::unbox(verbose),
@@ -37,10 +37,10 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
     req_body <- list()
     if(!is.null(property)){
-        req_body$property <- property
+        req_body$property <- jsonlite::unbox(property)
     }
     if(!is.null(value)){
-        req_body$value <- value
+        req_body$value <- jsonlite::unbox(value)
     }
     otl_POST(path="studies/find_trees/",   body=c(req_body,
                                                   jsonlite::unbox(verbose),
@@ -81,6 +81,8 @@ get_study <- function(study="pg_719") {
 ##
 
 
+
+
 get_study_tree <- function(study, tree){
     otl_GET(path=paste("study", study, "tree", tree, sep="/"))
 }
@@ -89,3 +91,23 @@ get_study_tree <- function(study, tree){
 get_study_meta <- function(study){
     otl_GET(path= paste("study", study, "meta", sep="/"))
 }
+
+
+get_study_subtree <- function(study, tree, subtree_id){
+}
+
+get_study_otu <- function(study, otu=NULL){
+    otl_GET(path=paste("study", study, "otu", otu, sep="/")) 
+}
+
+get_study_otus <- function(study) {
+    otl_GET(path=paste("study", study, "otu", otus, sep="/")) 
+}
+
+get_study_otumap <- function(study){
+    otl_GET(path=paste("study", study,"otumap", sep="/")
+
+}
+
+
+
