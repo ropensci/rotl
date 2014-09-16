@@ -7,17 +7,13 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' Returns summary information about the entire graph database, including identifiers for the
 ##' taxonomy and source trees used to build it.
 ##' @title Information about the tree of life
-##' @param study_list Boolean. Whether to return the list of source studies. Default = FALSE.
 ##' @return Some JSON
 ##' @examples
 ##' req <- gol_about()
 ##' @export
-gol_about <- function(study_list=FALSE) {
-	if (!is.logical(study_list)) {
-		stop("Argument \'study_list\' should be logical")
-	}
-	q <- list(study_list=study_list)
-    otl_POST(path="graph/about", body=q)
+gol_about <- function() {
+	
+    otl_POST(path="graph/about", body=list())
 }
 
 

@@ -3,7 +3,7 @@
 \alias{tnrs_infer_context}
 \title{infer context}
 \usage{
-tnrs_infer_context(taxon_names)
+tnrs_infer_context(taxon_names = NULL)
 }
 \arguments{
 \item{taxon_names}{}
