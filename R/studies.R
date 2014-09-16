@@ -55,8 +55,6 @@ studies_properties <- function(){
 }
 
 
-
-
 ##' returns study for given ID
 ##'
 ##' study
@@ -78,8 +76,16 @@ get_study <- function(study="pg_719") {
 ##" @param tree tree id
 ##' @param format char Tree format (default = json)
 ##' @return A tree in desired format
+##' @examples
+##  nexson_Ttr <- get_study_tree(study="pg_1144", tree="tree2324")
+##
 
 
-get_study_tree <- function(study="pg_1144", tree="tree2324", ...){
+get_study_tree <- function(study, tree){
     otl_GET(path=paste("study", study, "tree", tree, sep="/"))
+}
+
+
+get_study_meta <- function(study){
+    otl_GET(path= paste("study", study, "meta", sep="/"))
 }
