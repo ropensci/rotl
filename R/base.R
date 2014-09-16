@@ -1,22 +1,23 @@
 
-otl_url <- function() { "http://devapi.opentreeoflife.org/v2/" }
+otl_url <- function() { "http://api.opentreeoflife.org" }
+
+otl_version <- function() { "v2" }
 
 otl_parse <- function(req) {
-    txt <- content(req, as="text")
+    txt <- httr::content(req, as="text")
     if (identical(txt, "")) stop("No output to parse", call. = FALSE)
     jsonlite::fromJSON(txt, simplifyVector=FALSE)
 }
 
 otl_check <- function(req) {
-    if (req$status_code < 400) return(invisible())
+    if (req$status_code < 400) return(otl_parse(req))
 
     msg <- otl_parse(req)$message
     stop("HTTP failure: ", req$status_code, "\n", message, call. = FALSE)
 }
 
 otl_GET <- function(path, ...) {
-    ur <- paste0(otl_url(), paste(path, collapse="/"))
-    req <- httr::GET(ur, ...)
+    req <- httr::GET(otl_url(), path=paste(otl_version(), path, sep="/"), , ...)
     otl_check(req)
     req
 }
@@ -26,7 +27,7 @@ otl_POST <- function(path, body, ...) {
 
     body_json <- jsonlite::toJSON(body)
 
-    req <- httr::POST(paste0(otl_url(), paste(path, collapse="/")), body=body_json, ...)
+    req <- httr::POST(otl_url(), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
     otl_check(req)
 
     req
@@ -54,7 +55,7 @@ otl_about <- function() {
 ##' @author Francois Michonneau
 ##' @export
 otl_mrca <- function(q=list("ott_ids"=c(412129, 536234))) {
-    otl_POST(path="tree_of_life/mrca", q)
+    otl_POST(path="tree_of_life/mrca", body=q)
 }
 
 ##' returns study for given ID
@@ -66,5 +67,5 @@ otl_mrca <- function(q=list("ott_ids"=c(412129, 536234))) {
 ##' @author Francois Michonneau
 ##' @export
 otl_study <- function(study="pg_719") {
-    otl_GET(path=c("study", study))
+    otl_GET(path=paste("study", study, sep="/"))
 }
