@@ -5,8 +5,9 @@
 ##' @param value character, the property-value  to be searched on
 ##' @param verbose Boolean, include all metadata (default=FALSE)
 ##' @examples
-##' all_s <- studies_find_studies()
-##' length(all_s$
+##' req <- studies_find_studies(property="ot:studyId", value="pg_719")
+##' httr::content(req)
+
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
     req_body <- list()
