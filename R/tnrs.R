@@ -38,7 +38,7 @@
 tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
     if (missing(taxon_names)) {
-        stop("\'names\' need to be specified")
+        stop("\'names\' must be specified")
     }
     if (!is.null(ids)) {
         if (length(ids) != length(taxon_names))
@@ -85,7 +85,10 @@ tnrs_context <- function() {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_infer_context <- function(taxon_names) {
+tnrs_infer_context <- function(taxon_names=NULL) {
+	if (is.null(taxon_names)) {
+		stop("\'taxon_names\' must be specified")
+	}
     q <- list(names=taxon_names)
     otl_POST("tnrs/infer_context", q)
 }
