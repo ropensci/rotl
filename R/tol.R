@@ -88,7 +88,7 @@ tol_subtree <- function(node_id, ott_id, tree_id) {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @examples
-##' {"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]}
+##' tol_induced_subtree(ott_ids=list("ott_ids" = c(292466, 501678, 267845, 666104, 316878, 102710, 176458)))
 ##' @export
 tol_induced_subtree <- function(node_ids, ott_ids) {
     if (missing(node_ids) && !missing(ott_ids)) q <- ott_ids
