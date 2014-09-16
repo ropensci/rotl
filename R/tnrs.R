@@ -47,7 +47,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     if (!is.logical(do_approximate_matching)) stop("Argument \'do_approximate_matching\' should be logical")
 	if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
 	if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
-    
+
     q <- list(names = taxon_names, context_name = context_name,
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
               ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
@@ -55,7 +55,22 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     toKeep <- sapply(q, is.null)
     q <- q[!toKeep]
 
-    otl_POST("tnrs/match_names", q)
+    res <- otl_POST("tnrs/match_names", q)
+    check_tnrs(res)
+    summary_match <- do.call("rbind", lapply(content(res)$results, function(x) {
+        searchStr <- x$matches[[1]]$search_string
+        uniqNames <- x$matches[[1]]$unique_name
+        approxMatch <- x$matches[[1]]$is_approximate_match
+        ottId <- x$matches[[1]]$'ot:ottId'
+        isSynonym <- x$matches[[1]]$is_synonym
+        isDeprecated <- x$matches[[1]]$is_deprecated
+        nMatch <- length(x$match)
+        c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
+    }))
+    summary_match <- data.frame(summary_match)
+    names(summary_match) <- c("search_string", "unique_name", "approximate_match",
+                              "ottId", "number_matches", "is_synonym", "is_deprecated")
+    summary_match
 }
 
 ##' Return a list of pre-defined taxonomic contexts (i.e. clades),
@@ -90,9 +105,25 @@ tnrs_context <- function() {
 ##' @author Francois Michonneau
 ##' @export
 tnrs_infer_context <- function(taxon_names=NULL) {
-	if (is.null(taxon_names)) {
-		stop("\'taxon_names\' must be specified")
-	}
+    if (is.null(taxon_names)) {
+        stop("\'taxon_names\' must be specified")
+    }
     q <- list(names=taxon_names)
     otl_POST("tnrs/infer_context", q)
+}
+
+check_tnrs <- function(req) {
+    cont <- httr::content(req)
+    if (length(cont$results) < 1) {
+        warning("Nothing returned")
+    }
+    if (length(cont$unmatched_name_ids)) {
+        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
+    }
+}
+
+
+get_synonyms <- function(req, i) {
+    cont <- httr::content(req)
+    sapply(cont$results[[i]]$matches, function(x) x$unique_name)
 }
