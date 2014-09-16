@@ -42,20 +42,19 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @param ott_id The OpenTree taxonomic identifier.
 ##' @param node_id The idenitifer of the node in the graph.
 ##' @return a list of information about the node
-##' @example ott_id=93302
+##' @example ott_id=81461
 ##' @export
-gol_node_info <- function(node_id, ott_id) {
-    if (!missing(node_id) && !missing(ott_id)) {
+gol_node_info <- function(node_id=NULL, ott_id=NULL) {
+    if (!is.null(node_id) && !is.null(ott_id)) {
         stop("Use only node_id OR ott_id")
     }
-    if (missing(node_id) && missing(ott_id)) {
+    if (is.null(node_id) && is.null(ott_id)) {
         stop("Must supply a node_id OR ott_id")
     }
-    if (!missing(ott_id)) {
+    if (!is.null(ott_id)) {
         q <- list(ott_id = ott_id)
-    }
-    if (!missing(node_id)) {
-        q <- list(node_id = node_id)
+    } else {
+    	q <- list(node_id = node_id)
     }
     otl_POST(path="graph/node_info", body=q)
 }
