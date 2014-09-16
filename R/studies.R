@@ -84,7 +84,8 @@ get_study <- function(study="pg_719") {
 
 
 get_study_tree <- function(study, tree){
-    otl_GET(path=paste("study", study, "tree", tree, sep="/"))
+    tree_file <- paste(tree, otl_formats(format), sep="")
+    otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
 }
 
 
@@ -105,7 +106,7 @@ get_study_otus <- function(study) {
 }
 
 get_study_otumap <- function(study){
-    otl_GET(path=paste("study", study,"otumap", sep="/")
+    otl_GET(path=paste("study", study,"otumap", sep="/"))
 
 }
 
