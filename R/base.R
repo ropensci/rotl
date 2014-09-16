@@ -32,3 +32,15 @@ otl_POST <- function(path, body, ...) {
 
     req
 }
+
+otl_formats <- function(format){
+    switch(format, 
+           "nexus" = ".nex",
+           "newick" = ".tre",
+           "nexml" = ".nexml",
+           "nexson" = ".nexson",
+           "json" = ".nexson",
+           ".nexson")
+}
+
+

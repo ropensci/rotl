@@ -4,11 +4,16 @@
 ##' including information about the list of trees and the taxonomy
 ##' used to build it.
 ##' @title Information about the tree of life
+##' @param study_list Boolean. Whether to return the list of source studies. Default = FALSE.
 ##' @return Some JSON
 ##' @author Francois Michonneau
 ##' @export
-tol_about <- function() {
-    otl_POST(path="tree_of_life/about", body=list())
+tol_about <- function(study_list=FALSE) {
+	if (!is.logical(study_list)) {
+		stop("Argument \'study_list\' should be logical")
+	}
+	q <- list(study_list=study_list)
+    otl_POST(path="tree_of_life/about", body=q)
 }
 
 ##' Reurns the MRCA

@@ -1,4 +1,4 @@
-##' Taxonomic contexts
+##' Summary information about the OpenTree Taxaonomy (OTT)
 ##' 
 ##' Return information about the taxonomy, including version.
 ##' @title Taxonomy about
@@ -13,11 +13,12 @@ taxonomy_about <- function () {
 ##' 
 ##' Given an ott id, return information about the specified taxon.
 ##' @title taxon
-##' @param ott_id The OTT id of the taxon of interest.
+##' @param ott_id The OTT id of the taxon of interest. Not optional.
 ##' @return Some JSON
-##' @example ott_id=515698
+##' @examples
+##' req <- taxonomy_taxon(ott_id=515698)
 ##' @export
-taxonomy_infer_context <- function (ott_id=NULL) {
+taxonomy_taxon <- function (ott_id=NULL) {
 	if (is.null(ott_id)) {
 		stop("Must supply an \'ott_id\' argument")
 	}
@@ -30,13 +31,16 @@ taxonomy_infer_context <- function (ott_id=NULL) {
 ##' 
 ##' Given an ott id, return complete taxonomy subtree descended from specified taxon.
 ##' @title taxon
-##' @param ott_id The OTT id of the taxon of interest.
+##' @param ott_id The OTT id of the taxon of interest.  Not optional.
 ##' @return Some JSON
-##' @example ott_id=515698
+##' @examples
+##' req <- taxonomy_subtree(ott_id=515698)
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL) {
 	if (is.null(ott_id)) {
 		stop("Must supply an \'ott_id\' argument")
+	} else if (length(ott_id) > 1) {
+		stop("Must only supply one \'ott_id\' argument")
 	}
 	q <- list(ott_id=ott_id)
     otl_POST(path="/taxonomy/subtree", body=q)
@@ -49,9 +53,10 @@ taxonomy_subtree <- function (ott_id=NULL) {
 ##' (the LICA) of all the identified taxa. A taxonomic LICA is analogous to a most recent
 ##' common ancestor (MRCA) in a phylogenetic tree.
 ##' @title lica
-##' @param ott_ids The vector of ott ids for the taxa whose LICA is to be found.
+##' @param ott_ids The vector of ott ids for the taxa whose LICA is to be found. Not optional.
 ##' @return Some JSON
-##' @example ott_ids=c(515698,590452,409712,643717)
+##' @examples
+##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' @export
 taxonomy_lica <- function (ott_ids=NULL) {
 	if (is.null(ott_ids)) {
