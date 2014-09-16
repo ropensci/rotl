@@ -9,7 +9,7 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' @title Information about the tree of life
 ##' @return Some JSON
 ##' @export
-gol_about <- function() {
+gol_about <- function(study_list=FALSE) {
     otl_POST(path="graph/about", body=list())
 }
 
