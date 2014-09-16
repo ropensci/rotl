@@ -10,6 +10,9 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' @return Some JSON
 ##' @export
 gol_about <- function(study_list=FALSE) {
+	if (!is.logical(study_list)) {
+		stop("Argument study_list should be logical")
+	}
     otl_POST(path="graph/about", body=list())
 }
 
