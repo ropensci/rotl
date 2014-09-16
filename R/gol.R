@@ -41,6 +41,7 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @title Get summary information about a node in the graph
 ##' @param ott_id The OpenTree taxonomic identifier.
 ##' @param node_id The idenitifer of the node in the graph.
+##' @param include_lineage Whether to return the lineage of the node from the synthetic tree.
 ##' @return a list of information about the node
 ##' @example ott_id=81461
 ##' @export
