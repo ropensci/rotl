@@ -13,7 +13,7 @@ taxonomy_about <- function () {
 ##' 
 ##' Given an ott id, return information about the specified taxon.
 ##' @title taxon
-##' @param ott_id The OTT id of the taxon of interest.
+##' @param ott_id The OTT id of the taxon of interest. Not optional.
 ##' @return Some JSON
 ##' @examples
 ##' req <- taxonomy_taxon(ott_id=515698)
@@ -31,7 +31,7 @@ taxonomy_taxon <- function (ott_id=NULL) {
 ##' 
 ##' Given an ott id, return complete taxonomy subtree descended from specified taxon.
 ##' @title taxon
-##' @param ott_id The OTT id of the taxon of interest.
+##' @param ott_id The OTT id of the taxon of interest.  Not optional.
 ##' @return Some JSON
 ##' @examples
 ##' req <- taxonomy_subtree(ott_id=515698)
@@ -51,7 +51,7 @@ taxonomy_subtree <- function (ott_id=NULL) {
 ##' (the LICA) of all the identified taxa. A taxonomic LICA is analogous to a most recent
 ##' common ancestor (MRCA) in a phylogenetic tree.
 ##' @title lica
-##' @param ott_ids The vector of ott ids for the taxa whose LICA is to be found.
+##' @param ott_ids The vector of ott ids for the taxa whose LICA is to be found. Not optional.
 ##' @return Some JSON
 ##' @examples
 ##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))

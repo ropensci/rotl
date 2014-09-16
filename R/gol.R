@@ -7,6 +7,7 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' Returns summary information about the entire graph database, including identifiers for the
 ##' taxonomy and source trees used to build it.
 ##' @title Information about the tree of life
+##' @param study_list Boolean. Whether to return the list of source studies. Default = FALSE.
 ##' @return Some JSON
 ##' @export
 gol_about <- function(study_list=FALSE) {
@@ -46,7 +47,8 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @title Get summary information about a node in the graph
 ##' @param ott_id The OpenTree taxonomic identifier.
 ##' @param node_id The idenitifer of the node in the graph.
-##' @param include_lineage Whether to return the lineage of the node from the synthetic tree.
+##' @param include_lineage Boolean. Whether to return the lineage of the node from the synthetic tree.
+##' Default = FALSE.
 ##' @return a list of information about the node
 ##' @examples
 ##' req <- gol_node_info(ott_id=81461)
