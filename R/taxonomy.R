@@ -21,8 +21,10 @@ taxonomy_about <- function () {
 taxonomy_taxon <- function (ott_id=NULL) {
 	if (is.null(ott_id)) {
 		stop("Must supply an \'ott_id\' argument")
+	} else if (length(ott_id) > 1) {
+		stop("Must only supply one \'ott_id\' argument")
 	}
-	q <- list(ott_id=ott_id)
+	q <- list(ott_id=jsonlite::unbox(ott_id))
     otl_POST(path="/taxonomy/taxon", body=q)
 }
 
@@ -42,7 +44,7 @@ taxonomy_subtree <- function (ott_id=NULL) {
 	} else if (length(ott_id) > 1) {
 		stop("Must only supply one \'ott_id\' argument")
 	}
-	q <- list(ott_id=ott_id)
+	q <- list(ott_id=jsonlite::unbox(ott_id))
     otl_POST(path="/taxonomy/subtree", body=q)
 }
 
