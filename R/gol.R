@@ -13,7 +13,8 @@ gol_about <- function(study_list=FALSE) {
 	if (!is.logical(study_list)) {
 		stop("Argument study_list should be logical")
 	}
-    otl_POST(path="graph/about", body=list())
+	q <- list(study_list=study_list)
+    otl_POST(path="graph/about", body=q)
 }
 
 
