@@ -1,11 +1,24 @@
-##' Basic information about the tree
-##'
-##' Summary information about the current draft tree of life,
+
+
+##' @title Information about the tree of life
+##' @description Basic information about the tree
+##' @details Summary information about the current draft tree of life,
 ##' including information about the list of trees and the taxonomy
 ##' used to build it.
-##' @title Information about the tree of life
-##' @param study_list Boolean. Whether to return the list of source studies. Default = FALSE.
-##' @return Some JSON
+##' @param study_list Boolean. Whether to return the list of source studies. Optional; default = FALSE.
+##' @return A list of synthetic tree summary statistics:
+##' \itemize{
+##'	\item {tree_id} {The name identifier of the synthetic tree.}
+##'	\item {date} {The date that the synthetic tree was constructed.}
+##'	\item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
+##'	\item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
+##'	\item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
+##'	\item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
+##'	\item {root_node_id} {The node ID of the root node of the synthetic tree.}
+##'	\item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
+##' }
+##' @examples
+##' res <- tol_about()
 ##' @author Francois Michonneau
 ##' @export
 tol_about <- function(study_list=FALSE) {
@@ -13,13 +26,18 @@ tol_about <- function(study_list=FALSE) {
 		stop("Argument \'study_list\' should be logical")
 	}
 	q <- list(study_list=jsonlite::unbox(study_list))
-    otl_POST(path="tree_of_life/about", body=q)
+    res <- otl_POST(path="tree_of_life/about", body=q)
+    cont <- httr::content(res)
+    return(cont)
 }
 
-##' Reurns the MRCA
-##'
-##' Most recent common ancestor
+
+
+
+
 ##' @title get MRCA
+##' @description Most recent common ancestor
+##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree. 
 ##' @param ott_ids
 ##' @param node_ids
 ##' @return the MRCA

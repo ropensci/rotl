@@ -12,7 +12,7 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##'	\item {graph_num_tips} {The number of terminal (tip) taxa in the graph.}
 ##'	\item {graph_root_name} {The taxonomic name of the root node of the graph.}
 ##'	\item {graph_root_node_id} {The node ID of the root node of the graph.}
-##'	\item {graph_root_ott_id} {The OpenTree ID (ottID) of the root node of the graph.}
+##'	\item {graph_root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the graph.}
 ##' }
 ##' @examples
 ##' res <- gol_about()
@@ -33,7 +33,7 @@ gol_about <- function() {
 
 ##' @title Get reconstructed source tree
 ##' @description Returns a reconstructed source tree from the graph DB.
-##' @details Reconstructs a source tree given identifiers: \code{study_id}, \code{tree_id}, and \code{git_sha}. The tree may differ from the original source tree in 2 ways: 1) it may contain fewer taxa (as duplicate taxa are pruned on tree ingestion), and 2) OpenTree Taxonomy (OTT) IDs are applied to all named internal nodes and as a suffix to all terminal node names.
+##' @details Reconstructs a source tree given identifiers: \code{study_id}, \code{tree_id}, and \code{git_sha}. The tree may differ from the original source tree in 2 ways: 1) it may contain fewer taxa (as duplicate taxa are pruned on tree ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to all named internal nodes and as a suffix to all terminal node names.
 ##' @param study_id The study identifier. Will typically include a prefix ("pg_" or "ot_").
 ##' @param tree_id The tree identifier for a given study.
 ##' @param git_sha The git SHA identifying a particular source version.
@@ -61,7 +61,7 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @details Summary information about a queried node, including 1) whether it is in the graph DB,
 ##' 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of 
 ##' descendant tip taxa, 5) graph node ID, and 6) taxonomic information (if it is a named
-##' node in the graph), including: name, rank, OpenTree Taxonomy (OTT) ID, and source taxonomy
+##' node in the graph), including: name, rank, OpenTree Taxonomy ID (ottID), and source taxonomy
 ##' IDs.
 ##' @param ott_id The OpenTree taxonomic identifier.
 ##' @param node_id The idenitifer of the node in the graph.
@@ -73,7 +73,7 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##'	\item {in_synth_tree} {Boolean. Whether the queried node is present in the synthetic tree.}
 ##'	\item {rank} {String. The taxonomic rank of the queried node (if it is a named node).}
 ##'	\item {name} {String. The taxonomic name of the queried node (if it is a named node).}
-##'	\item {ott_id} {Numeric. The OpenTree Taxonomy (OTT) ID of the queried node (if it is a named node).}
+##'	\item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID) of the queried node (if it is a named node).}
 ##'	\item {num_tips} {Numeric. The number of taxonomic tip descendants.}
 ##'	\item {num_synth_children} {Numeric . The number of synthetic tree tip descendants.}
 ##'	\item {tax_source} {String. Source taxonomy IDs (if it is a named node), e.g. "ncbi:9242,gbif:5289,irmng:104628".}
