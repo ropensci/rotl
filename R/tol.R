@@ -32,7 +32,7 @@ tol_about <- function(study_list=FALSE) {
 
 
 ##' @title get MRCA
-##' @description Most recent common ancestor
+##' @description Most recent common ancestor of nodes
 ##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree. 
 ##' @param ott_ids
 ##' @param node_ids
