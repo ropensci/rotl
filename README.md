@@ -70,3 +70,32 @@ tr <- read.tree(text=httr::content(tr_string))
 plot(tr)
 
 ```
+
+### Get a subtree from the Big Tree
+
+```r
+
+( some_birds <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104)))
+    #Response [http://devapi.opentreeoflife.org/v2/tree_of_life/induced_subtree]
+    #  Status: 200
+    #  Content-type: application/json; charset=UTF-8
+    #{
+    #  "subtree" : "((Stellula_ott501678,(Dendroica_ott666104,Cinclus_ott267845))Neognathae_ott241846,Struthio_ott292466)Aves_ott81461;",
+    #  "ott_ids_not_in_tree" : [ ],
+    #  "ott_ids_not_in_graph" : [ ],
+    #  "node_ids_not_in_graph" : [ ],
+    #  "node_ids_not_in_tree" : [ ]
+    #} 
+library(ape)
+( tr <- read.tree(text=httr::content(some_birds)$subtree) )
+    #
+    #Phylogenetic tree with 4 tips and 3 internal nodes.
+    #
+    #Tip labels:
+    #[1] "Stellula_ott501678"  "Dendroica_ott666104" "Cinclus_ott267845"  
+    #[4] "Struthio_ott292466" 
+    #Node labels:
+    #[1] "Aves_ott81461"        "Neognathae_ott241846" ""                    
+    #
+    #Rooted; no branch lengths.
+```
