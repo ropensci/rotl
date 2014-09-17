@@ -33,7 +33,7 @@ tol_about <- function(study_list=FALSE) {
 
 ##' @title get MRCA
 ##' @description Most recent common ancestor of nodes
-##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree. 
+##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree.
 ##' @param ott_ids
 ##' @param node_ids
 ##' @return the MRCA
@@ -78,10 +78,10 @@ tol_subtree <- function(node_id, ott_id, tree_id) {
         stop("tree_id is currently ignored")
     }
     if (missing(node_id) && !missing(ott_id)) {
-        q <- list(ott_id = ott_id)
+        q <- list(ott_id = jsonlite::unbox(ott_id))
     }
     if (!missing(node_id) && missing(ott_id)) {
-        q <- list(node_id = node_id)
+        q <- list(node_id = jsonlite::unbox(node_id))
     }
     otl_POST(path="tree_of_life/subtree", body=q)
 }
