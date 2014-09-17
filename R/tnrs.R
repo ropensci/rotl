@@ -82,11 +82,17 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
         stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'")
     } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
+        if (!is.numeric(row_number)) stop("\'row_number\' must be a numeric")
+        if (row_number > length(orig_order)) {
+            stop("\'row_number\' is greater than actual number of rows.")
+        }
         i <- orig_order[row_number]
     } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
+        if (!is.character(taxon_name)) stop("\'taxon_name\' must be a character")
         i <- orig_order[match(tolower(taxon_name), response$search_string)]
         if (any(is.na(i))) stop("Can't find ", taxon_name)
     } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
+        if (!is.numeric(ott_id)) stop("\'ott_id\" must be a numeric")
         i <- orig_order[match(ott_id, response$ott_id)]
         if (any(is.na(i))) stop("Can't find ", ott_id)
     } else {
