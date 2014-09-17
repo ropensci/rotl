@@ -10,10 +10,11 @@ otl_parse <- function(req) {
 }
 
 otl_check <- function(req) {
-    if (req$status_code < 400) return(invisible())
-
-    msg <- otl_parse(req)$message
-    stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+    if (!req$status_code < 400) {
+    	    msg <- otl_parse(req)$message
+        stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+    }
+    otl_check_error(req)
 }
 
 otl_GET <- function(path, ...) {
