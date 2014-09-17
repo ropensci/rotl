@@ -1,5 +1,4 @@
 
-
 ##' @title Information about the tree of life
 ##' @description Basic information about the tree
 ##' @details Summary information about the current draft tree of life,
@@ -32,9 +31,6 @@ tol_about <- function(study_list=FALSE) {
 }
 
 
-
-
-
 ##' @title get MRCA
 ##' @description Most recent common ancestor
 ##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree. 
@@ -43,8 +39,8 @@ tol_about <- function(study_list=FALSE) {
 ##' @return the MRCA
 ##' @author Francois Michonneau
 ##' @examples
-##' test1 <- tol_mrca(ott_ids=list("ott_ids" = c(412129, 536234)))
-##' test2 <- tol_mrca(ott_ids=list("ott_ids" = c(415255)), node_ids=c(341556))
+##' test1 <- tol_mrca(ott_ids=c(412129, 536234))
+##' test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
 ##' @export
 tol_mrca <- function(ott_ids, node_ids) {
     if (missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids)
