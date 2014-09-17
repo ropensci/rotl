@@ -137,7 +137,7 @@ update_match_names <- function(response, i, j) {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_context <- function() {
+tnrs_contexts <- function() {
     otl_POST("tnrs/contexts", list())
 }
 

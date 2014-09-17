@@ -7,12 +7,25 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' Returns summary information about the entire graph database, including identifiers for the
 ##' taxonomy and source trees used to build it.
 ##' @title Information about the tree of life
-##' @return Some JSON
+##' @return A list of graph attributes
+##' itemize{
+##'	\item graph_num_source_trees The number of unique source trees in the graph.
+##'	\item graph_taxonomy_version The version of the taxonomy used to initialize the graph.
+##'	\item graph_num_tips The number of terminal (tip) taxa in the graph.
+##'	\item graph_root_name The taxonomic name of the root node of the graph.
+##'	\item graph_root_node_id The node ID of the root node of the graph.
+##'	\item graph_root_ott_id The OpenTree ID (ottID) of the root node of the graph.
+##' }
 ##' @examples
 ##' req <- gol_about()
 ##' @export
 gol_about <- function() {
-    otl_POST(path="graph/about", body=list())
+    res <- otl_POST(path="graph/about", body=list())
+    cont <- httr::content(res)
+    if (length(cont) < 1) {
+        warning("Nothing returned")
+    }
+    return(cont)
 }
 
 
