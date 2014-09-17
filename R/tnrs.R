@@ -71,6 +71,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "number_matches", "is_synonym", "is_deprecated")
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
+    rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     summary_match
 }
