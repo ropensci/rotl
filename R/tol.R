@@ -42,12 +42,17 @@ tol_about <- function(study_list=FALSE) {
 ##' test1 <- tol_mrca(ott_ids=c(412129, 536234))
 ##' test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
 ##' @export
-tol_mrca <- function(ott_ids, node_ids) {
-    if (missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids)
-    if (!missing(node_ids) && missing(ott_ids)) q <- list(node_ids = node_ids)
-    if (!missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids,
+tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
+    if (!is.null(node_ids) && !is.null(ott_ids)) {
+        stop("Use only node_id OR ott_id")
+    }
+    if (is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids)
+    if (!is.null(node_ids) && is.null(ott_ids)) q <- list(node_ids = node_ids)
+    if (!is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids,
                                                            node_ids = node_ids)
-    otl_POST(path="tree_of_life/mrca", body=q)
+    res <- otl_POST(path="tree_of_life/mrca", body=q)
+    cont <- httr::content(res)
+    
 }
 
 ##' Extract subtree from a node or an OTT
@@ -130,5 +135,11 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (!is.null(node_ids) && is.null(ott_ids)) q <- list(node_ids = node_ids)
     if (!is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids,
                                                            node_ids = node_ids)
-    otl_POST("tree_of_life/induced_subtree", body=q)
+    res <- otl_POST("tree_of_life/induced_subtree", body=q)
+    cont <- httr::content(res)
+    
+    #phy <- collapse.singles(read.tree(text=(cont)[["subtree"]])); # required b/c of "knuckles"
+    phy <- collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
+    
+    return(phy)
 }
