@@ -140,10 +140,27 @@ list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) 
 }
 
 ##' @export
-update_match_names <- function(response, row_number, taxon_name, ott_id, j) {
+update_match_names <- function(response, row_number, taxon_name, ott_id,
+                               new_row_number, new_ott_id) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
     res <- attr(response, "original_response")
     tmpRes <- httr::content(res)$results[[i]]
+
+    if (missing(new_row_number) && missing(new_ott_id)) {
+        stop("You must specify either \'new_row_number\' or \'new_ott_id\'")
+    } else if (!missing(new_row_number) && missing(new_ott_id)) {
+        if (new_row_number > length(tmpRes$matches))
+            stop("\'new_row_number\' is greater than actual number of rows.")
+        j <- new_row_number
+    } else if (missing(new_row_number) && !missing(new_ott_id)) {
+        allOttId <- sapply(tmpRes$matches, function(x) x$'ot:ottId')
+        j <- match(new_ott_id, allOttId)
+        if (any(is.na(j))) stop("Can't find ", new_ott_id)
+    } else {
+        stop("You must use only one of \'new_row_number\' or \'new_ott_id\'")
+    }
+    if (length(j) > 1) stop("You must supply a single element for each argument.")
+
     searchStr <- tmpRes$matches[[j]]$search_string
     uniqNames <- tmpRes$matches[[j]]$unique_name
     approxMatch <- tmpRes$matches[[j]]$is_approximate_match
