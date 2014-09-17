@@ -77,6 +77,16 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     summary_match
 }
 
+check_tnrs <- function(req) {
+    cont <- httr::content(req)
+    if (length(cont$results) < 1) {
+        warning("Nothing returned")
+    }
+    if (length(cont$unmatched_name_ids)) {
+        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
+    }
+}
+
 check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     orig_order <- attr(response, "original_order")
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
@@ -146,6 +156,16 @@ update_match_names <- function(response, row_number, taxon_name, ott_id,
     res <- attr(response, "original_response")
     tmpRes <- httr::content(res)$results[[i]]
 
+    if (missing(row_number)) {
+        if (!missing(taxon_name)) {
+            rnb <- match(tolower(taxon_name), response$search_string)
+        } else if (!missing(ott_id)) {
+            rnb <- match(ott_id, response$ott_id)
+        }
+    } else {
+        rnb <- row_number
+    }
+
     if (missing(new_row_number) && missing(new_ott_id)) {
         stop("You must specify either \'new_row_number\' or \'new_ott_id\'")
     } else if (!missing(new_row_number) && missing(new_ott_id)) {
@@ -168,7 +188,7 @@ update_match_names <- function(response, row_number, taxon_name, ott_id,
     isSynonym <- tmpRes$matches[[j]]$is_synonym
     isDeprecated <- tmpRes$matches[[j]]$is_deprecated
     nMatch <- length(tmpRes$match)
-    response[i, ] <- c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
+    response[rnb, ] <- c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
     response
 }
 
@@ -210,16 +230,6 @@ tnrs_infer_context <- function(taxon_names=NULL) {
     }
     q <- list(names=taxon_names)
     otl_POST("tnrs/infer_context", q)
-}
-
-check_tnrs <- function(req) {
-    cont <- httr::content(req)
-    if (length(cont$results) < 1) {
-        warning("Nothing returned")
-    }
-    if (length(cont$unmatched_name_ids)) {
-        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
-    }
 }
 
 
