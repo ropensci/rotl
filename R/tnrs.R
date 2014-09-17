@@ -67,7 +67,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
         nMatch <- length(x$match)
         c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
     }))
-    summary_match <- data.frame(summary_match)
+    summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "number_matches", "is_synonym", "is_deprecated")
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
@@ -87,7 +87,7 @@ inspect_match_names <- function(response, i) {
             isDeprecated <- x$is_deprecated
             c(searchStr, uniqNames, approxMatch, ottId, isSynonym, isDeprecated)
         }))
-    summary_match <- data.frame(summary_match)
+    summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "is_synonym", "is_deprecated")
     summary_match
@@ -105,6 +105,22 @@ list_synonyms_match_names <- function(response, i) {
     names(list_synonyms) <- name_synonyms
     list_synonyms
 }
+
+##' @export
+update_match_names <- function(response, i, j) {
+    res <- attr(response, "original_response")
+    tmpRes <- httr::content(res)$results[[i]]
+    searchStr <- tmpRes$matches[[j]]$search_string
+    uniqNames <- tmpRes$matches[[j]]$unique_name
+    approxMatch <- tmpRes$matches[[j]]$is_approximate_match
+    ottId <- tmpRes$matches[[j]]$'ot:ottId'
+    isSynonym <- tmpRes$matches[[j]]$is_synonym
+    isDeprecated <- tmpRes$matches[[j]]$is_deprecated
+    nMatch <- length(tmpRes$match)
+    response[i, ] <- c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
+    response
+}
+
 
 ##' Return a list of pre-defined taxonomic contexts (i.e. clades),
 ##' which can be used to limit the scope of tnrs queries.
