@@ -12,7 +12,7 @@ tol_about <- function(study_list=FALSE) {
 	if (!is.logical(study_list)) {
 		stop("Argument \'study_list\' should be logical")
 	}
-	q <- list(study_list=study_list)
+	q <- list(study_list=jsonlite::unbox(study_list))
     otl_POST(path="tree_of_life/about", body=q)
 }
 
