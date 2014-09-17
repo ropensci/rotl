@@ -45,8 +45,8 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
             stop("\'ids\' and \'taxon_names\' must be of the same length.")
     }
     if (!is.logical(do_approximate_matching)) stop("Argument \'do_approximate_matching\' should be logical")
-	if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
-	if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
+    if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
+    if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
 
     q <- list(names = taxon_names, context_name = context_name,
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
@@ -57,7 +57,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
 
     res <- otl_POST("tnrs/match_names", q)
     check_tnrs(res)
-    summary_match <- do.call("rbind", lapply(content(res)$results, function(x) {
+    summary_match <- do.call("rbind", lapply(httr::content(res)$results, function(x) {
         searchStr <- x$matches[[1]]$search_string
         uniqNames <- x$matches[[1]]$unique_name
         approxMatch <- x$matches[[1]]$is_approximate_match
@@ -70,6 +70,7 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     summary_match <- data.frame(summary_match)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "number_matches", "is_synonym", "is_deprecated")
+    summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
     assign("last_tnrs_match_names", res, envir=.ROTL)
     summary_match
 }
