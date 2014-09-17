@@ -71,17 +71,14 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ottId", "number_matches", "is_synonym", "is_deprecated")
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
-    assign("last_tnrs_match_names", res, envir=.ROTL)
+    attr(summary_match, "original_response") <- res
     summary_match
 }
 
 ##' @export
-inspect_match_names <- function(i) {
-    if (! exists("last_tnrs_match_names", envir=.ROTL)) {
-        stop("Need to use tnrs_match_names first")
-    } else {
-        res <- get("last_tnrs_match_names", envir=.ROTL)
-        summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
+inspect_match_names <- function(response, i) {
+    res <- attr(response, "original_response")
+    summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
             searchStr <- x$search_string
             uniqNames <- x$unique_name
             approxMatch <- x$is_approximate_match
@@ -90,24 +87,19 @@ inspect_match_names <- function(i) {
             isDeprecated <- x$is_deprecated
             c(searchStr, uniqNames, approxMatch, ottId, isSynonym, isDeprecated)
         }))
-        summary_match <- data.frame(summary_match)
-        names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                                  "ottId", "is_synonym", "is_deprecated")
-    }
+    summary_match <- data.frame(summary_match)
+    names(summary_match) <- c("search_string", "unique_name", "approximate_match",
+                              "ottId", "is_synonym", "is_deprecated")
     summary_match
 }
 
 ##' @export
-list_synonyms_match_names <- function(i) {
-    if (! exists("last_tnrs_match_names", envir=.ROTL)) {
-        stop("Need to use tnrs_match_names first")
-    } else {
-        res <-  get("last_tnrs_match_names", envir=.ROTL)
-        list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
-            paste(unlist(x$synonyms), collapse=", ")
-        })
-        list_synonyms
-    }
+list_synonyms_match_names <- function(response, i) {
+    res <- attr(response, "original_response")
+    list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
+        paste(unlist(x$synonyms), collapse=", ")
+    })
+    list_synonyms
 }
 
 ##' Return a list of pre-defined taxonomic contexts (i.e. clades),
