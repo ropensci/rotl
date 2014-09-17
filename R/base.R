@@ -33,6 +33,13 @@ otl_POST <- function(path, body, ...) {
     req
 }
 
+otl_check_error <- function(req) {
+	cont <- httr::content(req)
+	if (exists("error", cont)) {
+		stop(paste("Error: ", cont$error, "\n", sep = ""))
+	}
+}
+
 otl_formats <- function(format){
     switch(tolower(format), 
            "nexus" = ".nex",
