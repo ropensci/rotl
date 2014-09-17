@@ -27,20 +27,16 @@ gol_about <- function() {
 }
 
 
-
-## TODO: get a smaller example tree ***
-
-
 ##' @title Get reconstructed source tree
 ##' @description Returns a reconstructed source tree from the graph DB.
 ##' @details Reconstructs a source tree given identifiers: \code{study_id}, \code{tree_id}, and \code{git_sha}. The tree may differ from the original source tree in 2 ways: 1) it may contain fewer taxa (as duplicate taxa are pruned on tree ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to all named internal nodes and as a suffix to all terminal node names.
-##' @param study_id The study identifier. Will typically include a prefix ("pg_" or "ot_").
-##' @param tree_id The tree identifier for a given study.
-##' @param git_sha The git SHA identifying a particular source version.
+##' @param study_id String. The study identifier. Will typically include a prefix ("pg_" or "ot_").
+##' @param tree_id String. The tree identifier for a given study.
+##' @param git_sha String. The git SHA identifying a particular source version.
 ##' @param format The name of the return format. The only currently supported format is newick.
 ##' @return a tree of class \code{"synth_sources"}
 ##' @examples
-##' res <- gol_source_tree(study_id="pg_420", tree_id="522", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452")
+##' res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452", tree_id="7")
 ##' @export
 gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     if (any(is.null(c(study_id, tree_id, git_sha)))) {
