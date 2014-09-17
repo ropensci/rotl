@@ -99,6 +99,10 @@ list_synonyms_match_names <- function(response, i) {
     list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
         paste(unlist(x$synonyms), collapse=", ")
     })
+    name_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
+        x$unique_name
+    })
+    names(list_synonyms) <- name_synonyms
     list_synonyms
 }
 
