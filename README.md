@@ -21,3 +21,52 @@ library(devtools)
 
 install_github("fmichonneau/rotl")
 ```
+
+##Examples 
+
+Our first goal has been to impliment low-level functions that wrap the Open Tree
+APIs and return the complete response. These are now done (though we still need
+more tests and documentation), so we will focus on developing higher level
+functions that automate common use cases and provide the results in the most
+approriate R object (often trees). 
+
+If you want to get started with open tree the existing functions can be used eg
+
+###Find trees focused on my favourite taxon
+
+```r
+furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
+> ( furry_ids <- unlist(furry_list$matched_studies) )
+    ##ot:studyId ot:studyId ot:studyId ot:studyId ot:studyId 
+    ##  "2647"     "1428"     "2582"     "2550"     "2812" 
+
+```
+
+###Get a tree into memory
+
+First, use the studies_metadata to find the tree ID, then fetch a tree
+
+```r
+furry_metadata <- httr::content(get_study_meta(2647))
+furry_metadata$nexml$treesById
+    ##$trees2647
+    ##$trees2647$treeById
+    ##$trees2647$treeById$tree6169
+    ##NULL
+    ##
+    ##
+    ##$trees2647$`^ot:treeElementOrder`
+    ##$trees2647$`^ot:treeElementOrder`[[1]]
+    ##[1] "tree6169"
+    ##
+    ##
+    ##$trees2647$`@otus`
+    ##[1] "otus2647"
+    ##
+tr_string <- get_study_tree(study="2647", tree="tree6169",format="newick")
+
+library(ape)
+tr <- read.tree(text=httr::content(tr_string))
+plot(tr)
+
+```
