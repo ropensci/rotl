@@ -34,13 +34,11 @@ otl_POST <- function(path, body, ...) {
 }
 
 otl_formats <- function(format){
-    switch(format, 
+    switch(tolower(format), 
            "nexus" = ".nex",
            "newick" = ".tre",
            "nexml" = ".nexml",
-           "nexson" = ".nexson",
-           "json" = ".nexson",
-           ".nexson")
+           "")#fall through is no extension = nex(j)son
 }
 
 
