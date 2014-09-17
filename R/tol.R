@@ -29,9 +29,10 @@ tol_about <- function(study_list=FALSE) {
 ##' test2 <- tol_mrca(ott_ids=list("ott_ids" = c(415255)), node_ids=c(341556))
 ##' @export
 tol_mrca <- function(ott_ids, node_ids) {
-    if (missing(node_ids) && !missing(ott_ids)) q <- ott_ids
-    if (!missing(node_ids) && missing(ott_ids)) q <- node_ids
-    if (!missing(node_ids) && !missing(ott_ids)) q <- c(ott_ids, node_ids)
+    if (missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids)
+    if (!missing(node_ids) && missing(ott_ids)) q <- list(node_ids = node_ids)
+    if (!missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids,
+                                                           node_ids = node_ids)
     otl_POST(path="tree_of_life/mrca", body=q)
 }
 
@@ -96,8 +97,9 @@ tol_subtree <- function(node_id, ott_id, tree_id) {
 ##' {"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]}
 ##' @export
 tol_induced_subtree <- function(node_ids, ott_ids) {
-    if (missing(node_ids) && !missing(ott_ids)) q <- ott_ids
-    if (!missing(node_ids) && missing(ott_ids)) q <- node_ids
-    if (!missing(node_ids) && !missing(ott_ids)) q <- c(ott_ids, node_ids)
+    if (missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids  = ott_ids)
+    if (!missing(node_ids) && missing(ott_ids)) q <- list(node_ids = node_ids)
+    if (!missing(node_ids) && !missing(ott_ids)) q <- list(ott_ids = ott_ids,
+                                                           node_ids = node_ids)
     otl_POST("tree_of_life/induced_subtree", body=q)
 }
