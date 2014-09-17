@@ -71,13 +71,37 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ott_id", "number_matches", "is_synonym", "is_deprecated")
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
+    attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     summary_match
 }
 
+check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
+    orig_order <- attr(response, "original_order")
+    if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
+        stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'")
+    } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
+        i <- orig_order[row_number]
+    } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
+        i <- orig_order[match(tolower(taxon_name), response$search_string)]
+        if (any(is.na(i))) stop("Can't find ", taxon_name)
+    } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
+        i <- orig_order[match(ott_id, response$ott_id)]
+        if (any(is.na(i))) stop("Can't find ", ott_id)
+    } else {
+        stop("You must use only one of \'row_number\', \'taxon_name\' or \'ott_id\'")
+    }
+
+    if (length(i) > 1) stop("You must supply a single element for each argument.")
+    i
+}
+
 ##' @export
-inspect_match_names <- function(response, i) {
+inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
+
+    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+
     res <- attr(response, "original_response")
     summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
             searchStr <- x$search_string
@@ -95,7 +119,9 @@ inspect_match_names <- function(response, i) {
 }
 
 ##' @export
-list_synonyms_match_names <- function(response, i) {
+list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) {
+    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+
     res <- attr(response, "original_response")
     list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
         paste(unlist(x$synonyms), collapse=", ")
