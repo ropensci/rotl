@@ -61,15 +61,15 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
         searchStr <- x$matches[[1]]$search_string
         uniqNames <- x$matches[[1]]$unique_name
         approxMatch <- x$matches[[1]]$is_approximate_match
-        ottId <- x$matches[[1]]$'ot:ottId'
+        ott_id <- x$matches[[1]]$'ot:ottId'
         isSynonym <- x$matches[[1]]$is_synonym
         isDeprecated <- x$matches[[1]]$is_deprecated
         nMatch <- length(x$match)
-        c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
+        c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
     }))
     summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                              "ottId", "number_matches", "is_synonym", "is_deprecated")
+                              "ott_id", "number_matches", "is_synonym", "is_deprecated")
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
@@ -83,14 +83,14 @@ inspect_match_names <- function(response, i) {
             searchStr <- x$search_string
             uniqNames <- x$unique_name
             approxMatch <- x$is_approximate_match
-            ottId <- x$'ot:ottId'
+            ott_id <- x$'ot:ottId'
             isSynonym <- x$is_synonym
             isDeprecated <- x$is_deprecated
-            c(searchStr, uniqNames, approxMatch, ottId, isSynonym, isDeprecated)
+            c(searchStr, uniqNames, approxMatch, ott_id, isSynonym, isDeprecated)
         }))
     summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                              "ottId", "is_synonym", "is_deprecated")
+                              "ott_id", "is_synonym", "is_deprecated")
     summary_match
 }
 
@@ -114,11 +114,11 @@ update_match_names <- function(response, i, j) {
     searchStr <- tmpRes$matches[[j]]$search_string
     uniqNames <- tmpRes$matches[[j]]$unique_name
     approxMatch <- tmpRes$matches[[j]]$is_approximate_match
-    ottId <- tmpRes$matches[[j]]$'ot:ottId'
+    ott_id <- tmpRes$matches[[j]]$'ot:ottId'
     isSynonym <- tmpRes$matches[[j]]$is_synonym
     isDeprecated <- tmpRes$matches[[j]]$is_deprecated
     nMatch <- length(tmpRes$match)
-    response[i, ] <- c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
+    response[i, ] <- c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
     response
 }
 
