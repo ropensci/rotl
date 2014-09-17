@@ -35,7 +35,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 ##' @export
 ##' @examples
 ##' req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
-##' httr::content(req)
+##' length(httr::content(req)$matched_studies)
 
 
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
@@ -51,8 +51,8 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
                                                   jsonlite::unbox(exact)))
 }
 
-
 ##' returns properties on which studies and study-trees can be searched
+<<<<<<< HEAD
 ##' Property of a study
 ##'
 ##' properties of the studies
@@ -64,6 +64,16 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 ##'  all_the_properties <- studies_properties()
 ##'  prop_list = httr::content(all_the_properties)
 ##'  unlist(prop_list$tree_properties)
+=======
+##'@export
+##'@return httr request containing lists of properties
+##'@examples
+##' all_the_properties <- studies_properties()
+##' prop_list <- httr::content(all_the_properties)
+##' unlist(prop_list$tree_properties)
+
+
+>>>>>>> exports sudies-family of functions, re-wrote docs for all
 studies_properties <- function(){
     otl_POST(path="studies/properties/", body=list())
 }
@@ -79,7 +89,11 @@ studies_properties <- function(){
 ##' @export
 ##' @examples
 ##' that_one_study <- get_study(study="pg_719")
+<<<<<<< HEAD
 ##
+=======
+
+>>>>>>> exports sudies-family of functions, re-wrote docs for all
 get_study <- function(study) {
     otl_GET(path=paste("study", study, sep="/"))
 }
@@ -91,8 +105,14 @@ get_study <- function(study) {
 ##' @param tree tree id
 ##' @param format char Tree format (default = json)
 ##' @return A tree file in desired format
+##' @export
 ##' @examples
 ##'  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> exports sudies-family of functions, re-wrote docs for all
 
 get_study_tree <- function(study, tree, format){
     tree_file <- paste(tree, otl_formats(format), sep="")
@@ -103,7 +123,12 @@ get_study_tree <- function(study, tree, format){
 ##' @title Study Metadata
 ##' @param study character, study id
 ##' @return httr::request containing a json file with metadata
+<<<<<<< HEAD
 ##' @examples
+=======
+##' @export
+##' @examples 
+>>>>>>> exports sudies-family of functions, re-wrote docs for all
 ##' req <- get_study_meta("pg_719")
 ##' req_list <- httr::context(req)
 ##' req_lsit$nexml$`^ot:studyPublication`
@@ -117,9 +142,14 @@ get_study_meta <- function(study){
 ##' @param tree character, tree_id
 ##' @param subtree_id, either a node id that specifies a subtree or "ingroup"
 ##' which returns the ingroup is for this subtree, a 400 error otherwise
+##' @export
 ##' @examples
 ##' small_tr <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="node552052")
+<<<<<<< HEAD
 ##' ingroup  <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="ingroup")
+=======
+## ingroup  <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="ingroup")
+>>>>>>> exports sudies-family of functions, re-wrote docs for all
 
 get_study_subtree <- function(study, tree, subtree_id){
     url_stem <- paste("study", study, "tree", tree, sep="/")
