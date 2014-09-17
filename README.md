@@ -26,11 +26,13 @@ install_github("fmichonneau/rotl")
 
 Our first goal has been to impliment low-level functions that wrap the Open Tree
 APIs and return the complete response. These are now done (though we still need
-more tests and documentation), so we will focus on developing higher level
-functions that automate common use cases and provide the results in the most
+more tests and documentation), so we will shift our focus on developing higher 
+level functions that automate common use cases and provide the results in the most
 approriate R object (often trees). 
 
-If you want to get started with open tree the existing functions can be used eg
+If you want to get started with open tree the existing functions can be used.
+Note: it's quite possible that function names or behaviours will change, so 
+treat these as something to play with for now:
 
 ###Find trees focused on my favourite taxon
 
