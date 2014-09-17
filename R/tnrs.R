@@ -140,7 +140,8 @@ list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) 
 }
 
 ##' @export
-update_match_names <- function(response, i, j) {
+update_match_names <- function(response, row_number, taxon_name, ott_id, j) {
+    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
     res <- attr(response, "original_response")
     tmpRes <- httr::content(res)$results[[i]]
     searchStr <- tmpRes$matches[[j]]$search_string
