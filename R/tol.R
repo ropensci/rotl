@@ -98,7 +98,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
     cont <- httr::content(res)
 
     #phy <- collapse.singles(read.tree(text=(cont)[["newick"]])); # required b/c of "knuckles"
-    phy <- collapse.singles(phytools::read.newick(text=(cont)[["newick"]])); # required b/c of "knuckles"
+    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["newick"]])); # required b/c of "knuckles"
 
     return(phy)
 }
@@ -143,7 +143,7 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     cont <- httr::content(res)
 
     #phy <- collapse.singles(read.tree(text=(cont)[["subtree"]])); # required b/c of "knuckles"
-    phy <- collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
+    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
 
     return(phy)
 }
