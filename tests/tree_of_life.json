@@ -1,0 +1,109 @@
+{
+    "test_mrca_normal_input": {
+        "test_function": "tol_mrca",
+        "test_input": {"ott_ids":[412129, 536234]},
+        "tests": {
+             "of_type": 
+                        ["dict","Response is of wrong type"]
+                        ,
+             "equals":  [
+                        [["nearest_taxon_mrca_rank","'superorder'"],"Fails that nearest_taxon_mrca_rank contains superorder"]
+                        ],
+             "contains": [
+                        ["nearest_taxon_mrca_ott_id","Doesn't contain nearest_taxon_mrca_ott_id"]
+                        ]
+        }
+    },
+    "test_mrca_empty_list_input": {
+        "test_function": "tol_mrca",
+        "test_input": {"ott_ids":[]},
+        "tests": {
+             "error": [
+                 ["ValueError","Return wrong kind of error, or did return error"]
+                 ]
+        }
+    },
+    "test_mrca_empty_list_input_two": {
+        "test_function": "tol_mrca",
+        "test_input": {"ott_ids":[],
+                       "node_ids":[]},
+        "tests": {
+             "error": [
+                 ["ValueError","Return wrong kind of error, or did return error"]
+                 ]
+        }
+    },
+    "test_mrca_non_existing_node": {
+        "test_function": "tol_mrca",
+        "test_input": {"ott_ids":[4259824365942365972436598732]},
+        "tests": {
+            "error": [
+                ["OpenTreeService.OpenTreeError","Return wrong kind of error, or did return error"]
+                ]
+        }
+    },
+    "test_mrca_non_existing_empty": {
+        "test_function": "tol_mrca",
+        "test_input": "null",
+        "tests": {
+            "error": [
+                ["ValueError","Return wrong kind of error, or did return error"]
+                ]
+        }
+    },
+    "test_subtree_demo": {
+        "test_function": "tol_subtree",
+        "test_input": {"ott_id":3599390},
+        "tests": {
+             "of_type": 
+                 ["dict","Response is of wrong type"]
+                 ,
+             "contains": [
+                 ["newick","Doesn't contain a newick string"]
+                 ]
+        }
+    },   
+    "test_subtree_null": {
+        "test_function": "tol_subtree",
+        "test_input": {},
+        "tests": {
+            "error": [
+                ["ValueError","Return wrong kind of error, or did return error"]
+                ]
+        }
+    },  
+    "test_induced_tree_good": {
+        "test_function": "tol_induced_tree",
+        "test_input": {"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]},
+        "tests": {
+             "of_type": 
+                 ["dict","Response is of wrong type"]
+                 ,
+             "contains": [
+                 ["subtree","Doesn't contain a subtree string"]
+                 ]
+        }
+    },  
+    "test_induced_tree_null": {
+        "test_function": "tol_induced_tree",
+        "test_input": {},
+        "tests": {
+            "error": [
+                ["ValueError","Return wrong kind of error, or did return error"]
+                ]
+        }
+    },  
+    "test_about": {
+        "test_function": "tol_about",
+        "test_input": {},
+        "tests": {
+            "contains": [
+                ["root_taxon_name","Output doesn't contain root_taxon_name"],
+                ["num_source_studies","Output doesn't contain num_source_studies"],
+                ["taxonomy_version","Output doesn't contain taxonomy_version"],
+                ["root_ott_id","Output doesn't contain root_ott_id"],
+                ["num_tips","Output doesn't contain num_tips"]
+                ]
+        }
+    }
+}
