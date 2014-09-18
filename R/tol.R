@@ -131,7 +131,8 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
     	stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
-    if (any(is.na(node_ids)) || any(is.na(ott_ids))) {
+    if ((!is.null(node_ids) && any(is.na(node_ids))) ||
+        (!is.null(node_ids) && any(is.na(ott_ids)))) {
         stop("NA are not allowed")
     }
     if (is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids  = ott_ids)
