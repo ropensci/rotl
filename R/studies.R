@@ -76,9 +76,9 @@ studies_properties <- function(){
 ##' @export
 ##' @examples
 ##' that_one_study <- get_study(study="pg_719")
-
-get_study <- function(study) {
-    otl_GET(path=paste("study", study, sep="/"))
+get_study <- function(study, format=c("", "nexus", "newick", "nexml", "json")) {
+    format <- match.arg(format)
+    otl_GET(path=paste("study", paste0(study, otl_formats(format)), sep="/"))
 }
 
 ##' returns specific tree from a study
@@ -91,8 +91,8 @@ get_study <- function(study) {
 ##' @export
 ##' @examples
 ##'  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
-
-get_study_tree <- function(study, tree, format){
+get_study_tree <- function(study, tree, format=c("", "nexus", "newick", "json")) {
+    format <- match.arg(format)
     tree_file <- paste(tree, otl_formats(format), sep="")
     otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
 }
