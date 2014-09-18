@@ -34,7 +34,7 @@ gol_about <- function() {
 ##' @param tree_id String. The tree identifier for a given study.
 ##' @param git_sha String. The git SHA identifying a particular source version.
 ##' @param format The name of the return format. The only currently supported format is newick.
-##' @return a tree of class \code{"synth_sources"}
+##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##' res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452", tree_id="7")
 ##' @export
