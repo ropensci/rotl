@@ -19,9 +19,13 @@
 
 ##
 ##Create custom expectation to map the JSON specificatoin
+## In each case they take a complete test block, set up the requirement to run
+## test. They should be run with response as the first value in expect_that.
+##
+## expect_that(response, contains(test_block))
 
 #functionals that start with a response
-contains <- function(key_name){
+contains_key <- function(key_name){
     function(x){
         expectation(key_name %in% names(x), sprintf("Missing key name: %s", key_name))
     }
@@ -40,11 +44,11 @@ value_is_longer_than <- function(key, value, len){
     }
 }
 
-make_request(json_test){
-    do.call(what=json_test[test_function], args=json_test[test_input])
+make_request <- function(json_test){
+    do.call(what=json_test$test_function, args=json_test$test_input)
 }
 
-expectation_map <- function(test_type){
+expect_map <- function(test_type){
     switch(test_type,
            "contains"    = contains,
            "equals"      = key_has_value,
@@ -60,14 +64,19 @@ expectation_map <- function(test_type){
 #functionals that start with a complete test block
 
 test_that_json_test <- function(test_obj, test_name){
-    tests_to_run <- names(test_obj[test_name])
+    tests_to_run <- names(test_obj[test_name][tests])
+    
     if(identical(tests_to_run, "error")){
-        expect_error(make_request(test_obj[test_name]))
+        test_that(test_name, expect_error(make_request(test_obj[test_name])))
     }
     else{
+        test_that(test_name,
         response <- make_request(test_obj[test_name])
         for(i in 1:length(tests_to_run)){
-            test_that(test_name, 
+            expect_fxn <- expect_map(tests_to_run[i])
+
+
+           
 
 
         }
