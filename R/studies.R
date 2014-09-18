@@ -102,7 +102,7 @@ cho_get_study_tree <- function()
 ##' Retrieve metadata about a study in the Open Tree of Life datastor
 ##' @title Study Metadata
 ##' @param study character, study id
-##' @return httr::request containing a json file with metadata
+##' @return named-list json file with metadata
 ##' @export
 ##' @examples
 ##' req <- get_study_meta("pg_719")
