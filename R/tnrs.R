@@ -45,8 +45,8 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
             stop("\'ids\' and \'taxon_names\' must be of the same length.")
     }
     if (!is.logical(do_approximate_matching)) stop("Argument \'do_approximate_matching\' should be logical")
-	if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
-	if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
+    if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
+    if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
 
     q <- list(names = taxon_names, context_name = context_name,
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
@@ -57,55 +57,33 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
 
     res <- otl_POST("tnrs/match_names", q)
     check_tnrs(res)
-    summary_match <- do.call("rbind", lapply(content(res)$results, function(x) {
+    summary_match <- do.call("rbind", lapply(httr::content(res)$results, function(x) {
         searchStr <- x$matches[[1]]$search_string
         uniqNames <- x$matches[[1]]$unique_name
         approxMatch <- x$matches[[1]]$is_approximate_match
-        ottId <- x$matches[[1]]$'ot:ottId'
+        ott_id <- x$matches[[1]]$'ot:ottId'
         isSynonym <- x$matches[[1]]$is_synonym
         isDeprecated <- x$matches[[1]]$is_deprecated
         nMatch <- length(x$match)
-        c(searchStr, uniqNames, approxMatch, ottId, nMatch, isSynonym, isDeprecated)
+        c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
     }))
-    summary_match <- data.frame(summary_match)
+    summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                              "ottId", "number_matches", "is_synonym", "is_deprecated")
-    assign("last_tnrs_match_names", res, envir=.ROTL)
+                              "ott_id", "number_matches", "is_synonym", "is_deprecated")
+    summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
+    attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
+    rownames(summary_match) <- NULL
+    attr(summary_match, "original_response") <- res
     summary_match
 }
 
-##' @export
-inspect_match_names <- function(i) {
-    if (! exists("last_tnrs_match_names", envir=.ROTL)) {
-        stop("Need to use tnrs_match_names first")
-    } else {
-        res <- get("last_tnrs_match_names", envir=.ROTL)
-        summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
-            searchStr <- x$search_string
-            uniqNames <- x$unique_name
-            approxMatch <- x$is_approximate_match
-            ottId <- x$'ot:ottId'
-            isSynonym <- x$is_synonym
-            isDeprecated <- x$is_deprecated
-            c(searchStr, uniqNames, approxMatch, ottId, isSynonym, isDeprecated)
-        }))
-        summary_match <- data.frame(summary_match)
-        names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                                  "ottId", "is_synonym", "is_deprecated")
+check_tnrs <- function(req) {
+    cont <- httr::content(req)
+    if (length(cont$results) < 1) {
+        warning("Nothing returned")
     }
-    summary_match
-}
-
-##' @export
-list_synonyms_match_names <- function(i) {
-    if (! exists("last_tnrs_match_names", envir=.ROTL)) {
-        stop("Need to use tnrs_match_names first")
-    } else {
-        res <-  get("last_tnrs_match_names", envir=.ROTL)
-        list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
-            paste(unlist(x$synonyms), collapse=", ")
-        })
-        list_synonyms
+    if (length(cont$unmatched_name_ids)) {
+        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
     }
 }
 
@@ -123,7 +101,7 @@ list_synonyms_match_names <- function(i) {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_context <- function() {
+tnrs_contexts <- function() {
     otl_POST("tnrs/contexts", list())
 }
 
@@ -146,16 +124,6 @@ tnrs_infer_context <- function(taxon_names=NULL) {
     }
     q <- list(names=taxon_names)
     otl_POST("tnrs/infer_context", q)
-}
-
-check_tnrs <- function(req) {
-    cont <- httr::content(req)
-    if (length(cont$results) < 1) {
-        warning("Nothing returned")
-    }
-    if (length(cont$unmatched_name_ids)) {
-        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
-    }
 }
 
 

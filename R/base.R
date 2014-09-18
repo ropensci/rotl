@@ -10,10 +10,11 @@ otl_parse <- function(req) {
 }
 
 otl_check <- function(req) {
-    if (req$status_code < 400) return(invisible())
-
-    msg <- otl_parse(req)$message
-    stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+    if (!req$status_code < 400) {
+    	    msg <- otl_parse(req)$message
+        stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+    }
+    otl_check_error(req)
 }
 
 otl_GET <- function(path, ...) {
@@ -33,14 +34,17 @@ otl_POST <- function(path, body, ...) {
     req
 }
 
+otl_check_error <- function(req) {
+	cont <- httr::content(req)
+	if (is.list(cont) && exists("error", cont)) {
+		stop(paste("Error: ", cont$error, "\n", sep = ""))
+	}
+}
+
 otl_formats <- function(format){
-    switch(format, 
+    switch(tolower(format),
            "nexus" = ".nex",
            "newick" = ".tre",
            "nexml" = ".nexml",
-           "nexson" = ".nexson",
-           "json" = ".nexson",
-           ".nexson")
+           "")#fall through is no extension = nex(j)son
 }
-
-

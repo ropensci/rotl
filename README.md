@@ -26,11 +26,13 @@ install_github("fmichonneau/rotl")
 
 Our first goal has been to impliment low-level functions that wrap the Open Tree
 APIs and return the complete response. These are now done (though we still need
-more tests and documentation), so we will focus on developing higher level
-functions that automate common use cases and provide the results in the most
+more tests and documentation), so we will shift our focus on developing higher 
+level functions that automate common use cases and provide the results in the most
 approriate R object (often trees). 
 
-If you want to get started with open tree the existing functions can be used eg
+If you want to get started with open tree the existing functions can be used.
+Note: it's quite possible that function names or behaviours will change, so 
+treat these as something to play with for now:
 
 ###Find trees focused on my favourite taxon
 
@@ -69,4 +71,33 @@ library(ape)
 tr <- read.tree(text=httr::content(tr_string))
 plot(tr)
 
+```
+
+### Get a subtree from the Big Tree
+
+```r
+
+( some_birds <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104)))
+    #Response [http://devapi.opentreeoflife.org/v2/tree_of_life/induced_subtree]
+    #  Status: 200
+    #  Content-type: application/json; charset=UTF-8
+    #{
+    #  "subtree" : "((Stellula_ott501678,(Dendroica_ott666104,Cinclus_ott267845))Neognathae_ott241846,Struthio_ott292466)Aves_ott81461;",
+    #  "ott_ids_not_in_tree" : [ ],
+    #  "ott_ids_not_in_graph" : [ ],
+    #  "node_ids_not_in_graph" : [ ],
+    #  "node_ids_not_in_tree" : [ ]
+    #} 
+library(ape)
+( tr <- read.tree(text=httr::content(some_birds)$subtree) )
+    #
+    #Phylogenetic tree with 4 tips and 3 internal nodes.
+    #
+    #Tip labels:
+    #[1] "Stellula_ott501678"  "Dendroica_ott666104" "Cinclus_ott267845"  
+    #[4] "Struthio_ott292466" 
+    #Node labels:
+    #[1] "Aves_ott81461"        "Neognathae_ott241846" ""                    
+    #
+    #Rooted; no branch lengths.
 ```
