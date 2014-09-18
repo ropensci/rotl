@@ -18,14 +18,10 @@
 
 
 ##
-##Create custom expectation to map the JSON specificatoin
-## In each case they take a complete test block, set up the requirement to run
-## test. They should be run with response as the first value in expect_that.
-##
-## expect_that(response, contains(test_block))
+##Create custom expectation to map the JSON specificatoi
 
 #functionals that start with a response
-contains_key <- function(key_name){
+contains <- function(key_name){
     function(x){
         expectation(key_name %in% names(x), sprintf("Missing key name: %s", key_name))
     }
@@ -44,24 +40,70 @@ value_is_longer_than <- function(key, value, len){
     }
 }
 
+value_is_error <- function(key_name){
+    function(x){
+        expectation(x$key_name == 'error', 
+                       sprintf("Key %s is not 'error'",key_name)
+    }
+
+## Functions to test entire test blocks with the above expectations
+
+test_contains <- function(response, test_block){
+    key_names <- test_block[,1]
+    sapply(key_names, function(k) expect_that(response, contains(k)))
+}
+
+test_equals <- function(response, test_block){
+    kv_pairs <- sapply(test_block, "[[", 1)
+    apply(kv_pairs, 2,function(k) 
+          expect_that(response, key_has_value( k[[1]], k[[2]] )))
+    
+}
+
+test_of_type <- function(response, test_block){
+    expect_that(response, is_a(test_block[[1]]))
+}
+
+test_deep_equals <- function(response, test_block) #stub {
+}
+
+
+test_length_greater_than <- function(response, test_block){
+    vl_pairs <- sapply(test_block, "[[", 1)
+    apply(vl_pairs, 2, function(v)
+          expect_that(response, value_is_longer_than(vl[[1]], vl[[2]]))
+}
+
+test_contains_error <- function(response, test_block){
+    errs <- test_block[,1]
+    sapply(errs, function(e) expect_that(reponse, contains_error(e)))
+}
+
+
+
 make_request <- function(json_test){
     do.call(what=json_test$test_function, args=json_test$test_input)
 }
 
+
+
+
 expect_map <- function(test_type){
     switch(test_type,
-           "contains"    = contains,
-           "equals"      = key_has_value,
+           "contains"    = test_contains,
+           "equals"      = test_equals
            "deep_equals" = stop("Not there yet!"),
            "error"       = stop("Error tests shoul be handled first")
-           "length_greater_than" = value_is_longer_than,
-           "of_type"     = is_a
+           "length_greater_than" = test_length_greater_than,
+           "of_type"     = test_of_type,
            stop(sprintf("Unkown error type in JSON test: %s", test_type))
            )
 }
 }
 
 #functionals that start with a complete test block
+
+
 
 test_that_json_test <- function(test_obj, test_name){
     tests_to_run <- names(test_obj[test_name][tests])
@@ -70,6 +112,7 @@ test_that_json_test <- function(test_obj, test_name){
         test_that(test_name, expect_error(make_request(test_obj[test_name])))
     }
     else{
+
         test_that(test_name,
         response <- make_request(test_obj[test_name])
         for(i in 1:length(tests_to_run)){
