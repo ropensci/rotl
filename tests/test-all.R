@@ -1,4 +1,19 @@
-## To run the low-level tests we need to parse out the json
+##Making use of the shared OpenTree testing architecture
+##
+##The R, Python and Ruby wrappers for the Open Tree share a very similar design, 
+##allowing them to make use of a single test suite (thus, the tests both check
+## an individual library works and that the libraries stay in line). 
+##
+##This joint testing arhitecture is recorded in a series of JSON files that
+## contain a series of tests, each of which contains one of several different 
+## expectations. This code makes it possible to translate the JSON tests in to 
+## testthat expectations/tests. Each of the low-level APIs is then tested in its
+## own file in the 'testthat' folder, which reads the appropriate JSON file. 
+##
+##NOTE: At present the JSON files are stored locally, it might make more sense
+## to always pull them down from the python bindings repo, or manually keep the
+## library up to date between releases.
+
 
 ##Map JSON object types to R-equivalent
 type_map <- function(json_type){
