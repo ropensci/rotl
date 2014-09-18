@@ -5,7 +5,8 @@
 ##' @return Some JSON
 ##' @export
 taxonomy_about <- function () {
-    otl_POST(path="/taxonomy/about", body=list())
+    res <- .taxonomy_about()
+    return(res)
 }
 
 
@@ -19,13 +20,8 @@ taxonomy_about <- function () {
 ##' req <- taxonomy_taxon(ott_id=515698)
 ##' @export
 taxonomy_taxon <- function (ott_id=NULL) {
-	if (is.null(ott_id)) {
-		stop("Must supply an \'ott_id\' argument")
-	} else if (length(ott_id) > 1) {
-		stop("Must only supply one \'ott_id\' argument")
-	}
-	q <- list(ott_id=jsonlite::unbox(ott_id))
-    otl_POST(path="/taxonomy/taxon", body=q)
+    res <- .taxonomy_taxon(ott_id)
+    return(res)
 }
 
 
@@ -39,13 +35,8 @@ taxonomy_taxon <- function (ott_id=NULL) {
 ##' req <- taxonomy_subtree(ott_id=515698)
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL) {
-	if (is.null(ott_id)) {
-		stop("Must supply an \'ott_id\' argument")
-	} else if (length(ott_id) > 1) {
-		stop("Must only supply one \'ott_id\' argument")
-	}
-	q <- list(ott_id=jsonlite::unbox(ott_id))
-    otl_POST(path="/taxonomy/subtree", body=q)
+	res <- .taxonomy_subtree(ott_id)
+	return(res)
 }
 
 
@@ -61,9 +52,6 @@ taxonomy_subtree <- function (ott_id=NULL) {
 ##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' @export
 taxonomy_lica <- function (ott_ids=NULL) {
-	if (is.null(ott_ids)) {
-		stop("Must supply an \'ott_ids\' argument")
-	}
-	q <- list(ott_ids=ott_ids)
-    otl_POST(path="/taxonomy/lica", body=q)
+	res <- .taxonomy_lica(ott_ids)
+	return(res)
 }
