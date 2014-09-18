@@ -102,7 +102,8 @@ test_map <- function(test_type){
 }
 
 make_request <- function(json_test){
-    do.call(what=json_test$test_function, args=json_test$test_input)
+    test_fxn <- paste(".", json_test$test_function,sep="")
+    do.call(what=test_fxn, args=json_test$test_input)
 }
 
 
