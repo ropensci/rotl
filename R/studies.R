@@ -1,4 +1,4 @@
-##' Return a list of studes that match a given properties
+##' Return a list of studies that match a given properties
 ##' @title find_study
 ##' @param exact Boolean, exact matching (default = FALSE)
 ##' @param property character, the property to be searched on
@@ -11,17 +11,9 @@
 ##' req <- studies_find_studies(property="ot:studyId", value="pg_719")
 ##' httr::content(req)
 
-studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
-    req_body <- list()
-    if(!is.null(property)){
-        req_body$property <- jsonlite::unbox(property)
-    }
-    if(!is.null(value)){
-        req_body$value <- jsonlite::unbox(value)
-    }
-    otl_POST(path="studies/find_studies/", body=c(req_body,
-                                                  jsonlite::unbox(verbose),
-                                                  jsonlite::unbox(exact)))
+studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
+    res <- .studies_find_studies(property, value, verbose, exact)
+    return(res)
 }
 
 ##' Return a list of trees that match a given properties
@@ -37,18 +29,9 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 ##' req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 ##' length(httr::content(req)$matched_studies)
 
-
-studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE){
-    req_body <- list()
-    if(!is.null(property)){
-        req_body$property <- jsonlite::unbox(property)
-    }
-    if(!is.null(value)){
-        req_body$value <- jsonlite::unbox(value)
-    }
-    otl_POST(path="studies/find_trees/",   body=c(req_body,
-                                                  jsonlite::unbox(verbose),
-                                                  jsonlite::unbox(exact)))
+studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
+    res <- .studies_find_trees(property, value, verbose, exact)
+    return(res)
 }
 
 ##' Property of a study
@@ -61,8 +44,9 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 ##'  prop_list = httr::content(all_the_properties)
 ##'  unlist(prop_list$tree_properties)
 
-studies_properties <- function(){
-    otl_POST(path="studies/properties/", body=list())
+studies_properties <- function() {
+    res <- .studies_properties()
+    return(res)
 }
 
 
@@ -76,9 +60,9 @@ studies_properties <- function(){
 ##' @export
 ##' @examples
 ##' that_one_study <- get_study(study="pg_719")
-get_study <- function(study, format=c("", "nexus", "newick", "nexml", "json")) {
-    format <- match.arg(format)
-    otl_GET(path=paste("study", paste0(study, otl_formats(format)), sep="/"))
+get_study <- function(study=NULL, format=c("", "nexus", "newick", "nexml", "json")) {
+    res <- .get_study(study, format)
+    return(res)
 }
 
 ##' returns specific tree from a study
@@ -91,15 +75,14 @@ get_study <- function(study, format=c("", "nexus", "newick", "nexml", "json")) {
 ##' @export
 ##' @examples
 ##'  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
-get_study_tree <- function(study, tree, format=c("", "nexus", "newick", "json")) {
-    format <- match.arg(format)
-    tree_file <- paste(tree, otl_formats(format), sep="")
-    otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
+get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick", "json")) {
+    res <- .get_study_tree(study, tree, format)
+    return(res)
 }
 
 cho_get_study_tree <- function()
 
-##' Retrieve metadata about a study in the Open Tree of Life datastor
+##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
 ##' @param study character, study id
 ##' @return named-list json file with metadata
