@@ -97,12 +97,14 @@ get_study_tree <- function(study, tree, format=c("", "nexus", "newick", "json"))
     otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
 }
 
+cho_get_study_tree <- function()
+
 ##' Retrieve metadata about a study in the Open Tree of Life datastor
 ##' @title Study Metadata
 ##' @param study character, study id
 ##' @return httr::request containing a json file with metadata
 ##' @export
-##' @examples 
+##' @examples
 ##' req <- get_study_meta("pg_719")
 ##' req_list <- httr::context(req)
 ##' req_lsit$nexml$`^ot:studyPublication`
