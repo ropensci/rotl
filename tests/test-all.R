@@ -23,7 +23,7 @@ run_expectations <- function(test_type, response, test_obj){
 
 build_test <- function(json_test, desc){
     tests_to_run <- names(json_test$tests)
-    if(tests_to_run == "error"){
+    if(identical("error", tests_to_run)){
         test_that(desc,
             expect_error(do.call(json_test$test_function, 
                                  args=json_test$test_input)))
@@ -31,7 +31,7 @@ build_test <- function(json_test, desc){
     else{
         response <- do.call(json_test$test_function, args=json_test$test_input)
         test_that(desc, 
-            sapply(tests_to_run, run_expectations, response, json_test)
+            sapply(tests_to_run, run_expectations, response, json_test$tests)
         )
     }
 }
