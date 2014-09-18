@@ -12,4 +12,6 @@
 
 # other files
 *~
+*#
 .DS_Store
+tmp/
