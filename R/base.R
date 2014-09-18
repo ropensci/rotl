@@ -35,10 +35,10 @@ otl_POST <- function(path, body, ...) {
 }
 
 otl_check_error <- function(req) {
-	cont <- httr::content(req)
-	if (is.list(cont) && exists("error", cont)) {
-		stop(paste("Error: ", cont$error, "\n", sep = ""))
-	}
+    cont <- httr::content(req)
+    if (is.list(cont) && exists("error", cont)) {
+        stop(paste("Error: ", cont$error, "\n", sep = ""))
+    }
 }
 
 otl_formats <- function(format){
@@ -46,5 +46,6 @@ otl_formats <- function(format){
            "nexus" = ".nex",
            "newick" = ".tre",
            "nexml" = ".nexml",
-           "")#fall through is no extension = nex(j)son
+           "json" = ".json",
+           "") #fall through is no extension = nex(j)son
 }

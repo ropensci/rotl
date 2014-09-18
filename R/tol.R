@@ -52,7 +52,7 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
                                                            node_ids = node_ids)
     res <- otl_POST(path="tree_of_life/mrca", body=q)
     cont <- httr::content(res)
-    
+
 }
 
 ##' Extract subtree from a node or an OTT
@@ -96,10 +96,10 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
     }
     res <- otl_POST(path="tree_of_life/subtree", body=q)
     cont <- httr::content(res)
-    
+
     #phy <- collapse.singles(read.tree(text=(cont)[["newick"]])); # required b/c of "knuckles"
-    phy <- collapse.singles(phytools::read.newick(text=(cont)[["newick"]])); # required b/c of "knuckles"
-    
+    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["newick"]])); # required b/c of "knuckles"
+
     return(phy)
 }
 
@@ -131,15 +131,19 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
     	stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
+    if ((!is.null(node_ids) && any(is.na(node_ids))) ||
+        (!is.null(node_ids) && any(is.na(ott_ids)))) {
+        stop("NA are not allowed")
+    }
     if (is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids  = ott_ids)
     if (!is.null(node_ids) && is.null(ott_ids)) q <- list(node_ids = node_ids)
     if (!is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids,
                                                            node_ids = node_ids)
     res <- otl_POST("tree_of_life/induced_subtree", body=q)
     cont <- httr::content(res)
-    
+
     #phy <- collapse.singles(read.tree(text=(cont)[["subtree"]])); # required b/c of "knuckles"
-    phy <- collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
-    
+    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
+
     return(phy)
 }
