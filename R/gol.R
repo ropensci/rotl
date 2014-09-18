@@ -5,7 +5,7 @@ otl_url <- function() { "http://devapi.opentreeoflife.org" }
 ##' @title Information about the graph of life
 ##' @description Basic information about the graph
 ##' @details Returns summary information about the entire graph database, including identifiers for the taxonomy and source trees used to build it.
-##' @return A list of graph attributes:
+##' @return An invisible list of graph attributes:
 ##' \itemize{
 ##'	\item {graph_num_source_trees} {The number of unique source trees in the graph.}
 ##'	\item {graph_taxonomy_version} {The version of the taxonomy used to initialize the graph.}
