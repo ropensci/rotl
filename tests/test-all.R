@@ -15,7 +15,79 @@
 ## library up to date between releases.
 
 
+
+
+##
+##Create custom expectation to map the JSON specificatoin
+
+#functionals that start with a response
+contains <- function(key_name){
+    function(x){
+        expectation(key_name %in% names(x), sprintf("Missing key name: %s", key_name))
+    }
+}
+
+key_has_value <- function(key, value){
+    function(x){
+        expectation(x[key] == value, paste("Key", key, "doesn't have value", value))
+    }
+}
+
+value_is_longer_than <- function(key, value, len){
+    function(x){
+        expectation(length(x[key]) > len, 
+                    paste("Value for key", key, "is shorter than", len))
+    }
+}
+
+make_request(json_test){
+    do.call(what=json_test[test_function], args=json_test[test_input])
+}
+
+expectation_map <- function(test_type){
+    switch(test_type,
+           "contains"    = contains,
+           "equals"      = key_has_value,
+           "deep_equals" = stop("Not there yet!"),
+           "error"       = stop("Error tests shoul be handled first")
+           "length_greater_than" = value_is_longer_than,
+           "of_type"     = is_a
+           stop(sprintf("Unkown error type in JSON test: %s", test_type))
+           )
+}
+}
+
+#functionals that start with a complete test block
+
+test_that_json_test <- function(test_obj, test_name){
+    tests_to_run <- names(test_obj[test_name])
+    if(identical(tests_to_run, "error")){
+        expect_error(make_request(test_obj[test_name]))
+    }
+    else{
+        response <- make_request(test_obj[test_name])
+        for(i in 1:length(tests_to_run)){
+            test_that(test_name, 
+
+
+        }
+    }
+}
+
+
+
+
+
+
 ##Map JSON object types to R-equivalent
+test_of_type <- function(response, test_obj){
+    rtype <- test_obj[
+    expect_is(response, type_map[test_type]
+
+
+
+
+
 type_map <- function(json_type){
     switch(json_type, 
            "dict" = "list",
