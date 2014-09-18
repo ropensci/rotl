@@ -5,31 +5,45 @@
 ##' including information about the list of trees and the taxonomy
 ##' used to build it.
 ##' @param study_list Boolean. Whether to return the list of source studies. Optional; default = FALSE.
-##' @return A list of synthetic tree summary statistics:
+##' @return An invisible list of synthetic tree summary statistics:
 ##' \itemize{
-##'	\item {tree_id} {The name identifier of the synthetic tree.}
-##'	\item {date} {The date that the synthetic tree was constructed.}
-##'	\item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
-##'	\item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
-##'	\item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
-##'	\item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
-##'	\item {root_node_id} {The node ID of the root node of the synthetic tree.}
-##'	\item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
+##'    \item {tree_id} {The name identifier of the synthetic tree.}
+##'    \item {date} {The date that the synthetic tree was constructed.}
+##'    \item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
+##'    \item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
+##'    \item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
+##'    \item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
+##'    \item {root_node_id} {The node ID of the root node of the synthetic tree.}
+##'    \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
 ##' }
 ##' @examples
 ##' res <- tol_about()
 ##' @author Francois Michonneau
 ##' @export
 tol_about <- function(study_list=FALSE) {
-	if (!is.logical(study_list)) {
-		stop("Argument \'study_list\' should be logical")
-	}
-	q <- list(study_list=jsonlite::unbox(study_list))
+    if (!is.logical(study_list)) {
+        stop("Argument \'study_list\' should be logical")
+    }
+    q <- list(study_list=jsonlite::unbox(study_list))
     res <- otl_POST(path="tree_of_life/about", body=q)
     cont <- httr::content(res)
-    return(cont)
+    tol_summary(cont)
+    return(invisible(cont))
 }
 
+## this could make use of class information. say, 'print.tol'
+tol_summary <- function(res) {
+    cat("\nOpenTree Synthetic Tree of Life.\n\n")
+    cat("\tTree version: ", res$tree_id, "\n", sep="")
+    cat("\tTaxonomy version: ", res$taxonomy_version, "\n", sep="")
+    cat("\tConstructed: ", res$date, "\n", sep="")
+    cat("\tNumber of terminal taxa: ", res$num_tips, "\n", sep="")
+    cat("\tNumber of source trees: ", res$num_source_studies, "\n", sep="")
+    cat("\tSource list present: ", ifelse(exists("study_list", res), "true", "false"), "\n", sep="")
+    cat("\tRoot taxon: ", res$root_taxon_name, "\n", sep="")
+    cat("\tRoot ott_id: ", res$root_ott_id, "\n", sep="")
+    cat("\tRoot node_id: ", res$root_node_id, "\n", sep="")
+}
 
 ##' @title get MRCA
 ##' @description Most recent common ancestor of nodes
@@ -129,7 +143,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
-    	stop("Must supply \'node_ids\' and/or \'ott_ids\'")
+        stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
     if ((!is.null(node_ids) && any(is.na(node_ids))) ||
         (!is.null(node_ids) && any(is.na(ott_ids)))) {

@@ -9,16 +9,16 @@ tol_about(study_list = FALSE)
 \item{study_list}{Boolean. Whether to return the list of source studies. Optional; default = FALSE.}
 }
 \value{
-A list of synthetic tree summary statistics:
+An invisible list of synthetic tree summary statistics:
 \itemize{
-	\item {tree_id} {The name identifier of the synthetic tree.}
-	\item {date} {The date that the synthetic tree was constructed.}
-	\item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
-	\item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
-	\item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
-	\item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
-	\item {root_node_id} {The node ID of the root node of the synthetic tree.}
-	\item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
+   \item {tree_id} {The name identifier of the synthetic tree.}
+   \item {date} {The date that the synthetic tree was constructed.}
+   \item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
+   \item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
+   \item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
+   \item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
+   \item {root_node_id} {The node ID of the root node of the synthetic tree.}
+   \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
 }
 }
 \description{
