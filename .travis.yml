@@ -9,6 +9,7 @@ before_install:
 
 install:
   - ./travis-tool.sh install_deps
+  - ./travis-tools.sh install_github fmichonneau/rncl
 
 script: ./travis-tool.sh run_tests
 
