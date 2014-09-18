@@ -21,16 +21,13 @@
 ##' @author Francois Michonneau
 ##' @export
 tol_about <- function(study_list=FALSE) {
-    if (!is.logical(study_list)) {
-        stop("Argument \'study_list\' should be logical")
-    }
-    q <- list(study_list=jsonlite::unbox(study_list))
-    res <- otl_POST(path="tree_of_life/about", body=q)
-    cont <- httr::content(res)
-    tol_summary(cont)
-    return(invisible(cont))
+    res <- .tol_about(study_list)
+    tol_summary(res)
+    return(invisible(res))
 }
 
+
+## TEMPORARY. Need to use classes.
 ## this could make use of class information. say, 'print.tol'
 tol_summary <- function(res) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
@@ -57,16 +54,8 @@ tol_summary <- function(res) {
 ##' test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
-    if (!is.null(node_ids) && !is.null(ott_ids)) {
-        stop("Use only node_id OR ott_id")
-    }
-    if (is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids)
-    if (!is.null(node_ids) && is.null(ott_ids)) q <- list(node_ids = node_ids)
-    if (!is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids,
-                                                           node_ids = node_ids)
-    res <- otl_POST(path="tree_of_life/mrca", body=q)
-    cont <- httr::content(res)
-
+    res <- .tol_mrca(ott_ids, node_ids)
+    return(res)
 }
 
 ##' Extract subtree from a node or an OTT
@@ -93,27 +82,10 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' res <- tol_subtree(ott_id=81461)
 ##' @export
 tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
-    if (!is.null(node_id) && !is.null(ott_id)) {
-        stop("Use only node_id OR ott_id")
-    }
-    if (is.null(node_id) && is.null(ott_id)) {
-        stop("Must supply a \'node_id\' OR \'ott_id\'")
-    }
-    if (!is.null(tree_id)) {
-        stop("\'tree_id\' is currently ignored")
-    }
-    if (is.null(node_id) && !is.null(ott_id)) {
-        q <- list(ott_id = jsonlite::unbox(ott_id))
-    }
-    if (!is.null(node_id) && is.null(ott_id)) {
-        q <- list(node_id = jsonlite::unbox(node_id))
-    }
-    res <- otl_POST(path="tree_of_life/subtree", body=q)
-    cont <- httr::content(res)
+    res <- .tol_subtree(node_id, ott_id, tree_id)
 
     #phy <- collapse.singles(read.tree(text=(cont)[["newick"]])); # required b/c of "knuckles"
-    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["newick"]])); # required b/c of "knuckles"
-
+    phy <- ape::collapse.singles(phytools::read.newick(text=(res)[["newick"]])); # required b/c of "knuckles"
     return(phy)
 }
 
@@ -142,22 +114,10 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
-    if (is.null(node_ids) && is.null(ott_ids)) {
-        stop("Must supply \'node_ids\' and/or \'ott_ids\'")
-    }
-    if ((!is.null(node_ids) && any(is.na(node_ids))) ||
-        (!is.null(node_ids) && any(is.na(ott_ids)))) {
-        stop("NA are not allowed")
-    }
-    if (is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids  = ott_ids)
-    if (!is.null(node_ids) && is.null(ott_ids)) q <- list(node_ids = node_ids)
-    if (!is.null(node_ids) && !is.null(ott_ids)) q <- list(ott_ids = ott_ids,
-                                                           node_ids = node_ids)
-    res <- otl_POST("tree_of_life/induced_subtree", body=q)
-    cont <- httr::content(res)
+    res <- .tol_induced_subtree(node_ids, ott_ids)
 
     #phy <- collapse.singles(read.tree(text=(cont)[["subtree"]])); # required b/c of "knuckles"
-    phy <- ape::collapse.singles(phytools::read.newick(text=(cont)[["subtree"]])); # required b/c of "knuckles"
+    phy <- ape::collapse.singles(phytools::read.newick(text=(res)[["subtree"]])); # required b/c of "knuckles"
 
     return(phy)
 }
