@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
 
-# An R interface to TOL API
+# An R interface to Open Tree API
 
 This is the bleedingly-Alpha developmental version of an R package wrapping the
 Open Tree of Life data APIs, which being developed as part of the
