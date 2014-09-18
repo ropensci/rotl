@@ -35,30 +35,12 @@
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matching=TRUE,
+tnrs_match_names <- function(taxon_names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
-    if (missing(taxon_names)) {
-        stop("\'names\' must be specified")
-    }
-    if (!is.null(ids)) {
-        if (length(ids) != length(taxon_names))
-            stop("\'ids\' and \'taxon_names\' must be of the same length.")
-    }
-    if (!is.character(taxon_names)) stop("\'taxon_names\' must be a character vector")
-    if (!is.logical(do_approximate_matching)) stop("Argument \'do_approximate_matching\' should be logical")
-    if (!is.logical(include_deprecated)) stop("Argument \'include_deprecated\' should be logical")
-    if (!is.logical(include_dubious)) stop("Argument \'include_dubious\' should be logical")
-
-    q <- list(names = taxon_names, context_name = context_name,
-              do_approximate_matching = jsonlite::unbox(do_approximate_matching),
-              ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
-              include_dubious = jsonlite::unbox(include_dubious))
-    toKeep <- sapply(q, is.null)
-    q <- q[!toKeep]
-
-    res <- otl_POST("tnrs/match_names", q)
+    res <- .tnrs_match_names(taxon_names, context_name, do_approximate_matching,
+               ids, include_deprecated, include_dubious)
     check_tnrs(res)
-    summary_match <- do.call("rbind", lapply(httr::content(res)$results, function(x) {
+    summary_match <- do.call("rbind", lapply(res$results, function(x) {
         searchStr <- x$matches[[1]]$search_string
         uniqNames <- x$matches[[1]]$unique_name
         approxMatch <- x$matches[[1]]$is_approximate_match
@@ -79,12 +61,11 @@ tnrs_match_names <- function(taxon_names, context_name=NULL, do_approximate_matc
 }
 
 check_tnrs <- function(req) {
-    cont <- httr::content(req)
-    if (length(cont$results) < 1) {
+    if (length(req$results) < 1) {
         warning("Nothing returned")
     }
-    if (length(cont$unmatched_name_ids)) {
-        warning(paste(cont$unmatched_name_ids, collapse=", "), " are not matched")
+    if (length(req$unmatched_name_ids)) {
+        warning(paste(req$unmatched_name_ids, collapse=", "), " are not matched")
     }
 }
 
@@ -103,28 +84,31 @@ check_tnrs <- function(req) {
 ##' @author Francois Michonneau
 ##' @export
 tnrs_contexts <- function() {
-    otl_POST("tnrs/contexts", list())
+    res <- .tnrs_contexts()
+    return(res)
 }
 
 
-##' Return a taxonomic context given a list of taxonomic names.
-##'
-##' Find the least inclusive taxonomic context that includes all the
+## tnrs_contexts needs a summary function
+
+
+
+##' @title Infer context
+##' @description Return a taxonomic context given a list of taxonomic names
+##' @details Find the least inclusive taxonomic context that includes all the
 ##' unambiguous names in the input set. Unambiguous names are names
 ##' with exact matches to non-homonym taxa. Ambiguous names (those
 ##' without exact matches to non-homonym taxa) are indicated in
 ##' results.
-##' @title infer context
-##' @param taxon_names
+##' @param taxon_names Vector of taxon names.
 ##' @return something
 ##' @author Francois Michonneau
+##' @examples
+##' res <- tnrs_infer_context("taxon_names"=c("Stellula calliope", "Struthio camelus"))
 ##' @export
 tnrs_infer_context <- function(taxon_names=NULL) {
-    if (is.null(taxon_names)) {
-        stop("\'taxon_names\' must be specified")
-    }
-    q <- list(names=taxon_names)
-    otl_POST("tnrs/infer_context", q)
+    res <- .tnrs_infer_context(taxon_names)
+    return(res)
 }
 
 
