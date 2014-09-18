@@ -1,76 +1,38 @@
 ## To run the low-level tests we need to parse out the json
-contains <- function(name){
-    function(x) {
-        expectation(name %in% names(x), 
-                    paste("name '", name, "' not found", sep=""))
-    }
-}
-
-
-json_contains <- function(response, test_block){
-    apply(test_block, 1, function(r)
-                    expectation( r[[1]] %in% names(response), r[[2]]) )
-}
-
-json_of_type <- function(response, test_block){
-    expect_is(response, type_map(test_block[1]))
-}
-
-json_equals <- function(response, test_block){
-    expect
-}
-
-
-
-
-
-
-
-#JSON equals tests
-json_equals <- function(response, row){
-    apply(
-    resonse[row[1]]
-
 
 ##Map JSON object types to R-equivalent
 type_map <- function(json_type){
     switch(json_type, 
            "dict" = "list",
-           stop(sprintf("unknown json type in testing file: %s", 
-                        json_type))
-           )
+           stop(sprintf("unknown json type in testing file: %s", json_type))
+          )
 }
 
-##Map test-types to testthat expectations
-test_map <- function(test_type){
-    switch(test_type,
-           "of_type" = is_a,
-           "equals"  = is_equal
-           "contains" = contains
-           "error" =  throws_error,
-           stop())
+
+run_expectations <- function(test_type, response, test_obj){
+    test_block <- test_obj[test_type]
+    switch(test_type, 
+     "of_type" = expect_is(response, type_map(test_block[1])),
+     "equals"  = expect_equal(response[ test_block[1] ], is_equal(test_block[2])),
+     "contains" = apply(test_block, 1, function(r) expectation( r[[1]] %in% names(response),
+                                                                fail_msg=r[[2]]) ),
+     stop(sprintf("unkown test-type in json file: ", test_type))
+     )
 }
 
-run_expectations <- function(json_test, response, test_type)
-    expectations <- json_test[test_type]
-    if(length(expectations) == 1){
-        expect_that(response, test_map(test_type)(json_test[test_type][1]))
+
+build_test <- function(json_test, desc){
+    tests_to_run <- names(json_test$tests)
+    if(tests_to_run == "error"){
+        test_that(desc,
+            expect_error(do.call(json_test$test_function, 
+                                 args=json_test$test_input)))
     }
     else{
-        sapply(test_ma
+        response <- do.call(json_test$test_function, args=json_test$test_input)
+        test_that(desc, 
+            sapply(tests_to_run, run_expectations, response, json_test)
+        )
     }
 }
 
-
-
-build_test <- function(json_test){
-    response <- httr::content(do.call(json_test$test_function,
-                                      args=json_test$test_input))
-    tests_to_run <- names(json_test$tests)
-    sapply(tests_to_run, function(t){
-           t
-
-
-}
-
-   
