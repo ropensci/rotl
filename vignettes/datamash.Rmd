@@ -11,11 +11,23 @@ opts_knit$set(fig.show = "hold")
 
 ```
 
-#Data mashups
+Data mashups
+-----------
 
-The main reason
+The main reason to develop this library is to allow you to connect data from
+your own work, or other databases, to the tips of the Open Tree trees. Here is
+one example of how that might work, hooking up rfishbase to the open tree data:
 
-##Get a fish tree
+Red Fish Blue Fish..
+---
+
+We'll start by finding trees in the Open Tree data stor that are focused on
+everyone's favourite perches the cichlids. We use `studies_find_studies` and
+`get_study_meta` to trun up the tree id, then read the resulting string into
+memory using phytols `read.newick`
+
+*NOTE*: In future releases `get_study_tree` will return a phylo object by
+default:
 
 ```{r find a tree}
 ot_cichlids <- studies_find_studies(property="ot:focalCladeOTTTaxonName", 
@@ -30,6 +42,10 @@ plot(tr)
 
 ```
 
+That's a lot of tips! I wonder how many ahve data in fish base? We can make
+seraching the fishbase data easier by first pulling out on the Cichlids (note we
+also had to strip out single quotes from the taxon names):
+
 
 ```{r fishbase}
 library(rfishbase)
@@ -43,10 +59,10 @@ plot(tr_fb)
 axisPhylo()
 ```
 
+That's a bit more managable. Let's follow up on [Seuess (1960)](http://en.wikipedia.org/wiki/One_Fish_Two_Fish_Red_Fish_Blue_Fish) and
+ask aboutthe evolution of red and blue coloration in fish:
 
-
-
-```r
+```{r redfish}
 to_fb_intersect <- sapply(fb_cichlids, "[[", "ScientificName") %in% tr_fb$ti
 
 intersect_cichlids <- fb_cichlids[to_fb_intersect]
@@ -58,7 +74,22 @@ grep_diagnosis <- function(x){
 red_fish <- grep_diagnosis('red')
 blue_fish <- grep_diagnosis('blue')
 
-plot(tr_fb, tip.color=ifelse(red_fish, "red", "black"))
+cols <- rep("black", length(blue_fish))
+cols[red_fish] <- "red"
+cols[blue_fish] <- "blue"
+
+plot(tr_fb, tip.color=cols)
+
+```
+We can even go a little furthre and do a (very boring) stochastic character map
+to understand the evolution of this trait
+
+```{r char_mapping}
+names(cols) <- tr_fb$tip.label
+res <- phytools::make.simmap(tr_fb, cols)
+described <- describe.simmap(res)
+plot(described)
+
 
 ```
 
