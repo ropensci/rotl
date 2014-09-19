@@ -102,4 +102,6 @@
     return(cont)
 }
 
-
+.get_study_meta <- function(study){
+    httr::content(otl_GET(path= paste("study", study, "meta", sep="/")))
+}

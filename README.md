@@ -68,7 +68,7 @@ tr <- read.tree(text=response$subtree)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/rNWTvkf.png) 
+![plot of chunk get_tr](http://i.imgur.com/QN1k3CW.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -93,7 +93,19 @@ furry_metadata$nexml$treesById
 ```
 
 ```
+## $trees2647
+## $trees2647$treeById
+## $trees2647$treeById$tree6169
 ## NULL
+## 
+## 
+## $trees2647$`^ot:treeElementOrder`
+## $trees2647$`^ot:treeElementOrder`[[1]]
+## [1] "tree6169"
+## 
+## 
+## $trees2647$`@otus`
+## [1] "otus2647"
 ```
 
 ```r
@@ -101,4 +113,4 @@ tr_string <- get_study_tree(study="2647", tree="tree6169",format="newick")
 plot(read.tree(text=tr_string))
 ```
 
-![plot of chunk tree](http://i.imgur.com/dLgK8rZ.png) 
+![plot of chunk tree](http://i.imgur.com/6zhJg2R.png) 

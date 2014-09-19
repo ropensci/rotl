@@ -92,7 +92,7 @@ get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick"
 ##' req_lsit$nexml$`^ot:studyPublication`
 
 get_study_meta <- function(study){
-    otl_GET(path= paste("study", study, "meta", sep="/"))
+   .get_study_meta(study) 
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
