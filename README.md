@@ -7,11 +7,8 @@ output:
 
 
 
-```
-## Loading rotl
-```
 
-![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
+[![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
 
 # An R interface to Open Tree API
 
@@ -74,7 +71,7 @@ NOTE: the code below uses a work-around that avoids a (temporary) time-consuming
 
 
 ```r
-response <- .tol_induced_subtree(ott_ids=resolved_names$ott_id)
+response <- .tol_induced_subtree(ott_ids=as.numeric(resolved_names$ott_id))
 tr <- read.tree(text=response$subtree)
 plot(tr)
 ```
@@ -87,11 +84,12 @@ plot(tr)
 
 ```r
 furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
-( furry_ids <- unlist(furry_list$matched_studies) )
+( furry_ids <- unlist(furry_studies$matched_studies) )
 ```
 
 ```
-## Error: object 'furry_list' not found
+## ot:studyId ot:studyId ot:studyId ot:studyId ot:studyId 
+##     "2647"     "1428"     "2582"     "2550"     "2812"
 ```
 
 ### Get a specific study tree
