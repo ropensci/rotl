@@ -1,6 +1,8 @@
 ```{r setup, eval=TRUE, echo=FALSE}
 library(knitr)
-opts_knit$set(upload.fun = image_uri)
+#opts_knit$set(upload.fun = image_uri)
+opts_knit$set(upload.fun = imgur_upload)
+
 
 ```
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
