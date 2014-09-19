@@ -67,3 +67,11 @@ phylo_from_otl <- function(res) {
     unlink(fnm)
     phy
 }
+
+## nexml_from_otl <- function(res) {
+##     fnm <- tempfile()
+##     cat(res, file=fnm)
+##     phy <- RNexML::nexml_read(x=fnm)
+##     unlink(fnm)
+##     phy
+## }

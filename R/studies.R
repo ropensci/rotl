@@ -75,9 +75,25 @@ get_study <- function(study=NULL, format=c("", "nexus", "newick", "nexml", "json
 ##' @export
 ##' @examples
 ##'  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
-get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick", "json")) {
-    res <- .get_study_tree(study, tree, format)
-    return(res)
+get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
+                           text_format=NULL, file) {
+    object_format <- match.arg(object_format)
+    if (!is.null(text_format)) {
+        if (missing(file)) stop("You must specify a file to write your output")
+        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
+        res <- .get_study_tree(study, tree, format=text_format)
+        if (identical(text_format, "json")) {
+            cat(jsonlite::toJSON(res), file=file)
+        } else {
+            cat(res, file=file)
+        }
+        invisible()
+    } else if (identical(object_format, "phylo")) {
+        text_format <- "newick"
+        res <- .get_study_tree(study, tree, format=text_format)
+        res <- phylo_from_otl(res)
+    } else stop("Something is very wrong. Contact us.")
+    res
 }
 
 
@@ -88,11 +104,10 @@ get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick"
 ##' @export
 ##' @examples
 ##' req <- get_study_meta("pg_719")
-##' req_list <- httr::context(req)
+##' req_list <- httr::content(req)
 ##' req_lsit$nexml$`^ot:studyPublication`
-
-get_study_meta <- function(study){
-   .get_study_meta(study) 
+get_study_meta <- function(study) {
+   .get_study_meta(study)
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
@@ -104,10 +119,31 @@ get_study_meta <- function(study){
 ##' @examples
 ##' small_tr <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="node552052")
 ##' ingroup  <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="ingroup")
-
-get_study_subtree <- function(study, tree, subtree_id){
-    url_stem <- paste("study", study, "tree", tree, sep="/")
-    otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
+get_study_subtree <- function(study, tree, subtree_id, object_format=c("phylo"),
+                              text_format=NULL, file) {
+    ## NeXML should be possible for both object_format and text_format but it seems there
+    ## is something wrong with the server at this time (FM - 2014-09-19)
+    object_format <- match.arg(object_format)
+    if (!is.null(text_format)) {
+        if (missing(file)) stop("You must specify a file to write your output")
+        text_format <- match.arg(text_format, c("newick", "nexus", "json"))
+        res <- .get_study_subtree(study, tree, subtree_id, format=text_format)
+        if (identical(text_format, "json")) {
+            cat(jsonlite::toJSON(res), file=file)
+        } else {
+            cat(res, file=file)
+        }
+        invisible(res)
+    } else if (identical(object_format, "phylo")) {
+        text_format <- "newick"
+        res <-  .get_study_subtree(study, tree, subtree_id, format=text_format)
+        res <- phylo_from_otl(res)
+    } else if (identical(object_format, "nexml")) {
+        text_format <- "nexml"
+        res <- .get_study_subtree(study, tree, subtree_id, format=text_format)
+        res <- nexml_from_otl(res)
+    } else stop("Something is very wrong. Contact us.")
+    res
 }
 
 get_study_otu <- function(study, otu=NULL){

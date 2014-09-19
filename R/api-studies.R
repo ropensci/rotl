@@ -105,3 +105,13 @@
 .get_study_meta <- function(study){
     httr::content(otl_GET(path= paste("study", study, "meta", sep="/")))
 }
+
+
+.get_study_subtree <- function(study, tree, subtree_id,
+                               format=c("newick", "nexus", "nexml", "json")) {
+    format <- match.arg(format)
+    format <- otl_formats(format)
+    url_stem <- paste("study", study, "tree", paste0(tree, format), sep="/")
+    res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
+    httr::content(res)
+}
