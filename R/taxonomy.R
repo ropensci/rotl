@@ -3,6 +3,8 @@
 ##' Return information about the taxonomy, including version.
 ##' @title Taxonomy about
 ##' @return Some JSON
+##' @examples
+##' res <- taxonomy_about()
 ##' @export
 taxonomy_about <- function () {
     res <- .taxonomy_about()
