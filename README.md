@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
+[![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl)
 
 # An R interface to Open Tree API
 
@@ -23,7 +23,10 @@ library(devtools)
 
 install_github("fmichonneau/rotl")
 ```
+###Vignette
 
+For the time being a [small vignette lives
+here](http://dwinter.github.io/rotl-vignette/)
 ##Simple examples
 
 Note: the library is still in active development and behaviour of the following
