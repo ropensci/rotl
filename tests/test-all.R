@@ -43,8 +43,9 @@ value_is_longer_than <- function(key, value, len){
 value_is_error <- function(key_name){
     function(x){
         expectation(x$key_name == 'error', 
-                       sprintf("Key %s is not 'error'",key_name)
+                       sprintf("Key %s is not 'error'",key_name))
     }
+}
 
 ## Functions to test entire test blocks with the above expectations
 
@@ -61,17 +62,18 @@ test_equals <- function(response, test_block){
 }
 
 test_of_type <- function(response, test_block){
-    expect_that(response, is_a(test_block[[1]]))
+    rtype <- type_map(test_block[[1]])
+    expect_that(response, is_a(rtype))
 }
 
-test_deep_equals <- function(response, test_block) #stub {
+test_deep_equals <- function(response, test_block){ #stub 
 }
 
 
 test_length_greater_than <- function(response, test_block){
     vl_pairs <- sapply(test_block, "[[", 1)
     apply(vl_pairs, 2, function(v)
-          expect_that(response, value_is_longer_than(vl[[1]], vl[[2]]))
+          expect_that(response, value_is_longer_than(vl[[1]], vl[[2]])))
 }
 
 test_contains_error <- function(response, test_block){
@@ -92,9 +94,9 @@ type_map <- function(json_type){
 test_map <- function(test_type){
     switch(test_type,
            "contains"    = test_contains,
-           "equals"      = test_equals
+           "equals"      = test_equals,
            "deep_equals" = stop("Not there yet!"),
-           "error"       = stop("Error tests shoul be handled first")
+           "error"       = stop("Error tests shoul be handled first"),
            "length_greater_than" = test_length_greater_than,
            "of_type"     = test_of_type,
            stop(sprintf("Unkown error type in JSON test: %s", test_type))
@@ -108,15 +110,15 @@ make_request <- function(json_test){
 
 
 test_that_json_test <- function(test_obj, test_name){
-    tests_to_run <- names(test_obj$test_name$tests)
+    tests_to_run <- names(test_obj[[test_name]]$tests)
     if(identical(tests_to_run, "error")){
-        expect_error(make_request(test_obj[test_name]))
+        expect_error(make_request(test_obj[[test_name]]))
     }
 
     else{
-        response <- make_request(test_obj[test_name])
+        response <- make_request(test_obj[[test_name]])
         for(i in 1:length(tests_to_run)){
-            test_block <- test_obj$test_name$tests[[ tests_to_run[i] ]]
+            test_block <- test_obj[[test_name]]$tests[[ tests_to_run[i] ]]
             test_fxn <- test_map(tests_to_run[i]) 
             test_fxn(test_block)
         }
@@ -132,3 +134,7 @@ test_file <- function(json_obj){
    }
 }
 
+
+###
+library(testthat)
+test_check(rotl)
