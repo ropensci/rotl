@@ -53,6 +53,7 @@ tnrs_match_names <- function(taxon_names=NULL, context_name=NULL, do_approximate
     summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ott_id", "number_matches", "is_synonym", "is_deprecated")
+    summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
     summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
