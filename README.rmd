@@ -44,7 +44,7 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 Now get open tree to return a tree with just those tips. 
 
-NOTE: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
+*NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
 ```{r get_tr}
 response <- .tol_induced_subtree(ott_ids=as.numeric(resolved_names$ott_id))
@@ -64,7 +64,7 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 ### Get a specific study tree
 ```{r tree}
 library(ape)
-furry_metadata <- httr::content(get_study_meta(2647))
+furry_metadata <-get_study_meta(2647)
 furry_metadata$nexml$treesById
 tr_string <- get_study_tree(study="2647", tree="tree6169",format="newick")
 plot(read.tree(text=tr_string))

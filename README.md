@@ -59,7 +59,7 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 Now get open tree to return a tree with just those tips. 
 
-NOTE: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
+*NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
 
 ```r
@@ -68,7 +68,7 @@ tr <- read.tree(text=response$subtree)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/A1QWPSi.png) 
+![plot of chunk get_tr](http://i.imgur.com/rNWTvkf.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -88,24 +88,12 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 
 ```r
 library(ape)
-furry_metadata <- httr::content(get_study_meta(2647))
+furry_metadata <-get_study_meta(2647)
 furry_metadata$nexml$treesById
 ```
 
 ```
-## $trees2647
-## $trees2647$treeById
-## $trees2647$treeById$tree6169
 ## NULL
-## 
-## 
-## $trees2647$`^ot:treeElementOrder`
-## $trees2647$`^ot:treeElementOrder`[[1]]
-## [1] "tree6169"
-## 
-## 
-## $trees2647$`@otus`
-## [1] "otus2647"
 ```
 
 ```r
@@ -113,4 +101,4 @@ tr_string <- get_study_tree(study="2647", tree="tree6169",format="newick")
 plot(read.tree(text=tr_string))
 ```
 
-![plot of chunk tree](http://i.imgur.com/0qmHIvw.png) 
+![plot of chunk tree](http://i.imgur.com/dLgK8rZ.png) 
