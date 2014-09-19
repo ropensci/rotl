@@ -1,12 +1,3 @@
----
-title: rotl README
-output:
-  md_document:
-    variant: markdown_github
----
-
-
-
 
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
 
@@ -26,7 +17,8 @@ and [Ruby](https://github.com/SpeciesFileGroup/bark).
 If you want to play with these functions you can, via
 [devtools](https://github.com/hadley/devtools).
 
-```{r, eval=FALSE)
+
+```r
 library(devtools)
 
 install_github("fmichonneau/rotl")

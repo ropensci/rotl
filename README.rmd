@@ -1,17 +1,8 @@
----
-title: rotl README
-output:
-  md_document:
-    variant: markdown_github
----
-
-
 ```{r setup, eval=TRUE, echo=FALSE}
 library(knitr)
 opts_knit$set(upload.fun = image_uri)
 
 ```
-
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl.svg)
 
 # An R interface to Open Tree API
@@ -30,7 +21,7 @@ and [Ruby](https://github.com/SpeciesFileGroup/bark).
 If you want to play with these functions you can, via
 [devtools](https://github.com/hadley/devtools).
 
-```{r, eval=FALSE)
+```{r, eval=FALSE}
 library(devtools)
 
 install_github("fmichonneau/rotl")
