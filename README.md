@@ -23,7 +23,10 @@ library(devtools)
 
 install_github("fmichonneau/rotl")
 ```
+###Vignette
 
+For the time being a [small vignette lives
+here](http://dwinter.github.io/rotl-vignette/)
 ##Simple examples
 
 Note: the library is still in active development and behaviour of the following
