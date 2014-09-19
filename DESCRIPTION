@@ -11,4 +11,9 @@ Imports:
     jsonlite,
     ape
 License: BSD_2_clause + file LICENSE
+Suggests:
+    knitr,
+    testthat,
+VignetteBuilder: knitr
+
 LazyData: true

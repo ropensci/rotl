@@ -14,4 +14,7 @@ Summary information about the OpenTree Taxaonomy (OTT)
 \details{
 Return information about the taxonomy, including version.
 }
+\examples{
+res <- taxonomy_about()
+}
 
