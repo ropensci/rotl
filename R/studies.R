@@ -104,8 +104,7 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
 ##' @export
 ##' @examples
 ##' req <- get_study_meta("pg_719")
-##' req_list <- httr::content(req)
-##' req_lsit$nexml$`^ot:studyPublication`
+##' req$nexml$`^ot:studyPublication`
 get_study_meta <- function(study) {
    .get_study_meta(study)
 }
