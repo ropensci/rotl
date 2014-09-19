@@ -3,7 +3,7 @@
 \alias{get_study}
 \title{study}
 \usage{
-get_study(study, format = c("", "nexus", "newick", "nexml", "json"))
+get_study(study = NULL, format = c("", "nexus", "newick", "nexml", "json"))
 }
 \arguments{
 \item{study}{}

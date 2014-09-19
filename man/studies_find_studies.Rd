@@ -16,7 +16,7 @@ studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
 \item{verbose}{Boolean, include all metadata (default=FALSE)}
 }
 \description{
-Return a list of studes that match a given properties
+Return a list of studies that match a given properties
 }
 \examples{
 req <- studies_find_studies(property="ot:studyId", value="pg_719")
