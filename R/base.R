@@ -1,5 +1,5 @@
 
-otl_url <- function(dev=TRUE) {
+otl_url <- function(dev=FALSE) {
     if (dev) {
         "http://devapi.opentreeoflife.org"
     } else {
