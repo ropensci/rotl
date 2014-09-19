@@ -60,9 +60,31 @@ studies_properties <- function() {
 ##' @export
 ##' @examples
 ##' that_one_study <- get_study(study="pg_719")
-get_study <- function(study=NULL, format=c("", "nexus", "newick", "nexml", "json")) {
-    res <- .get_study(study, format)
-    return(res)
+# this function should accept nexml (both for object and text)
+get_study <- function(study=NULL, object_format=c("phylo"),
+                      text_format=c("nexus", "newick", "json"),
+                      file) {
+
+    object_format <- match.arg(object_format)
+    if (!is.null(text_format)) {
+        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
+    }
+    if (!is.null(text_format)) {
+        if (missing(file)) stop("You must specify a file to write your output")
+        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
+        res <- .get_study(study, format=text_format)
+        if (identical(text_format, "json")) {
+            cat(jsonlite::toJSON(res), file=file)
+        } else {
+            cat(res, file=file)
+        }
+        invisible(res)
+    } else if (identical(object_format, "phylo")) {
+        text_format <- "newick"
+        res <- .get_study(study, format=text_format)
+        res <- phylo_from_otl(res)
+    } else stop("Something is very wrong. Contact us.")
+    res
 }
 
 ##' returns specific tree from a study
@@ -79,6 +101,7 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
                            text_format=NULL, file) {
     object_format <- match.arg(object_format)
     if (!is.null(text_format)) {
+        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         res <- .get_study_tree(study, tree, format=text_format)
@@ -87,7 +110,7 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
         } else {
             cat(res, file=file)
         }
-        invisible()
+        invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
         res <- .get_study_tree(study, tree, format=text_format)
@@ -96,6 +119,23 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
     res
 }
 
+## get_study_internal <- function(fnx, file, ...) {
+##     if (!is.null(text_format)) {
+##         if (missing(file)) stop("You must specify a file to write your output")
+##         res <- do.call(fnx, list(...))
+##         if (identical(text_format, "json")) {
+##             cat(jsonlite::toJSON(res), file=file)
+##         } else {
+##             cat(res, file=file)
+##         }
+##         invisible(res)
+##     } else if (identical(object_format, "phylo")) {
+##         text_format <- "newick"
+##         res <- do.call(study, tree, format=text_format)
+##         res <- phylo_from_otl(res)
+##     } else stop("Something is very wrong. Contact us.")
+##   res
+## }
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
