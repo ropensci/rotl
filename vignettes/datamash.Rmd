@@ -1,0 +1,67 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{rotl datamash}
+-->
+ 
+```{r, eval=TRUE, echo=FALSE}
+library(knitr)
+opts_knit$set(upload.fun = image_uri)
+opts_knit$set(fig.keep = "last")
+opts_knit$set(fig.show = "hold")
+
+```
+
+#Data mashups
+
+The main reason
+
+##Get a fish tree
+
+```{r find a tree}
+ot_cichlids <- studies_find_studies(property="ot:focalCladeOTTTaxonName", 
+                                    value="Cichlidae")
+
+cichlid_summary <- get_study_meta("2655")
+names(cichlid_summary$nexml$treesById$trees2655$treeById)
+
+tr_string <- get_study_tree(study="2655", tree="tree6182", "newick")
+tr <- phytools::read.newick(text=tr_string)
+plot(tr)
+
+```
+
+
+```{r fishbase}
+library(rfishbase)
+data(fishbase)
+
+fb_cichlids <- fish.data[which_fish("Cichlidae", "Family")]
+tr$tip.label <- gsub("'", "", tr$tip.label)
+fb_ot_intersect <- tr$tip.label %in% sapply(fb_cichlids, "[[", "ScientificName")
+tr_fb <- drop.tip(tr, tr$tip.label[!fb_ot_intersect])
+plot(tr_fb)
+axisPhylo()
+```
+
+
+
+
+```r
+to_fb_intersect <- sapply(fb_cichlids, "[[", "ScientificName") %in% tr_fb$ti
+
+intersect_cichlids <- fb_cichlids[to_fb_intersect]
+names(intersect_cichlids) <- sapply(intersect_cichlids, "[[", "ScientificName")
+
+grep_diagnosis <- function(x){
+    grepl(x, sapply(intersect_cichlids[ tr_fb$tip.label ], "[[", "diagnostic"))
+}
+red_fish <- grep_diagnosis('red')
+blue_fish <- grep_diagnosis('blue')
+
+plot(tr_fb, tip.color=ifelse(red_fish, "red", "black"))
+
+```
+
+
+
+
