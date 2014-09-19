@@ -99,18 +99,23 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 ```r
 library(ape)
 furry_metadata <- httr::content(get_study_meta(2647))
-```
-
-```
-## Error: could not find function "get_study_meta"
-```
-
-```r
 furry_metadata$nexml$treesById
 ```
 
 ```
-## Error: object 'furry_metadata' not found
+## $trees2647
+## $trees2647$treeById
+## $trees2647$treeById$tree6169
+## NULL
+## 
+## 
+## $trees2647$`^ot:treeElementOrder`
+## $trees2647$`^ot:treeElementOrder`[[1]]
+## [1] "tree6169"
+## 
+## 
+## $trees2647$`@otus`
+## [1] "otus2647"
 ```
 
 ```r

@@ -80,7 +80,6 @@ get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick"
     return(res)
 }
 
-cho_get_study_tree <- function()
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
