@@ -1,5 +1,11 @@
 
-otl_url <- function() { "http://api.opentreeoflife.org" }
+otl_url <- function(dev=TRUE) {
+    if (dev) {
+        "http://devapi.opentreeoflife.org"
+    } else {
+        "http://api.opentreeoflife.org"
+    }
+}
 
 otl_version <- function() { "v2" }
 

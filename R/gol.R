@@ -1,6 +1,3 @@
-## *** NOTE: the development server has a newer tree graph DB (JWB) ***
-otl_url <- function() { "http://devapi.opentreeoflife.org" }
-
 
 ##' @title Information about the graph of life
 ##' @description Basic information about the graph
