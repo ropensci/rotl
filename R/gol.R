@@ -52,7 +52,10 @@ gol_summary <- function(res) {
 gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     res <- .gol_source_tree(study_id, tree_id, git_sha)
     # required b/c of "knuckles"
-    phy <- ape::collapse.singles(phytools::read.newick(text=(res)[["newick"]]))
+    fnm <- tempfile()
+    cat(res$"newick", file=fnm)
+    phy <- rncl::make_phylo(fnm, file.format="newick")
+    unlink(fnm)
     return(phy)
 }
 
@@ -98,4 +101,3 @@ gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
     res <- .gol_node_info(node_id, ott_id, include_lineage)
     return(res)
 }
-

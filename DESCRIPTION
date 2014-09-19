@@ -9,6 +9,7 @@ Depends:
 Imports:
     httr,
     jsonlite,
+    rncl,
     ape
 License: BSD_2_clause + file LICENSE
 LazyData: true
