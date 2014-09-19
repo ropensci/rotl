@@ -45,15 +45,11 @@ gol_summary <- function(res) {
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##' res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452", tree_id="7")
-##' @export
+## @export ## not exported for now as users probably don't care/need it
 gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
     res <- .gol_source_tree(study_id, tree_id, git_sha)
     # required b/c of "knuckles"
-    fnm <- tempfile()
-    cat(res$"newick", file=fnm)
-    phy <- rncl::make_phylo(fnm, file.format="newick")
-    unlink(fnm)
-    return(phy)
+    phylo_from_otl(res)
 }
 
 

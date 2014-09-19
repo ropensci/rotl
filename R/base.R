@@ -55,3 +55,15 @@ otl_formats <- function(format){
            "json" = ".json",
            "") #fall through is no extension = nex(j)son
 }
+
+phylo_from_otl <- function(res) {
+    fnm <- tempfile()
+    if (is.list(res)) {
+        cat(res$"newick", file=fnm)
+    } else if (is.character(res)) {
+        cat(res, file=fnm)
+    } else stop("I don't know how to deal with this format.")
+    phy <- rncl::make_phylo(fnm, file.format="newick")
+    unlink(fnm)
+    phy
+}

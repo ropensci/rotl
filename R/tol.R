@@ -83,10 +83,7 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' @export
 tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
     res <- .tol_subtree(node_id, ott_id, tree_id)
-
-    #phy <- collapse.singles(read.tree(text=(cont)[["newick"]])); # required b/c of "knuckles"
-    phy <- ape::collapse.singles(phytools::read.newick(text=(res)[["newick"]])); # required b/c of "knuckles"
-    return(phy)
+    phylo_from_otl(res)
 }
 
 ##' Extract induced subtree
@@ -115,9 +112,5 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     res <- .tol_induced_subtree(node_ids, ott_ids)
-
-    #phy <- collapse.singles(read.tree(text=(cont)[["subtree"]])); # required b/c of "knuckles"
-    phy <- ape::collapse.singles(phytools::read.newick(text=(res)[["subtree"]])); # required b/c of "knuckles"
-
-    return(phy)
+    phylo_from_otl(res)
 }

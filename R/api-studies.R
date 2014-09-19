@@ -2,7 +2,7 @@
 .studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
     if (!is.logical(verbose)) stop("Argument \'verbose\' should be logical")
     if (!is.logical(exact)) stop("Argument \'exact\' should be logical")
-    
+
     req_body <- list()
     if (!is.null(property)) {
         	if (!is.character(property)) {
@@ -84,7 +84,7 @@
 
 
 ## Get a tree in a study from the OpenTree docstore
-.get_study_tree <- function(study=NULL, tree=NULL, format=c("", "nexus", "newick", "json")) {
+.get_study_tree <- function(study=NULL, tree=NULL, format=c("nexus", "newick", "json")) {
     if (is.null(study)) {
     	    stop("Must supply a \'study\' argument")
     } else if (!is.character(study)) {
