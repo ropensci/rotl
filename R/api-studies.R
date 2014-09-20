@@ -90,14 +90,14 @@
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
-    if (is.null(tree)) {
+    if (is.null(tree_id)) {
         stop("Must supply a \'tree\' argument")
-    } else if (!is.character(tree)) {
+    } else if (!is.character(tree_id)) {
         stop("Argument \'tree\' must be of class \"character\"")
     }
     format <- match.arg(format)
-    tree_file <- paste(tree, otl_formats(format), sep="")
-    res <- otl_GET(path=paste("study", study, "tree", tree_file, sep="/"))
+    tree_file <- paste0(tree_id, otl_formats(format))
+    res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"))
     cont <- httr::content(res)
     return(cont)
 }
@@ -107,11 +107,11 @@
 }
 
 
-.get_study_subtree <- function(study, tree, subtree_id,
+.get_study_subtree <- function(study_id, tree_id, subtree_id,
                                format=c("newick", "nexus", "nexml", "json")) {
     format <- match.arg(format)
     format <- otl_formats(format)
-    url_stem <- paste("study", study, "tree", paste0(tree, format), sep="/")
+    url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
     res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
     httr::content(res)
 }

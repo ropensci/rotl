@@ -104,7 +104,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
-        res <- .get_study_tree(study_id, tree, format=text_format)
+        res <- .get_study_tree(study_id, tree_id, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -113,7 +113,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
         invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <- .get_study_tree(study_id, tree, format=text_format)
+        res <- .get_study_tree(study_id, tree_id, format=text_format)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
@@ -166,7 +166,7 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("newick", "nexus", "json"))
-        res <- .get_study_subtree(study_id, tree, subtree_id, format=text_format)
+        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -175,11 +175,11 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
         invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <-  .get_study_subtree(study_id, tree, subtree_id, format=text_format)
+        res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
         res <- phylo_from_otl(res)
     } else if (identical(object_format, "nexml")) {
         text_format <- "nexml"
-        res <- .get_study_subtree(study_id, tree, subtree_id, format=text_format)
+        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
         res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res

@@ -33,9 +33,9 @@ key_has_value <- function(key, value){
     }
 }
 
-value_is_longer_than <- function(key, value, len){
+value_is_longer_than <- function(key, len){
     function(x){
-        expectation(length(x[key]) > len, 
+        expectation(length(x[[key]]) > len, 
                     paste("Value for key", key, "is shorter than", len))
     }
 }
@@ -73,7 +73,7 @@ test_deep_equals <- function(response, test_block){ #stub
 test_length_greater_than <- function(response, test_block){
     vl_pairs <- sapply(test_block, "[[", 1)
     apply(vl_pairs, 2, function(v)
-          expect_that(response, value_is_longer_than(vl[[1]], vl[[2]])))
+          expect_that(response, value_is_longer_than(v[[1]], v[[2]])))
 }
 
 test_contains_error <- function(response, test_block){
