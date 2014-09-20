@@ -84,7 +84,7 @@
 
 
 ## Get a tree in a study from the OpenTree docstore
-.get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("nexus", "newick", "json")) {
+.get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("json", "newick", "nexus")) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
