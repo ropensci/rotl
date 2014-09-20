@@ -112,7 +112,7 @@ furry_metadata$nexml$treesById
 ```
 
 ```r
-tr_string <- get_study_tree(study="2647", tree="tree6169",format="newick")
+tr_string <- get_study_tree(study_id="2647", tree_id="tree6169",format="newick")
 plot(read.tree(text=tr_string))
 ```
 
