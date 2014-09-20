@@ -59,9 +59,9 @@ studies_properties <- function() {
 ##' @author Francois Michonneau
 ##' @export
 ##' @examples
-##' that_one_study <- get_study(study="pg_719")
+##' that_one_study <- get_study(study_id="pg_719")
 # this function should accept nexml (both for object and text)
-get_study <- function(study=NULL, object_format=c("phylo"),
+get_study <- function(study_id=NULL, object_format=c("phylo"),
                       text_format=c("nexus", "newick", "json"),
                       file) {
 
@@ -72,7 +72,7 @@ get_study <- function(study=NULL, object_format=c("phylo"),
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
-        res <- .get_study(study, format=text_format)
+        res <- .get_study(study_id, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -81,7 +81,7 @@ get_study <- function(study=NULL, object_format=c("phylo"),
         invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <- .get_study(study, format=text_format)
+        res <- .get_study(study_id, format=text_format)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
@@ -96,15 +96,15 @@ get_study <- function(study=NULL, object_format=c("phylo"),
 ##' @return A tree file in desired format
 ##' @export
 ##' @examples
-##'  nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
-get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
+##'  nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
+get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            text_format=NULL, file) {
     object_format <- match.arg(object_format)
     if (!is.null(text_format)) {
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
-        res <- .get_study_tree(study, tree, format=text_format)
+        res <- .get_study_tree(study_id, tree, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -113,7 +113,7 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
         invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <- .get_study_tree(study, tree, format=text_format)
+        res <- .get_study_tree(study_id, tree, format=text_format)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
@@ -145,8 +145,8 @@ get_study_tree <- function(study=NULL, tree=NULL, object_format=c("phylo"),
 ##' @examples
 ##' req <- get_study_meta("pg_719")
 ##' req$nexml$`^ot:studyPublication`
-get_study_meta <- function(study) {
-   .get_study_meta(study)
+get_study_meta <- function(study_id) {
+   .get_study_meta(study_id)
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
@@ -156,9 +156,9 @@ get_study_meta <- function(study) {
 ##' which returns the ingroup is for this subtree, a 400 error otherwise
 ##' @export
 ##' @examples
-##' small_tr <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="node552052")
-##' ingroup  <- get_study_subtree(study="pg_1144", tree="tree2324", subtree_id="ingroup")
-get_study_subtree <- function(study, tree, subtree_id, object_format=c("phylo"),
+##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
+##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
                               text_format=NULL, file) {
     ## NeXML should be possible for both object_format and text_format but it seems there
     ## is something wrong with the server at this time (FM - 2014-09-19)
@@ -166,7 +166,7 @@ get_study_subtree <- function(study, tree, subtree_id, object_format=c("phylo"),
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("newick", "nexus", "json"))
-        res <- .get_study_subtree(study, tree, subtree_id, format=text_format)
+        res <- .get_study_subtree(study_id, tree, subtree_id, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -175,25 +175,24 @@ get_study_subtree <- function(study, tree, subtree_id, object_format=c("phylo"),
         invisible(res)
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <-  .get_study_subtree(study, tree, subtree_id, format=text_format)
+        res <-  .get_study_subtree(study_id, tree, subtree_id, format=text_format)
         res <- phylo_from_otl(res)
     } else if (identical(object_format, "nexml")) {
         text_format <- "nexml"
-        res <- .get_study_subtree(study, tree, subtree_id, format=text_format)
+        res <- .get_study_subtree(study_id, tree, subtree_id, format=text_format)
         res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
 }
 
-get_study_otu <- function(study, otu=NULL){
-    otl_GET(path=paste("study", study, "otu", otu, sep="/"))
+get_study_otu <- function(study_id, otu=NULL){
+    otl_GET(path=paste("study", study_id, "otu", otu, sep="/"))
 }
 
-get_study_otus <- function(study, otus) {
-    otl_GET(path=paste("study", study, "otu", otus, sep="/"))
+get_study_otus <- function(study_id, otus) {
+    otl_GET(path=paste("study", study_id, "otu", otus, sep="/"))
 }
 
-get_study_otumap <- function(study){
-    otl_GET(path=paste("study", study,"otumap", sep="/"))
-
+get_study_otumap <- function(study_id){
+    otl_GET(path=paste("study", study_id,"otumap", sep="/"))
 }

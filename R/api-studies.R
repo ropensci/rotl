@@ -70,25 +70,25 @@
 
 
 ## Get a study from the OpenTree docstore
-.get_study <- function(study=NULL, format=c("", "nexus", "newick", "nexml", "json")) {
-    if (is.null(study)) {
-    	    stop("Must supply a \'study\' argument")
-    } else if (!is.character(study)) {
-        stop("Argument \'study\' must be of class \"character\"")
+.get_study <- function(study_id=NULL, format=c("", "nexus", "newick", "nexml", "json")) {
+    if (is.null(study_id)) {
+    	    stop("Must supply a \'study_id\' argument")
+    } else if (!is.character(study_id)) {
+        stop("Argument \'study_id\' must be of class \"character\"")
     }
     format <- match.arg(format)
-    res <- otl_GET(path=paste("study", paste0(study, otl_formats(format)), sep="/"))
+    res <- otl_GET(path=paste("study", paste0(study_id, otl_formats(format)), sep="/"))
     cont <- httr::content(res)
     return(cont)
 }
 
 
 ## Get a tree in a study from the OpenTree docstore
-.get_study_tree <- function(study=NULL, tree=NULL, format=c("nexus", "newick", "json")) {
-    if (is.null(study)) {
-    	    stop("Must supply a \'study\' argument")
-    } else if (!is.character(study)) {
-        stop("Argument \'study\' must be of class \"character\"")
+.get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("nexus", "newick", "json")) {
+    if (is.null(study_id)) {
+    	    stop("Must supply a \'study_id\' argument")
+    } else if (!is.character(study_id)) {
+        stop("Argument \'study_id\' must be of class \"character\"")
     }
     if (is.null(tree)) {
         stop("Must supply a \'tree\' argument")
@@ -102,8 +102,8 @@
     return(cont)
 }
 
-.get_study_meta <- function(study){
-    httr::content(otl_GET(path= paste("study", study, "meta", sep="/")))
+.get_study_meta <- function(study_id){
+    httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/")))
 }
 
 

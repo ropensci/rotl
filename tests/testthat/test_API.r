@@ -82,6 +82,13 @@ test_contains_error <- function(response, test_block){
 }
 
 ##convience functions 
+obj_map <- function(input){
+    switch(tolower(input), 
+           "true" = TRUE,
+           "false" = FALSE,
+           "null"  = NULL,
+           input)
+}
 
 type_map <- function(json_type){
     switch(json_type, 
@@ -105,7 +112,7 @@ test_map <- function(test_type){
 
 make_request <- function(json_test){
     test_fxn <- paste(".", json_test$test_function,sep="")
-    do.call(what=test_fxn, args=json_test$test_input)
+    do.call(what=test_fxn, args=lapply(json_test$test_input, obj_map))
 }
 
 
