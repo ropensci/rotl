@@ -29,7 +29,7 @@ contains <- function(key_name){
 
 key_has_value <- function(key, value){
     function(x){
-        expectation(x[key] == value, paste("Key", key, "doesn't have value", value))
+        expectation(x[[key]] == value, paste("Key", key, "doesn't have value", value))
     }
 }
 
@@ -42,7 +42,7 @@ value_is_longer_than <- function(key, len){
 
 value_is_error <- function(key_name){
     function(x){
-        expectation(x$key_name == 'error', 
+        expectation(x[[key_name]] == 'error', 
                        sprintf("Key %s is not 'error'",key_name))
     }
 }
@@ -90,6 +90,13 @@ obj_map <- function(input){
            input)
 }
 
+json_to_r <- function(test_input){
+    if(length(test_input) == 0){
+       return(test_input)
+    }
+    return(lapply(test_input, obj_map))
+}
+
 type_map <- function(json_type){
     switch(json_type, 
            "dict" = "list",
@@ -112,7 +119,8 @@ test_map <- function(test_type){
 
 make_request <- function(json_test){
     test_fxn <- paste(".", json_test$test_function,sep="")
-    do.call(what=test_fxn, args=lapply(json_test$test_input, obj_map))
+    do.call(what=test_fxn, args=json_to_r(json_test$test_input))
+
 }
 
 
