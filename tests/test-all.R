@@ -1,3 +1,3 @@
 ###
 library(testthat)
-test_check('rotl', reporter=SilentReporter())
+test_check('rotl')
