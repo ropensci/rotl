@@ -59,19 +59,21 @@ studies_properties <- function() {
 ##' @author Francois Michonneau
 ##' @export
 ##' @examples
-##' that_one_study <- get_study(study_id="pg_719")
+##' \dontrun{
+##' that_one_study <- get_study(study_id="pg_719", obj_format="phylo")
+##' }
 # this function should accept nexml (both for object and text)
 get_study <- function(study_id=NULL, object_format=c("phylo"),
-                      text_format=c("nexus", "newick", "json"),
+                      text_format=c("", "nexus", "newick", "json"),
                       file) {
 
     object_format <- match.arg(object_format)
-    if (!is.null(text_format)) {
-        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
+    text_format <- match.arg(text_format)
+    if(text_format == ""){
+        text_format <- NULL
     }
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
-        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         res <- .get_study(study_id, format=text_format)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
