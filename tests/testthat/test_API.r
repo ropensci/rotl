@@ -40,10 +40,15 @@ key_has_value <- function(key, value){
             expectation(length(x[[key]]) == 0, 
                                paste("Key", key, "is not empty"))
         }
-        else{
+        else if(length(value)==1){
             expectation(x[[key]] == value, 
                         paste("Key", key, "doesn't have value", value))
         }
+        else{
+            expectation(all(x[[key]] %in% value), 
+                        paste("Key", key, "doesn't conatin all of", value))
+        }
+
     }
 }
 
@@ -70,9 +75,9 @@ test_contains <- function(response, test_block){
 
 test_equals <- function(response, test_block){
     kv_pairs <- sapply(test_block, "[[", 1)
-    apply(kv_pairs, 2,function(k) 
-          expect_that(response, key_has_value( k[[1]], k[[2]] )))
-    
+    for(i in 1:length(kv_pairs)){
+        expect_that(response, key_has_value( kv_pairs[[1]], kv_pairs[[2]]))
+    } 
 }
 
 test_of_type <- function(response, test_block){
@@ -173,7 +178,12 @@ run_shared_test <- function(json_obj){
 
 
 base_url <- "https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/"
-apis <- c("graph_of_life", "studies", "taxonomy", "tree_of_life", "tnrs")
+apis <- c("graph_of_life", 
+          "studies", 
+          "taxonomy",
+          "tree_of_life",
+          "tnrs"
+          )
 for(i in 1:length(apis)){
     context( paste(apis[i], "API") )
     test_text <- httr::GET(paste0(base_url, apis[i], ".json"))
