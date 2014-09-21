@@ -98,7 +98,9 @@ get_study <- function(study_id=NULL, object_format=c("phylo"),
 ##' @return A tree file in desired format
 ##' @export
 ##' @examples
+##' \dontrun{
 ##'  nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
+##'}
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            text_format=NULL, file) {
     object_format <- match.arg(object_format)
@@ -158,8 +160,10 @@ get_study_meta <- function(study_id) {
 ##' which returns the ingroup is for this subtree, a 400 error otherwise
 ##' @export
 ##' @examples
+##' \dontrun{
 ##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
                               text_format=NULL, file) {
     ## NeXML should be possible for both object_format and text_format but it seems there

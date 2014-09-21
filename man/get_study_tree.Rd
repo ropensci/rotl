@@ -20,6 +20,8 @@ A tree file in desired format
 returns specific tree from a study
 }
 \examples{
-nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
+\dontrun{
+ nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
+}
 }
 

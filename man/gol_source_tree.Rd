@@ -24,6 +24,8 @@ Returns a reconstructed source tree from the graph DB.
 Reconstructs a source tree given identifiers: \code{study_id}, \code{tree_id}, and \code{git_sha}. The tree may differ from the original source tree in 2 ways: 1) it may contain fewer taxa (as duplicate taxa are pruned on tree ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to all named internal nodes and as a suffix to all terminal node names.
 }
 \examples{
+\dontrun{
 res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452", tree_id="7")
+}
 }
 

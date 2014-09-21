@@ -3,8 +3,8 @@
 \alias{get_study}
 \title{study}
 \usage{
-get_study(study_id = NULL, object_format = c("phylo"),
-  text_format = c("nexus", "newick", "json"), file)
+get_study(study_id = NULL, object_format = c("phylo"), text_format = c("",
+  "nexus", "newick", "json"), file)
 }
 \arguments{
 \item{study}{}
@@ -19,7 +19,9 @@ returns study for given ID
 study
 }
 \examples{
-that_one_study <- get_study(study_id="pg_719")
+\dontrun{
+that_one_study <- get_study(study_id="pg_719", obj_format="phylo")
+}
 }
 \author{
 Francois Michonneau

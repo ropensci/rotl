@@ -18,7 +18,9 @@ which returns the ingroup is for this subtree, a 400 error otherwise}
 Retrieve subtree from a specific tree in the Open Tree of Life data store
 }
 \examples{
+\dontrun{
 small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
 ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+}
 }
 
