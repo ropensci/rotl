@@ -29,12 +29,12 @@ otl_GET <- function(path, ...) {
     req
 }
 
-otl_POST <- function(path, body, ...) {
+otl_POST <- function(path, body, dev_url=FALSE, ...) {
     stopifnot(is.list(body))
 
     body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
-    req <- httr::POST(otl_url(), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
+    req <- httr::POST(otl_url(dev=dev_url), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
     otl_check(req)
 
     req

@@ -22,7 +22,8 @@
     }
     res <- otl_POST(path="studies/find_studies/", body=c(req_body,
                                                   jsonlite::unbox(verbose),
-                                                  jsonlite::unbox(exact)))
+                                                  jsonlite::unbox(exact)),
+                                                  dev_url=TRUE)
     cont <- httr::content(res)
     return(cont)
 }
