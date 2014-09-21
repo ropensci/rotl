@@ -19,8 +19,7 @@ studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
 Return a list of studies that match a given properties
 }
 \examples{
-req <- studies_find_studies(property="ot:studyId", value="pg_719")
-httr::content(req)
+study <- studies_find_studies(property="ot:studyId", value="pg_719")
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties against

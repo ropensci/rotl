@@ -13,8 +13,7 @@ Property of a study
 }
 \examples{
 all_the_properties <- studies_properties()
- prop_list = httr::content(all_the_properties)
- unlist(prop_list$tree_properties)
+ unlist(all_the_properties$tree_properties)
 }
 \author{
 Francois Michonneau

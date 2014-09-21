@@ -8,8 +8,7 @@
 ##' which the studies can be searched
 ##' @export
 ##' @examples
-##' req <- studies_find_studies(property="ot:studyId", value="pg_719")
-##' httr::content(req)
+##' study <- studies_find_studies(property="ot:studyId", value="pg_719")
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
     res <- .studies_find_studies(property, value, verbose, exact)
@@ -26,8 +25,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 ##' which the studies can be searched
 ##' @export
 ##' @examples
-##' req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
-##' length(httr::content(req)$matched_studies)
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
     res <- .studies_find_trees(property, value, verbose, exact)
@@ -41,8 +39,7 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 ##' @export
 ##' @examples
 ##'  all_the_properties <- studies_properties()
-##'  prop_list = httr::content(all_the_properties)
-##'  unlist(prop_list$tree_properties)
+##'  unlist(all_the_properties$tree_properties)
 
 studies_properties <- function() {
     res <- .studies_properties()

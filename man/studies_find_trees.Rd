@@ -19,8 +19,7 @@ studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
 Return a list of trees that match a given properties
 }
 \examples{
-req <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
-length(httr::content(req)$matched_studies)
+res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties against

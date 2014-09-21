@@ -34,7 +34,9 @@ specified node is not in the synthetic tree (or is entirely absent
 from the graph), an error will be returned.
 }
 \examples{
+\dontrun{
 res <- tol_subtree(ott_id=81461)
+}
 }
 \author{
 Francois Michonneau

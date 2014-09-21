@@ -81,7 +81,9 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' argument is superfluous and may be safely ignored.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
+##'\dontrun{
 ##' res <- tol_subtree(ott_id=81461)
+##'}
 ##' @export
 tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
     if (!is.null(node_id) && !is.null(ott_id)) {
@@ -116,7 +118,9 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' @return a tree of class \code{"phylo"}
 ##' @author Francois Michonneau
 ##' @examples
+##' \dontrun{
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' }
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
