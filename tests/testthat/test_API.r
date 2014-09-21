@@ -29,7 +29,14 @@ contains <- function(key_name){
 
 key_has_value <- function(key, value){
     function(x){
-        expectation(x[[key]] == value, paste("Key", key, "doesn't have value", value))
+        if(length(value) == 0){
+            expectation(length(x[[key]]) == 0, 
+                               paste("Key", key, "is not empty"))
+        }
+        else{
+            expectation(x[[key]] == value, 
+                        paste("Key", key, "doesn't have value", value))
+        }
     }
 }
 
@@ -131,12 +138,13 @@ make_request <- function(json_test){
 }
 
 
-test_that_json_test <- function(test_obj, test_name){
+testthat_json_test <- function(test_obj, test_name){
     tests_to_run <- names(test_obj[[test_name]]$tests)
-    if(identical(tests_to_run, "error")){
-        expect_error(make_request(test_obj[[test_name]]))
+    if(length(tests_to_run)==1){
+        if( grepl("error", tests_to_run)){
+        expect_error( make_request(test_obj[[test_name]]) )
+        }
     }
-
     else{
         response <- make_request(test_obj[[test_name]])
         for(i in 1:length(tests_to_run)){
@@ -151,10 +159,11 @@ run_shared_test <- function(json_obj){
    all_tests <- names(json_obj)
    for(i in 1:length(all_tests)){
        test_that(all_tests[i],
-          test_that_json_test(json_obj, all_tests[i])
+          testthat_json_test(json_obj, all_tests[i])
           )
    }
 }
+
 
 context("Graph of life API")
 
@@ -180,6 +189,7 @@ context("Taxonomic name resolution API")
     run_shared_test(test_description)
 
 context("Tree of life API")
-    test_description <-jsonlite::fromJSON('https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/tree_of_life.json',
-                                          unicode=TRUE)
+
+    test_description <-jsonlite::fromJSON(httr::content(httr::GET('https://github.com/dwinter/shared-api-tests/raw/master/tree_of_life.json')))
+                                     
     run_shared_test(test_description)

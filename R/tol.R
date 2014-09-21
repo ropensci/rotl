@@ -51,9 +51,11 @@ tol_summary <- function(res) {
 ##' @author Francois Michonneau
 ##' @examples
 ##' test1 <- tol_mrca(ott_ids=c(412129, 536234))
-##' test2 <- tol_mrca(ott_ids=c(415255), node_ids=c(341556))
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
+    if (!is.null(node_ids) && !is.null(ott_ids)) {
+        stop("Use only node_id OR ott_id")
+    }
     res <- .tol_mrca(ott_ids, node_ids)
     return(res)
 }
@@ -82,6 +84,12 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' res <- tol_subtree(ott_id=81461)
 ##' @export
 tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
+    if (!is.null(node_id) && !is.null(ott_id)) {
+        stop("Use only node_id OR ott_id")
+    }
+    if (is.null(node_id) && is.null(ott_id)) {
+        stop("Must supply a \'node_id\' OR \'ott_id\'")
+    }
     res <- .tol_subtree(node_id, ott_id, tree_id)
     phylo_from_otl(res)
 }
@@ -111,6 +119,10 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
+    if (is.null(node_ids) && is.null(ott_ids)) {
+        stop("Must supply \'node_ids\' and/or \'ott_ids\'")
+    }
     res <- .tol_induced_subtree(node_ids, ott_ids)
     phylo_from_otl(res)
 }
+
