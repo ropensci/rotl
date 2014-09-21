@@ -18,7 +18,7 @@
 ##' that context. For a list of available taxonomic contexts, see the
 ##' contexts service.
 ##' @title Match names
-##' @param taxon_names taxon names to be queried (character vector)
+##' @param names taxon names to be queried (character vector)
 ##' @param context_name name of the taxonomic context to be searched
 ##' (character vector)
 ##' @param do_approximate_matching A boolean indicating whether or not
@@ -35,9 +35,9 @@
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_match_names <- function(taxon_names=NULL, context_name=NULL, do_approximate_matching=TRUE,
+tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
-    res <- .tnrs_match_names(taxon_names, context_name, do_approximate_matching,
+    res <- .tnrs_match_names(names, context_name, do_approximate_matching,
                ids, include_deprecated, include_dubious)
     check_tnrs(res)
     summary_match <- do.call("rbind", lapply(res$results, function(x) {
@@ -54,7 +54,7 @@ tnrs_match_names <- function(taxon_names=NULL, context_name=NULL, do_approximate
     names(summary_match) <- c("search_string", "unique_name", "approximate_match",
                               "ott_id", "number_matches", "is_synonym", "is_deprecated")
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
-    summary_match <- summary_match[match(tolower(taxon_names), summary_match$search_string), ]
+    summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
@@ -101,14 +101,14 @@ tnrs_contexts <- function() {
 ##' with exact matches to non-homonym taxa. Ambiguous names (those
 ##' without exact matches to non-homonym taxa) are indicated in
 ##' results.
-##' @param taxon_names Vector of taxon names.
+##' @param names Vector of taxon names.
 ##' @return something
 ##' @author Francois Michonneau
 ##' @examples
-##' res <- tnrs_infer_context("taxon_names"=c("Stellula calliope", "Struthio camelus"))
+##' res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
 ##' @export
-tnrs_infer_context <- function(taxon_names=NULL) {
-    res <- .tnrs_infer_context(taxon_names)
+tnrs_infer_context <- function(names=NULL) {
+    res <- .tnrs_infer_context(names)
     return(res)
 }
 
