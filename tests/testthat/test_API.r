@@ -1,24 +1,31 @@
-##Making use of the shared OpenTree testing architecture
+####
+## Making use of the shared OpenTree testing architecture
+####
+## The R, Python and Ruby wrappers for the Open Tree share a very similar design, 
+## allowing them to make use of a single test suite for the low-level functions
+## (thus, the tests both checkvan individual library works as expected, and that 
+## the different libraries stay in line with each other). 
 ##
-##The R, Python and Ruby wrappers for the Open Tree share a very similar design, 
-##allowing them to make use of a single test suite (thus, the tests both check
-## an individual library works and that the libraries stay in line). 
+## This file pulls the current version of the test from a github repo 
+## (https://github.com/OpenTreeOfLife/shared-api-tests) and translates the json
+## files into tests that run in testthat. This takes a considerable amount of
+## infrastructure so I'll briefly described the rational here. 
 ##
-##This joint testing arhitecture is recorded in a series of JSON files that
-## contain a series of tests, each of which contains one of several different 
-## expectations. This code makes it possible to translate the JSON tests in to 
-## testthat expectations/tests. Each of the low-level APIs is then tested in its
-## own file in the 'testthat' folder, which reads the appropriate JSON file. 
+## The JSON test-specificaton is defined at the github repo linked above, to
+## translate these tests I have created custom testthat expectation-functionals
+## (contains(), (key_has_value()... ). Because many of the test blocks in the 
+## JSON files have multiple expectiatoins (i.e. many key-value pairs for
+## test_equals) there are functions starting with `test_` that run an entire
+## test block for a given expectation. Since many of these tests require
+## translation between R-objects and JSON encoded strings there is a set of
+## convienence functions to automate that step and a function "test_map" that
+## returns the appropriate test_* function for r given JSON test block. 
 ##
-##NOTE: At present the JSON files are stored locally, it might make more sense
-## to always pull them down from the python bindings repo, or manually keep the
-## library up to date between releases.
+## Finally, testthat_json_test uses the above functions to runs an entire test
+## from a JSON object, and run_shared_tests() runs every tests in a JSON file.
 
 
 
-
-##
-##Create custom expectation to map the JSON specificatoi
 
 #functionals that start with a response
 contains <- function(key_name){
@@ -165,31 +172,11 @@ run_shared_test <- function(json_obj){
 }
 
 
-context("Graph of life API")
-
-    test_description <- jsonlite::fromJSON("https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/graph_of_life.json",
-                                           unicode=TRUE)
+base_url <- "https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/"
+apis <- c("graph_of_life", "studies", "taxonomy", "tree_of_life", "tnrs")
+for(i in 1:length(apis)){
+    context( paste(apis[i], "API") )
+    test_text <- httr::GET(paste0(base_url, apis[i], ".json"))
+    test_description <- jsonlite::fromJSON(httr::content(test_text))
     run_shared_test(test_description)
-
-context("Studies API")
-    test_description <- jsonlite::fromJSON("https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/studies.json",
-                                          unicode=TRUE)                           
-    run_shared_test(test_description)
-
-context("Taxonomy life API")
-
-    test_description <- jsonlite::fromJSON('https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/taxonomy.json',
-                                           unicode=TRUE)
-    run_shared_test(test_description)
-
-context("Taxonomic name resolution API")
-
-    test_description <- jsonlite::fromJSON("https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/tnrs.json",
-                                           unicode=TRUE)
-    run_shared_test(test_description)
-
-context("Tree of life API")
-
-    test_description <-jsonlite::fromJSON(httr::content(httr::GET('https://github.com/dwinter/shared-api-tests/raw/master/tree_of_life.json')))
-                                     
-    run_shared_test(test_description)
+}

@@ -3,7 +3,7 @@
 \alias{get_study_meta}
 \title{Study Metadata}
 \usage{
-get_study_meta(study)
+get_study_meta(study_id)
 }
 \arguments{
 \item{study}{character, study id}
@@ -16,7 +16,6 @@ Retrieve metadata about a study in the Open Tree of Life datastore
 }
 \examples{
 req <- get_study_meta("pg_719")
-req_list <- httr::context(req)
-req_lsit$nexml$`^ot:studyPublication`
+req$nexml$`^ot:studyPublication`
 }
 

@@ -3,12 +3,12 @@
 \alias{tnrs_match_names}
 \title{Match names}
 \usage{
-tnrs_match_names(taxon_names = NULL, context_name = NULL,
+tnrs_match_names(names = NULL, context_name = NULL,
   do_approximate_matching = TRUE, ids = NULL, include_deprecated = FALSE,
   include_dubious = FALSE)
 }
 \arguments{
-\item{taxon_names}{taxon names to be queried (character vector)}
+\item{names}{taxon names to be queried (character vector)}
 
 \item{context_name}{name of the taxonomic context to be searched
 (character vector)}

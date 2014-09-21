@@ -3,10 +3,10 @@
 \alias{tnrs_infer_context}
 \title{Infer context}
 \usage{
-tnrs_infer_context(taxon_names = NULL)
+tnrs_infer_context(names = NULL)
 }
 \arguments{
-\item{taxon_names}{Vector of taxon names.}
+\item{names}{Vector of taxon names.}
 }
 \value{
 something
@@ -22,7 +22,7 @@ without exact matches to non-homonym taxa) are indicated in
 results.
 }
 \examples{
-res <- tnrs_infer_context("taxon_names"=c("Stellula calliope", "Struthio camelus"))
+res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
 }
 \author{
 Francois Michonneau

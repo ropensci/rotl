@@ -3,8 +3,8 @@
 \alias{get_study_tree}
 \title{Study Tree}
 \usage{
-get_study_tree(study = NULL, tree = NULL, format = c("", "nexus",
-  "newick", "json"))
+get_study_tree(study_id = NULL, tree_id = NULL,
+  object_format = c("phylo"), text_format = NULL, file)
 }
 \arguments{
 \item{study}{char study id}
@@ -20,6 +20,6 @@ A tree file in desired format
 returns specific tree from a study
 }
 \examples{
-nexson_tr <- get_study_tree(study="pg_1144", tree="tree2324")
+nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
 }
 
