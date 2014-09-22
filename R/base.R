@@ -69,6 +69,8 @@ phylo_from_otl <- function(res, parser="rncl") {
                 cat(res$newick, file=fnm)
             } else if (!is.null(res$subtree)) {
                 cat(res$subtree, file=fnm)
+            } else {
+            	    stop("Cannot find tree")
             }
         } else if (is.character(res)) {
             cat(res, file=fnm)
@@ -80,6 +82,8 @@ phylo_from_otl <- function(res, parser="rncl") {
             phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
         } else if (!is.null(res$subtree)) {
             phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
+        } else {
+            stop("Cannot find tree")
         }
     } else {
         stop(paste("Parser \'", parser, "\' not recognized", sep=""))
