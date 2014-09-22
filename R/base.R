@@ -56,6 +56,11 @@ otl_formats <- function(format){
            "") #fall through is no extension = nex(j)son
 }
 
+## Strip all characters except the ottId from a OpenTree label (internal or terminal)
+otl_ottid_from_label <- function(label){
+	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", tmp)));
+}
+
 phylo_from_otl <- function(res, parser="rncl") {
     if (parser == "rncl") {
         fnm <- tempfile()
