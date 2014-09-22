@@ -17,7 +17,7 @@ otl_parse <- function(req) {
 
 otl_check <- function(req) {
     if (!req$status_code < 400) {
-    	    msg <- otl_parse(req)$message
+            msg <- otl_parse(req)$message
         stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
     }
     otl_check_error(req)
@@ -56,16 +56,22 @@ otl_formats <- function(format){
            "") #fall through is no extension = nex(j)son
 }
 
-phylo_from_otl <- function(res) {
-    fnm <- tempfile()
-    if (is.list(res)) {
-        cat(res$"newick", file=fnm)
-    } else if (is.character(res)) {
-        cat(res, file=fnm)
-    } else stop("I don't know how to deal with this format.")
-    phy <- rncl::make_phylo(fnm, file.format="newick")
-    unlink(fnm)
-    phy
+phylo_from_otl <- function(res, parser="rncl") {
+    if (parser == "rncl") {
+        fnm <- tempfile()
+        if (is.list(res)) {
+            cat(res$"newick", file=fnm)
+        } else if (is.character(res)) {
+            cat(res, file=fnm)
+        } else stop("I don't know how to deal with this format.")
+        phy <- rncl::make_phylo(fnm, file.format="newick")
+        unlink(fnm)
+    } else if (parser == "phytools") {
+        phy <- phytools::read.newick(text=res$newick)
+    } else {
+        stop(paste("Parser \'", parser, "\' not recognized", sep=""))
+    }
+    return(phy)
 }
 
 ## nexml_from_otl <- function(res) {

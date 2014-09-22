@@ -95,14 +95,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
         stop("Must supply a \'node_id\' OR \'ott_id\'")
     }
     res <- .tol_subtree(node_id, ott_id, tree_id)
-    phy <- NULL
-    if (parser == "rncl") {
-        phy <- phylo_from_otl(res)
-    } else if (parser == "phytools") {
-    	    phy <- phytools::read.newick(text=res$newick)
-    } else {
-    	    stop(paste("Parser \'", parser, "\' not recognized", sep=""))
-    }
+    phy <- phylo_from_otl(res, parser)
     return(phy)
 }
 
@@ -125,6 +118,10 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
 ##' the induced tree
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##' induced tree
+##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
+##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
+##' the moment discards node labels. \code{"phytools"} retains node labels,
+##' but can be prohibitively slow.
 ##' @return a tree of class \code{"phylo"}
 ##' @author Francois Michonneau
 ##' @examples
@@ -132,11 +129,12 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' }
 ##' @export
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
+tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, parser="rncl") {
     if (is.null(node_ids) && is.null(ott_ids)) {
         stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
     res <- .tol_induced_subtree(node_ids, ott_ids)
-    phylo_from_otl(res)
+    phy <- phylo_from_otl(res, parser)
+    return(phy)
 }
 
