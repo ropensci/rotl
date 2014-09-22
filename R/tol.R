@@ -60,15 +60,8 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
     return(res)
 }
 
-##' Extract subtree from a node or an OTT
-##'
-##' Return a complete subtree of the draft tree descended from some
-##' specified node. The node to use as the start node may be specified
-##' using either a node id or an ott id, but not both. If the
-##' specified node is not in the synthetic tree (or is entirely absent
-##' from the graph), an error will be returned.
 ##' @title Extract subtree
-##' @return something
+##' @description Extract subtree from a node or ott id
 ##' @author Francois Michonneau
 ##' @param node_id The node id of the node in the tree that should
 ##' serve as the root of the tree returned. This argument may not be
@@ -79,13 +72,22 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' @param tree_id The identifier for the synthesis tree. We currently
 ##' only support a single draft tree in the db at a time, so this
 ##' argument is superfluous and may be safely ignored.
+##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
+##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
+##' the moment discards node labels. \code{"phytools"} retains node labels,
+##' but can be prohibitively slow.
+##' @details Return a complete subtree of the draft tree descended from some
+##' specified node. The node to use as the start node may be specified
+##' using either a node id or an ott id, but not both. If the
+##' specified node is not in the synthetic tree (or is entirely absent
+##' from the graph), an error will be returned.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##'\dontrun{
 ##' res <- tol_subtree(ott_id=81461)
 ##'}
 ##' @export
-tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
+tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") {
     if (!is.null(node_id) && !is.null(ott_id)) {
         stop("Use only node_id OR ott_id")
     }
@@ -93,7 +95,15 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
         stop("Must supply a \'node_id\' OR \'ott_id\'")
     }
     res <- .tol_subtree(node_id, ott_id, tree_id)
-    phylo_from_otl(res)
+    phy <- NULL
+    if (parser == "rncl") {
+        phy <- phylo_from_otl(res)
+    } else if (parser == "phytools") {
+    	    phy <- phytools::read.newick(text=res$newick)
+    } else {
+    	    stop(paste("Parser \'", parser, "\' not recognized", sep=""))
+    }
+    return(phy)
 }
 
 ##' Extract induced subtree

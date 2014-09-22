@@ -10,7 +10,8 @@ Imports:
     httr,
     jsonlite,
     rncl,
-    ape
+    ape,
+    phytools
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr,
