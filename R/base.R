@@ -60,14 +60,22 @@ phylo_from_otl <- function(res, parser="rncl") {
     if (parser == "rncl") {
         fnm <- tempfile()
         if (is.list(res)) {
-            cat(res$"newick", file=fnm)
+        	    if (!is.null(res$newick)) {
+                cat(res$newick, file=fnm)
+            } else if (!is.null(res$subtree)) {
+            	    cat(res$subtree, file=fnm)
+            }
         } else if (is.character(res)) {
             cat(res, file=fnm)
         } else stop("I don't know how to deal with this format.")
         phy <- rncl::make_phylo(fnm, file.format="newick")
         unlink(fnm)
     } else if (parser == "phytools") {
-        phy <- phytools::read.newick(text=res$newick)
+    	    if (!is.null(res$newick)) {
+            phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
+        } else if (!is.null(res$subtree)) {
+        	phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
+        }
     } else {
         stop(paste("Parser \'", parser, "\' not recognized", sep=""))
     }
