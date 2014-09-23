@@ -42,16 +42,21 @@ gol_summary <- function(res) {
 ##' @param tree_id String. The tree identifier for a given study.
 ##' @param git_sha String. The git SHA identifying a particular source version.
 ##' @param format The name of the return format. The only currently supported format is newick.
+##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
+##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
+##' the moment discards node labels. \code{"phytools"} retains node labels,
+##' but can be prohibitively slow.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##'\dontrun{
 ##' res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452", tree_id="7")
 ##'}
 ## @export ## not exported for now as users probably don't care/need it
-gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
+gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, parser="rncl") {
     res <- .gol_source_tree(study_id, tree_id, git_sha)
     # required b/c of "knuckles"
-    phylo_from_otl(res)
+    phy <- phylo_from_otl(res, parser)
+    return(phy)
 }
 
 

@@ -17,7 +17,7 @@ otl_parse <- function(req) {
 
 otl_check <- function(req) {
     if (!req$status_code < 400) {
-    	    msg <- otl_parse(req)$message
+            msg <- otl_parse(req)$message
         stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
     }
     otl_check_error(req)
@@ -56,16 +56,39 @@ otl_formats <- function(format){
            "") #fall through is no extension = nex(j)son
 }
 
-phylo_from_otl <- function(res) {
-    fnm <- tempfile()
-    if (is.list(res)) {
-        cat(res$"newick", file=fnm)
-    } else if (is.character(res)) {
-        cat(res, file=fnm)
-    } else stop("I don't know how to deal with this format.")
-    phy <- rncl::make_phylo(fnm, file.format="newick")
-    unlink(fnm)
-    phy
+## Strip all characters except the ottId from a OpenTree label (internal or terminal)
+otl_ottid_from_label <- function(label){
+	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
+}
+
+phylo_from_otl <- function(res, parser="rncl") {
+    if (parser == "rncl") {
+        fnm <- tempfile()
+        if (is.list(res)) {
+            if (!is.null(res$newick)) {
+                cat(res$newick, file=fnm)
+            } else if (!is.null(res$subtree)) {
+                cat(res$subtree, file=fnm)
+            } else {
+            	    stop("Cannot find tree")
+            }
+        } else if (is.character(res)) {
+            cat(res, file=fnm)
+        } else stop("I don't know how to deal with this format.")
+        phy <- rncl::make_phylo(fnm, file.format="newick")
+        unlink(fnm)
+    } else if (parser == "phytools") {
+        if (!is.null(res$newick)) {
+            phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
+        } else if (!is.null(res$subtree)) {
+            phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
+        } else {
+            stop("Cannot find tree")
+        }
+    } else {
+        stop(paste("Parser \'", parser, "\' not recognized", sep=""))
+    }
+    return(phy)
 }
 
 ## nexml_from_otl <- function(res) {
