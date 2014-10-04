@@ -26,7 +26,7 @@
         stop("Argument \'context_name\' must be of class \"character\"")
     }
     
-    q <- list(names = names, context_name = context_name,
+    q <- list(names = names, context_name = jsonlite::unbox(context_name),
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
               ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
               include_dubious = jsonlite::unbox(include_dubious))

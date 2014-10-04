@@ -20,7 +20,7 @@
 ##' @title Match names
 ##' @param names taxon names to be queried (character vector)
 ##' @param context_name name of the taxonomic context to be searched
-##' (character vector)
+##' (length-one character vector)
 ##' @param do_approximate_matching A boolean indicating whether or not
 ##' to perform approximate string (a.k.a. "fuzzy") matching. Will
 ##' greatly improve speed if this is turned OFF (false). By default,
