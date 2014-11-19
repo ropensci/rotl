@@ -15,14 +15,19 @@ and [Ruby](https://github.com/SpeciesFileGroup/bark).
 ##Installation
 
 If you want to play with these functions you can, via
-[devtools](https://github.com/hadley/devtools).
+[devtools](https://github.com/hadley/devtools). `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you first need to install that package:
+
 
 
 ```r
 library(devtools)
-
+install_github("fmichonneau/rncl")
 install_github("fmichonneau/rotl")
 ```
+
+Windows users may find it easier to install the pre-built `rncl` package [stored here](https://github.com/fmichonneau/rncl/tree/master/winbuilds)
+
+
 ###Vignette
 
 For the time being a [small vignette lives
