@@ -69,7 +69,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/lGLXILU.png) 
+![plot of chunk get_tr](http://i.imgur.com/YmiNCIi.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -110,17 +110,8 @@ furry_metadata$nexml$treesById
 ```
 
 ```r
-tr_string <- get_study_tree(study_id="2647", tree_id="tree6169",format="newick")
+furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
+plot(furry_tr)
 ```
 
-```
-## Error: unused argument (format = "newick")
-```
-
-```r
-plot(read.tree(text=tr_string))
-```
-
-```
-## Error: object 'tr_string' not found
-```
+![plot of chunk tree](http://i.imgur.com/bcaOQrt.png) 
