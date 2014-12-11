@@ -25,26 +25,25 @@ If you want to play with these functions you can, via
 
 
 `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you
-first need to install that package. You can use the latest version that lives on
-github or the one available from CRAN:
+first need to install that package. You can install the version available on
+CRAN (recommended):
 
 ```{r, eval=FALSE}
 install.packages("rncl")
 ```
 
+(or the latest version available on github: `{r, eval=FALSE} devtools::install_github("fmichonneau/rncl")`).
 
 ```{r, eval=FALSE}
 library(devtools)
-install_github("fmichonneau/rncl")
 install_github("fmichonneau/rotl")
-
 ```
 
-##Vignette
+## Vignette
 
 For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)
 
-##Simple examples
+## Simple examples
 
 Note: the library is still in active development and behaviour of the following
 functions may well change in the future:
@@ -54,6 +53,7 @@ functions may well change in the future:
 First find ott ids for a set of names:
 
 ```{r resolve}
+library(rotl)
 apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```

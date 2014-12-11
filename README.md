@@ -10,7 +10,7 @@ hackathon](http://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-ha
 
 Check out the sister repos for
 [Python](https://github.com/OpenTreeOfLife/opentree-interfaces/tree/master/python)
-and [Ruby](https://github.com/SpeciesFileGroup/bark). 
+and [Ruby](https://github.com/SpeciesFileGroup/bark).
 
 ##Installation
 If you want to play with these functions you can, via
@@ -18,20 +18,28 @@ If you want to play with these functions you can, via
 
 
 
+`rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you
+first need to install that package. You can install the version available on
+CRAN (recommended):
+
+
+```r
+install.packages("rncl")
+```
+
+(or the latest version available on github: `{r, eval=FALSE} devtools::install_github("fmichonneau/rncl")`).
+
 
 ```r
 library(devtools)
-install_github("fmichonneau/rncl")
 install_github("fmichonneau/rotl")
 ```
 
-Windows users may find it easier to install the pre-built `rncl` package [stored here](https://github.com/fmichonneau/rncl/tree/master/winbuilds)
+## Vignette
 
-##Vignette 
+For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)
 
-For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
-
-##Simple examples
+## Simple examples
 
 Note: the library is still in active development and behaviour of the following
 functions may well change in the future:
@@ -42,6 +50,7 @@ First find ott ids for a set of names:
 
 
 ```r
+library(rotl)
 apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
@@ -64,7 +73,7 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ## 6 712902              1      FALSE         FALSE
 ## 7 770309              1      FALSE         FALSE
 ```
-Now get open tree to return a tree with just those tips. 
+Now get open tree to return a tree with just those tips.
 
 
 
@@ -73,7 +82,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/pWUJd2K.png) 
+![plot of chunk get_tr](http://i.imgur.com/glcbpag.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -118,4 +127,4 @@ furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
 plot(furry_tr)
 ```
 
-![plot of chunk tree](http://i.imgur.com/OVcg9vM.png) 
+![plot of chunk tree](http://i.imgur.com/YaxCqhe.png) 
