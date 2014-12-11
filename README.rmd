@@ -48,11 +48,9 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 Now get open tree to return a tree with just those tips. 
 
-*NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
 ```{r get_tr}
-response <- .tol_induced_subtree(ott_ids=as.numeric(resolved_names$ott_id))
-tr <- read.tree(text=response$subtree)
+tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
