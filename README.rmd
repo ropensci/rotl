@@ -30,8 +30,7 @@ install_github("fmichonneau/rotl")
 ```
 ##Vignette 
 
-                                                                                                                                                
-                                                                                                                                                For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
+For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
 
 ##Simple examples
 

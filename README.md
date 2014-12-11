@@ -25,8 +25,7 @@ install_github("fmichonneau/rotl")
 ```
 ##Vignette 
 
-                                                                                                                                                
-                                                                                                                                                For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
+For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
 
 ##Simple examples
 
@@ -70,7 +69,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/WmGZgeo.png) 
+![plot of chunk get_tr](http://i.imgur.com/lGLXILU.png) 
 
 
 ### Find trees focused on my favourite taxa
