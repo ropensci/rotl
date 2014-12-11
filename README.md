@@ -13,9 +13,9 @@ Check out the sister repos for
 and [Ruby](https://github.com/SpeciesFileGroup/bark). 
 
 ##Installation
-
 If you want to play with these functions you can, via
-[devtools](https://github.com/hadley/devtools). `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you first need to install that package:
+[devtools](https://github.com/hadley/devtools). `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you first need to install that package, which is avaliable from CRAN or github:
+
 
 
 
@@ -27,11 +27,10 @@ install_github("fmichonneau/rotl")
 
 Windows users may find it easier to install the pre-built `rncl` package [stored here](https://github.com/fmichonneau/rncl/tree/master/winbuilds)
 
+##Vignette 
 
-###Vignette
+For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
 
-For the time being a [small vignette lives
-here](http://dwinter.github.io/rotl-vignette/)
 ##Simple examples
 
 Note: the library is still in active development and behaviour of the following
@@ -67,16 +66,14 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 Now get open tree to return a tree with just those tips. 
 
-*NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
 
 ```r
-response <- .tol_induced_subtree(ott_ids=as.numeric(resolved_names$ott_id))
-tr <- read.tree(text=response$subtree)
+tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/QN1k3CW.png) 
+![plot of chunk get_tr](http://i.imgur.com/pWUJd2K.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -117,8 +114,8 @@ furry_metadata$nexml$treesById
 ```
 
 ```r
-tr_string <- get_study_tree(study_id="2647", tree_id="tree6169",format="newick")
-plot(read.tree(text=tr_string))
+furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
+plot(furry_tr)
 ```
 
-![plot of chunk tree](http://i.imgur.com/6zhJg2R.png) 
+![plot of chunk tree](http://i.imgur.com/OVcg9vM.png) 

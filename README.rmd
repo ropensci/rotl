@@ -19,9 +19,10 @@ Check out the sister repos for
 and [Ruby](https://github.com/SpeciesFileGroup/bark).
 
 ##Installation
-
 If you want to play with these functions you can, via
-[devtools](https://github.com/hadley/devtools).
+[devtools](https://github.com/hadley/devtools). `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you first need to install that package, which is avaliable from CRAN or github:
+
+
 
 `rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you
 first need to install that package. You can use the latest version that lives on
@@ -34,8 +35,9 @@ install.packages("rncl")
 
 ```{r, eval=FALSE}
 library(devtools)
-
+install_github("fmichonneau/rncl")
 install_github("fmichonneau/rotl")
+
 ```
 
 ##Vignette
@@ -57,11 +59,9 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 Now get open tree to return a tree with just those tips.
 
-*NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
 ```{r get_tr}
-response <- .tol_induced_subtree(ott_ids=as.numeric(resolved_names$ott_id))
-tr <- read.tree(text=response$subtree)
+tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
@@ -79,6 +79,6 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 library(ape)
 furry_metadata <-get_study_meta(2647)
 furry_metadata$nexml$treesById
-tr_string <- get_study_tree(study_id="2647", tree_id="tree6169",format="newick")
-plot(read.tree(text=tr_string))
+furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
+plot(furry_tr)
 ```
