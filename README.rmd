@@ -16,22 +16,31 @@ hackathon](http://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-ha
 
 Check out the sister repos for
 [Python](https://github.com/OpenTreeOfLife/opentree-interfaces/tree/master/python)
-and [Ruby](https://github.com/SpeciesFileGroup/bark). 
+and [Ruby](https://github.com/SpeciesFileGroup/bark).
 
 ##Installation
 
 If you want to play with these functions you can, via
 [devtools](https://github.com/hadley/devtools).
 
+`rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you
+first need to install that package. You can use the latest version that lives on
+github or the one available from CRAN:
+
+```{r, eval=FALSE}
+install.packages("rncl")
+```
+
+
 ```{r, eval=FALSE}
 library(devtools)
 
 install_github("fmichonneau/rotl")
 ```
-##Vignette 
 
-                                                                                                                                                
-                                                                                                                                                For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)  
+##Vignette
+
+For the time being a [small vignette lives here](http://dwinter.github.io/rotl-vignette/)
 
 ##Simple examples
 
@@ -46,7 +55,7 @@ First find ott ids for a set of names:
 apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
-Now get open tree to return a tree with just those tips. 
+Now get open tree to return a tree with just those tips.
 
 *NOTE*: the code below uses a work-around that avoids a (temporary) time-consuming step that cleans source trees for parsing safely in R. In the future `tol_induced_subtree()` will return a tree object
 
