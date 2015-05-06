@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl)
+[![Coverage Status](https://coveralls.io/repos/fmichonneau/rotl/badge.svg)](https://coveralls.io/r/fmichonneau/rotl)
 
 # An R interface to Open Tree API
 
@@ -82,7 +83,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/glcbpag.png) 
+![plot of chunk get_tr](http://i.imgur.com/VOIXQKM.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -95,7 +96,7 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 
 ```
 ## ot:studyId ot:studyId ot:studyId ot:studyId ot:studyId 
-##     "2647"     "1428"     "2582"     "2550"     "2812"
+##     "2647"     "2582"     "2812"     "1428"     "2550"
 ```
 
 ### Get a specific study tree
@@ -109,6 +110,9 @@ furry_metadata$nexml$treesById
 ```
 ## $trees2647
 ## $trees2647$treeById
+## $trees2647$treeById$tree6170
+## NULL
+## 
 ## $trees2647$treeById$tree6169
 ## NULL
 ## 
@@ -116,6 +120,9 @@ furry_metadata$nexml$treesById
 ## $trees2647$`^ot:treeElementOrder`
 ## $trees2647$`^ot:treeElementOrder`[[1]]
 ## [1] "tree6169"
+## 
+## $trees2647$`^ot:treeElementOrder`[[2]]
+## [1] "tree6170"
 ## 
 ## 
 ## $trees2647$`@otus`
@@ -127,4 +134,4 @@ furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
 plot(furry_tr)
 ```
 
-![plot of chunk tree](http://i.imgur.com/YaxCqhe.png) 
+![plot of chunk tree](http://i.imgur.com/iHmFP1O.png) 
