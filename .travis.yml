@@ -2,6 +2,9 @@ language: r
 
 sudo: required
 
+r_binary_packages:
+  - rncl
+
 r_github_packages:
   - jimhester/covr
 
