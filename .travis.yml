@@ -2,7 +2,7 @@ language: r
 
 sudo: required
 
-r_binary_packages:
+r_binary_install:
   - rncl
 
 r_github_packages:
