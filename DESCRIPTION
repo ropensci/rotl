@@ -15,6 +15,6 @@ Imports:
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr,
-    testthat,
+    testthat
 VignetteBuilder: knitr
-LazyData: NA
+LazyData: true
