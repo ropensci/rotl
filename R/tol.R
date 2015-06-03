@@ -73,7 +73,7 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' only support a single draft tree in the db at a time, so this
 ##' argument is superfluous and may be safely ignored.
 ##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
-##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
+##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at
 ##' the moment discards node labels. \code{"phytools"} retains node labels,
 ##' but can be prohibitively slow.
 ##' @details Return a complete subtree of the draft tree descended from some
@@ -119,7 +119,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##' induced tree
 ##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
-##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
+##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at
 ##' the moment discards node labels. \code{"phytools"} retains node labels,
 ##' but can be prohibitively slow.
 ##' @return a tree of class \code{"phylo"}
@@ -134,7 +134,15 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, parser="rncl") {
         stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
     res <- .tol_induced_subtree(node_ids, ott_ids)
+    if (length(res$node_ids_not_in_graph) > 0) {
+        warning("node ids: ", paste0(res$node_ids_not_in_graph, collapse = ", "), " not in graph.")
+    }
+    if (length(res$ott_ids_not_in_tree) >  0) {
+        warning("ott ids: ", paste0(res$ott_ids_not_in_tree, collaspse = ", "),  " not in tree.")
+    }
+    if (length(res$ott_ids_not_in_graph) > 0) {
+        warning("ott ids: ", paste0(res$ott_ids_not_in_graph, collapse = ", "), " not in graph.")
+    }
     phy <- phylo_from_otl(res, parser)
     return(phy)
 }
-
