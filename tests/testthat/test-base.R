@@ -16,12 +16,8 @@ test_that("otl_ottid_from_label",
 
 
 test_that("errors that would otherwise not get caught in phylo_from_otl", {
-              expect_error(phylo_from_otl(list(newick = "((A, B), C);"), parser = "foobar"))
-              expect_error(phylo_from_otl(list(something = "((A, B), C);"), parser = "rncl"),
+              expect_error(phylo_from_otl(list(something = "((A, B), C);")),
                            "Cannot find tree")
-              expect_error(phylo_from_otl(list(something = "((A, B), C);"), parser = "phytools"),
-                           "Cannot find tree")
-              expect_error(phylo_from_otl(999, parser = "rncl"), "I don't know how to deal with this format")
-              expect_error(phylo_from_otl(999, parser = "phytools"), "I don't know how to deal with this format")
+              expect_error(phylo_from_otl(999), "I don't know how to deal with this format")
           }
           )

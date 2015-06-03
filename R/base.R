@@ -70,38 +70,21 @@ otl_ottid_from_label <- function(label) {
 	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
 }
 
-phylo_from_otl <- function(res, parser=c("rncl", "phytools")) {
-    parser <- match.arg(parser)
-    if (parser == "rncl") {
-        fnm <- tempfile()
-        if (is.list(res)) {
-            if (!is.null(res$newick)) {
-                cat(res$newick, file=fnm)
-            } else if (!is.null(res$subtree)) {
-                cat(res$subtree, file=fnm)
-            } else {
-                stop("Cannot find tree")
-            }
-        } else if (is.character(res)) {
-            cat(res, file=fnm)
-        } else stop("I don't know how to deal with this format.")
-        phy <- rncl::make_phylo(fnm, file.format="newick")
-        unlink(fnm)
-    } else if (parser == "phytools") {
-        if (is.list(res)) {
-            if (!is.null(res$newick)) {
-                phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
-            } else if (!is.null(res$subtree)) {
-                phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
-            } else {
-                stop("Cannot find tree")
-            }
-        } else if (is.character(res)) {
-            phy <- ape::collapse.singles(phytools::read.newick(text = res))
-        } else stop("I don't know how to deal with this format.")
-    } else {
-        stop(paste("Parser \'", parser, "\' not recognized", sep=""))
-    }
+phylo_from_otl <- function(res) {
+    fnm <- tempfile()
+    if (is.list(res)) {
+        if (!is.null(res$newick)) {
+            cat(res$newick, file=fnm)
+        } else if (!is.null(res$subtree)) {
+            cat(res$subtree, file=fnm)
+        } else {
+            stop("Cannot find tree")
+        }
+    } else if (is.character(res)) {
+        cat(res, file=fnm)
+    } else stop("I don't know how to deal with this format.")
+    phy <- rncl::make_phylo(fnm, file.format="newick")
+    unlink(fnm)
     return(phy)
 }
 

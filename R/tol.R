@@ -72,10 +72,6 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' @param tree_id The identifier for the synthesis tree. We currently
 ##' only support a single draft tree in the db at a time, so this
 ##' argument is superfluous and may be safely ignored.
-##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
-##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at
-##' the moment discards node labels. \code{"phytools"} retains node labels,
-##' but can be prohibitively slow.
 ##' @details Return a complete subtree of the draft tree descended from some
 ##' specified node. The node to use as the start node may be specified
 ##' using either a node id or an ott id, but not both. If the
@@ -87,7 +83,7 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' res <- tol_subtree(ott_id=81461)
 ##'}
 ##' @export
-tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") {
+tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
     if (!is.null(node_id) && !is.null(ott_id)) {
         stop("Use only node_id OR ott_id")
     }
@@ -95,7 +91,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
         stop("Must supply a \'node_id\' OR \'ott_id\'")
     }
     res <- .tol_subtree(node_id, ott_id, tree_id)
-    phy <- phylo_from_otl(res, parser)
+    phy <- phylo_from_otl(res)
     return(phy)
 }
 
@@ -118,10 +114,6 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
 ##' the induced tree
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##' induced tree
-##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
-##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at
-##' the moment discards node labels. \code{"phytools"} retains node labels,
-##' but can be prohibitively slow.
 ##' @return a tree of class \code{"phylo"}
 ##' @author Francois Michonneau
 ##' @examples
@@ -129,7 +121,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, parser="rncl") 
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' }
 ##' @export
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, parser="rncl") {
+tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
         stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
@@ -143,6 +135,6 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, parser="rncl") {
     if (length(res$ott_ids_not_in_graph) > 0) {
         warning("ott ids: ", paste0(res$ott_ids_not_in_graph, collapse = ", "), " not in graph.")
     }
-    phy <- phylo_from_otl(res, parser)
+    phy <- phylo_from_otl(res)
     return(phy)
 }
