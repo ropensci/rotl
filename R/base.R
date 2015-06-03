@@ -1,4 +1,3 @@
-
 otl_url <- function(dev=FALSE) {
     if (dev) {
         "http://devapi.opentreeoflife.org"
@@ -7,7 +6,13 @@ otl_url <- function(dev=FALSE) {
     }
 }
 
-otl_version <- function() { "v2" }
+otl_version <- function(version) {
+    if (missing(version)) {
+        return("v2")
+    } else {
+        return(version)
+    }
+}
 
 otl_parse <- function(req) {
     txt <- httr::content(req, as="text")
@@ -51,7 +56,7 @@ otl_check_error <- function(req) {
     }
 }
 
-otl_formats <- function(format){
+otl_formats <- function(format) {
     switch(tolower(format),
            "nexus" = ".nex",
            "newick" = ".tre",
@@ -61,11 +66,12 @@ otl_formats <- function(format){
 }
 
 ## Strip all characters except the ottId from a OpenTree label (internal or terminal)
-otl_ottid_from_label <- function(label){
+otl_ottid_from_label <- function(label) {
 	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
 }
 
-phylo_from_otl <- function(res, parser="rncl") {
+phylo_from_otl <- function(res, parser=c("rncl", "phytools")) {
+    parser <- match.arg(parser)
     if (parser == "rncl") {
         fnm <- tempfile()
         if (is.list(res)) {
@@ -74,7 +80,7 @@ phylo_from_otl <- function(res, parser="rncl") {
             } else if (!is.null(res$subtree)) {
                 cat(res$subtree, file=fnm)
             } else {
-            	    stop("Cannot find tree")
+                stop("Cannot find tree")
             }
         } else if (is.character(res)) {
             cat(res, file=fnm)
@@ -82,13 +88,17 @@ phylo_from_otl <- function(res, parser="rncl") {
         phy <- rncl::make_phylo(fnm, file.format="newick")
         unlink(fnm)
     } else if (parser == "phytools") {
-        if (!is.null(res$newick)) {
-            phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
-        } else if (!is.null(res$subtree)) {
-            phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
-        } else {
-            stop("Cannot find tree")
-        }
+        if (is.list(res)) {
+            if (!is.null(res$newick)) {
+                phy <- ape::collapse.singles(phytools::read.newick(text=res$newick))
+            } else if (!is.null(res$subtree)) {
+                phy <- ape::collapse.singles(phytools::read.newick(text=res$subtree))
+            } else {
+                stop("Cannot find tree")
+            }
+        } else if (is.character(res)) {
+            phy <- ape::collapse.singles(phytools::read.newick(text = res))
+        } else stop("I don't know how to deal with this format.")
     } else {
         stop(paste("Parser \'", parser, "\' not recognized", sep=""))
     }
