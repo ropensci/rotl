@@ -11,13 +11,15 @@ otl_version <- function() { "v2" }
 
 otl_parse <- function(req) {
     txt <- httr::content(req, as="text")
-    if (identical(txt, "")) stop("No output to parse", call. = FALSE)
-    jsonlite::fromJSON(txt, simplifyVector=FALSE)
+    if (identical(txt, "")) {
+        stop("No output to parse; check your query.", call. = FALSE)
+    }
+    txt
 }
 
 otl_check <- function(req) {
-    if (!req$status_code < 400) {
-            msg <- otl_parse(req)$message
+    if (!req$status_code <  400) {
+        msg <- otl_parse(req)
         stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
     }
     otl_check_error(req)
