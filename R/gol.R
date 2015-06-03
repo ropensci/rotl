@@ -68,17 +68,19 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 }
 
 
-##' Get summary information about a node in the graph
+##' Get summary information about a node in the graph database
 ##'
 ##' @title Node info
-##' @details Summary information about a queried node, including 1) whether it is in the graph DB,
-##' 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of
-##' descendant tip taxa, 5) graph node ID, and 6) taxonomic information (if it is a named
-##' node in the graph), including: name, rank, OpenTree Taxonomy ID (ottID), and source taxonomy
-##' IDs.
+##' @details Summary information about a queried node, including 1)
+##' whether it is in the graph database, 2) whether it is in the
+##' synthetic tree, 3) supporting study sources, 4) number of
+##' descendant tip taxa, 5) graph node ID, and 6) taxonomic
+##' information (if it is a named node in the graph), including: name,
+##' rank, OpenTree Taxonomy ID (ottID), and source taxonomy IDs.
 ##' @param ott_id The OpenTree taxonomic identifier.
 ##' @param node_id The idenitifer of the node in the graph.
-##' @param include_lineage Boolean. Whether to return the lineage of the node from the synthetic tree. Optional; default = FALSE.
+##' @param include_lineage Boolean. Whether to return the lineage of
+##' the node from the synthetic tree. Optional; default = FALSE.
 ##' @return A list of summary information about the queried node.
 ##' \itemize{
 ##'	\item {in_graph} {Boolean. Whether the queried node is present in the graph.}
