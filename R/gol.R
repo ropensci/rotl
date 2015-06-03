@@ -1,7 +1,11 @@
-
+##' Graph of Life
+##'
+##' Basic information about the graph
+##'
 ##' @title Information about the graph of life
-##' @description Basic information about the graph
-##' @details Returns summary information about the entire graph database, including identifiers for the taxonomy and source trees used to build it.
+##' @details Returns summary information about the entire graph
+##' database, including identifiers for the taxonomy and source trees
+##' used to build it.
 ##' @return An invisible list of graph attributes:
 ##' \itemize{
 ##'	\item {graph_num_source_trees} {The number of unique source trees in the graph.}
@@ -15,15 +19,12 @@
 ##' res <- gol_about()
 ##' @export
 gol_about <- function() {
-    res <- .gol_about()
-    gol_summary(res)
-    return(invisible(res))
+    res <- structure(.gol_about(), class = "gol")
+    res
 }
 
 
-## TEMPORARY. Need to use classes.
-## this could make use of class information. say, 'print.gol'
-gol_summary <- function(res) {
+print.gol <- function(res) {
     cat("\nOpenTree Synthetic Tree Graph.\n\n")
     cat("\tTaxonomy version: ", res$graph_taxonomy_version, "\n", sep="")
     cat("\tNumber of terminal taxa: ", res$graph_num_tips, "\n", sep="")
@@ -35,17 +36,27 @@ gol_summary <- function(res) {
 
 
 
+##' Returns a reconstructed source tree from the graph database.
+##'
 ##' @title Get reconstructed source tree
-##' @description Returns a reconstructed source tree from the graph DB.
-##' @details Reconstructs a source tree given identifiers: \code{study_id}, \code{tree_id}, and \code{git_sha}. The tree may differ from the original source tree in 2 ways: 1) it may contain fewer taxa (as duplicate taxa are pruned on tree ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to all named internal nodes and as a suffix to all terminal node names.
-##' @param study_id String. The study identifier. Will typically include a prefix ("pg_" or "ot_").
+##' @details Reconstructs a source tree given identifiers:
+##' \code{study_id}, \code{tree_id}, and \code{git_sha}.
+##'
+##' The tree may differ from the original source tree in 2 ways: 1) it
+##' may contain fewer taxa (as duplicate taxa are pruned on tree
+##' ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to
+##' all named internal nodes and as a suffix to all terminal node
+##' names.
+##' @param study_id String. The study identifier. Will typically
+##' include a prefix ("pg_" or "ot_").
 ##' @param tree_id String. The tree identifier for a given study.
-##' @param git_sha String. The git SHA identifying a particular source version.
-##' @param format The name of the return format. The only currently supported format is newick.
-##' @param parser The newick parser to use. Defaults to \code{"rncl"}. The
-##' alternative is \code{"phytools"}. \code{"rncl"} is faster, but at 
-##' the moment discards node labels. \code{"phytools"} retains node labels,
-##' but can be prohibitively slow.
+##' @param git_sha String. The git SHA identifying a particular source
+##' version.
+##' @param format The name of the return format. The only currently
+##' supported format is newick.
+##' @param parser The newick parser to use. Defaults to
+##' \code{"rncl"}. The alternative is \code{"phytools"}. \code{"rncl"}
+##' is faster.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##'\dontrun{
@@ -60,8 +71,9 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, parser="r
 }
 
 
+##' Get summary information about a node in the graph
+##'
 ##' @title Node info
-##' @description Get summary information about a node in the graph
 ##' @details Summary information about a queried node, including 1) whether it is in the graph DB,
 ##' 2) whether it is in the synthetic tree, 3) supporting study sources, 4) number of
 ##' descendant tip taxa, 5) graph node ID, and 6) taxonomic information (if it is a named
