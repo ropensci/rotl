@@ -14,7 +14,9 @@ otl_parse <- function(req) {
     if (identical(txt, "")) {
         stop("No output to parse; check your query.", call. = FALSE)
     }
-    txt
+    if (substr(txt, 1, 1) == "{") {
+        jsonlite::fromJSON(txt, simplifyVector = FALSE)$description
+    } else txt
 }
 
 otl_check <- function(req) {
