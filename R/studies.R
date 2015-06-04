@@ -111,7 +111,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
         } else {
             cat(res, file=file)
         }
-        invisible(res)
+        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
         res <- .get_study_tree(study_id, tree_id, format=text_format)
