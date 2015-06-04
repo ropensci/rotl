@@ -116,7 +116,6 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
     if (!is.null(text_format)) {
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
-        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         res <- .get_study_tree(study_id, tree_id, format=text_format,
                                tip_label = tip_label)
         if (identical(text_format, "json")) {
