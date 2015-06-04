@@ -71,7 +71,7 @@
 
 
 ## Get a study from the OpenTree docstore
-.get_study <- function(study_id=NULL, format=c("", "nexus", "newick", "nexml", "json")) {
+.get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json")) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
@@ -85,7 +85,8 @@
 
 
 ## Get a tree in a study from the OpenTree docstore
-.get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("json", "newick", "nexus")) {
+.get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("json", "newick", "nexus"),
+                            tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname")) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
@@ -97,7 +98,9 @@
         stop("Argument \'tree\' must be of class \"character\"")
     }
     format <- match.arg(format)
-    tree_file <- paste0(tree_id, otl_formats(format))
+    tip_label <- match.arg(tip_label)
+    tip_label <- paste0("/?tip_label=", tip_label)
+    tree_file <- paste0(tree_id, otl_formats(format), tip_label)
     res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"))
     cont <- httr::content(res)
     return(cont)

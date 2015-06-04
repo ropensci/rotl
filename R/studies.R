@@ -1,4 +1,4 @@
-##' Return a list of studies that match a given properties
+##' Return a list of studies that match given properties
 ##' @title find_study
 ##' @param exact Boolean, exact matching (default = FALSE)
 ##' @param property character, the property to be searched on
@@ -57,11 +57,11 @@ studies_properties <- function() {
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' that_one_study <- get_study(study_id="pg_719", obj_format="phylo")
+##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 ##' }
 # this function should accept nexml (both for object and text)
 get_study <- function(study_id=NULL, object_format=c("phylo"),
-                      text_format=c("", "nexus", "newick", "json"),
+                      text_format = c("", "nexus", "newick", "json"),
                       file) {
 
     object_format <- match.arg(object_format)
@@ -89,6 +89,12 @@ get_study <- function(study_id=NULL, object_format=c("phylo"),
 ##' returns specific tree from a study
 ##'
 ##' @title Study Tree
+##' @param study_id
+##' @param tree_id
+##' @param object_format
+##' @param tip_label
+##' @param text_format
+##' @param file
 ##' @param study char study id
 ##' @param tree tree id
 ##' @param format char Tree format (default = json)
@@ -99,13 +105,20 @@ get_study <- function(study_id=NULL, object_format=c("phylo"),
 ##'  nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
 ##'}
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
+                           tip_label = c("original_label", "ott_id", "ott_taxon_name"),
                            text_format=NULL, file) {
     object_format <- match.arg(object_format)
+    tip_label <- match.arg(tip_label)
+    tip_label <- switch(tip_label,
+                        original_labels = "ot:originallabel",
+                        ott_id =  "ot:ottid",
+                        ott_taxon_name = "ot:otttaxonname")
     if (!is.null(text_format)) {
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         text_format <- match.arg(text_format, c("nexus", "newick", "json"))
-        res <- .get_study_tree(study_id, tree_id, format=text_format)
+        res <- .get_study_tree(study_id, tree_id, format=text_format,
+                               tip_label = tip_label)
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -114,7 +127,8 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
-        res <- .get_study_tree(study_id, tree_id, format=text_format)
+        res <- .get_study_tree(study_id, tree_id, format=text_format,
+                               tip_label = tip_label)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
