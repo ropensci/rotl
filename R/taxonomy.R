@@ -1,10 +1,10 @@
 ##' Summary information about the OpenTree Taxaonomy (OTT)
-##' 
+##'
 ##' Return information about the taxonomy, including version.
 ##' @title Taxonomy about
 ##' @return Some JSON
 ##' @examples
-##' res <- taxonomy_about()
+##' taxonomy_about()
 ##' @export
 taxonomy_about <- function () {
     res <- .taxonomy_about()
@@ -13,7 +13,7 @@ taxonomy_about <- function () {
 
 
 ##' Taxon Info
-##' 
+##'
 ##' Given an ott id, return information about the specified taxon.
 ##' @title taxon
 ##' @param ott_id The OTT id of the taxon of interest. Not optional.
@@ -28,7 +28,7 @@ taxonomy_taxon <- function (ott_id=NULL) {
 
 
 ##' Taxonomic Subtree
-##' 
+##'
 ##' Given an ott id, return complete taxonomy subtree descended from specified taxon.
 ##' @title taxon
 ##' @param ott_id The OTT id of the taxon of interest.  Not optional.
@@ -36,14 +36,37 @@ taxonomy_taxon <- function (ott_id=NULL) {
 ##' @examples
 ##' req <- taxonomy_subtree(ott_id=515698)
 ##' @export
-taxonomy_subtree <- function (ott_id=NULL) {
-	res <- .taxonomy_subtree(ott_id)
-	return(res)
+taxonomy_subtree <- function (ott_id=NULL,
+                              output_format = c("taxa_all", "newick", "phylo", "raw", "taxa_species", "taxa_internal"),
+                              file) {
+    output_format <- match.arg(output_format)
+    res <- .taxonomy_subtree(ott_id)
+    if (!missing(file) && !identical(output_format, "newick"))
+        warning("'file' argument is ignored, you can only write newick tree strings to a file.")
+    if (identical(output_format, "raw")) {
+        return(res)
+    } else if (identical(output_format, "newick")) {
+        res <- res$subtree
+        if (!missing(file)) {
+            cat(res, file = file)
+            return(file.exists(file))
+        }
+    } else { ## in all other cases, need to convert to phylo object
+        res <- phylo_from_otl(res)
+        if (identical(output_format, "taxa_internal")) {
+            res <- res$node.label
+        } else if (identical(output_format, "taxa_species")) {
+            res <- res$tip.label
+        } else if (identical(output_format, "taxa_all")) {
+            res <- c(res$tip.label, res$node.label)
+        }
+    }
+    return(res)
 }
 
 
 ##' Taxonomic LICA
-##' 
+##'
 ##' Given a set of ott ids, get the taxon that is the least inclusive common ancestor
 ##' (the LICA) of all the identified taxa. A taxonomic LICA is analogous to a most recent
 ##' common ancestor (MRCA) in a phylogenetic tree.
