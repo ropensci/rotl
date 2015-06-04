@@ -189,7 +189,7 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
         } else {
             cat(res, file=file)
         }
-        invisible(res)
+        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
         res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
