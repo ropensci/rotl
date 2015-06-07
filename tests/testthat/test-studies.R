@@ -48,9 +48,9 @@ test_that("get_study generates a nexml file", {
 
 test_that("get_study generates a json file", {
               ff <- tempfile()
-              tr <- get_study("pg_719", text_format = "json")
+              tr <- get_study("pg_719", text_format = "json", file = ff)
               expect_true(tr)
-              expect_true(grepl("^\\{", readLines(fr, n = 1)))
+              expect_true(grepl("^\\{", readLines(ff, n = 1)))
           })
 
 
