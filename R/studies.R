@@ -174,8 +174,6 @@ get_study_meta <- function(study_id) {
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
                               text_format=NULL, file) {
-    ## NeXML should be possible for both object_format and text_format but it seems there
-    ## is something wrong with the server at this time (FM - 2014-09-19)
     object_format <- match.arg(object_format)
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
@@ -191,10 +189,12 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
         text_format <- "newick"
         res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
         res <- phylo_from_otl(res)
-    } else if (identical(object_format, "nexml")) {
-        text_format <- "nexml"
-        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
-        res <- nexml_from_otl(res)
+        ## NeXML should be possible for both object_format and text_format but it seems there
+        ## is something wrong with the server at this time (FM - 2015-06-07)
+        ## } else if (identical(object_format, "nexml")) {
+        ##    text_format <- "nexml"
+        ##    res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
+        ##    res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
 }
