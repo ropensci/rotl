@@ -14,6 +14,7 @@ Imports:
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr,
-    testthat
+    testthat,
+    RNeXML
 VignetteBuilder: knitr
 LazyData: true
