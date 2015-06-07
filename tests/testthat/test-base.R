@@ -19,5 +19,4 @@ test_that("errors that would otherwise not get caught in phylo_from_otl", {
               expect_error(phylo_from_otl(list(something = "((A, B), C);")),
                            "Cannot find tree")
               expect_error(phylo_from_otl(999), "I don't know how to deal with this format")
-          }
-          )
+          })
