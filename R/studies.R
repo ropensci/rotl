@@ -59,11 +59,8 @@ studies_properties <- function() {
 ##' \dontrun{
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 ##' }
-# this function should accept nexml (both for object and text)
-get_study <- function(study_id=NULL, object_format=c("phylo"),
-                      text_format = c("", "nexus", "newick", "json"),
-                      file) {
-
+get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
+                      text_format = NULL, file) {
     object_format <- match.arg(object_format)
     text_format <- match.arg(text_format)
     if (!is.null(text_format)) {
@@ -79,6 +76,10 @@ get_study <- function(study_id=NULL, object_format=c("phylo"),
         text_format <- "newick"
         res <- .get_study(study_id, format=text_format)
         res <- phylo_from_otl(res)
+    } else if (identical(object_format, "nexml")) {
+        text_format <- "nexml"
+        res <- .get_study(study_id, format = text_format)
+        res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
 }
