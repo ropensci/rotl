@@ -114,6 +114,9 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' the induced tree
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##' induced tree
+##' @param file If NULL the function returns a phylo object (default),
+##' otherwise, the function writes the newick string to the specified
+##' file.
 ##' @return a tree of class \code{"phylo"}
 ##' @author Francois Michonneau
 ##' @examples
@@ -121,7 +124,7 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' }
 ##' @export
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
+tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL) {
     if (is.null(node_ids) && is.null(ott_ids)) {
         stop("Must supply \'node_ids\' and/or \'ott_ids\'")
     }
@@ -135,6 +138,11 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL) {
     if (length(res$ott_ids_not_in_graph) > 0) {
         warning("ott ids: ", paste0(res$ott_ids_not_in_graph, collapse = ", "), " not in graph.")
     }
-    phy <- phylo_from_otl(res)
-    return(phy)
+    if (!is.null(file)) {
+        cat(res$subtree, file = file)
+        return(file.exists(file))
+    } else {
+        phy <- phylo_from_otl(res)
+        return(phy)
+    }
 }
