@@ -2,6 +2,60 @@ context("test of studies")
 
 
 ############################################################################
+## get_study                                                              ##
+############################################################################
+
+test_that("get_study returns an error when asking for a study that doesn't exist",
+          expect_error(get_study("tt_666666"), "GET failure"))
+
+test_that("get_study generates a phylo object", {
+              tr <- get_study("pg_719", object_format = "phylo")
+              expect_true(inherits(tr, "multiPhylo"))
+              expect_equal(length(tr), 3)
+              expect_true(length(tr[[1]]$tip.label) > 1)
+          })
+
+test_that("get_study generates a nexml object", {
+              tr <- get_study("pg_719", object_format = "nexml")
+              expect_true(inherits(tr, "nexml"))
+          })
+
+test_that("get_study throws error if no file name given, but asking for one",
+          expect_error(get_study("pg_719", text_format = "newick"),
+                       "must specify a file")
+          )
+
+test_that("get_study generates a newick file", {
+              ff <- tempfile()
+              tr <- get_study("pg_719", text_format = "newick", file = ff)
+              expect_true(tr)
+              expect_true(grepl("^\\(", readLines(ff, n = 1)))
+          })
+
+test_that("get_study generates a nexus file", {
+              ff <- tempfile()
+              tr <- get_study("pg_719", text_format = "nexus", file = ff)
+              expect_true(tr)
+              expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+          })
+
+test_that("get_study generates a nexml file", {
+              ff <- tempfile()
+              tr <- get_study("pg_719", text_format = "nexml", file = ff)
+              expect_true(tr)
+              expect_true(grepl("^<\\?xml", readLines(ff, n = 1)))
+          })
+
+test_that("get_study generates a json file", {
+              ff <- tempfile()
+              tr <- get_study("pg_719", text_format = "json")
+              expect_true(tr)
+              expect_true(grepl("^\\{", readLines(fr, n = 1)))
+          })
+
+
+
+############################################################################
 ## get_study_tree                                                         ##
 ############################################################################
 
@@ -108,7 +162,7 @@ test_that("get_study_subtree returns an error when tree_id doesn't exist",
 
 ## API still returns object
 ## test_that("get_study_subtree returns an error when the subtree_id is invalid",
-##           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar"))
+##           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar")))
 
 test_that("get_study_subtree returns a phylo object", {
               tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
