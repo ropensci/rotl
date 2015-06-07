@@ -119,3 +119,18 @@
     res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
     httr::content(res)
 }
+
+### Let's not worry about those for now, as their results could be
+### obtained using get_study_tree
+
+get_study_otu <- function(study_id, otu=NULL){
+    otl_GET(path=paste("study", study_id, "otu", otu, sep="/"))
+}
+
+get_study_otus <- function(study_id, otus) {
+    otl_GET(path=paste("study", study_id, "otu", otus, sep="/"))
+}
+
+get_study_otumap <- function(study_id){
+    otl_GET(path=paste("study", study_id,"otumap", sep="/"))
+}

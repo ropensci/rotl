@@ -198,15 +198,3 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
     } else stop("Something is very wrong. Contact us.")
     res
 }
-
-get_study_otu <- function(study_id, otu=NULL){
-    otl_GET(path=paste("study", study_id, "otu", otu, sep="/"))
-}
-
-get_study_otus <- function(study_id, otus) {
-    otl_GET(path=paste("study", study_id, "otu", otus, sep="/"))
-}
-
-get_study_otumap <- function(study_id){
-    otl_GET(path=paste("study", study_id,"otumap", sep="/"))
-}
