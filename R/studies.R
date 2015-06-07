@@ -66,18 +66,15 @@ get_study <- function(study_id=NULL, object_format=c("phylo"),
 
     object_format <- match.arg(object_format)
     text_format <- match.arg(text_format)
-    if(text_format == ""){
-        text_format <- NULL
-    }
     if (!is.null(text_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
-        res <- .get_study(study_id, format=text_format)
+        res <- .get_study(study_id, format = c("newick", "nexus", "nexml", "json"))
         if (identical(text_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
             cat(res, file=file)
         }
-        invisible(res)
+        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         text_format <- "newick"
         res <- .get_study(study_id, format=text_format)
