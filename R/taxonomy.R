@@ -32,6 +32,8 @@ taxonomy_taxon <- function (ott_id=NULL) {
 ##' Given an ott id, return complete taxonomy subtree descended from specified taxon.
 ##' @title taxon
 ##' @param ott_id The OTT id of the taxon of interest.  Not optional.
+##' @param output_format
+##' @param file
 ##' @return Some JSON
 ##' @examples
 ##' req <- taxonomy_subtree(ott_id=515698)
