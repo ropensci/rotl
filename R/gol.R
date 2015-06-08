@@ -52,8 +52,6 @@ print.gol <- function(res) {
 ##' @param tree_id String. The tree identifier for a given study.
 ##' @param git_sha String. The git SHA identifying a particular source
 ##' version.
-##' @param format The name of the return format. The only currently
-##' supported format is newick.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##'\dontrun{
