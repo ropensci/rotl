@@ -88,7 +88,6 @@ phylo_from_otl <- function(res) {
     return(phy)
 }
 
-##' @importFrom RNeXML nexml_read
 nexml_from_otl <- function(res) {
     if (!requireNamespace("RNeXML", quietly = TRUE)) {
         stop("The RNeXML package is needed to use the nexml file format")
