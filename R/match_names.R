@@ -24,7 +24,7 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     i
 }
 
-##' @export
+## @export
 inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
 
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
@@ -45,7 +45,7 @@ inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
     summary_match
 }
 
-##' @export
+## @export
 list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
 
@@ -60,7 +60,7 @@ list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) 
     list_synonyms
 }
 
-##' @export
+## @export
 update_match_names <- function(response, row_number, taxon_name, ott_id,
                                new_row_number, new_ott_id) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
