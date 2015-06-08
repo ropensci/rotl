@@ -50,8 +50,10 @@ studies_properties <- function() {
 ##' returns study for given ID
 ##'
 ##' study
-##' @title study
-##' @param study
+##' @param study_id
+##' @param object_format
+##' @param file_format
+##' @param file
 ##' @return some study
 ##' @author Francois Michonneau
 ##' @export
@@ -60,25 +62,25 @@ studies_properties <- function() {
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 ##' }
 get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
-                      text_format = NULL, file) {
+                      file_format = NULL, file) {
     object_format <- match.arg(object_format)
-    if (!is.null(text_format)) {
+    if (!is.null(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
-        text_format <- match.arg(text_format, c("newick", "nexus", "nexml", "json"))
-        res <- .get_study(study_id, format = text_format)
-        if (identical(text_format, "json")) {
+        file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
+        res <- .get_study(study_id, format = file_format)
+        if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
             cat(res, file=file)
         }
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
-        text_format <- "newick"
-        res <- .get_study(study_id, format=text_format)
+        file_format <- "newick"
+        res <- .get_study(study_id, format=file_format)
         res <- phylo_from_otl(res)
     } else if (identical(object_format, "nexml")) {
-        text_format <- "nexml"
-        res <- .get_study(study_id, format = text_format)
+        file_format <- "nexml"
+        res <- .get_study(study_id, format = file_format)
         res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
@@ -91,10 +93,8 @@ get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
 ##' @param tree_id
 ##' @param object_format
 ##' @param tip_label
-##' @param text_format
+##' @param file_format
 ##' @param file
-##' @param study char study id
-##' @param tree tree id
 ##' @param format char Tree format (default = json)
 ##' @return A tree file in desired format
 ##' @export
@@ -104,27 +104,27 @@ get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
 ##'}
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
-                           text_format=NULL, file) {
+                           file_format=NULL, file) {
     object_format <- match.arg(object_format)
     tip_label <- match.arg(tip_label)
     tip_label <- switch(tip_label,
                         original_labels = "ot:originallabel",
                         ott_id =  "ot:ottid",
                         ott_taxon_name = "ot:otttaxonname")
-    if (!is.null(text_format)) {
-        text_format <- match.arg(text_format, c("nexus", "newick", "json"))
+    if (!is.null(file_format)) {
+        file_format <- match.arg(file_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
-        res <- .get_study_tree(study_id, tree_id, format=text_format,
+        res <- .get_study_tree(study_id, tree_id, format=file_format,
                                tip_label = tip_label)
-        if (identical(text_format, "json")) {
+        if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
             cat(res, file=file)
         }
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
-        text_format <- "newick"
-        res <- .get_study_tree(study_id, tree_id, format=text_format,
+        file_format <- "newick"
+        res <- .get_study_tree(study_id, tree_id, format=file_format,
                                tip_label = tip_label)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
@@ -132,18 +132,18 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 }
 
 ## get_study_internal <- function(fnx, file, ...) {
-##     if (!is.null(text_format)) {
+##     if (!is.null(file_format)) {
 ##         if (missing(file)) stop("You must specify a file to write your output")
 ##         res <- do.call(fnx, list(...))
-##         if (identical(text_format, "json")) {
+##         if (identical(file_format, "json")) {
 ##             cat(jsonlite::toJSON(res), file=file)
 ##         } else {
 ##             cat(res, file=file)
 ##         }
 ##         invisible(res)
 ##     } else if (identical(object_format, "phylo")) {
-##         text_format <- "newick"
-##         res <- do.call(study, tree, format=text_format)
+##         file_format <- "newick"
+##         res <- do.call(study, tree, format=file_format)
 ##         res <- phylo_from_otl(res)
 ##     } else stop("Something is very wrong. Contact us.")
 ##   res
@@ -151,7 +151,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
-##' @param study character, study id
+##' @param study_id character, study id
 ##' @return named-list json file with metadata
 ##' @export
 ##' @examples
@@ -162,8 +162,15 @@ get_study_meta <- function(study_id) {
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
-##' @param study character, study id
-##' @param tree character, tree_id
+##' @param study_id character, the study id
+##' @param tree_id character,  the tree id
+##' @param object_format character, the class of the object returned
+##' by the function (default, and currently only possibility
+##' \code{phylo} from the APE package)
+##' @param file_format character, the file format to use to save the
+##' results of the query.
+##' @param file character, the path and file name where the output
+##' should be written.
 ##' @param subtree_id, either a node id that specifies a subtree or "ingroup"
 ##' which returns the ingroup is for this subtree, a 400 error otherwise
 ##' @export
@@ -173,27 +180,27 @@ get_study_meta <- function(study_id) {
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
-                              text_format=NULL, file) {
+                              file_format=NULL, file) {
     object_format <- match.arg(object_format)
-    if (!is.null(text_format)) {
+    if (!is.null(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
-        text_format <- match.arg(text_format, c("newick", "nexus", "json"))
-        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
-        if (identical(text_format, "json")) {
+        file_format <- match.arg(file_format, c("newick", "nexus", "json"))
+        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
+        if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
             cat(res, file=file)
         }
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
-        text_format <- "newick"
-        res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
+        file_format <- "newick"
+        res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
         res <- phylo_from_otl(res)
-        ## NeXML should be possible for both object_format and text_format but it seems there
+        ## NeXML should be possible for both object_format and file_format but it seems there
         ## is something wrong with the server at this time (FM - 2015-06-07)
         ## } else if (identical(object_format, "nexml")) {
-        ##    text_format <- "nexml"
-        ##    res <- .get_study_subtree(study_id, tree_id, subtree_id, format=text_format)
+        ##    file_format <- "nexml"
+        ##    res <- .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
         ##    res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
