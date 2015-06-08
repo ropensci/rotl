@@ -5,15 +5,15 @@
 
     req_body <- list()
     if (!is.null(property)) {
-        	if (!is.character(property)) {
+        if (!is.character(property)) {
             stop("Argument \'property\' must be of class \"character\"")
         }
         req_body$property <- jsonlite::unbox(property)
     } else {
-    	    stop("Must supply a \'property\' argument")
+        stop("Must supply a \'property\' argument")
     }
     if (!is.null(value)) {
-    	    if (!is.character(value)) {
+        if (!is.character(value)) {
             stop("Argument \'value\' must be of class \"character\"")
         }
         req_body$value <- jsonlite::unbox(value)
@@ -31,6 +31,12 @@
 
 ## Return a list of trees from the OpenTree docstore that match a given properties
 .studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
+    if (!is.logical(verbose)) {
+        stop("Argument \'verbose\' must be of class \"logical\"")
+    }
+    if (!is.logical(exact)) {
+        stop("Argument \'exact\' must be of class \"logical\"")
+    }
     req_body <- list()
     if (!is.null(property)) {
     	    if (!is.character(property)) {
@@ -48,12 +54,7 @@
     } else {
     	    stop("Must supply a \'value\' argument")
     }
-    if (!is.logical(verbose)) {
-        stop("Argument \'verbose\' must be of class \"logical\"")
-    }
-    if (!is.logical(exact)) {
-        stop("Argument \'exact\' must be of class \"logical\"")
-    }
+
     res <- otl_POST(path="studies/find_trees/", body=c(req_body,
                                                 jsonlite::unbox(verbose),
                                                 jsonlite::unbox(exact)))
@@ -106,13 +107,28 @@
     return(cont)
 }
 
-.get_study_meta <- function(study_id){
+.get_study_meta <- function(study_id) {
     httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/")))
 }
 
 
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
                                format=c("newick", "nexus", "nexml", "json")) {
+    if (is.null(study_id)) {
+    	    stop("Must supply a \'study_id\' argument")
+    } else if (!is.character(study_id)) {
+        stop("Argument \'study_id\' must be of class \"character\"")
+    }
+    if (is.null(tree_id)) {
+        stop("Must supply a \'tree\' argument")
+    } else if (!is.character(tree_id)) {
+        stop("Argument \'tree\' must be of class \"character\"")
+    }
+    if (is.null(subtree_id)) {
+        stop("Must supply a \'subtree\' argument")
+    } else if (!is.character(subtree_id)) {
+        stop("Argument \'subtree\' must be of class \"character\"")
+    }
     format <- match.arg(format)
     format <- otl_formats(format)
     url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
