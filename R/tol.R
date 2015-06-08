@@ -43,8 +43,20 @@ tol_summary <- function(res) {
 }
 
 ##' @title get MRCA
-##' @description Most recent common ancestor of nodes
-##' @details Return the most recent common ancestor of a set of nodes in the synthetic tree.
+##' @description Most recent common ancestor of nodes Get the MRCA of
+##' a set of nodes on the current draft tree. Accepts any combination
+##' of node ids and ott ids as input. Returns information about the
+##' most recent common ancestor (MRCA) node as well as the most recent
+##' taxonomic ancestor (MRTA) node (the closest taxonomic node to the
+##' MRCA node in the synthetic tree; the MRCA and MRTA may be the same
+##' node). Node ids that are not in the synthetic tree are dropped
+##' from the MRCA calculation. For a valid ott id that is not in the
+##' synthetic tree (i.e. it is not recovered as monophyletic from the
+##' source tree information), the taxonomic descendants of the node
+##' are used in the MRCA calculation. Returns any unmatched node ids /
+##' ott ids.
+##' @details Return the most recent common ancestor of a set of nodes
+##' in the synthetic tree.
 ##' @param ott_ids
 ##' @param node_ids
 ##' @return the MRCA
@@ -53,9 +65,6 @@ tol_summary <- function(res) {
 ##' test1 <- tol_mrca(ott_ids=c(412129, 536234))
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
-    if (!is.null(node_ids) && !is.null(ott_ids)) {
-        stop("Use only node_id OR ott_id")
-    }
     res <- .tol_mrca(ott_ids, node_ids)
     return(res)
 }
@@ -84,12 +93,6 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##'}
 ##' @export
 tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
-    if (!is.null(node_id) && !is.null(ott_id)) {
-        stop("Use only node_id OR ott_id")
-    }
-    if (is.null(node_id) && is.null(ott_id)) {
-        stop("Must supply a \'node_id\' OR \'ott_id\'")
-    }
     res <- .tol_subtree(node_id, ott_id, tree_id)
     phy <- phylo_from_otl(res)
     return(phy)
@@ -125,9 +128,6 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
 ##' }
 ##' @export
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL) {
-    if (is.null(node_ids) && is.null(ott_ids)) {
-        stop("Must supply \'node_ids\' and/or \'ott_ids\'")
-    }
     res <- .tol_induced_subtree(node_ids, ott_ids)
     if (length(res$node_ids_not_in_graph) > 0) {
         warning("node ids: ", paste0(res$node_ids_not_in_graph, collapse = ", "), " not in graph.")
