@@ -21,34 +21,34 @@ test_that("get_study generates a nexml object", {
           })
 
 test_that("get_study throws error if no file name given, but asking for one",
-          expect_error(get_study("pg_719", text_format = "newick"),
+          expect_error(get_study("pg_719", file_format = "newick"),
                        "must specify a file")
           )
 
 test_that("get_study generates a newick file", {
               ff <- tempfile()
-              tr <- get_study("pg_719", text_format = "newick", file = ff)
+              tr <- get_study("pg_719", file_format = "newick", file = ff)
               expect_true(tr)
               expect_true(grepl("^\\(", readLines(ff, n = 1)))
           })
 
 test_that("get_study generates a nexus file", {
               ff <- tempfile()
-              tr <- get_study("pg_719", text_format = "nexus", file = ff)
+              tr <- get_study("pg_719", file_format = "nexus", file = ff)
               expect_true(tr)
               expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
           })
 
 test_that("get_study generates a nexml file", {
               ff <- tempfile()
-              tr <- get_study("pg_719", text_format = "nexml", file = ff)
+              tr <- get_study("pg_719", file_format = "nexml", file = ff)
               expect_true(tr)
               expect_true(grepl("^<\\?xml", readLines(ff, n = 1)))
           })
 
 test_that("get_study generates a json file", {
               ff <- tempfile()
-              tr <- get_study("pg_719", text_format = "json", file = ff)
+              tr <- get_study("pg_719", file_format = "json", file = ff)
               expect_true(tr)
               expect_true(grepl("^\\{", readLines(ff, n = 1)))
           })
@@ -70,7 +70,7 @@ test_that("get_study_tree returns error when study doesn't exist",
 
 test_that("get_study_tree generates nexus file", {
               ff <- tempfile(fileext = ".nex")
-              tt <- get_study_tree("pg_1144", "tree2324", text_format = "nexus",
+              tt <- get_study_tree("pg_1144", "tree2324", file_format = "nexus",
                                    file = ff)
               expect_true(tt)
               expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
@@ -78,7 +78,7 @@ test_that("get_study_tree generates nexus file", {
 
 test_that("get_study_tree generates newick file", {
               ff <- tempfile(fileext = ".tre")
-              tt <- get_study_tree("pg_1144", "tree2324", text_format = "newick",
+              tt <- get_study_tree("pg_1144", "tree2324", file_format = "newick",
                                    file = ff)
               expect_true(tt)
               expect_true(grepl("^\\(", readLines(ff, n = 1)))
@@ -86,7 +86,7 @@ test_that("get_study_tree generates newick file", {
 
 test_that("get_study_tree generates json file", {
               ff <- tempfile(fileext = ".json")
-              tt <- get_study_tree("pg_1144", "tree2324", text_format = "json",
+              tt <- get_study_tree("pg_1144", "tree2324", file_format = "json",
                                    file = ff)
               expect_true(tt)
               expect_true(grepl("^\\{", readLines(ff, n = 1)))
@@ -128,7 +128,7 @@ test_that("get_study_tree returns a phylo object and original labels for tip lab
 
 test_that("get_study_tree returns nexus file and ott_id for tip labels", {
               ff <- tempfile(fileext = ".nex")
-              tt <- get_study_tree("pg_1144", "tree2324", text_format = "nexus",
+              tt <- get_study_tree("pg_1144", "tree2324", file_format = "nexus",
                                    tip_label = "ott_id", file = ff)
               expect_true(tt)
               tr <- rncl::read_nexus_phylo(ff)
@@ -138,7 +138,7 @@ test_that("get_study_tree returns nexus file and ott_id for tip labels", {
 
 test_that("get_study_tree returns a phylo object and ott_taxon_names for tip labels", {
               ff <- tempfile(fileext = ".tre")
-              tt <- get_study_tree("pg_1144", "tree2324", text_format = "newick",
+              tt <- get_study_tree("pg_1144", "tree2324", file_format = "newick",
                                    tip_label = "ott_taxon_name", file = ff)
               expect_true(tt)
               tr <- rncl::read_newick_phylo(ff)
@@ -174,7 +174,7 @@ test_that("get_study_subtree returns a phylo object", {
 test_that("get_study_subtree returns a nexus file", {
               ff <- tempfile(fileext = ".nex")
               tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                                      text_format = "nexus", file = ff)
+                                      file_format = "nexus", file = ff)
               expect_true(tt)
               expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
           })
@@ -182,7 +182,7 @@ test_that("get_study_subtree returns a nexus file", {
 test_that("get_study_subtree returns a newick file", {
               ff <- tempfile(fileext = ".tre")
               tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                                      text_format = "newick", file = ff)
+                                      file_format = "newick", file = ff)
               expect_true(tt)
               expect_true(grepl("^\\(", readLines(ff, n = 1)))
           })
@@ -190,7 +190,7 @@ test_that("get_study_subtree returns a newick file", {
 test_that("get_study_subtree returns a json file", {
           ff <- tempfile(fileext = ".json")
           tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                                  text_format = "json", file = ff)
+                                  file_format = "json", file = ff)
           expect_true(tt)
           expect_true(grepl("^\\{", readLines(ff, n = 1)))
       })
