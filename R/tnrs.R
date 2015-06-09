@@ -40,6 +40,12 @@
 ##' @export
 tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
+
+    if (!is.null(context_name) &&
+        !context_name %in% unlist(tnrs_contexts())) {
+        stop("The \'context_name\' is not valid. Check possible values using tnrs_contexts()")
+    }
+
     res <- .tnrs_match_names(names, context_name, do_approximate_matching,
                              ids, include_deprecated, include_dubious)
     check_tnrs(res)
