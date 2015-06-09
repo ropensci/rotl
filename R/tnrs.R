@@ -20,18 +20,18 @@
 ##' @title Match names
 ##' @param names taxon names to be queried (character vector)
 ##' @param context_name name of the taxonomic context to be searched
-##' (length-one character vector)
+##'     (length-one character vector)
 ##' @param do_approximate_matching A boolean indicating whether or not
-##' to perform approximate string (a.k.a. "fuzzy") matching. Will
-##' greatly improve speed if this is turned OFF (false). By default,
-##' however, it is on (true).
+##'     to perform approximate string (a.k.a. "fuzzy") matching. Will
+##'     greatly improve speed if this is turned OFF (false). By
+##'     default, however, it is on (true).
 ##' @param ids An array of ids to use for identifying names. These
-##' will be assigned to each name in the names array. If ids is
-##' provided, then ids and names must be identical in length.
+##'     will be assigned to each name in the names array. If ids is
+##'     provided, then ids and names must be identical in length.
 ##' @param include_deprecated A boolean indicating whether or not to
-##' include deprecated taxa in the search.
+##'     include deprecated taxa in the search.
 ##' @param include_dubious Whether to include so-called 'dubious'
-##' taxa--those which are not accepted by OTT.
+##'     taxa--those which are not accepted by OTT.
 ##' @return something
 ##' @author Francois Michonneau
 ##' @examples \dontrun{
@@ -97,10 +97,6 @@ tnrs_contexts <- function() {
     res <- .tnrs_contexts()
     return(res)
 }
-
-
-## *** tnrs_contexts needs a summary function ***
-
 
 
 ##' @title Infer context
