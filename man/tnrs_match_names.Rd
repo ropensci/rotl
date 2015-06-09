@@ -16,8 +16,8 @@ tnrs_match_names(names = NULL, context_name = NULL,
 
 \item{do_approximate_matching}{A boolean indicating whether or not
 to perform approximate string (a.k.a. "fuzzy") matching. Will
-greatly improve speed if this is turned OFF (false). By default,
-however, it is on (true).}
+greatly improve speed if this is turned OFF (false). By
+default, however, it is on (true).}
 
 \item{ids}{An array of ids to use for identifying names. These
 will be assigned to each name in the names array. If ids is
