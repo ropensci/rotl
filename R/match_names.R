@@ -1,5 +1,6 @@
 check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     orig_order <- attr(response, "original_order")
+
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
         stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'")
     } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
@@ -30,7 +31,7 @@ inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
 
     res <- attr(response, "original_response")
-    summary_match <- do.call("rbind", lapply(httr::content(res)$results[[i]]$match, function(x) {
+    summary_match <- do.call("rbind", lapply(res$results[[i]]$match, function(x) {
             searchStr <- x$search_string
             uniqNames <- x$unique_name
             approxMatch <- x$is_approximate_match
@@ -50,10 +51,10 @@ list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) 
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
 
     res <- attr(response, "original_response")
-    list_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
+    list_synonyms <- lapply(res$results[[i]]$match, function(x) {
         paste(unlist(x$synonyms), collapse=", ")
     })
-    name_synonyms <- lapply(httr::content(res)$results[[i]]$match, function(x) {
+    name_synonyms <- lapply(res$results[[i]]$match, function(x) {
         x$unique_name
     })
     names(list_synonyms) <- name_synonyms
@@ -65,7 +66,7 @@ update_match_names <- function(response, row_number, taxon_name, ott_id,
                                new_row_number, new_ott_id) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
     res <- attr(response, "original_response")
-    tmpRes <- httr::content(res)$results[[i]]
+    tmpRes <- res$results[[i]]
 
     if (missing(row_number)) {
         if (!missing(taxon_name)) {
