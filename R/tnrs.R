@@ -120,9 +120,3 @@ tnrs_infer_context <- function(names=NULL) {
     res <- .tnrs_infer_context(names)
     return(res)
 }
-
-
-get_synonyms <- function(req, i) {
-    cont <- httr::content(req)
-    sapply(cont$results[[i]]$matches, function(x) x$unique_name)
-}
