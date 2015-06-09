@@ -1,0 +1,119 @@
+---
+title: "How to use rotl?"
+author: "François Michonneau"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`rotl` provides an interface to the Open Tree of Life (OTL) API and allows users
+to query the API, retrieve parts of the Tree of Life and integrate these parts
+with other R packages.
+
+The OTL API provides service to access:
+
+* the **Tree of Life** a.k.a. TOL (the synthetic tree): a single draft tree that is
+a combination of **the OTL taxonomy** and the **source trees** (studies)
+* the **Graph of Life** a.k.a. GOL: the neo4j graph database used to store and
+build the synthetic tree. It includes additional information (more nodes and
+edges) that is not in the TOL.
+* the **Taxonomic name resolution services** a.k.a. TNRS: the methods for
+  resolving taxonomic names to the internal identifiers used by the TOL and the
+  GOL (the `ott ids`).
+* the **Taxonomy** a.k.a. OTT (for Open Tree Taxonomy): which represents the
+  synthesis of the different taxonomies used as a backbone of the TOL when no
+  studies are available.
+* the **Studies** containing the source trees used to build the TOL, and
+extracted from the scientific literature.
+
+In `rotl`, each of these services correspond to functions with different
+prefixes:
+
+| Service       | `rotl` prefix |
+|---------------|---------------|
+| Tree of Life  | `tol_`        |
+| Graph of Life | `gol_`        |
+| TNRS          | `tnrs_`       |
+| Studies       | `studies_`    |
+
+
+
+## Demonstration of a basic workflow
+
+The most common use for `rotl` is probably to start from a list of species and
+get the relevant parts of the TOL for these species. This is a two step process:
+
+1. the species names need to be matched to their `ott_id` (the Open Tree
+Taxonomy identifiers) using the Taxonomic name resolution services (TNRS)
+1. these `ott_id` will then be used to retrieve the relevant parts of the Tree
+of Life.
+
+### Matching taxonomy to the `ott_id`
+
+Let's start by doing a search on a diverse group of taxa: a tree frog (genus
+_Hyla_), a fish (genus _Salmo_), a sea urchin (genus _Diadema_), a nautilus
+(genus _Nautilus_), and an oak tree (genus _Acer_).
+
+```{r}
+library(rotl)
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
+resolved_names <- tnrs_match_names(taxa)
+```
+
+It's always a good idea to check that the resolved names match what you
+intend:
+
+`r knitr::kable(resolved_names)`
+
+The column `unique_name` sometimes indicates the higher taxonomic level
+associated with the name. Here we queried on genera names, so the API indicates
+the family names associated with some the genera. The column `number_matches`
+indicates the number of `ott_id` that corresponds to a given name. In our
+example, our search on _Diadema_ returns 4 matches, and the one returned by
+default is a fungus and not the sea urchin that we want for our query.
+
+To figure out what is happening, we can use the function
+`inspect_match_names`. This function takes the object resulting from using
+`tnrs_match_names`, and either the row number, the taxon name (you used in your
+search), or the `ott_id` returned by the initial query.
+
+```{r}
+inspect_match_names(resolved_names, taxon_name = "diadema")
+```
+
+In our case, we want the second result in this data frame. We can now use the
+`update_match_names`, to change to the correct taxa (the sea urchin not the
+fungus):
+
+```{r}
+resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
+                                     new_row_number = 2)
+## we could also have used the ott_id to replace this taxon
+## resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
+##                                     new_ott_id = 631176)
+```
+
+`r knitr::kable(resolved_names)`
+
+### Getting the tree corresponding to our taxa
+
+Now that we have the correct `ott_id` for our taxa, we can ask for the tree. By
+default, the object returned by `tol_induced_subtree` is a phylo object (from
+the [ape](http://cran.r-project.org/package=ape)), so we can plot it directly.
+
+```{r, fig.width=7, fig.height=4}
+my_tree <- tol_induced_subtree(ott_ids = resolved_names$ott_id)
+plot(my_tree, no.margin=TRUE)
+```
+
+
+## FAQ
+
+### How do I know that the taxa I'm asking for is the correct one?
+
+### How do I find trees focused on my favourite taxa?
+
+### How do I get a specific tree from a study?
