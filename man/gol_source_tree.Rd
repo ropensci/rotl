@@ -33,6 +33,7 @@ names.
 }
 \examples{
 \dontrun{
+## This example is broken as it returns a single taxa that rncl can't deal with
 res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452",
                        tree_id="7")
 }

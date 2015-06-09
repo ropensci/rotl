@@ -27,6 +27,7 @@ tol_about <- function(study_list = FALSE) {
 }
 
 
+##' @export
 print.tol_summary <- function(res) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
     cat("\tTree version: ", res$tree_id, "\n", sep="")
@@ -38,6 +39,34 @@ print.tol_summary <- function(res) {
     cat("\tRoot taxon: ", res$root_taxon_name, "\n", sep="")
     cat("\tRoot ott_id: ", res$root_ott_id, "\n", sep="")
     cat("\tRoot node_id: ", res$root_node_id, "\n", sep="")
+}
+
+##' Retrieve the detailed information for the list of studies used in the Tree of Life.
+##'
+##' This function takes the object resulting from
+##' `tol_about(study_list = TRUE)` and returns a data frame listing
+##' the \code{tree_id}, \code{study_id} and \code{git_sha} for the
+##' studies currently included in the Tree of Life.
+##' @title List of studies used for the Tree of Life
+##' @param tol an object created using \code{tol_about(study_list = TRUE)}
+##' @return a data frame
+##' @author Francois Michonneau
+##' @export
+study_list <- function(tol) UseMethod("study_list")
+
+##' @export
+##' @rdname study_list
+study_list.tol_summary <- function(tol) {
+    if (! exists("study_list", tol)) {
+        stop("Make sure that your object has been created using tol_about(study_list = TRUE)")
+    }
+    tol <- lapply(tol[["study_list"]], function(x) {
+        c("tree_id" = x[["tree_id"]],
+          "study_id" = x[["study_id"]],
+          "git_sha" = x[["git_sha"]])
+    })
+    tol <- do.call("rbind", tol)
+    data.frame(tol, stringsAsFactors = FALSE)
 }
 
 ##' @title get MRCA
