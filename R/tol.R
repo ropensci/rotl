@@ -20,16 +20,14 @@
 ##' res <- tol_about()
 ##' @author Francois Michonneau
 ##' @export
-tol_about <- function(study_list=FALSE) {
+tol_about <- function(study_list = FALSE) {
     res <- .tol_about(study_list)
-    tol_summary(res)
-    return(invisible(res))
+    class(res) <- "tol_summary"
+    res
 }
 
 
-## TEMPORARY. Need to use classes.
-## this could make use of class information. say, 'print.tol'
-tol_summary <- function(res) {
+print.tol_summary <- function(res) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
     cat("\tTree version: ", res$tree_id, "\n", sep="")
     cat("\tTaxonomy version: ", res$taxonomy_version, "\n", sep="")
