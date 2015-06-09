@@ -34,6 +34,9 @@
 ##' taxa--those which are not accepted by OTT.
 ##' @return something
 ##' @author Francois Michonneau
+##' @examples \dontrun{
+##'   deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha", "chordata", "hemichordata"))
+##' }
 ##' @export
 tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {

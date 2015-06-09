@@ -53,6 +53,11 @@ all taxon name matches will performed only against taxa within
 that context. For a list of available taxonomic contexts, see the
 contexts service.
 }
+\examples{
+\dontrun{
+  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha", "chordata", "hemichordata"))
+}
+}
 \author{
 Francois Michonneau
 }
