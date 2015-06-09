@@ -73,29 +73,35 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' @description Extract subtree from a node or ott id
 ##' @author Francois Michonneau
 ##' @param node_id The node id of the node in the tree that should
-##' serve as the root of the tree returned. This argument may not be
-##' used in combination with ott_id.
+##'     serve as the root of the tree returned. This argument cannot
+##'     be used in combination with ott_id.
 ##' @param ott_id The ott id of the node in the tree that should serve
-##' as the root of the tree returned. This argument may not be used in
-##' combination with node_id.
+##'     as the root of the tree returned. This argument may not be
+##'     used in combination with node_id.
 ##' @param tree_id The identifier for the synthesis tree. We currently
-##' only support a single draft tree in the db at a time, so this
-##' argument is superfluous and may be safely ignored.
-##' @details Return a complete subtree of the draft tree descended from some
-##' specified node. The node to use as the start node may be specified
-##' using either a node id or an ott id, but not both. If the
-##' specified node is not in the synthetic tree (or is entirely absent
-##' from the graph), an error will be returned.
+##'     only support a single draft tree in the db at a time, so this
+##'     argument is superfluous and may be safely ignored.
+##' @details Return a complete subtree of the draft tree descended
+##'     from some specified node. The node to use as the start node
+##'     may be specified using either a node id or an ott id, but not
+##'     both. If the specified node is not in the synthetic tree (or
+##'     is entirely absent from the graph), an error will be returned.
 ##' @return a tree of class \code{"phylo"}
 ##' @examples
 ##'\dontrun{
 ##' res <- tol_subtree(ott_id=81461)
 ##'}
 ##' @export
-tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL) {
+tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL,
+                        file = NULL) {
     res <- .tol_subtree(node_id, ott_id, tree_id)
-    phy <- phylo_from_otl(res)
-    return(phy)
+    if (!is.null(file)) {
+        cat(res$newick, file = file)
+        return(invisible(file.exists(file)))
+    } else {
+        phy <- phylo_from_otl(res)
+        return(phy)
+    }
 }
 
 ##' Extract induced subtree
