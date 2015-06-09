@@ -41,7 +41,7 @@
 tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                              ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
     res <- .tnrs_match_names(names, context_name, do_approximate_matching,
-               ids, include_deprecated, include_dubious)
+                             ids, include_deprecated, include_dubious)
     check_tnrs(res)
     summary_match <- do.call("rbind", lapply(res$results, function(x) {
         searchStr <- x$matches[[1]]$search_string
