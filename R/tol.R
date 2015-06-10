@@ -20,8 +20,8 @@
 ##' res <- tol_about()
 ##' @author Francois Michonneau
 ##' @export
-tol_about <- function(study_list = FALSE) {
-    res <- .tol_about(study_list)
+tol_about <- function(study_list = FALSE, ...) {
+    res <- .tol_about(study_list = study_list, ...)
     class(res) <- "tol_summary"
     res
 }
@@ -91,8 +91,8 @@ study_list.tol_summary <- function(tol) {
 ##' @examples
 ##' test1 <- tol_mrca(ott_ids=c(412129, 536234))
 ##' @export
-tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
-    res <- .tol_mrca(ott_ids, node_ids)
+tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
+    res <- .tol_mrca(ott_ids = ott_ids, node_ids = node_ids, ...)
     return(res)
 }
 
@@ -119,9 +119,12 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL) {
 ##' res <- tol_subtree(ott_id=81461)
 ##'}
 ##' @export
-tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL,
-                        file = NULL) {
-    res <- .tol_subtree(node_id, ott_id, tree_id)
+tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
+                        file = NULL, ...) {
+
+    res <- .tol_subtree(node_id = node_id, ott_id = ott_id,
+                        tree_id = tree_id, ...)
+
     if (!is.null(file)) {
         cat(res$newick, file = file)
         return(invisible(file.exists(file)))
@@ -160,8 +163,9 @@ tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL,
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' }
 ##' @export
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL) {
-    res <- .tol_induced_subtree(node_ids, ott_ids)
+tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL, ...) {
+    res <- .tol_induced_subtree(node_ids = node_ids, ott_ids = ott_ids, ...)
+
     if (length(res$node_ids_not_in_graph) > 0) {
         warning("node ids: ", paste0(res$node_ids_not_in_graph, collapse = ", "), " not in graph.")
     }
