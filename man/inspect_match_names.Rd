@@ -47,9 +47,9 @@ Taxonomy.
 \details{
 To inspect alternative taxonomic meanings of a given name, you
 need to provide the object resulting from a call to the
-tnrs_match_names function, as well as either the row number of the
-name of interest in this data frame, its name (the one used for
-the inital search), or the ott_id listed.
+tnrs_match_names function, as well as one of either the row number
+corresponding to the name in this object, the name itself (as used
+in the original query), or the ott_id listed for this name.
 
 To update one of the name, you also need to provide the row number
 in which the name to be replaced appear or its ott id.
