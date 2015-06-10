@@ -38,16 +38,21 @@
 ##'   deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha", "chordata", "hemichordata"))
 ##' }
 ##' @export
-tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
-                             ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
+tnrs_match_names <- function(names = NULL, context_name = NULL,
+                             do_approximate_matching = TRUE,
+                             ids = NULL, include_deprecated = FALSE,
+                             include_dubious = FALSE, ...) {
 
     if (!is.null(context_name) &&
-        !context_name %in% unlist(tnrs_contexts())) {
+        !context_name %in% unlist(tnrs_contexts(...))) {
         stop("The \'context_name\' is not valid. Check possible values using tnrs_contexts()")
     }
 
-    res <- .tnrs_match_names(names, context_name, do_approximate_matching,
-                             ids, include_deprecated, include_dubious)
+    res <- .tnrs_match_names(names = names, context_name = context_name,
+                             do_approximate_matching = do_approximate_matching,
+                             ids = ids, include_deprecated = include_deprecated,
+                             include_dubious = include_dubious, ...)
+
     check_tnrs(res)
     summary_match <- do.call("rbind", lapply(res$results, function(x) {
         searchStr <- x$matches[[1]]$search_string
@@ -93,8 +98,8 @@ check_tnrs <- function(req) {
 ##' @return something
 ##' @author Francois Michonneau
 ##' @export
-tnrs_contexts <- function() {
-    res <- .tnrs_contexts()
+tnrs_contexts <- function(...) {
+    res <- .tnrs_contexts(...)
     return(res)
 }
 
@@ -112,7 +117,7 @@ tnrs_contexts <- function() {
 ##' @examples
 ##' res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
 ##' @export
-tnrs_infer_context <- function(names=NULL) {
-    res <- .tnrs_infer_context(names)
+tnrs_infer_context <- function(names=NULL, ...) {
+    res <- .tnrs_infer_context(names = names, ...)
     return(res)
 }

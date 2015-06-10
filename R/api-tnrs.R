@@ -1,6 +1,6 @@
 ## Match taxon names
 .tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
-                         ids=NULL, include_deprecated=FALSE, include_dubious=FALSE) {
+                         ids=NULL, include_deprecated=FALSE, include_dubious=FALSE, ...) {
     if (is.null(names)) {
         stop("Must supply a \'names\' argument")
     } else if (!is.character(names)) {
@@ -28,39 +28,38 @@
         }
         context_name <- jsonlite::unbox(context_name)
     }
-    
-    
+
+
     q <- list(names = names, context_name = context_name,
               do_approximate_matching = jsonlite::unbox(do_approximate_matching),
               ids = ids, include_deprecated = jsonlite::unbox(include_deprecated),
               include_dubious = jsonlite::unbox(include_dubious))
     toKeep <- sapply(q, is.null)
     q <- q[!toKeep]
-    
-    res <- otl_POST("tnrs/match_names", body=q)
+
+    res <- otl_POST("tnrs/match_names", body=q, ...)
     cont <- httr::content(res)
     return(cont)
 }
 
 
 ## Get OpenTree TNRS contexts
-.tnrs_contexts <- function() {
-    res <- otl_POST("tnrs/contexts", body=list())
+.tnrs_contexts <- function(...) {
+    res <- otl_POST("tnrs/contexts", body=list(), ...)
     cont <- httr::content(res)
     return(cont)
 }
 
 
 ## Infer taxonomic context from a set of names
-.tnrs_infer_context <- function(names=NULL) {
+.tnrs_infer_context <- function(names=NULL, ...) {
     if (is.null(names)) {
         stop("Must supply a \'names\' argument")
     } else if (!is.character(names)) {
         stop("Argument \'names\' must be of class \"character\"")
     }
     q <- list(names=names)
-    res <- otl_POST("tnrs/infer_context", body=q)
+    res <- otl_POST("tnrs/infer_context", body=q, ...)
     cont <- httr::content(res)
     return(cont)
 }
-
