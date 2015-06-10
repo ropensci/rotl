@@ -6,8 +6,8 @@
 ##' @examples
 ##' taxonomy_about()
 ##' @export
-taxonomy_about <- function () {
-    res <- .taxonomy_about()
+taxonomy_about <- function (...) {
+    res <- .taxonomy_about(...)
     return(res)
 }
 
@@ -21,8 +21,8 @@ taxonomy_about <- function () {
 ##' @examples
 ##' req <- taxonomy_taxon(ott_id=515698)
 ##' @export
-taxonomy_taxon <- function (ott_id=NULL) {
-    res <- .taxonomy_taxon(ott_id)
+taxonomy_taxon <- function (ott_id=NULL, ...) {
+    res <- .taxonomy_taxon(ott_id = ott_id)
     return(res)
 }
 
@@ -40,9 +40,9 @@ taxonomy_taxon <- function (ott_id=NULL) {
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL,
                               output_format = c("taxa_all", "newick", "phylo", "raw", "taxa_species", "taxa_internal"),
-                              file) {
+                              file, ...) {
     output_format <- match.arg(output_format)
-    res <- .taxonomy_subtree(ott_id)
+    res <- .taxonomy_subtree(ott_id = ott_id, ...)
     if (!missing(file) && !identical(output_format, "newick"))
         warning("'file' argument is ignored, you can only write newick tree strings to a file.")
     if (identical(output_format, "raw")) {
@@ -78,7 +78,7 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##' @examples
 ##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' @export
-taxonomy_lica <- function (ott_ids=NULL) {
-	res <- .taxonomy_lica(ott_ids)
+taxonomy_lica <- function (ott_ids=NULL, ...) {
+	res <- .taxonomy_lica(ott_ids = ott_ids, ...)
 	return(res)
 }
