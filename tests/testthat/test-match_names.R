@@ -115,6 +115,11 @@ test_that("correct synonyms are being returned when asked to look up by taxon na
     expect_true(any(grepl("^Priapulus", names(tt))))
 })
 
+test_that("holothuria is present in each element of the list", {
+    tt <- list_synonyms_match_names(rsp, taxon_name = "holothuria")
+    expect_true(all(sapply(tt, function(x) any(grepl("holothuria", x, ignore.case = TRUE)))))
+})
+
 test_that("correct synonyms are being returned when asked to look up by row number", {
     tt <- list_synonyms_match_names(rsp, row_number = 1)
     expect_true(any(grepl("^Holothuria", names(tt))))
