@@ -100,9 +100,23 @@ check_tnrs <- function(req) {
 ##' @export
 tnrs_contexts <- function(...) {
     res <- .tnrs_contexts(...)
-    return(res)
+    class(res) <- "tnrs_contexts"
+    res
 }
 
+##' @export
+print.tnrs_contexts <- function(x, ...) {
+    cat("Possible contexts:\n")
+    lapply(x, function(t) {
+        res <- unlist(t)
+        cat("  ", res[1], "\n")
+        if (length(res) > 1)
+            lapply(seq(2, length(t), by = 5), function(l) {
+                m <- ifelse(l + 5 <= length(t), l+5, length(t))
+                cat("     ", paste(t[l:m], collapse = ", "), "\n")
+            })
+    })
+}
 
 ##' @title Infer context
 ##' @description Return a taxonomic context given a list of taxonomic names
