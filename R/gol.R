@@ -18,8 +18,8 @@
 ##' @examples
 ##' res <- gol_about()
 ##' @export
-gol_about <- function() {
-    res <- structure(.gol_about(), class = "gol")
+gol_about <- function(...) {
+    res <- structure(.gol_about(...), class = "gol")
     res
 }
 
@@ -61,9 +61,9 @@ print.gol <- function(res, ...) {
 ##'                        tree_id="7")
 ##'}
 ## @export ## not exported for now as users probably don't care/need it
-gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
-    res <- .gol_source_tree(study_id, tree_id, git_sha)
-    # required b/c of "knuckles"
+gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, ...) {
+    res <- .gol_source_tree(study_id = study_id, tree_id = tree_id,
+                            git_sha = git_sha, ...)
     phy <- phylo_from_otl(res)
     return(phy)
 }
@@ -109,7 +109,8 @@ gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL) {
 ##' @examples
 ##' res <- gol_node_info(ott_id=81461)
 ##' @export
-gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE) {
-    res <- .gol_node_info(node_id, ott_id, include_lineage)
+gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE, ...) {
+    res <- .gol_node_info(node_id = node_id, ott_id = ott_id,
+                          include_lineage = include_lineage, ...)
     return(res)
 }
