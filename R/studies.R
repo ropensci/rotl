@@ -10,8 +10,10 @@
 ##' @examples
 ##' study <- studies_find_studies(property="ot:studyId", value="pg_719")
 
-studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
-    res <- .studies_find_studies(property, value, verbose, exact)
+studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
+                                 exact=FALSE, ...) {
+    res <- .studies_find_studies(property = property, value = value,
+                                 verbose = verbose, exact = exact, ...)
     return(res)
 }
 
@@ -27,8 +29,10 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact
 ##' @examples
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 
-studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
-    res <- .studies_find_trees(property, value, verbose, exact)
+studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
+                               exact=FALSE, ...) {
+    res <- .studies_find_trees(property = property, value = value,
+                               verbose = verbose, exact = exact, ...)
     return(res)
 }
 
@@ -41,8 +45,8 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=F
 ##'  all_the_properties <- studies_properties()
 ##'  unlist(all_the_properties$tree_properties)
 
-studies_properties <- function() {
-    res <- .studies_properties()
+studies_properties <- function(...) {
+    res <- .studies_properties(...)
     return(res)
 }
 
@@ -61,8 +65,8 @@ studies_properties <- function() {
 ##' \dontrun{
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 ##' }
-get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
-                      file_format = NULL, file) {
+get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
+                      file_format = NULL, file, ...) {
     object_format <- match.arg(object_format)
     if (!is.null(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
@@ -76,11 +80,11 @@ get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
-        res <- .get_study(study_id, format=file_format)
+        res <- .get_study(study_id = study_id, format=file_format, ...)
         res <- phylo_from_otl(res)
     } else if (identical(object_format, "nexml")) {
         file_format <- "nexml"
-        res <- .get_study(study_id, format = file_format)
+        res <- .get_study(study_id = study_id, format = file_format, ...)
         res <- nexml_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
@@ -104,7 +108,8 @@ get_study <- function(study_id=NULL, object_format=c("phylo", "nexml"),
 ##'}
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
-                           file_format=NULL, file) {
+                           file_format=NULL, file, ...) {
+
     object_format <- match.arg(object_format)
     tip_label <- match.arg(tip_label)
     tip_label <- switch(tip_label,
@@ -114,8 +119,8 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
     if (!is.null(file_format)) {
         file_format <- match.arg(file_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
-        res <- .get_study_tree(study_id, tree_id, format=file_format,
-                               tip_label = tip_label)
+        res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
+                               format=file_format, tip_label = tip_label, ...)
         if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -124,30 +129,12 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
-        res <- .get_study_tree(study_id, tree_id, format=file_format,
-                               tip_label = tip_label)
+        res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
+                               format=file_format, tip_label = tip_label, ...)
         res <- phylo_from_otl(res)
     } else stop("Something is very wrong. Contact us.")
     res
 }
-
-## get_study_internal <- function(fnx, file, ...) {
-##     if (!is.null(file_format)) {
-##         if (missing(file)) stop("You must specify a file to write your output")
-##         res <- do.call(fnx, list(...))
-##         if (identical(file_format, "json")) {
-##             cat(jsonlite::toJSON(res), file=file)
-##         } else {
-##             cat(res, file=file)
-##         }
-##         invisible(res)
-##     } else if (identical(object_format, "phylo")) {
-##         file_format <- "newick"
-##         res <- do.call(study, tree, format=file_format)
-##         res <- phylo_from_otl(res)
-##     } else stop("Something is very wrong. Contact us.")
-##   res
-## }
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
@@ -157,8 +144,8 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##' @examples
 ##' req <- get_study_meta("pg_719")
 ##' req$nexml$`^ot:studyPublication`
-get_study_meta <- function(study_id) {
-   .get_study_meta(study_id)
+get_study_meta <- function(study_id, ...) {
+   .get_study_meta(study_id = study_id, ...)
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
@@ -180,12 +167,13 @@ get_study_meta <- function(study_id) {
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
-                              file_format=NULL, file) {
+                              file_format=NULL, file, ...) {
     object_format <- match.arg(object_format)
     if (!is.null(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         file_format <- match.arg(file_format, c("newick", "nexus", "json"))
-        res <- .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
+        res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
+                                  subtree_id = subtree_id, format=file_format, ...)
         if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -194,7 +182,8 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
         return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
-        res <-  .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
+        res <-  .get_study_subtree(study_id = study_id, tree_id = tree_id,
+                                   subtree_id = subtree_id, format=file_format, ...)
         res <- phylo_from_otl(res)
         ## NeXML should be possible for both object_format and file_format but it seems there
         ## is something wrong with the server at this time (FM - 2015-06-07)

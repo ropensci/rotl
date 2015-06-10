@@ -1,5 +1,6 @@
 ## Return a list of studies from the OpenTree docstore that match a given properties
-.studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
+.studies_find_studies <- function(property = NULL, value = NULL, verbose = FALSE,
+                                  exact = FALSE, ...) {
     if (!is.logical(verbose)) stop("Argument \'verbose\' should be logical")
     if (!is.logical(exact)) stop("Argument \'exact\' should be logical")
 
@@ -20,17 +21,19 @@
     } else {
     	    stop("Must supply a \'value\' argument")
     }
-    res <- otl_POST(path="studies/find_studies/", body=c(req_body,
-                                                  jsonlite::unbox(verbose),
-                                                  jsonlite::unbox(exact)),
-                                                  dev_url=TRUE)
+    res <- otl_POST(path="studies/find_studies/",
+                    body=c(req_body,
+                           jsonlite::unbox(verbose),
+                           jsonlite::unbox(exact)),
+                    ...)
     cont <- httr::content(res)
     return(cont)
 }
 
 
 ## Return a list of trees from the OpenTree docstore that match a given properties
-.studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE, exact=FALSE) {
+.studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
+                                exact=FALSE, ...) {
     if (!is.logical(verbose)) {
         stop("Argument \'verbose\' must be of class \"logical\"")
     }
@@ -55,9 +58,11 @@
     	    stop("Must supply a \'value\' argument")
     }
 
-    res <- otl_POST(path="studies/find_trees/", body=c(req_body,
-                                                jsonlite::unbox(verbose),
-                                                jsonlite::unbox(exact)))
+    res <- otl_POST(path="studies/find_trees/",
+                    body=c(req_body,
+                           jsonlite::unbox(verbose),
+                           jsonlite::unbox(exact)),
+                    ...)
     cont <- httr::content(res)
     return(cont)
 }
@@ -72,14 +77,17 @@
 
 
 ## Get a study from the OpenTree docstore
-.get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json")) {
+.get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json"),
+                       ...) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
     format <- match.arg(format)
-    res <- otl_GET(path=paste("study", paste0(study_id, otl_formats(format)), sep="/"))
+    res <- otl_GET(path=paste("study",
+                              paste0(study_id, otl_formats(format)), sep="/"),
+                   ...)
     cont <- httr::content(res)
     return(cont)
 }
@@ -87,7 +95,8 @@
 
 ## Get a tree in a study from the OpenTree docstore
 .get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("json", "newick", "nexus"),
-                            tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname")) {
+                            tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
+                            ...) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
@@ -102,18 +111,18 @@
     tip_label <- match.arg(tip_label)
     tip_label <- paste0("/?tip_label=", tip_label)
     tree_file <- paste0(tree_id, otl_formats(format), tip_label)
-    res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"))
+    res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"), ...)
     cont <- httr::content(res)
     return(cont)
 }
 
-.get_study_meta <- function(study_id) {
-    httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/")))
+.get_study_meta <- function(study_id, ...) {
+    httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/"), ...))
 }
 
 
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
-                               format=c("newick", "nexus", "nexml", "json")) {
+                               format=c("newick", "nexus", "nexml", "json"), ...) {
     if (is.null(study_id)) {
     	    stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
@@ -132,7 +141,7 @@
     format <- match.arg(format)
     format <- otl_formats(format)
     url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
-    res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""))
+    res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""), ...)
     httr::content(res)
 }
 
@@ -140,11 +149,11 @@
 ### obtained using get_study_tree
 
 get_study_otu <- function(study_id, otu=NULL){
-    otl_GET(path=paste("study", study_id, "otu", otu, sep="/"))
+    otl_GET(path=paste("study", study_id, "otu", otu, sep="/"), ...)
 }
 
 get_study_otus <- function(study_id, otus) {
-    otl_GET(path=paste("study", study_id, "otu", otus, sep="/"))
+    otl_GET(path=paste("study", study_id, "otu", otus, sep="/"), ...)
 }
 
 get_study_otumap <- function(study_id){
