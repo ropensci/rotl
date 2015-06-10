@@ -8,6 +8,10 @@ rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
 
 context("check_args_match_names")
 
+test_that("error generated if object provided isn't created by tnrs_match_names",
+          expect_error(rotl:::check_args_match_names(letters),
+                       "was not created using"))
+
 test_that("error generated if no argument is provided",
           expect_error(rotl:::check_args_match_names(rsp),
                        "You must specify"))

@@ -3,6 +3,10 @@
 ## for a series of matched names.
 check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     orig_order <- attr(response, "original_order")
+    if (is.null(orig_order)) {
+        stop(sQuote(substitute(response)), " was not created using ",
+             sQuote("tnrs_match_names"))
+    }
 
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
         stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'.")
