@@ -25,7 +25,7 @@ gol_about <- function() {
 
 
 ##' @export
-print.gol <- function(res) {
+print.gol <- function(res, ...) {
     cat("\nOpenTree Synthetic Tree Graph.\n\n")
     cat("\tTaxonomy version: ", res$graph_taxonomy_version, "\n", sep="")
     cat("\tNumber of terminal taxa: ", res$graph_num_tips, "\n", sep="")

@@ -28,7 +28,7 @@ tol_about <- function(study_list = FALSE) {
 
 
 ##' @export
-print.tol_summary <- function(res) {
+print.tol_summary <- function(res, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
     cat("\tTree version: ", res$tree_id, "\n", sep="")
     cat("\tTaxonomy version: ", res$taxonomy_version, "\n", sep="")
