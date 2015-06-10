@@ -25,14 +25,14 @@ gol_about <- function(...) {
 
 
 ##' @export
-print.gol <- function(res, ...) {
+print.gol <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree Graph.\n\n")
-    cat("\tTaxonomy version: ", res$graph_taxonomy_version, "\n", sep="")
-    cat("\tNumber of terminal taxa: ", res$graph_num_tips, "\n", sep="")
-    cat("\tNumber of source trees: ", res$graph_num_source_trees, "\n", sep="")
-    cat("\tGraph root taxon: ", res$graph_root_name, "\n", sep="")
-    cat("\tGraph root ott_id: ", res$graph_root_ott_id, "\n", sep="")
-    cat("\tGraph root node_id: ", res$graph_root_node_id, "\n", sep="")
+    cat("\tTaxonomy version: ", x$graph_taxonomy_version, "\n", sep="")
+    cat("\tNumber of terminal taxa: ", x$graph_num_tips, "\n", sep="")
+    cat("\tNumber of source trees: ", x$graph_num_source_trees, "\n", sep="")
+    cat("\tGraph root taxon: ", x$graph_root_name, "\n", sep="")
+    cat("\tGraph root ott_id: ", x$graph_root_ott_id, "\n", sep="")
+    cat("\tGraph root node_id: ", x$graph_root_node_id, "\n", sep="")
 }
 
 
