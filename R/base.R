@@ -32,20 +32,21 @@ otl_check <- function(req) {
     otl_check_error(req)
 }
 
-otl_GET <- function(path, ...) {
-    req <- httr::GET(otl_url(), path=paste(otl_version(), path, sep="/"), ...)
+otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
+    req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
     req
 }
 
-otl_POST <- function(path, body, dev_url=FALSE, ...) {
+otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
     stopifnot(is.list(body))
 
     body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
-    req <- httr::POST(otl_url(dev=dev_url), path=paste(otl_version(), path, sep="/"), body=body_json, ...)
+    req <- httr::POST(otl_url(dev = dev_url),
+                      path=paste(otl_v, path, sep="/"),
+                      body=body_json, ...)
     otl_check(req)
-
     req
 }
 
