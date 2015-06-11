@@ -2,21 +2,33 @@
 % Please edit documentation in R/studies.R
 \name{studies_properties}
 \alias{studies_properties}
-\title{studies properties}
+\title{Studies properties}
 \usage{
-studies_properties()
+studies_properties(...)
+}
+\arguments{
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-something
+A list of the study properties that can be used to find
+    studies and trees that are contributing to the synthetic tree.
 }
 \description{
-Property of a study
+Return the list of study properties that can be used to search
+studies and trees used in the synthetic tree.
+}
+\details{
+The list returned has 2 elements \code{tree_properties} and
+\code{studies_properties}. Each of these elements lists theadditional arguments to customize the API request
+properties that can be used to search for trees and studies that
+are contributing to the synthetic tree.
 }
 \examples{
 all_the_properties <- studies_properties()
  unlist(all_the_properties$tree_properties)
 }
-\author{
-Francois Michonneau
+\seealso{
+\code{\link{studies_find_trees}}
 }
 

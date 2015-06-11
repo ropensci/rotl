@@ -2,25 +2,47 @@
 % Please edit documentation in R/studies.R
 \name{get_study}
 \alias{get_study}
-\title{returns study for given ID}
+\title{Get Study}
 \usage{
-get_study(study_id = NULL, object_format = c("phylo", "nexml"),
-  file_format = NULL, file)
+get_study(study_id = NULL, object_format = c("phylo", "nexml"), file_format,
+  file, ...)
 }
 \arguments{
-\item{study_id}{}
+\item{study_id}{the study ID for the study of interest (character)}
 
-\item{object_format}{}
+\item{object_format}{the class of the object the query should
+return (either \code{phylo} or \code{nexml}). Ignored if
+\code{file_format} is specified.}
 
-\item{file_format}{}
+\item{file_format}{the format of the file to be generated
+(\code{newick}, \code{nexus}, \code{nexml} or \code{json}).}
 
-\item{file}{}
+\item{file}{the file name where the output of the function will be
+saved.}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-some study
+if \code{file_format} is missing, an object of class
+    \code{phylo} or \code{nexml}, otherwise a logical indicating
+    whether the file was successfully created.
 }
 \description{
-study
+Returns a study for given ID
+}
+\details{
+If \code{file_format} is missing, the function returns an object
+of the class \code{phylo} from the \code{\link[ape]{ape}} package
+(default), or an object of the class \code{nexml} from the
+\code{RNeXML} package.
+
+Otherwise \code{file_format} can be either \code{newick},
+\code{nexus}, \code{nexml} or \code{json}, and the function will
+generate a file of the selected format. In this case, a file name
+needs to be provided using the argument \code{file}. If a file
+with the same name already exists, it will be silently
+overwritten.
 }
 \examples{
 \dontrun{
@@ -29,5 +51,8 @@ that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 }
 \author{
 Francois Michonneau
+}
+\seealso{
+\code{\link{get_study_meta}}
 }
 

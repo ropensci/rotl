@@ -4,13 +4,17 @@
 \alias{get_study_meta}
 \title{Study Metadata}
 \usage{
-get_study_meta(study_id)
+get_study_meta(study_id, ...)
 }
 \arguments{
-\item{study_id}{character, study id}
+\item{study_id}{the study identifier (character)}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-named-list json file with metadata
+named-list containing the metadata associated with the
+    study requested
 }
 \description{
 Retrieve metadata about a study in the Open Tree of Life datastore

@@ -6,32 +6,42 @@
 \usage{
 get_study_tree(study_id = NULL, tree_id = NULL,
   object_format = c("phylo"), tip_label = c("original_label", "ott_id",
-  "ott_taxon_name"), file_format = NULL, file)
+  "ott_taxon_name"), file_format, file, ...)
 }
 \arguments{
-\item{study_id}{}
+\item{study_id}{the identifier of a study (character)}
 
-\item{tree_id}{}
+\item{tree_id}{the identifier of a tree within the study}
 
-\item{object_format}{}
+\item{object_format}{the class of the object to be returned
+(default and currently only possible value \code{phylo} from
+the \code{\link[ape]{ape}} package).}
 
-\item{tip_label}{}
+\item{tip_label}{the format of the tip
+labels. \code{\dQuote{original_label}} (default) returns the
+original labels as provided in the study,
+\code{\dQuote{ott_id}} labels are replaced by their ott IDs,
+\code{\dQuote{ott_taxon_name}} labels are replaced by their
+Open Tree Taxonomy taxon name.}
 
-\item{file_format}{}
+\item{file_format}{the format of the file to be generated
+(\code{newick} default, \code{nexus}, or \code{json}).}
 
-\item{file}{}
+\item{file}{the file name where the output of the function will be
+saved.}
 
-\item{format}{char Tree format (default = json)}
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-A tree file in desired format
+if \code{file_format} is missing, an object of class
+    \code{phylo}, otherwise a logical indicating whether the file
+    was successfully created.
 }
 \description{
-returns specific tree from a study
+Returns a specific tree from within a study
 }
 \examples{
-\dontrun{
- nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
-}
+tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
 }
 

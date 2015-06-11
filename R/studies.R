@@ -1,11 +1,16 @@
 ##' Return a list of studies that match given properties
+##'
 ##' @title find_study
-##' @param exact Should exact matching be used? (logical, default \code{FALSE})
+##' @param exact Should exact matching be used? (logical, default
+##'     \code{FALSE})
 ##' @param property The property to be searched on (character)
-##' @param value The property-value  to be searched on (character)
-##' @param verbose Should the output include all metadata (logical default \code{FALSE})
-##' @seealso \code{\link{studies_properties}} which lists properties against
-##' which the studies can be searched
+##' @param value The property-value to be searched on (character)
+##' @param verbose Should the output include all metadata (logical
+##'     default \code{FALSE})
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
+##' @seealso \code{\link{studies_properties}} which lists properties
+##'     against which the studies can be searched
 ##' @export
 ##' @examples
 ##' study <- studies_find_studies(property="ot:studyId", value="pg_719")
@@ -30,6 +35,8 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##'     default \code{FALSE})
 ##' @param exact Should exact matching be used? (logical, default
 ##'     \code{FALSE})
+##' @param ... additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
 ##' @seealso \code{\link{studies_properties}} which lists properties
 ##'     against which the studies can be searched
 ##' @export
@@ -43,19 +50,20 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
     return(res)
 }
 
-##' Return the list study properties that can be used to search
-##' studies and trees.
+##' Return the list of study properties that can be used to search
+##' studies and trees used in the synthetic tree.
 ##'
-##' The list returned as 2 elements \code{tree_properties} and
-##' \code{studies_properties}. Each lists properties that can be used
-##' to search for studies and trees that are contributing to the
-##' synthetic tree.
+##' The list returned has 2 elements \code{tree_properties} and
+##' \code{studies_properties}. Each of these elements lists theadditional arguments to customize the API request
+##' properties that can be used to search for trees and studies that
+##' are contributing to the synthetic tree.
 ##'
 ##' @title Studies properties
-##' @param ... additional arguments to be used to customized the API
-##'     query (see the \code{\link{rotl}} package documentation).
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
 ##' @return A list of the study properties that can be used to find
 ##'     studies and trees that are contributing to the synthetic tree.
+##' @seealso \code{\link{studies_find_trees}}
 ##' @export
 ##' @examples
 ##'  all_the_properties <- studies_properties()
@@ -67,15 +75,36 @@ studies_properties <- function(...) {
 }
 
 
-##' returns study for given ID
+##' Returns a study for given ID
 ##'
-##' study
-##' @param study_id
-##' @param object_format
-##' @param file_format
-##' @param file
-##' @return some study
+##' If \code{file_format} is missing, the function returns an object
+##' of the class \code{phylo} from the \code{\link[ape]{ape}} package
+##' (default), or an object of the class \code{nexml} from the
+##' \code{RNeXML} package.
+##'
+##' Otherwise \code{file_format} can be either \code{newick},
+##' \code{nexus}, \code{nexml} or \code{json}, and the function will
+##' generate a file of the selected format. In this case, a file name
+##' needs to be provided using the argument \code{file}. If a file
+##' with the same name already exists, it will be silently
+##' overwritten.
+##'
+##' @title Get Study
+##' @param study_id the study ID for the study of interest (character)
+##' @param object_format the class of the object the query should
+##'     return (either \code{phylo} or \code{nexml}). Ignored if
+##'     \code{file_format} is specified.
+##' @param file_format the format of the file to be generated
+##'     (\code{newick}, \code{nexus}, \code{nexml} or \code{json}).
+##' @param file the file name where the output of the function will be
+##'     saved.
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
+##' @return if \code{file_format} is missing, an object of class
+##'     \code{phylo} or \code{nexml}, otherwise a logical indicating
+##'     whether the file was successfully created.
 ##' @author Francois Michonneau
+##' @seealso \code{\link{get_study_meta}}
 ##' @export
 ##' @examples
 ##' \dontrun{
@@ -107,22 +136,33 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
     res
 }
 
-##' returns specific tree from a study
+##' Returns a specific tree from within a study
 ##'
 ##' @title Study Tree
-##' @param study_id
-##' @param tree_id
-##' @param object_format
-##' @param tip_label
-##' @param file_format
-##' @param file
-##' @param format char Tree format (default = json)
-##' @return A tree file in desired format
+##' @param study_id the identifier of a study (character)
+##' @param tree_id the identifier of a tree within the study
+##' @param object_format the class of the object to be returned
+##'     (default and currently only possible value \code{phylo} from
+##'     the \code{\link[ape]{ape}} package).
+##' @param tip_label the format of the tip
+##'     labels. \code{\dQuote{original_label}} (default) returns the
+##'     original labels as provided in the study,
+##'     \code{\dQuote{ott_id}} labels are replaced by their ott IDs,
+##'     \code{\dQuote{ott_taxon_name}} labels are replaced by their
+##'     Open Tree Taxonomy taxon name.
+##' @param file_format the format of the file to be generated
+##'     (\code{newick} default, \code{nexus}, or \code{json}).
+##' @param file the file name where the output of the function will be
+##'     saved.
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
+##' @return if \code{file_format} is missing, an object of class
+##'     \code{phylo}, otherwise a logical indicating whether the file
+##'     was successfully created.
 ##' @export
 ##' @examples
-##' \dontrun{
-##'  nexson_tr <- get_study_tree(study_id="pg_1144", tree="tree2324")
-##'}
+##'  tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
                            file_format, file, ...) {
@@ -134,7 +174,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
                         ott_id =  "ot:ottid",
                         ott_taxon_name = "ot:otttaxonname")
     if (!missing(file_format)) {
-        file_format <- match.arg(file_format, c("nexus", "newick", "json"))
+        file_format <- match.arg(file_format, c("newick", "nexus", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
                                format=file_format, tip_label = tip_label, ...)
@@ -156,8 +196,11 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore
 ##' @title Study Metadata
-##' @param study_id character, study id
-##' @return named-list json file with metadata
+##' @param study_id the study identifier (character)
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
+##' @return named-list containing the metadata associated with the
+##'     study requested
 ##' @export
 ##' @examples
 ##' req <- get_study_meta("pg_719")
@@ -167,17 +210,22 @@ get_study_meta <- function(study_id, ...) {
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
-##' @param study_id character, the study id
-##' @param tree_id character,  the tree id
-##' @param object_format character, the class of the object returned
-##' by the function (default, and currently only possibility
-##' \code{phylo} from the APE package)
+##'
+##' @title Study subtree
+##' @param study_id the study identifier (character)
+##' @param tree_id the tree identifier (character)
+##' @param object_format the class of the object returned by the
+##'     function (default, and currently only possibility \code{phylo}
+##'     from the \code{\link[ape]{ape}} package)
 ##' @param file_format character, the file format to use to save the
-##' results of the query.
+##'     results of the query.
 ##' @param file character, the path and file name where the output
-##' should be written.
-##' @param subtree_id, either a node id that specifies a subtree or "ingroup"
-##' which returns the ingroup is for this subtree, a 400 error otherwise
+##'     should be written.
+##' @param subtree_id, either a node id that specifies a subtree or
+##'     "ingroup" which returns the ingroup is for this subtree, a 400
+##'     error otherwise
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
 ##' @export
 ##' @examples
 ##' \dontrun{

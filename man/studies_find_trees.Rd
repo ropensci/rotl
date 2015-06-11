@@ -5,25 +5,35 @@
 \title{find trees}
 \usage{
 studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE)
+  exact = FALSE, ...)
 }
 \arguments{
-\item{property}{character, the property to be searched on}
+\item{property}{The property to be searched on (character)}
 
-\item{value}{character, the property-value  to be searched on}
+\item{value}{The property-value to be searched on (character)}
 
-\item{verbose}{Boolean, include all metadata (default=FALSE)}
+\item{verbose}{Should the output include all metadata? (logical,
+default \code{FALSE})}
 
-\item{exact}{Boolean, exact matching (default = FALSE)}
+\item{exact}{Should exact matching be used? (logical, default
+\code{FALSE})}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \description{
 Return a list of trees that match a given properties
+}
+\details{
+The list of possible values to be used as values for the argument
+\code{property} can be found using the function
+\code{\link{studies_properties}}.
 }
 \examples{
 res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
 }
 \seealso{
-\code{\link{studies_properties}} which lists properties against
-which the studies can be searched
+\code{\link{studies_properties}} which lists properties
+    against which the studies can be searched
 }
 

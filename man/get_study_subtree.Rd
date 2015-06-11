@@ -2,28 +2,32 @@
 % Please edit documentation in R/studies.R
 \name{get_study_subtree}
 \alias{get_study_subtree}
-\title{Retrieve subtree from a specific tree in the Open Tree of Life data store}
+\title{Study subtree}
 \usage{
 get_study_subtree(study_id, tree_id, subtree_id, object_format = c("phylo"),
-  file_format = NULL, file)
+  file_format, file, ...)
 }
 \arguments{
-\item{study_id}{character, the study id}
+\item{study_id}{the study identifier (character)}
 
-\item{tree_id}{character,  the tree id}
+\item{tree_id}{the tree identifier (character)}
 
-\item{subtree_id,}{either a node id that specifies a subtree or "ingroup"
-which returns the ingroup is for this subtree, a 400 error otherwise}
+\item{subtree_id,}{either a node id that specifies a subtree or
+"ingroup" which returns the ingroup is for this subtree, a 400
+error otherwise}
 
-\item{object_format}{character, the class of the object returned
-by the function (default, and currently only possibility
-\code{phylo} from the APE package)}
+\item{object_format}{the class of the object returned by the
+function (default, and currently only possibility \code{phylo}
+from the \code{\link[ape]{ape}} package)}
 
 \item{file_format}{character, the file format to use to save the
 results of the query.}
 
 \item{file}{character, the path and file name where the output
 should be written.}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \description{
 Retrieve subtree from a specific tree in the Open Tree of Life data store

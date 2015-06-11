@@ -5,16 +5,21 @@
 \title{find_study}
 \usage{
 studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE)
+  exact = FALSE, ...)
 }
 \arguments{
-\item{property}{character, the property to be searched on}
+\item{property}{The property to be searched on (character)}
 
-\item{value}{character, the property-value  to be searched on}
+\item{value}{The property-value to be searched on (character)}
 
-\item{verbose}{Boolean, include all metadata (default=FALSE)}
+\item{verbose}{Should the output include all metadata (logical
+default \code{FALSE})}
 
-\item{exact}{Boolean, exact matching (default = FALSE)}
+\item{exact}{Should exact matching be used? (logical, default
+\code{FALSE})}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \description{
 Return a list of studies that match given properties
@@ -23,7 +28,7 @@ Return a list of studies that match given properties
 study <- studies_find_studies(property="ot:studyId", value="pg_719")
 }
 \seealso{
-\code{\link{studies_properties}} which lists properties against
-which the studies can be searched
+\code{\link{studies_properties}} which lists properties
+    against which the studies can be searched
 }
 
