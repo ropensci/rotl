@@ -1,13 +1,22 @@
 context("taxonomy")
 
-### taxonomy about
-test_that("taxonomy_about", {
-              tt <- taxonomy_about()
-              expect_true(inherits(tt, "list"))
-          })
+############################################################################
+## taxonomy about                                                         ##
+############################################################################
+
+test_that("taxonomy_about is a list", {
+    tt <- taxonomy_about()
+    expect_true(inherits(tt, "list"))
+})
+
+test_that("taxonomy_about has the names listed in documentation (if it breaks update documentation)", {
+    tt <- taxonomy_about()
+    expect_true(all(names(tt) %in% c("weburl", "author", "source")))
+})
 
 
 ### taxon Info
+
 test_that("taxonomy taxon info", {
               tid <- 515698
               tt <- taxonomy_taxon(tid)
