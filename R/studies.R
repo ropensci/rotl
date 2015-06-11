@@ -82,12 +82,13 @@ studies_properties <- function(...) {
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 ##' }
 get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
-                      file_format = NULL, file, ...) {
+                      file_format, file, ...) {
     object_format <- match.arg(object_format)
-    if (!is.null(file_format)) {
+    if (!missing(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
         res <- .get_study(study_id, format = file_format)
+        unlink(file)
         if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -124,7 +125,7 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##'}
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
-                           file_format=NULL, file, ...) {
+                           file_format, file, ...) {
 
     object_format <- match.arg(object_format)
     tip_label <- match.arg(tip_label)
@@ -132,11 +133,12 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
                         original_labels = "ot:originallabel",
                         ott_id =  "ot:ottid",
                         ott_taxon_name = "ot:otttaxonname")
-    if (!is.null(file_format)) {
+    if (!missing(file_format)) {
         file_format <- match.arg(file_format, c("nexus", "newick", "json"))
         if (missing(file)) stop("You must specify a file to write your output")
         res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
                                format=file_format, tip_label = tip_label, ...)
+        unlink(file)
         if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {
@@ -183,13 +185,14 @@ get_study_meta <- function(study_id, ...) {
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
-                              file_format=NULL, file, ...) {
+                              file_format, file, ...) {
     object_format <- match.arg(object_format)
-    if (!is.null(file_format)) {
+    if (!missing(file_format)) {
         if (missing(file)) stop("You must specify a file to write your output")
         file_format <- match.arg(file_format, c("newick", "nexus", "json"))
         res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
                                   subtree_id = subtree_id, format=file_format, ...)
+        unlink(file)
         if (identical(file_format, "json")) {
             cat(jsonlite::toJSON(res), file=file)
         } else {

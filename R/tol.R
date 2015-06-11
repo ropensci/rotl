@@ -120,12 +120,13 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'}
 ##' @export
 tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
-                        file = NULL, ...) {
+                        file, ...) {
 
     res <- .tol_subtree(node_id = node_id, ott_id = ott_id,
                         tree_id = tree_id, ...)
 
-    if (!is.null(file)) {
+    if (!missing(file)) {
+        unlink(file)
         cat(res$newick, file = file)
         return(invisible(file.exists(file)))
     } else {
@@ -163,7 +164,7 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
 ##' }
 ##' @export
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL, ...) {
+tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file, ...) {
     res <- .tol_induced_subtree(node_ids = node_ids, ott_ids = ott_ids, ...)
 
     if (length(res$node_ids_not_in_graph) > 0) {
@@ -175,7 +176,8 @@ tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file = NULL, ...) {
     if (length(res$ott_ids_not_in_graph) > 0) {
         warning("ott ids: ", paste0(res$ott_ids_not_in_graph, collapse = ", "), " not in graph.")
     }
-    if (!is.null(file)) {
+    if (!missing(file)) {
+        unlink(file)
         cat(res$subtree, file = file)
         return(file.exists(file))
     } else {

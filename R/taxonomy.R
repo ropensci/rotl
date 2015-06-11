@@ -50,6 +50,7 @@ taxonomy_subtree <- function (ott_id=NULL,
     } else if (identical(output_format, "newick")) {
         res <- res$subtree
         if (!missing(file)) {
+            unlink(file)
             cat(res, file = file)
             return(file.exists(file))
         }
