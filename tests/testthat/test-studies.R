@@ -1,5 +1,12 @@
 context("test of studies")
 
+############################################################################
+## studies_properties                                                     ##
+############################################################################
+
+test_that("studies_properties is a list with 2 elements (if breaks, need to update documentation)",
+          expect_true(all(names(studies_properties() %in% c("tree_properties", "study_properties")))))
+
 
 ############################################################################
 ## get_study                                                              ##
