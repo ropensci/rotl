@@ -1,9 +1,19 @@
 Package: rotl
 Title: Interface to the Open Tree of Life API
 Version: 0.1
-Authors@R: person("Francois", "Michonneau", role=c("aut", "cre"),
-    email="francois.michonneau@gmail.com")
-Description: Interface to the Open Tree of Life API
+Authors@R: c(
+  person("Francois", "Michonneau", role=c("aut", "cre"),
+         email="francois.michonneau@gmail.com"),
+  person("Joseph", "Brown", role="aut"),
+  person("David", "Winter", role="aut")
+)
+Description: An interface to the Open Tree of Life API to retrieve phylogenetic
+   trees, information about studies used to assemble the synthetic tree, and
+   utilities to match taxonomic names to Open Tree identifiers. The Open Tree of
+   Life aims at assembling a comprehensive phylogenetic tree for all named
+   species.
+URL: https://github.com/fmichonneau/rotl
+BugReports: https://github.com/fmichonneau/rotl/issues
 Depends:
     R (>= 3.1.1)
 Imports:
