@@ -49,8 +49,8 @@ test_that("include_lineage must be logical with .gol_node_info",
 
 test_that("ott_id must be a numeric .gol_node_info",
           expect_error(.gol_node_info(node_id = NULL, ott_id = "test"),
-                       "numeric"))
+                       "look like a number"))
 
 test_that("node_id must be a numeric .gol_node_info",
           expect_error(.gol_node_info(node_id = "test", ott_id = NULL),
-                       "numeric"))
+                       "look like a number"))

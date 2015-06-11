@@ -99,3 +99,16 @@ nexml_from_otl <- function(res) {
     unlink(fnm)
     phy
 }
+
+check_numeric <- function(x) {
+    if (length(x) != 1) {
+        stop("only 1 element should be provided")
+    }
+    if (!is.numeric(x)) {
+        x <- as.character(x)
+        if (any(is.na(x))) return(FALSE)
+        return(grepl("^[0-9]+$", x))
+    } else {
+        return(x %% 1 == 0)
+    }
+}

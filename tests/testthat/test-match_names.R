@@ -37,7 +37,7 @@ test_that("error generated if row_number is not numeric",
 
 test_that("error generated if ott_id is not numeric",
           expect_error(rotl:::check_args_match_names(rsp, ott_id = TRUE),
-                       "must be a numeric"))
+                       "must look like a number"))
 
 test_that("error generated if taxon_name is not character",
           expect_error(rotl:::check_args_match_names(rsp, taxon_name = TRUE),
@@ -75,7 +75,7 @@ test_that("error generated if more than 1 value for taxon_name is provided",
 
 test_that("error generated if more than 1 value for ott_id is provided",
           expect_error(rotl::check_args_match_names(rsp, ott_id = c(924443, 4930522, 240396)),
-                       "You must supply a single element"))
+                       "only 1 element should be provided"))
 
 ############################################################################
 ## inspect_match_names                                                    ##

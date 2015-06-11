@@ -47,14 +47,14 @@
         stop("Argument \'include_lineage\' must be of class \"logical\"")
     }
     if (!is.null(ott_id)) {
-        if (!is.numeric(ott_id)) {
-            stop("Argument \'ott_id\' must be of class \"numeric\"")
+        if (!check_numeric(ott_id)) {
+            stop("Argument \'ott_id\' must look like a number.")
         }
         q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     }
     if (!is.null(node_id)) {
-        if (!is.numeric(node_id)) {
-            stop("Argument \'node_id\' must be of class \"numeric\"")
+        if (!check_numeric(node_id)) {
+            stop("Argument \'node_id\' must look like a number.")
         }
         q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
     }

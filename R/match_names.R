@@ -21,7 +21,7 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
         i <- orig_order[match(tolower(taxon_name), response$search_string)]
         if (any(is.na(i))) stop("Can't find ", taxon_name)
     } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
-        if (!is.numeric(ott_id)) stop("\'ott_id\" must be a numeric")
+        if (!check_numeric(ott_id)) stop("\'ott_id\" must look like a number.")
         i <- orig_order[match(ott_id, response$ott_id)]
         if (any(is.na(i))) stop("Can't find ", ott_id)
     } else {
