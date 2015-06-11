@@ -1,9 +1,9 @@
 ##' Return a list of studies that match given properties
 ##' @title find_study
-##' @param exact Boolean, exact matching (default = FALSE)
-##' @param property character, the property to be searched on
-##' @param value character, the property-value  to be searched on
-##' @param verbose Boolean, include all metadata (default=FALSE)
+##' @param exact Should exact matching be used? (logical, default \code{FALSE})
+##' @param property The property to be searched on (character)
+##' @param value The property-value  to be searched on (character)
+##' @param verbose Should the output include all metadata (logical default \code{FALSE})
 ##' @seealso \code{\link{studies_properties}} which lists properties against
 ##' which the studies can be searched
 ##' @export
@@ -18,13 +18,20 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 }
 
 ##' Return a list of trees that match a given properties
+##'
+##' The list of possible values to be used as values for the argument
+##' \code{property} can be found using the function
+##' \code{\link{studies_properties}}.
+##'
 ##' @title find trees
-##' @param property character, the property to be searched on
-##' @param value character, the property-value  to be searched on
-##' @param verbose Boolean, include all metadata (default=FALSE)
-##' @param exact Boolean, exact matching (default = FALSE)
-##' @seealso \code{\link{studies_properties}} which lists properties against
-##' which the studies can be searched
+##' @param property The property to be searched on (character)
+##' @param value The property-value to be searched on (character)
+##' @param verbose Should the output include all metadata? (logical,
+##'     default \code{FALSE})
+##' @param exact Should exact matching be used? (logical, default
+##'     \code{FALSE})
+##' @seealso \code{\link{studies_properties}} which lists properties
+##'     against which the studies can be searched
 ##' @export
 ##' @examples
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
@@ -36,10 +43,19 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
     return(res)
 }
 
-##' Property of a study
-##' @title studies properties
-##' @return something
-##' @author Francois Michonneau
+##' Return the list study properties that can be used to search
+##' studies and trees.
+##'
+##' The list returned as 2 elements \code{tree_properties} and
+##' \code{studies_properties}. Each lists properties that can be used
+##' to search for studies and trees that are contributing to the
+##' synthetic tree.
+##'
+##' @title Studies properties
+##' @param ... additional arguments to be used to customized the API
+##'     query (see the \code{\link{rotl}} package documentation).
+##' @return A list of the study properties that can be used to find
+##'     studies and trees that are contributing to the synthetic tree.
 ##' @export
 ##' @examples
 ##'  all_the_properties <- studies_properties()
