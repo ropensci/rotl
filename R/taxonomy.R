@@ -21,8 +21,10 @@ taxonomy_about <- function (...) {
 ##' @examples
 ##' req <- taxonomy_taxon(ott_id=515698)
 ##' @export
-taxonomy_taxon <- function (ott_id=NULL, ...) {
-    res <- .taxonomy_taxon(ott_id = ott_id)
+taxonomy_taxon <- function (ott_ids, ...) {
+    res <- lapply(ott_ids, function(x) .taxonomy_taxon(ott_id = x, ...))
+    names(res) <- ott_ids
+    class(res) <- "taxon_info"
     return(res)
 }
 
