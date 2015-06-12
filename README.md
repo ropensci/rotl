@@ -83,7 +83,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/VOIXQKM.png) 
+![plot of chunk get_tr](http://i.imgur.com/yCYhPrK.png) 
 
 
 ### Find trees focused on my favourite taxa
@@ -95,8 +95,8 @@ furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", valu
 ```
 
 ```
-## ot:studyId ot:studyId ot:studyId ot:studyId ot:studyId 
-##     "2647"     "2582"     "2812"     "1428"     "2550"
+## ot:studyId 
+##  "pg_2550"
 ```
 
 ### Get a specific study tree
@@ -134,4 +134,10 @@ furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
 plot(furry_tr)
 ```
 
-![plot of chunk tree](http://i.imgur.com/iHmFP1O.png) 
+![plot of chunk tree](http://i.imgur.com/t1zecQb.png) 
+
+### Code of Conduct
+
+Please note that this project is released with a
+[Contributor Code of Conduct](CONDUCT.md). By participating in this project you
+agree to abide by its terms.

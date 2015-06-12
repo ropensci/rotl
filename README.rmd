@@ -83,3 +83,9 @@ furry_metadata$nexml$treesById
 furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
 plot(furry_tr)
 ```
+
+### Code of Conduct
+
+Please note that this project is released with a
+[Contributor Code of Conduct](CONDUCT.md). By participating in this project you
+agree to abide by its terms.

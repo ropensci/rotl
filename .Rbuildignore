@@ -2,3 +2,4 @@
 ^README\.rmd$
 figure/
 tmp/
+^CONDUCT\.md$
