@@ -60,21 +60,21 @@ test_that("error generated if invalid taxon_name", {
 })
 
 test_that("error generated if invalid ott id", {
-    expect_error(rotl::check_args_match_names(rsp, ott_id = 66666),
+    expect_error(rotl:::check_args_match_names(rsp, ott_id = 66666),
                  "Can't find")
 })
 
 test_that("error generated if more than 1 value for row_number is provided",
-          expect_error(rotl::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
+          expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
                        "You must supply a single element"))
 
 test_that("error generated if more than 1 value for taxon_name is provided",
-          expect_error(rotl::check_args_match_names(rsp, taxon_name = c("holothuria", "diadema")),
+          expect_error(rotl:::check_args_match_names(rsp, taxon_name = c("holothuria", "diadema")),
                        "You must supply a single element"))
 
 
 test_that("error generated if more than 1 value for ott_id is provided",
-          expect_error(rotl::check_args_match_names(rsp, ott_id = c(924443, 4930522, 240396)),
+          expect_error(rotl:::check_args_match_names(rsp, ott_id = c(924443, 4930522, 240396)),
                        "only 1 element should be provided"))
 
 ############################################################################
