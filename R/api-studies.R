@@ -24,8 +24,7 @@
     res <- otl_POST(path="studies/find_studies/",
                     body=c(req_body,
                            jsonlite::unbox(verbose),
-                           jsonlite::unbox(exact)),
-                    ...)
+                           jsonlite::unbox(exact)), ...)
     cont <- httr::content(res)
     return(cont)
 }
@@ -61,8 +60,7 @@
     res <- otl_POST(path="studies/find_trees/",
                     body=c(req_body,
                            jsonlite::unbox(verbose),
-                           jsonlite::unbox(exact)),
-                    ...)
+                           jsonlite::unbox(exact)), ...)
     cont <- httr::content(res)
     return(cont)
 }
@@ -148,14 +146,14 @@
 ### Let's not worry about those for now, as their results could be
 ### obtained using get_study_tree
 
-get_study_otu <- function(study_id, otu=NULL){
+get_study_otu <- function(study_id, otu=NULL, ...) {
     otl_GET(path=paste("study", study_id, "otu", otu, sep="/"), ...)
 }
 
-get_study_otus <- function(study_id, otus) {
+get_study_otus <- function(study_id, otus, ...) {
     otl_GET(path=paste("study", study_id, "otu", otus, sep="/"), ...)
 }
 
-get_study_otumap <- function(study_id){
+get_study_otumap <- function(study_id, ...) {
     otl_GET(path=paste("study", study_id,"otumap", sep="/"))
 }
