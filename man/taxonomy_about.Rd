@@ -2,18 +2,26 @@
 % Please edit documentation in R/taxonomy.R
 \name{taxonomy_about}
 \alias{taxonomy_about}
-\title{Taxonomy about}
+\title{About the Open Tree Taxonomy}
 \usage{
-taxonomy_about()
+taxonomy_about(...)
+}
+\arguments{
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-Some JSON
+A list with at least the version and the location of the
+    taxonomy source files
 }
 \description{
-Summary information about the OpenTree Taxaonomy (OTT)
+Summary information about the Open Tree Taxaonomy (OTT)
 }
 \details{
-Return information about the taxonomy, including version.
+Return metadata and information about the taxonomy
+itself. Currently, the available metadata is fairly sparse, but
+includes (at least) the eversion, and the location from which the
+complete taxonomy source files can be downloaded.
 }
 \examples{
 taxonomy_about()
