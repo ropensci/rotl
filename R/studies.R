@@ -193,11 +193,32 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
     res
 }
 
-##' Retrieve metadata about a study in the Open Tree of Life datastore
+##' Retrieve metadata about a study in the Open Tree of Life datastore.
+##'
+##' \code{get_study_meta} returns a long list of attributes for the
+##' studies that are contributing to the synthetic tree. To help with
+##' the extraction of relevant information from this list, several
+##' helper functions exists: \itemize{
+##'
+##'   \item {get_tree_ids} { The identifiers of the trees
+##'   associated with the study }
+##'
+##'   \item {get_publication} { The citation information of the
+##'   publication for the study. The DOI (or URL) for the study is
+##'   available as an attribute to the returned object (i.e.,
+##'   \code{attr(object, "DOI")} ) }.
+##'
+##'   \item {candidate_for_synth} { The identifier of the tree(s) from
+##'   the study used in the synthetic tree. This is a subset of the
+##'   result of \code{get_tree_ids}.}
+##'
+##' }
+##'
 ##' @title Study Metadata
 ##' @param study_id the study identifier (character)
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
+##' @param sm an object created by \code{get_study_meta}
 ##' @return named-list containing the metadata associated with the
 ##'     study requested
 ##' @export
@@ -205,11 +226,45 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##' req <- get_study_meta("pg_719")
 ##' req$nexml$`^ot:studyPublication`
 get_study_meta <- function(study_id, ...) {
-   .get_study_meta(study_id = study_id, ...)
+    res <- .get_study_meta(study_id = study_id, ...)
+    class(res) <- "study_meta"
+    attr(res, "study_id") <- study_id
+    res
 }
 
+##' @export
+##' @rdname get_study_meta
+get_tree_ids <- function(sm) UseMethod("get_tree_ids")
 
+##' @export
+##' @rdname get_study_meta
+get_publication <- function(sm) UseMethod("get_publication")
 
+##' @export
+##' @rdname get_study_meta
+candidate_for_synth <- function(sm) UseMethod("candidate_for_synth")
+
+##' @export
+##' @rdname get_study_meta
+get_tree_ids.study_meta <- function(sm) {
+    ## only keep the number of the ID
+    st_id <- gsub("[^0-9]", "", sm[["nexml"]][["^ot:studyId"]])
+    unlist(sm[["nexml"]][["treesById"]][[paste0("trees", st_id)]][["^ot:treeElementOrder"]])
+}
+
+##' @export
+##' @rdname get_study_meta
+get_publication.study_meta <- function(sm) {
+    pub <- sm[["nexml"]][["^ot:studyPublicationReference"]]
+    attr(pub, "DOI") <- sm[["nexml"]][["^ot:studyPublication"]][["@href"]]
+    pub
+}
+
+##' @export
+##' @rdname get_study_meta
+candidate_for_synth.study_meta <- function(sm) {
+    unlist(sm[["nexml"]][["^ot:candidateTreeForSynthesis"]])
+}
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
 ##'

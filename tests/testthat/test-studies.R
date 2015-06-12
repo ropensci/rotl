@@ -201,3 +201,26 @@ test_that("get_study_subtree returns a json file", {
           expect_true(tt)
           expect_true(grepl("^\\{", readLines(ff, n = 1)))
       })
+
+
+############################################################################
+## get_study_meta                                                         ##
+############################################################################
+
+sm <- get_study_meta("pg_719")
+
+test_that("get_study meta returns a study_meta object",
+          expect_true(inherits(sm, "study_meta"))
+          )
+
+test_that("get_tree_ids method for study_meta",
+          expect_equal(get_tree_ids(sm), c("tree1294", "tree1295", "tree1296"))
+          )
+
+test_that("get_publication method for study_meta",
+          expect_equal(attr(get_publication(sm), "DOI"), "http://dx.doi.org/10.1600/036364411X605092")
+          )
+
+test_that("candidate_for_synth method for study_meta",
+          expect_true(candidate_for_synth(sm) %in% get_tree_ids(sm))
+          )
