@@ -118,7 +118,6 @@ check_tnrs <- function(req) {
 ##' @return Returns invisibly a list for each major clades (e.g.,
 ##'     animals, microbes, plants, fungi, life) whose elements
 ##'     contains the possible contexts.
-##' @author Francois Michonneau
 ##' @export
 
 tnrs_contexts <- function(...) {

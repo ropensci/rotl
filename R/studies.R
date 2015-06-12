@@ -103,7 +103,6 @@ studies_properties <- function(...) {
 ##' @return if \code{file_format} is missing, an object of class
 ##'     \code{phylo} or \code{nexml}, otherwise a logical indicating
 ##'     whether the file was successfully created.
-##' @author Francois Michonneau
 ##' @seealso \code{\link{get_study_meta}}
 ##' @export
 ##' @examples
@@ -208,6 +207,9 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 get_study_meta <- function(study_id, ...) {
    .get_study_meta(study_id = study_id, ...)
 }
+
+
+
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
 ##'

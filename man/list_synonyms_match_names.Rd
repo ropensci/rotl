@@ -39,7 +39,4 @@ as well as one of either the row number corresponding to the name
 in this object, the name itself (as used in the original query),
 or the ott_id listed for this name.
 }
-\author{
-Francois Michonneau
-}
 

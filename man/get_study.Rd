@@ -49,9 +49,6 @@ overwritten.
 that_one_study <- get_study(study_id="pg_719", object_format="phylo")
 }
 }
-\author{
-Francois Michonneau
-}
 \seealso{
 \code{\link{get_study_meta}}
 }

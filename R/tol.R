@@ -75,7 +75,6 @@ print.tol_summary <- function(x, ...) {
 ##' @title List of studies used for the Tree of Life
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
 ##' @return a data frame
-##' @author Francois Michonneau
 ##' @export
 study_list <- function(tol) UseMethod("study_list")
 

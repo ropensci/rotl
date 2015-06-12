@@ -61,7 +61,4 @@ matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
                                            new_ott_id = 631176)
  new_matched_names
 }
-\author{
-Francois Michonneau
-}
 

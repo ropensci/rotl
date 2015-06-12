@@ -25,7 +25,4 @@ This function takes the object resulting from
 the \code{tree_id}, \code{study_id} and \code{git_sha} for the
 studies currently included in the Tree of Life.
 }
-\author{
-Francois Michonneau
-}
 

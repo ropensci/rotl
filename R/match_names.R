@@ -60,7 +60,6 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
 ##' @param taxon_name the taxon name corresponding to the name to inspect
 ##' @param ott_id the ott id corresponding to the name to inspect
 ##' @return a data frame
-##' @author Francois Michonneau
 ##' @examples
 ##'    matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
 ##'  inspect_match_names(matched_names, taxon_name="diadema")
@@ -165,7 +164,6 @@ update_match_names <- function(response, row_number, taxon_name, ott_id,
 ##' @return a list whose elements are all synomym names (as vectors of
 ##'     character) for the taxonomic names that match the query (the
 ##'     names of the elements of the list).
-##' @author Francois Michonneau
 ##' @export
 
 list_synonyms_match_names <- function(response, row_number, taxon_name, ott_id) {
