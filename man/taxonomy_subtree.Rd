@@ -2,26 +2,67 @@
 % Please edit documentation in R/taxonomy.R
 \name{taxonomy_subtree}
 \alias{taxonomy_subtree}
-\title{taxon}
+\title{Taxonomy subtree}
 \usage{
 taxonomy_subtree(ott_id = NULL, output_format = c("taxa_all", "newick",
-  "phylo", "raw", "taxa_species", "taxa_internal"), file)
+  "phylo", "raw", "taxa_species", "taxa_internal"), file, ...)
 }
 \arguments{
-\item{ott_id}{The OTT id of the taxon of interest.  Not optional.}
+\item{ott_id}{The ott id of the taxon of interest.}
 
-\item{output_format}{}
+\item{output_format}{the format of the object to be returned. See
+the \sQuote{Return} section.}
 
-\item{file}{}
+\item{file}{the file name where to save the output of the
+function. Ignored unless \code{output_format} is set to
+\code{dQuote{phylo}}.}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-Some JSON
+If the \code{file} argument is missing:
+   \itemize{
+
+    \item{\code{\dQuote{taxa_all}}} { a character vector listing
+    all the taxa names (species and higher-level taxanomy, e.g.,
+    families, genera) descending from the taxa corresponding to
+    the \code{ott_id} provided. }
+
+    \item{\code{\dQuote{newick}}} { a character vector containing
+    the newick formatted string corresponding to the taxonomic
+    subtree for the \code{ott_id} provided. }
+
+    \item{\code{\dQuote{phylo}}} { an object of the class
+    \code{phylo} from the \code{\link{[ape]{ape}}} package. }
+
+    \item{\code{\dQuote{raw}}} { the direct output from the API,
+    i.e., a list with an element named \sQuote{subtree} that
+    contains the subtree as a newick formatted string. }
+
+    \item{\code{\dQuote{taxa_species}}} { a character vector
+    listing the species descending from the taxa corresponding to
+    the \code{ott_id} provided. }
+
+    \item{\code{\dQuote{taxa_internal}}} { a character vector
+    listing the higher taxonomy descending from the taxa
+    corresponding to the \code{ott_id} provided. }
+
+    }
+
+    If a \code{file} argument is provided (and
+    \code{output_format} is set to \code{\dQuote{phylo}}), a
+    logical indicating whether the file was successfully created.
 }
 \description{
-Taxonomic Subtree
+Given an ott id, return the inclusive taxonomic subtree descended
+from the specified taxon.
 }
 \details{
-Given an ott id, return complete taxonomy subtree descended from specified taxon.
+If the output of this function is exported to a file, the only
+possible value for the \code{output_format} argument is
+\code{\dQuote{newick}}. If the file provided already exists, it
+will be silently overwritten.
 }
 \examples{
 req <- taxonomy_subtree(ott_id=515698)
