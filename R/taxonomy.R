@@ -28,6 +28,35 @@ taxonomy_taxon <- function (ott_ids, ...) {
     return(res)
 }
 
+##' @export
+tax_rank <- function(tax) { UseMethod("rank") }
+
+##' @export
+ott_taxon_name <- function(tax) { UseMethod("ott_taxon_name") }
+
+##' @export
+node_id <- function(tax) { UseMethod("node_id") }
+
+##' @export
+##' @aliases tax_rank
+##' @rdname taxonomy_taxon
+tax_rank.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["rank"]], character(1))
+}
+
+##' @export
+##' @aliases ott_taxon
+##' @rdname taxonomy_taxon
+ott_taxon_name.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["ot:ottTaxonName"]], character(1))
+}
+
+##' @export
+##' @aliases node_id
+##' @rdname taxonomy_taxon
+node_id.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["node_id"]], integer(1) )
+}
 
 ##' Taxonomic Subtree
 ##'
