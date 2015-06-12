@@ -44,14 +44,15 @@ prefixes:
 ## Demonstration of a basic workflow
 
 The most common use for `rotl` is probably to start from a list of species and
-get the relevant parts of the TOL for these species. This is a two step process:
+get the relevant parts of the tree for these species. This is a two step
+process:
 
 1. the species names need to be matched to their `ott_id` (the Open Tree
 Taxonomy identifiers) using the Taxonomic name resolution services (TNRS)
 1. these `ott_id` will then be used to retrieve the relevant parts of the Tree
 of Life.
 
-### Matching taxonomy to the `ott_id`
+### Step 1: Matching taxonomy to the `ott_id`
 
 Let's start by doing a search on a diverse group of taxa: a tree frog (genus
 _Hyla_), a fish (genus _Salmo_), a sea urchin (genus _Diadema_), a nautilus
@@ -75,34 +76,26 @@ indicates the number of `ott_id` that corresponds to a given name. In our
 example, our search on _Diadema_ returns 4 matches, and the one returned by
 default is a fungus and not the sea urchin that we want for our query.
 
-To figure out what is happening, we can use the function
-`inspect_match_names`. This function takes the object resulting from using
-`tnrs_match_names`, and either the row number, the taxon name (you used in your
-search), or the `ott_id` returned by the initial query.
+The argument `context_name` allows you to limit the taxonomic scope of your
+search. In this case, if we limit our search to animals, the genus _Diadema_ now
+matches our sea urchin:
 
 ```{r}
-inspect_match_names(resolved_names, taxon_name = "diadema")
+resolved_names <- tnrs_match_names(taxa, context_name = "Animals")
 ```
 
-In our case, we want the second result in this data frame. We can now use the
-`update_match_names`, to change to the correct taxa (the sea urchin not the
-fungus):
+`r knitr::ktable(resolved_names)`
 
-```{r}
-resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
-                                     new_row_number = 2)
-## we could also have used the ott_id to replace this taxon
-## resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
-##                                     new_ott_id = 631176)
-```
+If you are trying to build a tree with deeply divergent taxa and run into this
+issue, see "How to change the ott ids assigned to my taxa?" in the FAQ below.
 
-`r knitr::kable(resolved_names)`
 
 ### Getting the tree corresponding to our taxa
 
 Now that we have the correct `ott_id` for our taxa, we can ask for the tree. By
 default, the object returned by `tol_induced_subtree` is a phylo object (from
-the [ape](http://cran.r-project.org/package=ape)), so we can plot it directly.
+the [ape](http://cran.r-project.org/package=ape) package), so we can plot it
+directly.
 
 ```{r, fig.width=7, fig.height=4}
 my_tree <- tol_induced_subtree(ott_ids = resolved_names$ott_id)
@@ -111,6 +104,42 @@ plot(my_tree, no.margin=TRUE)
 
 
 ## FAQ
+
+### How to change the ott ids assigned to my taxa?
+
+If you realize that `tnrs_match_names` assigns the incorrect taxonomic group to
+your name (e.g., because of synonymy) and changing the `context_name` does not
+help, you can use the function `inspect_match_names`. This function takes the
+object resulting from using `tnrs_match_names`, and either the row number, the
+taxon name (you used in your search in lowercase), or the `ott_id` returned by
+the initial query.
+
+To illustrate this, let's re-use the previous query but by adding a fungus to
+our list of taxa, such that restricting our search to animals doesn't work.
+
+```{r}
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer", "Boletus")
+resolved_names <- tnrs_match_names(taxa)
+inspect_match_names(resolved_names, taxon_name = "diadema")
+```
+
+In our case, we want the second row in this data frame to replace the
+information that initially matched for _Diadema_. We can now use the
+`update_match_names`, to change to the correct taxa (the sea urchin not the
+fungus):
+
+```{r}
+resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
+                                     new_row_number = 2)
+
+## we could also have used the ott_id to replace this taxon:
+## resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
+##                                     new_ott_id = 631176)
+```
+
+And now our `resolved_names` data frame includes the taxon we want:
+
+`r knitr::kable(resolved_names)`
 
 ### How do I know that the taxa I'm asking for is the correct one?
 
