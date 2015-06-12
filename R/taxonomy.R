@@ -67,8 +67,7 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##' @param file the file name where to save the output of the
 ##'     function. Ignored unless \code{output_format} is set to
 ##'     \code{dQuote{phylo}}.
-##' @return If the \code{file} argument is missing:
-##'    \itemize{
+##' @return If the \code{file} argument is missing: \itemize{
 ##'
 ##'     \item{\code{\dQuote{taxa_all}}} { a character vector listing
 ##'     all the taxa names (species and higher-level taxanomy, e.g.,
@@ -80,7 +79,7 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##'     subtree for the \code{ott_id} provided. }
 ##'
 ##'     \item{\code{\dQuote{phylo}}} { an object of the class
-##'     \code{phylo} from the \code{\link{[ape]{ape}}} package. }
+##'     \code{phylo} from the \code{\link[ape]{ape}} package. }
 ##'
 ##'     \item{\code{\dQuote{raw}}} { the direct output from the API,
 ##'     i.e., a list with an element named \sQuote{subtree} that
