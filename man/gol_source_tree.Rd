@@ -4,7 +4,7 @@
 \alias{gol_source_tree}
 \title{Get reconstructed source tree}
 \usage{
-gol_source_tree(study_id = NULL, tree_id = NULL, git_sha = NULL)
+gol_source_tree(study_id = NULL, tree_id = NULL, git_sha = NULL, ...)
 }
 \arguments{
 \item{study_id}{String. The study identifier. Will typically

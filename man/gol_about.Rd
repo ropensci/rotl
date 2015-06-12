@@ -4,18 +4,28 @@
 \alias{gol_about}
 \title{Information about the graph of life}
 \usage{
-gol_about()
+gol_about(...)
+}
+\arguments{
+\item{...}{additional arguments to customize the API call (see
+?rotl for more information)}
 }
 \value{
 An invisible list of graph attributes:
-\itemize{
-	\item {graph_num_source_trees} {The number of unique source trees in the graph.}
-	\item {graph_taxonomy_version} {The version of the taxonomy used to initialize the graph.}
-	\item {graph_num_tips} {The number of terminal (tip) taxa in the graph.}
-	\item {graph_root_name} {The taxonomic name of the root node of the graph.}
-	\item {graph_root_node_id} {The node ID of the root node of the graph.}
-	\item {graph_root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the graph.}
-}
+    \itemize{
+       \item {graph_num_source_trees} {The number of unique source trees in
+    the graph.}
+       \item {graph_taxonomy_version} {The version of
+    the taxonomy used to initialize the graph.}
+       \item {graph_num_tips} {The number of terminal (tip) taxa in the
+    graph.}
+        \item {graph_root_name} {The taxonomic name of the
+    root node of the graph.}
+        \item {graph_root_node_id} {The node
+    ID of the root node of the graph.}
+        \item {graph_root_ott_id}
+    {The OpenTree Taxonomy ID (ottID) of the root node of the
+    graph.}  }
 }
 \description{
 Graph of Life
@@ -24,8 +34,8 @@ Graph of Life
 Basic information about the graph
 
 Returns summary information about the entire graph
-database, including identifiers for the taxonomy and source trees
-used to build it.
+    database, including identifiers for the taxonomy and source
+    trees used to build it.
 }
 \examples{
 res <- gol_about()

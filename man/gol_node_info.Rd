@@ -4,7 +4,7 @@
 \alias{gol_node_info}
 \title{Node info}
 \usage{
-gol_node_info(node_id = NULL, ott_id = NULL, include_lineage = FALSE)
+gol_node_info(node_id = NULL, ott_id = NULL, include_lineage = FALSE, ...)
 }
 \arguments{
 \item{node_id}{The idenitifer of the node in the graph.}
