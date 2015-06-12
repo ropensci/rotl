@@ -13,19 +13,25 @@ gol_about(...)
 \value{
 An invisible list of graph attributes:
     \itemize{
-       \item {graph_num_source_trees} {The number of unique source trees in
+
+    \item {graph_num_source_trees} {The number of unique source
+    trees in the graph.}
+
+    \item {graph_taxonomy_version} {The version of the taxonomy
+    used to initialize the graph.}
+
+    \item {graph_num_tips} {The number of terminal (tip) taxa in
     the graph.}
-       \item {graph_taxonomy_version} {The version of
-    the taxonomy used to initialize the graph.}
-       \item {graph_num_tips} {The number of terminal (tip) taxa in the
-    graph.}
-        \item {graph_root_name} {The taxonomic name of the
-    root node of the graph.}
-        \item {graph_root_node_id} {The node
-    ID of the root node of the graph.}
-        \item {graph_root_ott_id}
-    {The OpenTree Taxonomy ID (ottID) of the root node of the
-    graph.}  }
+
+    \item {graph_root_name} {The taxonomic name of the root node
+    of the graph.}
+
+    \item {graph_root_node_id} {The node ID of the root node of
+    the graph.}
+
+    \item {graph_root_ott_id} {The OpenTree Taxonomy ID (ottID) of
+    the root node of the graph.}
+}
 }
 \description{
 Graph of Life

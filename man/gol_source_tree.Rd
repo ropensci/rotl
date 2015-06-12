@@ -2,7 +2,7 @@
 % Please edit documentation in R/gol.R
 \name{gol_source_tree}
 \alias{gol_source_tree}
-\title{Get reconstructed source tree}
+\title{Get a reconstructed source tree}
 \usage{
 gol_source_tree(study_id = NULL, tree_id = NULL, git_sha = NULL, ...)
 }
@@ -14,6 +14,9 @@ include a prefix ("pg_" or "ot_").}
 
 \item{git_sha}{String. The git SHA identifying a particular source
 version.}
+
+\item{...}{additional arguments to customize the API call (see
+\code{\link{rotl}} for more information)}
 }
 \value{
 a tree of class \code{"phylo"}
@@ -34,8 +37,8 @@ names.
 \examples{
 \dontrun{
 ## This example is broken as it returns a single taxa that rncl can't deal with
-res <- gol_source_tree(study_id="ot_121", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452",
-                       tree_id="7")
+res <- gol_source_tree(study_id="pg_420", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452",
+                       tree_id="522")
 }
 }
 
