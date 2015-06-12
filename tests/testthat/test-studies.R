@@ -224,3 +224,19 @@ test_that("get_publication method for study_meta",
 test_that("candidate_for_synth method for study_meta",
           expect_true(candidate_for_synth(sm) %in% get_tree_ids(sm))
           )
+
+
+############################################################################
+## tol_about                                                              ##
+############################################################################
+
+test_that("tol_about returns class tol_summary",
+          expect_true(inherits(tol_about(), "tol_summary"))
+          )
+
+test_that("study_about", {
+    ta <- study_list(tol_about(TRUE))
+    expect_true(inherits(ta, "data.frame"))
+    expect_true(nrow(ta) > 100)
+    expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))
+})
