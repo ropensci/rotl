@@ -2,38 +2,58 @@
 % Please edit documentation in R/tol.R
 \name{tol_about}
 \alias{tol_about}
-\title{Information about the tree of life}
+\title{Information about the Tree of Life}
 \usage{
-tol_about(study_list = FALSE)
+tol_about(study_list = FALSE, ...)
 }
 \arguments{
-\item{study_list}{Boolean. Whether to return the list of source studies. Optional; default = FALSE.}
+\item{study_list}{Whether to return the list of source
+    studies. (Logical, default = FALSE).}
+
+\item{...}{additional arguments to customize the API call (see
+    \code{\link{rotl}} for more information).}
 }
 \value{
 An invisible list of synthetic tree summary statistics:
+
 \itemize{
-   \item {tree_id} {The name identifier of the synthetic tree.}
-   \item {date} {The date that the synthetic tree was constructed.}
-   \item {taxonomy_version} {The version of the taxonomy used to initialize the graph.}
-   \item {num_source_studies} {The number of unique source trees used in the synthetic tree.}
-   \item {num_tips} {The number of terminal (tip) taxa in the synthetic tree.}
-   \item {root_taxon_name} {The taxonomic name of the root node of the synthetic tree.}
-   \item {root_node_id} {The node ID of the root node of the synthetic tree.}
-   \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the root node of the synthetic tree.}
-}
+
+    \item {tree_id} {The name identifier of the synthetic tree.}
+
+    \item {date} {The date that the synthetic tree was
+    constructed.}
+
+    \item {taxonomy_version} {The version of the taxonomy used to
+    initialize the graph.}
+
+    \item {num_source_studies} {The number of unique source trees
+    used in the synthetic tree.}
+
+    \item {num_tips} {The number of terminal (tip) taxa in the
+    synthetic tree.}
+
+    \item {root_taxon_name} {The taxonomic name of the root node
+    of the synthetic tree.}
+
+    \item {root_node_id} {The node ID of the root node of the
+    synthetic tree.}
+
+    \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the
+    root node of the synthetic tree.}  }
 }
 \description{
-Basic information about the tree
+Basic information about the Open Tree of Life (the synthetic tree)
 }
 \details{
 Summary information about the current draft tree of life,
-including information about the list of trees and the taxonomy
-used to build it.
+    including information about the list of trees and the taxonomy
+    used to build it.
 }
 \examples{
 res <- tol_about()
 }
-\author{
-Francois Michonneau
+\seealso{
+\code{\link{study_list}} to explore the list of studies
+    used in the synthetic tree.
 }
 

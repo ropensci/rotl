@@ -16,7 +16,8 @@ study_list(tol)
 a data frame
 }
 \description{
-Retrieve the detailed information for the list of studies used in the Tree of Life.
+Retrieve the detailed information for the list of studies used in
+the Tree of Life.
 }
 \details{
 This function takes the object resulting from

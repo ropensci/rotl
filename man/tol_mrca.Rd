@@ -2,40 +2,43 @@
 % Please edit documentation in R/tol.R
 \name{tol_mrca}
 \alias{tol_mrca}
-\title{get MRCA}
+\title{MRCA of taxa from the synthetic tree}
 \usage{
-tol_mrca(ott_ids = NULL, node_ids = NULL)
+tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
 }
 \arguments{
-\item{ott_ids}{}
+\item{ott_ids}{the ott ids for which the MRCA is desired
+(character or numeric vector)}
 
-\item{node_ids}{}
+\item{node_ids}{the node ids for which the MRCA is desired
+(character or numeric vector)}
+
+\item{...}{additional arguments to customize the API call (see
+\code{\link{rotl}} for more information).}
 }
 \value{
-the MRCA
+A list
 }
 \description{
-Most recent common ancestor of nodes Get the MRCA of
-a set of nodes on the current draft tree. Accepts any combination
-of node ids and ott ids as input. Returns information about the
-most recent common ancestor (MRCA) node as well as the most recent
-taxonomic ancestor (MRTA) node (the closest taxonomic node to the
-MRCA node in the synthetic tree; the MRCA and MRTA may be the same
-node). Node ids that are not in the synthetic tree are dropped
-from the MRCA calculation. For a valid ott id that is not in the
-synthetic tree (i.e. it is not recovered as monophyletic from the
-source tree information), the taxonomic descendants of the node
-are used in the MRCA calculation. Returns any unmatched node ids /
-ott ids.
+Most Recent Common Ancestor for a set of nodes
 }
 \details{
+Get the MRCA of a set of nodes on the current synthetic
+tree. Accepts any combination of node ids and ott ids as
+input. Returns information about the most recent common ancestor
+(MRCA) node as well as the most recent taxonomic ancestor (MRTA)
+node (the closest taxonomic node to the MRCA node in the synthetic
+tree; the MRCA and MRTA may be the same node). Node ids that are
+not in the synthetic tree are dropped from the MRCA
+calculation. For a valid ott id that is not in the synthetic tree
+(i.e. it is not recovered as monophyletic from the source tree
+information), the taxonomic descendants of the node are used in
+the MRCA calculation. Returns any unmatched node ids / ott ids.
+
 Return the most recent common ancestor of a set of nodes
-in the synthetic tree.
+    in the synthetic tree.
 }
 \examples{
-test1 <- tol_mrca(ott_ids=c(412129, 536234))
-}
-\author{
-Francois Michonneau
+birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 }
 

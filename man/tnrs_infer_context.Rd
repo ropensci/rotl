@@ -2,15 +2,20 @@
 % Please edit documentation in R/tnrs.R
 \name{tnrs_infer_context}
 \alias{tnrs_infer_context}
-\title{Infer context}
+\title{Infer the taxonomic context from a list of names}
 \usage{
-tnrs_infer_context(names = NULL)
+tnrs_infer_context(names = NULL, ...)
 }
 \arguments{
 \item{names}{Vector of taxon names.}
+
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-something
+A list including the context name, the context ott id and
+    possibly the names in the query that have an ambiguous
+    taxonomic meaning in the query.
 }
 \description{
 Return a taxonomic context given a list of taxonomic names
@@ -24,8 +29,5 @@ results.
 }
 \examples{
 res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
-}
-\author{
-Francois Michonneau
 }
 

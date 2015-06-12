@@ -2,28 +2,38 @@
 % Please edit documentation in R/tol.R
 \name{tol_subtree}
 \alias{tol_subtree}
-\title{Extract subtree}
+\title{Extract a subtree from the synthetic tree}
 \usage{
-tol_subtree(node_id = NULL, ott_id = NULL, tree_id = NULL, file = NULL)
+tol_subtree(node_id = NULL, ott_id = NULL, tree_id = NULL, file, ...)
 }
 \arguments{
-\item{node_id}{The node id of the node in the tree that should
+\item{node_id}{the node id of the node in the tree that should
 serve as the root of the tree returned. This argument cannot
 be used in combination with ott_id.}
 
-\item{ott_id}{The ott id of the node in the tree that should serve
+\item{ott_id}{the ott id of the node in the tree that should serve
 as the root of the tree returned. This argument may not be
 used in combination with node_id.}
 
-\item{tree_id}{The identifier for the synthesis tree. We currently
-only support a single draft tree in the db at a time, so this
-argument is superfluous and may be safely ignored.}
+\item{tree_id}{the identifier for the synthesis tree. Currently a
+single draft tree is supported, so this argument is
+superfluous and may be safely ignored.}
+
+\item{file}{if specified, the function will write the subtree to a
+file in newick format.}
+
+\item{...}{additional arguments to customize the API call (see
+\code{\link{rotl}} for more information).}
 }
 \value{
-a tree of class \code{"phylo"}
+If no value is specified to the \code{file} argument
+    (default), a phyogenetic tree of class \code{phylo}.
+
+    Otherwise, the function returns invisibly a logical indicating
+    whether the file was successfully created.
 }
 \description{
-Extract subtree from a node or ott id
+Extract a subtree from the synthetic tree from a node or an ott id.
 }
 \details{
 Return a complete subtree of the draft tree descended
@@ -33,11 +43,6 @@ Return a complete subtree of the draft tree descended
     is entirely absent from the graph), an error will be returned.
 }
 \examples{
-\dontrun{
-res <- tol_subtree(ott_id=81461)
-}
-}
-\author{
-Francois Michonneau
+\dontrun{ res <- tol_subtree(ott_id=81461) }
 }
 

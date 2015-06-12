@@ -2,25 +2,32 @@
 % Please edit documentation in R/tnrs.R
 \name{tnrs_contexts}
 \alias{tnrs_contexts}
-\title{tnrs context}
+\title{TNRS contexts}
 \usage{
-tnrs_contexts()
+tnrs_contexts(...)
+}
+\arguments{
+\item{...}{additional arguments to customize the API request (see
+\code{\link{rotl}} package documentation).}
 }
 \value{
-something
+Returns invisibly a list for each major clades (e.g.,
+    animals, microbes, plants, fungi, life) whose elements
+    contains the possible contexts.
 }
 \description{
-Return a list of pre-defined taxonomic contexts (i.e. clades),
-which can be used to limit the scope of tnrs queries.
+This function returns a list of pre-defined taxonomic contexts
+(i.e. clades) which can be used to limit the scope of tnrs
+queries.
 }
 \details{
 Taxonomic contexts are available to limit the scope of TNRS
 searches. These contexts correspond to uncontested higher taxa
 such as 'Animals' or 'Land plants'. This service returns a list
 containing all available taxonomic context names, which may be
-used as input (via the context_name parameter) to limit the search
-scope of other services including match_names and
-autocomplete_name.
+used as input (via the \code{context_name} argument in other
+functions) to limit the search scope of other services including
+\code{\link{tnrs_match_names}}.
 }
 \author{
 Francois Michonneau

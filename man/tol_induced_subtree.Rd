@@ -4,7 +4,7 @@
 \alias{tol_induced_subtree}
 \title{induced subtree}
 \usage{
-tol_induced_subtree(node_ids = NULL, ott_ids = NULL, file = NULL)
+tol_induced_subtree(node_ids = NULL, ott_ids = NULL, file, ...)
 }
 \arguments{
 \item{node_ids}{Node ids indicating nodes to be used as tips in
@@ -13,36 +13,37 @@ the induced tree}
 \item{ott_ids}{OTT ids indicating nodes to be used as tips in the
 induced tree}
 
-\item{file}{If NULL the function returns a phylo object (default),
-otherwise, the function writes the newick string to the specified
-file.}
+\item{file}{if specified, the function will write the subtree to a
+file in newick format.}
+
+\item{...}{additional arguments to customize the API call (see
+\code{\link{rotl}} for more information).}
 }
 \value{
-a tree of class \code{"phylo"}
+If no value is specified to the \code{file} argument
+    (default), a phyogenetic tree of class \code{phylo}.
+
+    Otherwise, the function returns invisibly a logical indicating
+    whether the file was successfully created.
 }
 \description{
-Extract induced subtree
+Extract a subtree based on a list of ott ids or node ids.
 }
 \details{
 Return a tree with tips corresponding to the nodes identified in
-the input set(s), that is consistent with topology of the current
-draft tree. This tree is equivalent to the minimal subtree induced
-on the draft tree by the set of identified nodes. Any combination
-of node ids and ott ids may be used as input. Nodes or ott ids
-that do not correspond to any found nodes in the graph, or which
-are in the graph but are absent from the synthetic tree, will be
-identified in the output (but will of course not be present in the
-resulting induced tree). Branch lengths in the result may be
-arbitrary, and the leaf labels of the tree may either be taxonomic
-names or (for nodes not corresponding directly to named taxa) node
-ids.
+the input set that is consistent with the topology of the current
+synthetic tree. This tree is equivalent to the minimal subtree
+induced on the draft tree by the set of identified nodes. Any
+combination of node ids and ott ids may be used as input. Nodes or
+ott ids that do not correspond to any found nodes in the graph, or
+which are in the graph but are absent from the synthetic tree,
+will be identified in the output (but obvisouly will be absent
+from the resulting induced tree). Branch lengths in the result may
+be arbitrary, and the leaf labels of the tree may either be
+taxonomic names or (for nodes not corresponding directly to named
+taxa) node ids.
 }
 \examples{
-\dontrun{
 res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
-}
-}
-\author{
-Francois Michonneau
 }
 
