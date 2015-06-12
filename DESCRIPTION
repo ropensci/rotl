@@ -5,8 +5,7 @@ Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com"),
   person("Joseph", "Brown", role="aut"),
-  person("David", "Winter", role="aut")
-)
+  person("David", "Winter", role="aut"))
 Description: An interface to the Open Tree of Life API to retrieve phylogenetic
    trees, information about studies used to assemble the synthetic tree, and
    utilities to match taxonomic names to Open Tree identifiers. The Open Tree of
