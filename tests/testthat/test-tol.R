@@ -48,3 +48,21 @@ test_that("tol_induced_subtree generates a newick file when providing a file arg
     expect_true(tr)
     expect_true(grepl("^\\(", readLines(ff, n = 1)))
 })
+
+############################################################################
+## tol_mrca                                                               ##
+############################################################################
+
+test_that("tol_mrca returns a list", {
+    birds <- tol_mrca(ott_ids = c(412129, 536234))
+    expect_true(inherits(birds, "list"))
+    expect_true(all(names(birds) %in%
+                      c("mrca_rank", "mrca_name",
+                        "nearest_taxon_mrca_node_id", "invalid_node_ids",
+                        "tree_id", "ott_id",
+                        "mrca_unique_name","node_ids_not_in_tree",
+                        "nearest_taxon_mrca_unique_name","nearest_taxon_mrca_ott_id",
+                        "ott_ids_not_in_tree","nearest_taxon_mrca_name",
+                        "invalid_ott_ids","mrca_node_id",
+                        "nearest_taxon_mrca_rank")))
+})
