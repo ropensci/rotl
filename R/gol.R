@@ -51,39 +51,39 @@ print.gol <- function(x, ...) {
 
 
 
-##' Returns a reconstructed source tree from the graph database.
-##'
-##' Reconstructs a source tree given identifiers:
-##' \code{study_id}, \code{tree_id}, and \code{git_sha}.
-##'
-##' The tree may differ from the original source tree in 2 ways: 1) it
-##' may contain fewer taxa (as duplicate taxa are pruned on tree
-##' ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to
-##' all named internal nodes and as a suffix to all terminal node
-##' names.
-##'
-##' @title Get a reconstructed source tree
-##' @param study_id String. The study identifier. Will typically
-##'     include a prefix ("pg_" or "ot_").
-##' @param tree_id String. The tree identifier for a given study.
-##' @param git_sha String. The git SHA identifying a particular source
-##'     version.
-##' @param ... additional arguments to customize the API call (see
-##'     \code{\link{rotl}} for more information)
-##' @return a tree of class \code{"phylo"}
-##' @examples
-##'\dontrun{
-##' ## This example is broken as it returns a single taxa that rncl can't deal with
-##' res <- gol_source_tree(study_id="pg_420", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452",
-##'                        tree_id="522")
-##'}
+## Returns a reconstructed source tree from the graph database.
+##
+## Reconstructs a source tree given identifiers:
+## \code{study_id}, \code{tree_id}, and \code{git_sha}.
+##
+## The tree may differ from the original source tree in 2 ways: 1) it
+## may contain fewer taxa (as duplicate taxa are pruned on tree
+## ingestion), and 2) OpenTree Taxonomy IDs (ottIDs) are applied to
+## all named internal nodes and as a suffix to all terminal node
+## names.
+##
+## @title Get a reconstructed source tree
+## @param study_id String. The study identifier. Will typically
+##     include a prefix ("pg_" or "ot_").
+## @param tree_id String. The tree identifier for a given study.
+## @param git_sha String. The git SHA identifying a particular source
+##     version.
+## @param ... additional arguments to customize the API call (see
+##     \code{\link{rotl}} for more information)
+## @return a tree of class \code{"phylo"}
+## @examples
+##\dontrun{
+## ## This example is broken as it returns a single taxa that rncl can't deal with
+## res <- gol_source_tree(study_id="pg_420", git_sha="a2c48df995ddc9fd208986c3d4225112550c8452",
+##                        tree_id="522")
+##}
 ## @export ## not exported for now as users probably don't care/need it
-gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, ...) {
-    res <- .gol_source_tree(study_id = study_id, tree_id = tree_id,
-                            git_sha = git_sha, ...)
-    phy <- phylo_from_otl(res)
-    return(phy)
-}
+## gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, ...) {
+##     res <- .gol_source_tree(study_id = study_id, tree_id = tree_id,
+##                             git_sha = git_sha, ...)
+##     phy <- phylo_from_otl(res)
+##     return(phy)
+## }
 
 
 ##' Get summary information about a node in the graph database
