@@ -15,16 +15,39 @@ test_that("taxonomy_about has the names listed in documentation (if it breaks up
 })
 
 
-### taxon Info
+############################################################################
+## taxon Info                                                             ##
+############################################################################
 
 test_that("taxonomy taxon info", {
-              tid <- 515698
-              tt <- taxonomy_taxon(tid)
-              expect_equal(tt$`ot:ottId`[1], tid)
-          })
+    tid <- 515698
+    tt <- taxonomy_taxon(tid)
+    expect_equal(tt[[1]]$`ot:ottId`[1], tid)
+    expect_true(inherits(tt, "taxon_info"))
+})
 
+tid <- c(924443, 337928, 631176)
+tax_info <- taxonomy_taxon(tid)
 
-## taxon subtree
+test_that("taxonomy_taxon tax_rank method", {
+    expect_equal(names(tax_rank(tax_info)), as.character(tid))
+    expect_equal(unname(tax_rank(tax_info)), rep("genus", 3))
+})
+
+test_that("taxonomy_taxon ott_taxon_name method", {
+    expect_equal(names(ott_taxon_name(tax_info)), as.character(tid))
+    expect_equal(unname(ott_taxon_name(tax_info)), c("Holothuria", "Acanthaster", "Diadema"))
+})
+
+test_that("taxonomy_taxon node_id method", {
+    expect_equal(names(node_id(tax_info)), as.character(tid))
+    expect_equal(unname(node_id(tax_info)), c(3315679, 3297625, 3312119))
+})
+
+############################################################################
+## taxon subtree                                                          ##
+############################################################################
+
 test_that("taxonomy subtree raw output", {
               tt <- taxonomy_subtree(515698, output_format = "raw")
               expect_true(inherits(tt, "list"))
@@ -67,7 +90,28 @@ test_that("taxonomy subtree returns valid internal + species names", {
               expect_equal(length(tt), 16)
           })
 
-### taxonomic LICA
+############################################################################
+## taxonomic LICA                                                         ##
+############################################################################
+
+tax_lica <- taxonomy_lica(ott_id = c(515698,590452,409712,643717))
+
 test_that("taxonomic least inclusive comman ancestor",
-          expect_identical(taxonomy_lica(ott_id = c(515698,590452,409712,643717))$lica$synonyms[[1]],
-                       "Asterales"))
+          expect_true(inherits(tax_lica, "taxon_lica"))
+          )
+
+test_that("lica tax_rank method",
+          expect_equal(tax_rank(tax_lica), "order")
+          )
+
+test_that("lica ott_taxon_name method",
+          expect_equal(ott_taxon_name(tax_lica), "Asterales")
+          )
+
+test_that("lica node_id method",
+          expect_equal(node_id(tax_lica), 3940323)
+          )
+
+test_that("lica ott_id method",
+          expect_equal(ott_id(tax_lica), 1042120)
+          )
