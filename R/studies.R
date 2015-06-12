@@ -145,10 +145,10 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##'     (default and currently only possible value \code{phylo} from
 ##'     the \code{\link[ape]{ape}} package).
 ##' @param tip_label the format of the tip
-##'     labels. \code{\dQuote{original_label}} (default) returns the
+##'     labels. \dQuote{\code{original_label}} (default) returns the
 ##'     original labels as provided in the study,
-##'     \code{\dQuote{ott_id}} labels are replaced by their ott IDs,
-##'     \code{\dQuote{ott_taxon_name}} labels are replaced by their
+##'     \dQuote{\code{ott_id}} labels are replaced by their ott IDs,
+##'     \dQuote{\code{ott_taxon_name}} labels are replaced by their
 ##'     Open Tree Taxonomy taxon name.
 ##' @param file_format the format of the file to be generated
 ##'     (\code{newick} default, \code{nexus}, or \code{json}).
