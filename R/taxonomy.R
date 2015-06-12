@@ -28,35 +28,6 @@ taxonomy_taxon <- function (ott_ids, ...) {
     return(res)
 }
 
-##' @export
-tax_rank <- function(tax) { UseMethod("rank") }
-
-##' @export
-ott_taxon_name <- function(tax) { UseMethod("ott_taxon_name") }
-
-##' @export
-node_id <- function(tax) { UseMethod("node_id") }
-
-##' @export
-##' @aliases tax_rank
-##' @rdname taxonomy_taxon
-tax_rank.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["rank"]], character(1))
-}
-
-##' @export
-##' @aliases ott_taxon
-##' @rdname taxonomy_taxon
-ott_taxon_name.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["ot:ottTaxonName"]], character(1))
-}
-
-##' @export
-##' @aliases node_id
-##' @rdname taxonomy_taxon
-node_id.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["node_id"]], integer(1) )
-}
 
 ##' Taxonomic Subtree
 ##'
@@ -111,6 +82,85 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' @export
 taxonomy_lica <- function (ott_ids=NULL, ...) {
-	res <- .taxonomy_lica(ott_ids = ott_ids, ...)
-	return(res)
+    res <- .taxonomy_lica(ott_ids = ott_ids, ...)
+    class(res) <- "taxon_lica"
+    return(res)
+}
+
+############################################################################
+## methods                                                                ##
+############################################################################
+
+##' Methods for dealing with objects returned by functions dealing
+##' with the Taxonomy API.
+##'
+##' This the page for the generic methods. See the help pages for
+##' \code{\link{taxonomy_taxon}} and \code{\link{taxonomy_lica}} for
+##' more information.
+##'
+##' @title Methods for Taxonomy
+##' @param tax an object returned by \code{\link{taxonomy_taxon}} or
+##'     \code{\link{taxonomy_lica}}.
+##' @rdname taxonomy-methods
+##' @export
+
+tax_rank <- function(tax) { UseMethod("tax_rank") }
+
+##' @export
+##' @rdname taxonomy-methods
+ott_taxon_name <- function(tax) { UseMethod("ott_taxon_name") }
+
+##' @export
+##' @rdname taxonomy-methods
+node_id <- function(tax) { UseMethod("node_id") }
+
+##' @export
+##' @rdname taxonomy-methods
+ott_id <- function(tax) { UseMethod("ott_id") }
+
+
+### methods for taxonomy_taxon ---------------------------------------------
+
+##' @export
+##' @rdname taxonomy_taxon
+tax_rank.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["rank"]], character(1))
+}
+
+##' @export
+##' @rdname taxonomy_taxon
+ott_taxon_name.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["ot:ottTaxonName"]], character(1))
+}
+
+##' @export
+##' @rdname taxonomy_taxon
+node_id.taxon_info <- function(tax) {
+    vapply(tax, function(x) x[["node_id"]], integer(1) )
+}
+
+### methods for taxonomy_lica ----------------------------------------------
+
+##' @export
+##' @rdname taxonomy_lica
+tax_rank.taxon_lica <- function(tax) {
+    tax[["lica"]][["rank"]]
+}
+
+##' @export
+##' @rdname taxonomy_lica
+ott_taxon_name.taxon_lica <- function(tax) {
+    tax[["lica"]][["ot:ottTaxonName"]]
+}
+
+##' @export
+##' @rdname taxonomy_lica
+node_id.taxon_lica <- function(tax) {
+    tax[["lica"]][["node_id"]]
+}
+
+##' @export
+##' @rdname taxonomy_lica
+ott_id.taxon_lica <- function(tax) {
+    tax[["lica"]][["ot:ottId"]]
 }
