@@ -55,7 +55,7 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##'
 ##' If the output of this function is exported to a file, the only
 ##' possible value for the \code{output_format} argument is
-##' \code{\dQuote{newick}}. If the file provided already exists, it
+##' \dQuote{\code{newick}}. If the file provided already exists, it
 ##' will be silently overwritten.
 ##'
 ##' @title Taxonomy subtree
@@ -66,37 +66,37 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##'     \code{\link{rotl}} package documentation).
 ##' @param file the file name where to save the output of the
 ##'     function. Ignored unless \code{output_format} is set to
-##'     \code{dQuote{phylo}}.
+##'     \dQuote{\code{phylo}}.
 ##' @return If the \code{file} argument is missing: \itemize{
 ##'
-##'     \item{\code{\dQuote{taxa_all}}} { a character vector listing
+##'     \item{\dQuote{\code{taxa_all}}} { a character vector listing
 ##'     all the taxa names (species and higher-level taxanomy, e.g.,
 ##'     families, genera) descending from the taxa corresponding to
 ##'     the \code{ott_id} provided. }
 ##'
-##'     \item{\code{\dQuote{newick}}} { a character vector containing
+##'     \item{\dQuote{\code{newick}}} { a character vector containing
 ##'     the newick formatted string corresponding to the taxonomic
 ##'     subtree for the \code{ott_id} provided. }
 ##'
-##'     \item{\code{\dQuote{phylo}}} { an object of the class
+##'     \item{\dQuote{\code{phylo}}} { an object of the class
 ##'     \code{phylo} from the \code{\link[ape]{ape}} package. }
 ##'
-##'     \item{\code{\dQuote{raw}}} { the direct output from the API,
+##'     \item{\dQuote{\code{raw}}} { the direct output from the API,
 ##'     i.e., a list with an element named \sQuote{subtree} that
 ##'     contains the subtree as a newick formatted string. }
 ##'
-##'     \item{\code{\dQuote{taxa_species}}} { a character vector
+##'     \item{\dQuote{\code{taxa_species}}} { a character vector
 ##'     listing the species descending from the taxa corresponding to
 ##'     the \code{ott_id} provided. }
 ##'
-##'     \item{\code{\dQuote{taxa_internal}}} { a character vector
+##'     \item{\dQuote{\code{taxa_internal}}} { a character vector
 ##'     listing the higher taxonomy descending from the taxa
 ##'     corresponding to the \code{ott_id} provided. }
 ##'
 ##'     }
 ##'
 ##'     If a \code{file} argument is provided (and
-##'     \code{output_format} is set to \code{\dQuote{phylo}}), a
+##'     \code{output_format} is set to \dQuote{\code{phylo}}), a
 ##'     logical indicating whether the file was successfully created.
 ##'
 ##' @examples

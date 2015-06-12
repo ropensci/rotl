@@ -39,7 +39,7 @@
 ##'
 ##'     \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the
 ##'     root node of the synthetic tree.}  }
-##' @seealso \link{\code{study_list}} to explore the list of studies
+##' @seealso \code{\link{study_list}} to explore the list of studies
 ##'     used in the synthetic tree.
 ##' @examples
 ##' res <- tol_about()
@@ -52,7 +52,6 @@ tol_about <- function(study_list = FALSE, ...) {
 
 
 ##' @export
-##' @rdname tol_about
 print.tol_summary <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
     cat("\tTree version: ", x$tree_id, "\n", sep="")
