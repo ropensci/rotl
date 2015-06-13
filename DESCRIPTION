@@ -23,6 +23,7 @@ Imports:
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr,
+    rmarkdown,
     testthat,
     RNeXML
 VignetteBuilder: knitr
