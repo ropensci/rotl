@@ -84,7 +84,7 @@ matches our sea urchin:
 resolved_names <- tnrs_match_names(taxa, context_name = "Animals")
 ```
 
-`r knitr::ktable(resolved_names)`
+`r knitr::kable(resolved_names)`
 
 If you are trying to build a tree with deeply divergent taxa and run into this
 issue, see "How to change the ott ids assigned to my taxa?" in the FAQ below.
