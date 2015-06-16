@@ -89,9 +89,11 @@ test_that("error generated if more than 1 value for row_number is provided", {
                  "You must supply a single element")
 })
 
-test_that("error generated if more than 1 value for taxon_name is provided",
-          expect_error(rotl:::check_args_match_names(rsp, taxon_name = c("holothuria", "diadema")),
-                       "You must supply a single element"))
+test_that("error generated if more than 1 value for taxon_name is provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, taxon_name = c("holothuria", "diadema")),
+                 "You must supply a single element")
+})
 
 
 test_that("error generated if more than 1 value for ott_id is provided", {
