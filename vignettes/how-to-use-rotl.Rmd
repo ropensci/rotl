@@ -202,7 +202,7 @@ associated with this study:
 
 ```{r}
 furry_meta <- get_study_meta("pg_2550")
-kable(get_publication(furry_meta))     ## The citation for the source of the study
+knitr::kable(get_publication(furry_meta))     ## The citation for the source of the study
 get_tree_ids(furry_meta)        ## This study has 10 trees associated with it
 candidate_for_synth(furry_meta) ## None of these trees are yet included in the OTL
 ```
