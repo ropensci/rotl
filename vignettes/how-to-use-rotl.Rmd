@@ -13,7 +13,7 @@ vignette: >
 to query the API, retrieve parts of the Tree of Life and integrate these parts
 with other R packages.
 
-The OTL API provides service to access:
+The OTL API provides services to access:
 
 * the **Tree of Life** a.k.a. TOL (the synthetic tree): a single draft tree that is
 a combination of **the OTL taxonomy** and the **source trees** (studies)
@@ -39,6 +39,8 @@ prefixes:
 | TNRS          | `tnrs_`       |
 | Studies       | `studies_`    |
 
+`rotl` also provides a few other functions that can be used to extract relevant
+information from the objects returned by these functions.
 
 
 ## Demonstration of a basic workflow
@@ -55,17 +57,17 @@ of Life.
 ### Step 1: Matching taxonomy to the `ott_id`
 
 Let's start by doing a search on a diverse group of taxa: a tree frog (genus
-_Hyla_), a fish (genus _Salmo_), a sea urchin (genus _Diadema_), a nautilus
-(genus _Nautilus_), and an oak tree (genus _Acer_).
+_Hyla_), a fish (genus _Salmo_), a sea urchin (genus _Diadema_), and a nautilus
+(genus _Nautilus_).
 
 ```{r}
 library(rotl)
-taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus")
 resolved_names <- tnrs_match_names(taxa)
 ```
 
 It's always a good idea to check that the resolved names match what you
-intend:
+intended:
 
 `r knitr::kable(resolved_names)`
 
@@ -78,7 +80,7 @@ default is a fungus and not the sea urchin that we want for our query.
 
 The argument `context_name` allows you to limit the taxonomic scope of your
 search. In this case, if we limit our search to animals, the genus _Diadema_ now
-matches our sea urchin:
+matches the sea urchin (notice the family is Diadematidae):
 
 ```{r}
 resolved_names <- tnrs_match_names(taxa, context_name = "Animals")
@@ -86,15 +88,17 @@ resolved_names <- tnrs_match_names(taxa, context_name = "Animals")
 
 `r knitr::kable(resolved_names)`
 
-If you are trying to build a tree with deeply divergent taxa and run into this
-issue, see "How to change the ott ids assigned to my taxa?" in the FAQ below.
+If you are trying to build a tree with deeply divergent taxa that the argument
+`context_name` cannot fix, see "How to change the ott ids assigned to my taxa?"
+in the FAQ below.
 
 
-### Getting the tree corresponding to our taxa
+### Step 2: Getting the tree corresponding to our taxa
 
-Now that we have the correct `ott_id` for our taxa, we can ask for the tree. By
-default, the object returned by `tol_induced_subtree` is a phylo object (from
-the [ape](http://cran.r-project.org/package=ape) package), so we can plot it
+Now that we have the correct `ott_id` for our taxa, we can ask for the tree
+using the `tol_induced_subtree()` function. By default, the object returned by
+`tol_induced_subtree` is a phylo object (from the
+[ape](http://cran.r-project.org/package=ape) package), so we can plot it
 directly.
 
 ```{r, fig.width=7, fig.height=4}
@@ -114,12 +118,14 @@ object resulting from using `tnrs_match_names`, and either the row number, the
 taxon name (you used in your search in lowercase), or the `ott_id` returned by
 the initial query.
 
-To illustrate this, let's re-use the previous query but by adding a fungus to
-our list of taxa, such that restricting our search to animals doesn't work.
+To illustrate this, let's re-use the previous query but by adding a tree to our
+list of taxa (Oak tree, genus _Acer_), such that restricting our search to
+animals doesn't work.
 
 ```{r}
-taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer", "Boletus")
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
 resolved_names <- tnrs_match_names(taxa)
+resolved_names
 inspect_match_names(resolved_names, taxon_name = "diadema")
 ```
 
@@ -143,6 +149,64 @@ And now our `resolved_names` data frame includes the taxon we want:
 
 ### How do I know that the taxa I'm asking for is the correct one?
 
-### How do I find trees focused on my favourite taxa?
+The function `taxonomy_taxon()` takes `ott_ids` as arguments and returns
+taxonomic information about the taxa. This output can be passed to some helpers
+functions to extract the relevant information. Let's illustrate this with our
+_Diadema_ example
 
-### How do I get a specific tree from a study?
+```{r}
+diadema_info <- taxonomy_taxon(631176)
+tax_rank(diadema_info)
+synonyms(diadema_info)
+ott_taxon_name(diadema_info)
+```
+
+In some cases, it might also be useful to investigate the taxonomic tree
+descending from an `ott_id` to check that it's the correct taxon and to
+determine the species included in the Open Tree Taxonomy:
+
+```{r}
+diadema_tax_tree <- taxonomy_subtree(631176)
+diadema_tax_tree
+```
+
+By default, this function return all taxa (including self, and internal)
+descending from this `ott_id` but it also possible to return `phylo` object.
+
+### How do I get the tree for a particular taxonomic group?
+
+If you are looking to get the tree for a particular taxonomic group, you need to
+first identify it by its node id or ott id, and then use the `tol_subtree()`
+function:
+
+```{r}
+mono_id <- tnrs_match_names("Monotremes")
+mono_tree <- tol_subtree(ott_id = mono_id$ott_id[1])
+plot(mono_tree)
+```
+
+
+### How do I find trees from studies focused on my favourite taxa?
+
+The function `studies_find_trees()` allows the user to search for studies
+matching a specific criteria. The function `studies_properties()` returns the
+list of properties that can be used in the search.
+
+```{r}
+furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
+furry_ids <- unlist(furry_studies$matched_studies)
+```
+
+Now that we know the `study_id`, we can ask for the meta data information
+associated with this study:
+
+```{r}
+furry_meta <- get_study_meta("pg_2550")
+kable(get_publication(furry_meta))     ## The citation for the source of the study
+get_tree_ids(furry_meta)        ## This study has 10 trees associated with it
+candidate_for_synth(furry_meta) ## None of these trees are yet included in the OTL
+```
+
+Using `get_study("pg_2550")` would returns a `multiPhylo` object (default) with
+all the trees associated with this particular study, while
+`get_study_tree("pg_2550", "tree5513")` would return one of these trees.
