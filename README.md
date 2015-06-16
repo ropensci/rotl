@@ -39,14 +39,12 @@ install_github("fmichonneau/rotl")
 
 There are two vignettes:
 - start by checking out the "How to use `rotl`?" by typing:
-  `vignette("how-to-use-rotl", package="rotl")` after installing the package.
-- explore in a little more detail how to use `rotl` with other packages with
-  [this vignette](http://dwinter.github.io/rotl-vignette/)
+  `vignette("how-to-use-rotl", package="rotl")` after installing the
+  package.
+- then explore in a little more detail how to combine `rotl` with other packages
+  with [this vignette](http://dwinter.github.io/rotl-vignette/)
 
-## Simple examples
-
-Note: the library is still in active development and behaviour of the following
-functions may well change in the future:
+## Quick start
 
 ### Get a little bit of the big Open Tree tree
 
@@ -55,113 +53,38 @@ First find ott ids for a set of names:
 
 ```r
 library(rotl)
-```
-
-```
-## Warning in get(Info[i, 1], envir = env): internal error -3 in R_decompress1
-```
-
-```
-## Error: package or namespace load failed for 'rotl'
-```
-
-```r
 apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): could not find function "tnrs_match_names"
+##   search_string                             unique_name approximate_match
+## 1           pan      Pan (genus in subfamily Homininae)             FALSE
+## 2         pongo     Pongo (genus in subfamily Ponginae)             FALSE
+## 3           pan      Pan (genus in subfamily Homininae)             FALSE
+## 4       gorilla                                 Gorilla             FALSE
+## 5     hylobates Hylobates (genus in family Hylobatidae)             FALSE
+## 6       hoolock                                 Hoolock             FALSE
+## 7          homo                                    Homo             FALSE
+##   ott_id number_matches is_synonym is_deprecated
+## 1 417957              2      FALSE         FALSE
+## 2 417949              2      FALSE         FALSE
+## 3 417957              2      FALSE         FALSE
+## 4 417969              3      FALSE         FALSE
+## 5 166552              1      FALSE         FALSE
+## 6 712902              1      FALSE         FALSE
+## 7 770309              1      FALSE         FALSE
 ```
-Now get open tree to return a tree with just those tips.
 
+Now get the tree with just those tips:
 
 
 ```r
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "tol_induced_subtree"
-```
-
-```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/7HQMAJ0.png) 
-
-
-### Find trees focused on my favourite taxa
-
-
-```r
-furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "studies_find_studies"
-```
-
-```r
-( furry_ids <- unlist(furry_studies$matched_studies) )
-```
-
-```
-## ot:studyId 
-##  "pg_2550"
-```
-
-### Get a specific study tree
-
-```r
-library(ape)
-furry_metadata <-get_study_meta(2647)
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "get_study_meta"
-```
-
-```r
-furry_metadata$nexml$treesById
-```
-
-```
-## $trees2647
-## $trees2647$treeById
-## $trees2647$treeById$tree6170
-## NULL
-## 
-## $trees2647$treeById$tree6169
-## NULL
-## 
-## 
-## $trees2647$`^ot:treeElementOrder`
-## $trees2647$`^ot:treeElementOrder`[[1]]
-## [1] "tree6169"
-## 
-## $trees2647$`^ot:treeElementOrder`[[2]]
-## [1] "tree6170"
-## 
-## 
-## $trees2647$`@otus`
-## [1] "otus2647"
-```
-
-```r
-furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "get_study_tree"
-```
-
-```r
-plot(furry_tr)
-```
-
-![plot of chunk tree](http://i.imgur.com/dUYwv5z.png) 
+![plot of chunk get_tr](http://i.imgur.com/yWO685l.png) 
 
 ### Code of Conduct
 

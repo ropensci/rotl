@@ -43,14 +43,12 @@ install_github("fmichonneau/rotl")
 
 There are two vignettes:
 - start by checking out the "How to use `rotl`?" by typing:
-  `vignette("how-to-use-rotl", package="rotl")` after installing the package.
-- explore in a little more detail how to use `rotl` with other packages with
-  [this vignette](http://dwinter.github.io/rotl-vignette/)
+  `vignette("how-to-use-rotl", package="rotl")` after installing the
+  package.
+- then explore in a little more detail how to combine `rotl` with other packages
+  with [this vignette](http://dwinter.github.io/rotl-vignette/)
 
-## Simple examples
-
-Note: the library is still in active development and behaviour of the following
-functions may well change in the future:
+## Quick start
 
 ### Get a little bit of the big Open Tree tree
 
@@ -61,30 +59,12 @@ library(rotl)
 apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
-Now get open tree to return a tree with just those tips.
 
+Now get the tree with just those tips:
 
 ```{r get_tr}
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
-```
-
-
-### Find trees focused on my favourite taxa
-
-```{r mammals}
-furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
-( furry_ids <- unlist(furry_studies$matched_studies) )
-
-```
-
-### Get a specific study tree
-```{r tree}
-library(ape)
-furry_metadata <-get_study_meta(2647)
-furry_metadata$nexml$treesById
-furry_tr <- get_study_tree(study_id="2647", tree_id="tree6169")
-plot(furry_tr)
 ```
 
 ### Code of Conduct
