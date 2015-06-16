@@ -64,6 +64,8 @@ possible value for the \code{output_format} argument is
 will be silently overwritten.
 }
 \examples{
+\dontrun{
 req <- taxonomy_subtree(ott_id=515698)
+}
 }
 

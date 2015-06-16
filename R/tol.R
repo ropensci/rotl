@@ -42,7 +42,9 @@
 ##' @seealso \code{\link{study_list}} to explore the list of studies
 ##'     used in the synthetic tree.
 ##' @examples
+##' \dontrun{
 ##' res <- tol_about()
+##' }
 ##' @export
 tol_about <- function(study_list = FALSE, ...) {
     res <- .tol_about(study_list = study_list, ...)
@@ -119,7 +121,9 @@ study_list.tol_summary <- function(tol) {
 ##'     \code{\link{rotl}} for more information).
 ##' @return A list
 ##' @examples
+##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+##' }
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
     res <- .tol_mrca(ott_ids = ott_ids, node_ids = node_ids, ...)
@@ -155,7 +159,9 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##' @examples
-##'    \dontrun{ res <- tol_subtree(ott_id=81461) }
+##'    \dontrun{
+##'       res <- tol_subtree(ott_id=81461)
+##'     }
 ##' @export
 
 tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
@@ -204,7 +210,9 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##' @examples
+##' \dontrun{
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' }
 ##' @export
 
 tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file, ...) {

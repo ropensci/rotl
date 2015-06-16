@@ -10,7 +10,9 @@
 ##' @return A list with at least the version and the location of the
 ##'     taxonomy source files
 ##' @examples
+##' \dontrun{
 ##' taxonomy_about()
+##' }
 ##' @export
 taxonomy_about <- function (...) {
     res <- .taxonomy_about(...)
@@ -42,7 +44,9 @@ taxonomy_about <- function (...) {
 ##' @seealso \code{\link{tnrs_match_names}} to obtain \code{ott_id}
 ##'     from a taxonomic name.
 ##' @examples
+##' \dontrun{
 ##' req <- taxonomy_taxon(ott_id=515698)
+##' }
 ##' @export
 taxonomy_taxon <- function (ott_ids, ...) {
     res <- lapply(ott_ids, function(x) .taxonomy_taxon(ott_id = x, ...))
@@ -102,7 +106,9 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##'     logical indicating whether the file was successfully created.
 ##'
 ##' @examples
+##' \dontrun{
 ##' req <- taxonomy_subtree(ott_id=515698)
+##' }
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL,
                               output_format = c("taxa_all", "newick", "phylo", "raw", "taxa_species", "taxa_internal"),
@@ -167,10 +173,12 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##'
 ##' }
 ##' @examples
+##' \dontrun{
 ##' req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 ##' tax_rank(req)
 ##' ott_taxon_name(req)
 ##' ott_id(req)
+##' }
 ##' @export
 taxonomy_lica <- function (ott_ids=NULL, ...) {
     res <- .taxonomy_lica(ott_ids = ott_ids, ...)

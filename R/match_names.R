@@ -60,12 +60,15 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
 ##' @param taxon_name the taxon name corresponding to the name to inspect
 ##' @param ott_id the ott id corresponding to the name to inspect
 ##' @return a data frame
+##' @seealso \code{\link{tnrs_match_names}}
 ##' @examples
+##'   \dontrun{
 ##'    matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
-##'  inspect_match_names(matched_names, taxon_name="diadema")
-##'  new_matched_names <- update_match_names(matched_names, taxon_name="diadema",
+##'    inspect_match_names(matched_names, taxon_name="diadema")
+##'    new_matched_names <- update_match_names(matched_names, taxon_name="diadema",
 ##'                                            new_ott_id = 631176)
-##'  new_matched_names
+##'    new_matched_names
+##'    }
 ##' @export
 inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
 

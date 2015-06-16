@@ -24,6 +24,8 @@ includes (at least) the eversion, and the location from which the
 complete taxonomy source files can be downloaded.
 }
 \examples{
+\dontrun{
 taxonomy_about()
+}
 }
 

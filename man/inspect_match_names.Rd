@@ -55,10 +55,15 @@ To update one of the name, you also need to provide the row number
 in which the name to be replaced appear or its ott id.
 }
 \examples{
-matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
- inspect_match_names(matched_names, taxon_name="diadema")
- new_matched_names <- update_match_names(matched_names, taxon_name="diadema",
+\dontrun{
+   matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
+   inspect_match_names(matched_names, taxon_name="diadema")
+   new_matched_names <- update_match_names(matched_names, taxon_name="diadema",
                                            new_ott_id = 631176)
- new_matched_names
+   new_matched_names
+   }
+}
+\seealso{
+\code{\link{tnrs_match_names}}
 }
 

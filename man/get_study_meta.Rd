@@ -60,7 +60,9 @@ helper functions exists: \itemize{
 }
 }
 \examples{
+\dontrun{
 req <- get_study_meta("pg_719")
 req$nexml$`^ot:studyPublication`
+}
 }
 

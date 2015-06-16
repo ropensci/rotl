@@ -13,7 +13,9 @@
 ##'     against which the studies can be searched
 ##' @export
 ##' @examples
+##' \dontrun{
 ##' study <- studies_find_studies(property="ot:studyId", value="pg_719")
+##' }
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                                  exact=FALSE, ...) {
@@ -41,7 +43,9 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##'     against which the studies can be searched
 ##' @export
 ##' @examples
+##' \dontrun{
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
+##' }
 
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                                exact=FALSE, ...) {
@@ -66,8 +70,10 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' @seealso \code{\link{studies_find_trees}}
 ##' @export
 ##' @examples
+##' \dontrun{
 ##'  all_the_properties <- studies_properties()
 ##'  unlist(all_the_properties$tree_properties)
+##' }
 
 studies_properties <- function(...) {
     res <- .studies_properties(...)
@@ -160,7 +166,9 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##'     was successfully created.
 ##' @export
 ##' @examples
+##' \dontrun{
 ##'  tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+##' }
 
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
@@ -223,8 +231,10 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##'     study requested
 ##' @export
 ##' @examples
+##' \dontrun{
 ##' req <- get_study_meta("pg_719")
 ##' req$nexml$`^ot:studyPublication`
+##' }
 get_study_meta <- function(study_id, ...) {
     res <- .get_study_meta(study_id = study_id, ...)
     class(res) <- "study_meta"

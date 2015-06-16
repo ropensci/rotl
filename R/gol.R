@@ -30,7 +30,9 @@
 ##'     the root node of the graph.}
 ##' }
 ##' @examples
-##' res <- gol_about()
+##'   \dontrun{
+##'     res <- gol_about()
+##'   }
 ##' @export
 gol_about <- function(...) {
     res <- structure(.gol_about(...), class = "gol")
@@ -169,11 +171,13 @@ print.gol <- function(x, ...) {
 ##'     \code{synth_sources} returns a data frame listing information
 ##'     about the synthetic sources used.
 ##' @examples
+##' \dontrun{
 ##' birds <- gol_node_info(ott_id=81461)
 ##' synth_sources(birds)
 ##' tax_rank(birds)
 ##' node_id(birds)
 ##' ott_id(birds)
+##' }
 ##' @export
 gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE, ...) {
     res <- .gol_node_info(node_id = node_id, ott_id = ott_id,

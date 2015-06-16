@@ -43,6 +43,8 @@ Return a complete subtree of the draft tree descended
     is entirely absent from the graph), an error will be returned.
 }
 \examples{
-\dontrun{ res <- tol_subtree(ott_id=81461) }
+\dontrun{
+      res <- tol_subtree(ott_id=81461)
+    }
 }
 

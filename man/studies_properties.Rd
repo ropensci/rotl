@@ -25,8 +25,10 @@ properties that can be used to search for trees and studies that
 are contributing to the synthetic tree.
 }
 \examples{
-all_the_properties <- studies_properties()
+\dontrun{
+ all_the_properties <- studies_properties()
  unlist(all_the_properties$tree_properties)
+}
 }
 \seealso{
 \code{\link{studies_find_trees}}

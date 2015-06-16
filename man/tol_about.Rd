@@ -50,7 +50,9 @@ Summary information about the current draft tree of life,
     used to build it.
 }
 \examples{
+\dontrun{
 res <- tol_about()
+}
 }
 \seealso{
 \code{\link{study_list}} to explore the list of studies

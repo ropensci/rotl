@@ -39,6 +39,8 @@ Return the most recent common ancestor of a set of nodes
     in the synthetic tree.
 }
 \examples{
+\dontrun{
 birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+}
 }
 

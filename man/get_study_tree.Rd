@@ -42,6 +42,8 @@ if \code{file_format} is missing, an object of class
 Returns a specific tree from within a study
 }
 \examples{
-tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+\dontrun{
+ tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+}
 }
 

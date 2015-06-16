@@ -44,6 +44,8 @@ Returns summary information about the entire graph
     trees used to build it.
 }
 \examples{
-res <- gol_about()
+\dontrun{
+    res <- gol_about()
+  }
 }
 

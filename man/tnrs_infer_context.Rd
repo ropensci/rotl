@@ -28,6 +28,8 @@ without exact matches to non-homonym taxa) are indicated in
 results.
 }
 \examples{
+\dontrun{
 res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
+}
 }
 

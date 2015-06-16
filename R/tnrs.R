@@ -51,9 +51,10 @@
 ##' @seealso \code{\link{inspect_match_names}},
 ##'     \code{\link{update_match_names}},
 ##'     \code{\link{list_synonyms_match_names}}.
-##' @examples \dontrun{ deuterostomes <-
-##'     tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",
-##'     "chordata", "hemichordata")) }
+##' @examples \dontrun{
+##'  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",
+##'                                             "chordata", "hemichordata"))
+##' }
 ##' @export
 tnrs_match_names <- function(names = NULL, context_name = NULL,
                              do_approximate_matching = TRUE,
@@ -156,7 +157,9 @@ print.tnrs_contexts <- function(x, ...) {
 ##'     possibly the names in the query that have an ambiguous
 ##'     taxonomic meaning in the query.
 ##' @examples
+##' \dontrun{
 ##' res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
+##' }
 ##' @export
 tnrs_infer_context <- function(names=NULL, ...) {
     res <- .tnrs_infer_context(names = names, ...)

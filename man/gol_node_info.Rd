@@ -115,10 +115,12 @@ Summary information about a queried node, including 1)
     IDs.
 }
 \examples{
+\dontrun{
 birds <- gol_node_info(ott_id=81461)
 synth_sources(birds)
 tax_rank(birds)
 node_id(birds)
 ott_id(birds)
+}
 }
 

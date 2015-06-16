@@ -25,7 +25,9 @@ default \code{FALSE})}
 Return a list of studies that match given properties
 }
 \examples{
+\dontrun{
 study <- studies_find_studies(property="ot:studyId", value="pg_719")
+}
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties

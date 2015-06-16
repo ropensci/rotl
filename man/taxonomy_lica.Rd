@@ -58,9 +58,11 @@ Given a set of ott ids, get the taxon that is the least inclusive common ancesto
 common ancestor (MRCA) in a phylogenetic tree.
 }
 \examples{
+\dontrun{
 req <- taxonomy_lica(ott_ids=c(515698,590452,409712,643717))
 tax_rank(req)
 ott_taxon_name(req)
 ott_id(req)
+}
 }
 

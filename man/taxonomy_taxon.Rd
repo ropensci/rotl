@@ -47,7 +47,9 @@ The functions \code{tax_rank}, \code{ott_taxon_name},
 from an object created by the \code{taxonomy_taxon} function.
 }
 \examples{
+\dontrun{
 req <- taxonomy_taxon(ott_id=515698)
+}
 }
 \seealso{
 \code{\link{tnrs_match_names}} to obtain \code{ott_id}
