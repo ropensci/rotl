@@ -44,6 +44,11 @@ test_that("taxonomy_taxon node_id method", {
     expect_equal(unname(node_id(tax_info)), c(3315679, 3297625, 3312119))
 })
 
+test_that("taxonomy_taxon synonyms method", {
+    expect_equal(names(synonyms(tax_info)), as.character(tid))
+    expect_equal(synonyms(tax_info)[[3]], c("Diadema", "Centrechinus"))
+})
+
 ############################################################################
 ## taxon subtree                                                          ##
 ############################################################################

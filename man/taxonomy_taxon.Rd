@@ -3,6 +3,7 @@
 \name{taxonomy_taxon}
 \alias{node_id.taxon_info}
 \alias{ott_taxon_name.taxon_info}
+\alias{synonyms.taxon_info}
 \alias{tax_rank.taxon_info}
 \alias{taxonomy_taxon}
 \title{Taxon information}
@@ -14,6 +15,8 @@ taxonomy_taxon(ott_ids, ...)
 \method{ott_taxon_name}{taxon_info}(tax)
 
 \method{node_id}{taxon_info}(tax)
+
+\method{synonyms}{taxon_info}(tax)
 }
 \arguments{
 \item{ott_ids}{the ott ids of the taxon of interest (numeric or
@@ -28,7 +31,9 @@ function}
 \value{
 \code{taxonomy_taxon} returns a list detailing information
     about the taxa. \code{tax_rank}, \code{ott_taxon_name}, and
-    \code{node_id} return a vector.
+    \code{node_id} return a vector. \code{synonyms} returns a list
+    whose elements are the synonyms for each of the \code{ott_id}
+    requested.
 }
 \description{
 Information about taxa.
@@ -37,9 +42,9 @@ Information about taxa.
 Given a vector of ott ids, \code{taxonomy_taxon} returns
 information about the specified taxa.
 
-The functions \code{tax_rank}, \code{ott_taxon_name}, and
-\code{node_id} can extract this information from an object
-createdby the \code{taxonomy_taxon} function.
+The functions \code{tax_rank}, \code{ott_taxon_name},
+\code{synonyms}, and \code{node_id} can extract this information
+from an object created by the \code{taxonomy_taxon} function.
 }
 \examples{
 req <- taxonomy_taxon(ott_id=515698)

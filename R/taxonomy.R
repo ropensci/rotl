@@ -23,9 +23,9 @@ taxonomy_about <- function (...) {
 ##' Given a vector of ott ids, \code{taxonomy_taxon} returns
 ##' information about the specified taxa.
 ##'
-##' The functions \code{tax_rank}, \code{ott_taxon_name}, and
-##' \code{node_id} can extract this information from an object
-##' createdby the \code{taxonomy_taxon} function.
+##' The functions \code{tax_rank}, \code{ott_taxon_name},
+##' \code{synonyms}, and \code{node_id} can extract this information
+##' from an object created by the \code{taxonomy_taxon} function.
 ##'
 ##' @title Taxon information
 ##' @param ott_ids the ott ids of the taxon of interest (numeric or
@@ -36,7 +36,9 @@ taxonomy_about <- function (...) {
 ##'     \code{\link{rotl}} package documentation).
 ##' @return \code{taxonomy_taxon} returns a list detailing information
 ##'     about the taxa. \code{tax_rank}, \code{ott_taxon_name}, and
-##'     \code{node_id} return a vector.
+##'     \code{node_id} return a vector. \code{synonyms} returns a list
+##'     whose elements are the synonyms for each of the \code{ott_id}
+##'     requested.
 ##' @seealso \code{\link{tnrs_match_names}} to obtain \code{ott_id}
 ##'     from a taxonomic name.
 ##' @examples
@@ -207,6 +209,10 @@ node_id <- function(tax) { UseMethod("node_id") }
 ##' @rdname taxonomy-methods
 ott_id <- function(tax) { UseMethod("ott_id") }
 
+##' @export
+##' @rdname taxonomy-methods
+synonyms <- function(tax) { UseMethod("synonyms") }
+
 
 ### methods for taxonomy_taxon ---------------------------------------------
 
@@ -226,6 +232,15 @@ ott_taxon_name.taxon_info <- function(tax) {
 ##' @rdname taxonomy_taxon
 node_id.taxon_info <- function(tax) {
     vapply(tax, function(x) x[["node_id"]], integer(1) )
+}
+
+##' @export
+##' @rdname taxonomy_taxon
+synonyms.taxon_info <- function(tax) {
+    sapply(tax, function(x) {
+        tt <- x[["synonyms"]]
+        unlist(as.character(tt))
+    }, simplify = FALSE)
 }
 
 ### methods for taxonomy_lica ----------------------------------------------

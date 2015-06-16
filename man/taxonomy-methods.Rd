@@ -4,6 +4,7 @@
 \alias{node_id}
 \alias{ott_id}
 \alias{ott_taxon_name}
+\alias{synonyms}
 \alias{tax_rank}
 \title{Methods for Taxonomy}
 \usage{
@@ -14,6 +15,8 @@ ott_taxon_name(tax)
 node_id(tax)
 
 ott_id(tax)
+
+synonyms(tax)
 }
 \arguments{
 \item{tax}{an object returned by \code{\link{taxonomy_taxon}} or
