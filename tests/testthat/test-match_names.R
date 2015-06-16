@@ -1,6 +1,8 @@
 context("match names")
 
-rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+     rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+ }
 
 ############################################################################
 ## check_args_match_names                                                 ##
@@ -12,38 +14,53 @@ test_that("error generated if object provided isn't created by tnrs_match_names"
           expect_error(rotl:::check_args_match_names(letters),
                        "was not created using"))
 
-test_that("error generated if no argument is provided",
-          expect_error(rotl:::check_args_match_names(rsp),
-                       "You must specify"))
+test_that("error generated if no argument is provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp),
+                 "You must specify")
+})
 
-test_that("error generated if row_number and taxon_name are provided",
-          expect_error(rotl:::check_args_match_names(rsp, row_number = 1,
-                                                     taxon_name = "holothuria"),
-                       "must use only one of "))
+test_that("error generated if row_number and taxon_name are provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, row_number = 1,
+                                               taxon_name = "holothuria"),
+                 "must use only one of ")
+})
 
-test_that("error generated if row_number and ott_id are provided",
-          expect_error(rotl:::check_args_match_names(rsp, row_number = 1,
-                                                    ott_id = 924443),
-                      "must use only one of"))
+test_that("error generated if row_number and ott_id are provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, row_number = 1,
+                                               ott_id = 924443),
+                 "must use only one of")
+})
 
-test_that("error generated if ott_id and taxon_name are provided",
-          expect_error(rotl:::check_args_match_names(rsp, taxon_name = "holothuria",
-                                                     ott_id = 924443),
-                       "must use only one of"))
+test_that("error generated if ott_id and taxon_name are provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, taxon_name = "holothuria",
+                                               ott_id = 924443),
+                 "must use only one of")
+})
 
-test_that("error generated if row_number is not numeric",
-          expect_error(rotl:::check_args_match_names(rsp, row_number = TRUE),
-                       "must be a numeric"))
+test_that("error generated if row_number is not numeric", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, row_number = TRUE),
+                 "must be a numeric")
+})
 
-test_that("error generated if ott_id is not numeric",
-          expect_error(rotl:::check_args_match_names(rsp, ott_id = TRUE),
-                       "must look like a number"))
+test_that("error generated if ott_id is not numeric", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, ott_id = TRUE),
+                 "must look like a number")
+})
 
-test_that("error generated if taxon_name is not character",
-          expect_error(rotl:::check_args_match_names(rsp, taxon_name = TRUE),
-                       "must be a character"))
+test_that("error generated if taxon_name is not character", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, taxon_name = TRUE),
+                 "must be a character")
+})
 
 test_that("error generated if row_number if not one of the row", {
+    skip_on_cran()
     expect_error(rotl:::check_args_match_names(rsp, row_number = 10),
                  "is not a valid row number")
     expect_error(rotl:::check_args_match_names(rsp, row_number = 1.5),
@@ -53,6 +70,7 @@ test_that("error generated if row_number if not one of the row", {
 })
 
 test_that("error generated if invalid taxon_name", {
+    skip_on_cran()
     expect_error(rotl:::check_args_match_names(rsp, taxon_name = "echinodermata"),
                  "Can't find")
     expect_error(rotl:::check_args_match_names(rsp, taxon_name = NA_character_),
@@ -60,22 +78,27 @@ test_that("error generated if invalid taxon_name", {
 })
 
 test_that("error generated if invalid ott id", {
+    skip_on_cran()
     expect_error(rotl:::check_args_match_names(rsp, ott_id = 66666),
                  "Can't find")
 })
 
-test_that("error generated if more than 1 value for row_number is provided",
-          expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
-                       "You must supply a single element"))
+test_that("error generated if more than 1 value for row_number is provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
+                 "You must supply a single element")
+})
 
 test_that("error generated if more than 1 value for taxon_name is provided",
           expect_error(rotl:::check_args_match_names(rsp, taxon_name = c("holothuria", "diadema")),
                        "You must supply a single element"))
 
 
-test_that("error generated if more than 1 value for ott_id is provided",
-          expect_error(rotl:::check_args_match_names(rsp, ott_id = c(924443, 4930522, 240396)),
-                       "only 1 element should be provided"))
+test_that("error generated if more than 1 value for ott_id is provided", {
+    skip_on_cran()
+    expect_error(rotl:::check_args_match_names(rsp, ott_id = c(924443, 4930522, 240396)),
+                 "only 1 element should be provided")
+})
 
 ############################################################################
 ## inspect_match_names                                                    ##
@@ -84,18 +107,21 @@ test_that("error generated if more than 1 value for ott_id is provided",
 context("inspect_match_names")
 
 test_that("correct data is being returned when asked to lookup by taxon name", {
+    skip_on_cran()
     tt <- inspect_match_names(rsp, taxon_name = "holothuria")[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
 })
 
 test_that("correct data is being returned when asked to lookup by ott_id", {
+    skip_on_cran()
     tt <- inspect_match_names(rsp, ott_id = 924443)[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
 })
 
 test_that("correct data is being returned when asked to lookup by row number", {
+    skip_on_cran()
     tt <- inspect_match_names(rsp, row_number = 1)[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
@@ -108,6 +134,7 @@ test_that("correct data is being returned when asked to lookup by row number", {
 context("list_synonym_match_names")
 
 test_that("correct synonyms are being returned when asked to look up by taxon name", {
+    skip_on_cran()
     tt <- list_synonyms_match_names(rsp, taxon_name = "holothuria")
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
@@ -116,11 +143,13 @@ test_that("correct synonyms are being returned when asked to look up by taxon na
 })
 
 test_that("holothuria is present in each element of the list", {
+    skip_on_cran()
     tt <- list_synonyms_match_names(rsp, taxon_name = "holothuria")
     expect_true(all(sapply(tt, function(x) any(grepl("holothuria", x, ignore.case = TRUE)))))
 })
 
 test_that("correct synonyms are being returned when asked to look up by row number", {
+    skip_on_cran()
     tt <- list_synonyms_match_names(rsp, row_number = 1)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
@@ -130,6 +159,7 @@ test_that("correct synonyms are being returned when asked to look up by row numb
 
 
 test_that("correct synonyms are being returned when asked to look up by ott id", {
+    skip_on_cran()
     tt <- list_synonyms_match_names(rsp, ott_id =  924443)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
@@ -143,17 +173,22 @@ test_that("correct synonyms are being returned when asked to look up by ott id",
 
 context("update_match_names")
 
-test_that("error message if missing both new arguments",
-          expect_error(update_match_names(rsp, row_number = 1),
-                       "You must specify either"))
+test_that("error message if missing both new arguments", {
+    skip_on_cran()
+    expect_error(update_match_names(rsp, row_number = 1),
+                 "You must specify either")
+})
 
-test_that("error message if both new arguments are provided",
-          expect_error(update_match_names(rsp, row_number = 1,
-                                          new_row_number = 1,
-                                          new_ott_id = 6666),
-                       "You must use only"))
+test_that("error message if both new arguments are provided", {
+    skip_on_cran()
+    expect_error(update_match_names(rsp, row_number = 1,
+                                    new_row_number = 1,
+                                    new_ott_id = 6666),
+                 "You must use only")
+})
 
 test_that("error message if wrong new row number provided", {
+    skip_on_cran()
     expect_error(update_match_names(rsp, row_number = 1,
                                     new_row_number = 10),
                  "is not a valid row number")
@@ -163,12 +198,14 @@ test_that("error message if wrong new row number provided", {
 })
 
 test_that("error message if wrong new ott id provided", {
+    skip_on_cran()
     expect_error(update_match_names(rsp, row_number = 1,
                                     new_ott_id = 66666),
                  "Can't find")
 })
 
 test_that("it works correctly when providing a new row number", {
+    skip_on_cran()
     new_rsp <- update_match_names(rsp, row_number = 2,
                                   new_row_number = 2)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
@@ -177,6 +214,7 @@ test_that("it works correctly when providing a new row number", {
 
 
 test_that("it works correctly when providing a new ott id", {
+    skip_on_cran()
     new_rsp <- update_match_names(rsp, row_number = 2,
                                   new_ott_id = 631176)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],

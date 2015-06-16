@@ -169,10 +169,11 @@ testthat_json_test <- function(test_obj, test_name){
 
 run_shared_test <- function(json_obj){
    all_tests <- names(json_obj)
-   for(i in 1:length(all_tests)){
-       test_that(all_tests[i],
-          testthat_json_test(json_obj, all_tests[i])
-          )
+   for(i in 1:length(all_tests)) {
+       test_that(all_tests[i], {
+           skip_on_cran()
+           testthat_json_test(json_obj, all_tests[i])
+       })
    }
 }
 
