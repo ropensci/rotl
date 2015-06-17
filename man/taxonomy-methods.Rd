@@ -16,19 +16,22 @@ node_id(tax)
 
 ott_id(tax)
 
-synonyms(tax)
+synonyms(tax, ...)
 }
 \arguments{
-\item{tax}{an object returned by \code{\link{taxonomy_taxon}} or
-\code{\link{taxonomy_lica}}.}
+\item{tax}{an object returned by \code{\link{taxonomy_taxon}},
+\code{\link{taxonomy_lica}}, or \code{\link{tnrs_match_names}}}
+
+\item{...}{additional arguments (see
+\code{\link{tnrs_match_names}})}
 }
 \description{
 Methods for dealing with objects returned by functions dealing
-with the Taxonomy API.
+with the Taxonomy and the Taxonomic Name Resolution Services APIs.
 }
 \details{
-This the page for the generic methods. See the help pages for
-\code{\link{taxonomy_taxon}} and \code{\link{taxonomy_lica}} for
-more information.
+This is the page for the generic methods. See the help pages for
+\code{\link{taxonomy_taxon}}, \code{\link{taxonomy_lica}}, and
+\code{\link{tnrs_match_names}} for more information.
 }
 

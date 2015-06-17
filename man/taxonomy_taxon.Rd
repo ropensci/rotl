@@ -16,7 +16,7 @@ taxonomy_taxon(ott_ids, ...)
 
 \method{node_id}{taxon_info}(tax)
 
-\method{synonyms}{taxon_info}(tax)
+\method{synonyms}{taxon_info}(tax, ...)
 }
 \arguments{
 \item{ott_ids}{the ott ids of the taxon of interest (numeric or

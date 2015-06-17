@@ -130,14 +130,14 @@ test_that("correct data is being returned when asked to lookup by row number", {
 })
 
 ############################################################################
-## list_synonyms_match_names                                              ##
+## synonyms.match_names                                                   ##
 ############################################################################
 
 context("list_synonym_match_names")
 
 test_that("correct synonyms are being returned when asked to look up by taxon name", {
     skip_on_cran()
-    tt <- list_synonyms_match_names(rsp, taxon_name = "holothuria")
+    tt <- synonyms(rsp, taxon_name = "holothuria")
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
     expect_true(any(grepl("^Physalia", names(tt))))
@@ -146,13 +146,13 @@ test_that("correct synonyms are being returned when asked to look up by taxon na
 
 test_that("holothuria is present in each element of the list", {
     skip_on_cran()
-    tt <- list_synonyms_match_names(rsp, taxon_name = "holothuria")
+    tt <- synonyms(rsp, taxon_name = "holothuria")
     expect_true(all(sapply(tt, function(x) any(grepl("holothuria", x, ignore.case = TRUE)))))
 })
 
 test_that("correct synonyms are being returned when asked to look up by row number", {
     skip_on_cran()
-    tt <- list_synonyms_match_names(rsp, row_number = 1)
+    tt <- synonyms(rsp, row_number = 1)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
     expect_true(any(grepl("^Physalia", names(tt))))
@@ -162,7 +162,7 @@ test_that("correct synonyms are being returned when asked to look up by row numb
 
 test_that("correct synonyms are being returned when asked to look up by ott id", {
     skip_on_cran()
-    tt <- list_synonyms_match_names(rsp, ott_id =  924443)
+    tt <- synonyms(rsp, ott_id =  924443)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("^Vaneyothuria", names(tt))))
     expect_true(any(grepl("^Physalia", names(tt))))

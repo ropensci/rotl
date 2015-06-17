@@ -191,15 +191,17 @@ taxonomy_lica <- function (ott_ids=NULL, ...) {
 ############################################################################
 
 ##' Methods for dealing with objects returned by functions dealing
-##' with the Taxonomy API.
+##' with the Taxonomy and the Taxonomic Name Resolution Services APIs.
 ##'
-##' This the page for the generic methods. See the help pages for
-##' \code{\link{taxonomy_taxon}} and \code{\link{taxonomy_lica}} for
-##' more information.
+##' This is the page for the generic methods. See the help pages for
+##' \code{\link{taxonomy_taxon}}, \code{\link{taxonomy_lica}}, and
+##' \code{\link{tnrs_match_names}} for more information.
 ##'
 ##' @title Methods for Taxonomy
-##' @param tax an object returned by \code{\link{taxonomy_taxon}} or
-##'     \code{\link{taxonomy_lica}}.
+##' @param tax an object returned by \code{\link{taxonomy_taxon}},
+##'     \code{\link{taxonomy_lica}}, or \code{\link{tnrs_match_names}}
+##' @param ... additional arguments (see
+##'     \code{\link{tnrs_match_names}})
 ##' @rdname taxonomy-methods
 ##' @export
 
@@ -219,7 +221,7 @@ ott_id <- function(tax) { UseMethod("ott_id") }
 
 ##' @export
 ##' @rdname taxonomy-methods
-synonyms <- function(tax) { UseMethod("synonyms") }
+synonyms <- function(tax, ...) { UseMethod("synonyms") }
 
 
 ### methods for taxonomy_taxon ---------------------------------------------
@@ -244,7 +246,7 @@ node_id.taxon_info <- function(tax) {
 
 ##' @export
 ##' @rdname taxonomy_taxon
-synonyms.taxon_info <- function(tax) {
+synonyms.taxon_info <- function(tax, ...) {
     sapply(tax, function(x) {
         tt <- x[["synonyms"]]
         unlist(as.character(tt))

@@ -50,7 +50,7 @@
 ##'     "original_response")}).
 ##' @seealso \code{\link{inspect_match_names}},
 ##'     \code{\link{update_match_names}},
-##'     \code{\link{list_synonyms_match_names}}.
+##'     \code{\link{synonyms.match_names}}.
 ##' @examples \dontrun{
 ##'  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",
 ##'                                             "chordata", "hemichordata"))
@@ -90,6 +90,7 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
+    class(summary_match) <- c("match_names", "data.frame")
     summary_match
 }
 

@@ -76,6 +76,6 @@ function.
 \seealso{
 \code{\link{inspect_match_names}},
     \code{\link{update_match_names}},
-    \code{\link{list_synonyms_match_names}}.
+    \code{\link{synonyms.match_names}}.
 }
 
