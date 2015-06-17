@@ -130,17 +130,16 @@ inspect_match_names(resolved_names, taxon_name = "diadema")
 ```
 
 In our case, we want the second row in this data frame to replace the
-information that initially matched for _Diadema_. We can now use the
-`update_match_names`, to change to the correct taxa (the sea urchin not the
-fungus):
+information that initially matched for _Diadema_. We can now use the `update()`
+function, to change to the correct taxa (the sea urchin not the fungus):
 
 ```{r}
-resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
-                                     new_row_number = 2)
+resolved_names <- update(resolved_names, taxon_name = "diadema",
+                         new_row_number = 2)
 
 ## we could also have used the ott_id to replace this taxon:
-## resolved_names <- update_match_names(resolved_names, taxon_name = "diadema",
-##                                     new_ott_id = 631176)
+## resolved_names <- update(resolved_names, taxon_name = "diadema",
+##                          new_ott_id = 631176)
 ```
 
 And now our `resolved_names` data frame includes the taxon we want:

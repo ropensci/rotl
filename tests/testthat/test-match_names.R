@@ -170,46 +170,46 @@ test_that("correct synonyms are being returned when asked to look up by ott id",
 })
 
 ############################################################################
-## update_match_names                                                     ##
+## update.match_names                                                     ##
 ############################################################################
 
-context("update_match_names")
+context("update.match_names")
 
 test_that("error message if missing both new arguments", {
     skip_on_cran()
-    expect_error(update_match_names(rsp, row_number = 1),
+    expect_error(update(rsp, row_number = 1),
                  "You must specify either")
 })
 
 test_that("error message if both new arguments are provided", {
     skip_on_cran()
-    expect_error(update_match_names(rsp, row_number = 1,
-                                    new_row_number = 1,
-                                    new_ott_id = 6666),
+    expect_error(update(rsp, row_number = 1,
+                        new_row_number = 1,
+                        new_ott_id = 6666),
                  "You must use only")
 })
 
 test_that("error message if wrong new row number provided", {
     skip_on_cran()
-    expect_error(update_match_names(rsp, row_number = 1,
-                                    new_row_number = 10),
+    expect_error(update(rsp, row_number = 1,
+                        new_row_number = 10),
                  "is not a valid row number")
-    expect_error(update_match_names(rsp, row_number = 1,
-                                    new_row_number = 1.5),
+    expect_error(update(rsp, row_number = 1,
+                        new_row_number = 1.5),
                  "is not a valid row number")
 })
 
 test_that("error message if wrong new ott id provided", {
     skip_on_cran()
-    expect_error(update_match_names(rsp, row_number = 1,
-                                    new_ott_id = 66666),
+    expect_error(update(rsp, row_number = 1,
+                        new_ott_id = 66666),
                  "Can't find")
 })
 
 test_that("it works correctly when providing a new row number", {
     skip_on_cran()
-    new_rsp <- update_match_names(rsp, row_number = 2,
-                                  new_row_number = 2)
+    new_rsp <- update(rsp, row_number = 2,
+                      new_row_number = 2)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
                  "631176")
 })
@@ -217,8 +217,8 @@ test_that("it works correctly when providing a new row number", {
 
 test_that("it works correctly when providing a new ott id", {
     skip_on_cran()
-    new_rsp <- update_match_names(rsp, row_number = 2,
-                                  new_ott_id = 631176)
+    new_rsp <- update(rsp, row_number = 2,
+                      new_ott_id = 631176)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
                  "631176")
 })

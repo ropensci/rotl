@@ -49,7 +49,7 @@
 ##'     returned object (and can be obtained using \code{attr(object,
 ##'     "original_response")}).
 ##' @seealso \code{\link{inspect_match_names}},
-##'     \code{\link{update_match_names}},
+##'     \code{\link{update.match_names}},
 ##'     \code{\link{synonyms.match_names}}.
 ##' @examples \dontrun{
 ##'  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",

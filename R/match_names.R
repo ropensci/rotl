@@ -65,8 +65,8 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
 ##'   \dontrun{
 ##'    matched_names <- tnrs_match_names(c("holothuria", "diadema", "boletus"))
 ##'    inspect_match_names(matched_names, taxon_name="diadema")
-##'    new_matched_names <- update_match_names(matched_names, taxon_name="diadema",
-##'                                            new_ott_id = 631176)
+##'    new_matched_names <- update(matched_names, taxon_name="diadema",
+##'                                new_ott_id = 631176)
 ##'    new_matched_names
 ##'    }
 ##' @export
@@ -90,18 +90,20 @@ inspect_match_names <- function(response, row_number, taxon_name, ott_id) {
     summary_match
 }
 
-
+##' @param object an object created by \code{\link{tnrs_match_names}}
 ##' @param new_row_number the row number in the output of
 ##'     inspect_match_names to replace the taxa specified by
 ##'     \code{row_number}, \code{taxon_name}, or \code{ott_id}.
 ##' @param new_ott_id the ott id of the taxon to replace the taxa
 ##'     specified by \code{row_number}, \code{taxon_name}, or
 ##'     \code{ott_id}.
+##' @param ... currently ignored
 ##' @export
 ##' @rdname inspect_match_names
-update_match_names <- function(response, row_number, taxon_name, ott_id,
-                               new_row_number, new_ott_id) {
+update.match_names <- function(object, row_number, taxon_name, ott_id,
+                               new_row_number, new_ott_id, ...) {
 
+    response <- object
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
     res <- attr(response, "original_response")
     tmpRes <- res$results[[i]]
