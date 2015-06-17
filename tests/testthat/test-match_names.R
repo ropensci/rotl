@@ -103,28 +103,28 @@ test_that("error generated if more than 1 value for ott_id is provided", {
 })
 
 ############################################################################
-## inspect_match_names                                                    ##
+## inspect.match_names                                                    ##
 ############################################################################
 
-context("inspect_match_names")
+context("inspect.match_names")
 
 test_that("correct data is being returned when asked to lookup by taxon name", {
     skip_on_cran()
-    tt <- inspect_match_names(rsp, taxon_name = "holothuria")[["ott_id"]]
+    tt <- inspect(rsp, taxon_name = "holothuria")[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
 })
 
 test_that("correct data is being returned when asked to lookup by ott_id", {
     skip_on_cran()
-    tt <- inspect_match_names(rsp, ott_id = 924443)[["ott_id"]]
+    tt <- inspect(rsp, ott_id = 924443)[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
 })
 
 test_that("correct data is being returned when asked to lookup by row number", {
     skip_on_cran()
-    tt <- inspect_match_names(rsp, row_number = 1)[["ott_id"]]
+    tt <- inspect(rsp, row_number = 1)[["ott_id"]]
     tt <- all(tt %in% c(924443, 3652285, 497201, 443193))
     expect_true(tt)
 })

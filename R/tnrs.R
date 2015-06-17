@@ -48,7 +48,7 @@
 ##'     original query output is appended as an attribute to the
 ##'     returned object (and can be obtained using \code{attr(object,
 ##'     "original_response")}).
-##' @seealso \code{\link{inspect_match_names}},
+##' @seealso \code{\link{inspect.match_names}},
 ##'     \code{\link{update.match_names}},
 ##'     \code{\link{synonyms.match_names}}.
 ##' @examples \dontrun{

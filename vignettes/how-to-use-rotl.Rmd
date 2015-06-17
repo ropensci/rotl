@@ -113,10 +113,10 @@ plot(my_tree, no.margin=TRUE)
 
 If you realize that `tnrs_match_names` assigns the incorrect taxonomic group to
 your name (e.g., because of synonymy) and changing the `context_name` does not
-help, you can use the function `inspect_match_names`. This function takes the
-object resulting from using `tnrs_match_names`, and either the row number, the
-taxon name (you used in your search in lowercase), or the `ott_id` returned by
-the initial query.
+help, you can use the function `inspect`. This function takes the object
+resulting from `tnrs_match_names()`, and either the row number, the taxon name
+(you used in your search in lowercase), or the `ott_id` returned by the initial
+query.
 
 To illustrate this, let's re-use the previous query but by adding a tree to our
 list of taxa (Oak tree, genus _Acer_), such that restricting our search to
@@ -126,7 +126,7 @@ animals doesn't work.
 taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
 resolved_names <- tnrs_match_names(taxa)
 resolved_names
-inspect_match_names(resolved_names, taxon_name = "diadema")
+inspect(resolved_names, taxon_name = "diadema")
 ```
 
 In our case, we want the second row in this data frame to replace the
