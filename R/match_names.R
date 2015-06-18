@@ -155,23 +155,24 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
 
 
-match_names_method_factory <- function(list_name, first.only, simplify_) {
+match_names_method_factory <- function(list_name, all_, simplify_) {
 
-    function(tax, row_number, taxon_name, ott_id, first_only = first.only, simplify = simplify_) {
+    function(tax, row_number, taxon_name, ott_id, all = all_, simplify = simplify_) {
 
-        get_list_element <- function(response, i, first_only) {
-            if (first_only) {
+        get_list_element <- function(response, i, all) {
+            if (!all) {
                 list_content <- unlist(res[["results"]][[i]][["matches"]][[1]][[list_name]])
-                name_content <- res[["results"]][[i]][["matches"]][[1]][["unique_name"]]
+                if (is.null(list_content)) list_content <- ""
+                name_content <- res$results[[i]][["matches"]][[1]][["unique_name"]]
             } else {
                 list_content <- lapply(res$results[[i]][["matches"]], function(x) {
                     unlist(x[[list_name]])
                 })
-                name_content <- lapply(res$results[[i]][["matches"]], function(x) {
-                    x[["unique_name"]]
-                })
+                 name_content <- lapply(res$results[[i]][["matches"]], function(x) {
+                     x[["unique_name"]]
+                 })
             }
-            names(list_content) <- name_content
+            attr(list_content, "list_names") <- name_content
             list_content
         }
 
@@ -182,11 +183,16 @@ match_names_method_factory <- function(list_name, first.only, simplify_) {
 
         if (no_args) {
             ret <- lapply(attr(response, "original_order"), function(i) {
-                get_list_element(res, i, first_only = first_only)
+                get_list_element(res, i, all = all)
             })
+            names(ret) <- sapply(ret,  function(x) {
+                attr(x, "list_names")
+            })
+            ret <- lapply(ret, c)
         } else {
             i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-            ret <- get_list_element(res, i, first_only = first_only)
+            ret <- get_list_element(res, i, all = all)
+            ret <- c(ret)
         }
 
         if (simplify) {
