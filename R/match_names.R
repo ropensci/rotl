@@ -186,17 +186,24 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 ##' }
 ##' @export
 
-synonyms.match_names <- function(tax, row_number, taxon_name, ott_id, ...) {
-    response <- tax
-    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
 
-    res <- attr(response, "original_response")
-    list_synonyms <- lapply(res$results[[i]]$match, function(x) {
-        unlist(x$synonyms)
-    })
-    name_synonyms <- lapply(res$results[[i]]$match, function(x) {
-        x$unique_name
-    })
-    names(list_synonyms) <- name_synonyms
-    list_synonyms
+match_names_method_factory <- function(list_name) {
+
+    function(tax, row_number, taxon_name, ott_id) {
+        response <- tax
+        i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+
+        res <- attr(response, "original_response")
+        list_content <- lapply(res$results[[i]][["matches"]], function(x) {
+            unlist(x[[list_name]])
+        })
+        name_content <- lapply(res$results[[i]][["matches"]], function(x) {
+            x[["unique_name"]]
+        })
+        names(list_content) <- name_content
+        list_content
+    }
+
 }
+##' @export
+synonyms.match_names <- match_names_method_factory("synonyms")
