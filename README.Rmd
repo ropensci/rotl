@@ -6,6 +6,7 @@ opts_knit$set(upload.fun = imgur_upload)
 
 ```
 [![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl)
+[![Build Status](https://ci.appveyor.com/api/github/webhook?id=57rapgc0s7fwxwad)](https://ci.appveyor.com/project/fmichonneau/rotl)
 [![Coverage Status](https://coveralls.io/repos/fmichonneau/rotl/badge.svg)](https://coveralls.io/r/fmichonneau/rotl)
 
 # An R interface to Open Tree API
