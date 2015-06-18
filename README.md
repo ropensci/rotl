@@ -32,7 +32,7 @@ Then you can intall `rotl` using:
 
 ```r
 library(devtools)
-install_github("fmichonneau/rotl")
+install_github("fmichonneau/rotl", build_vignette=TRUE)
 ```
 
 ## Vignettes
@@ -84,7 +84,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/yWO685l.png) 
+![plot of chunk get_tr](http://i.imgur.com/KOSzti4.png) 
 
 ### Code of Conduct
 
