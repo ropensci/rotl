@@ -203,6 +203,14 @@ match_names_method_factory <- function(list_name, first.only, simplify_) {
 
 }
 
+##' @export
+##' @rdname match_names-methods
+flags <- function(tax, ...) UseMethod("flags")
+
+##' @export
+##' @rdname match_names-methods
+flags.match_names <- match_names_method_factory("flags", first.only = FALSE,
+                                                simplify_= FALSE)
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all
 ##' names that include the queried name as a possible synonym. This
