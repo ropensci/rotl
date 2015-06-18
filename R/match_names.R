@@ -150,6 +150,59 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
     response
 }
 
+
+
+
+
+
+match_names_method_factory <- function(list_name, first.only, simplify_) {
+
+    function(tax, row_number, taxon_name, ott_id, first_only = first.only, simplify = simplify_) {
+
+        get_list_element <- function(response, i, first_only) {
+            if (first_only) {
+                list_content <- unlist(res[["results"]][[i]][["matches"]][[1]][[list_name]])
+                name_content <- res[["results"]][[i]][["matches"]][[1]][["unique_name"]]
+            } else {
+                list_content <- lapply(res$results[[i]][["matches"]], function(x) {
+                    unlist(x[[list_name]])
+                })
+                name_content <- lapply(res$results[[i]][["matches"]], function(x) {
+                    x[["unique_name"]]
+                })
+            }
+            names(list_content) <- name_content
+            list_content
+        }
+
+        response <- tax
+        res <- attr(response, "original_response")
+
+        no_args <- all(c(missing(row_number), missing(taxon_name), missing(ott_id)))
+
+        if (no_args) {
+            ret <- lapply(attr(response, "original_order"), function(i) {
+                get_list_element(res, i, first_only = first_only)
+            })
+        } else {
+            i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+            ret <- get_list_element(res, i, first_only = first_only)
+        }
+
+        if (simplify) {
+            if (all(sapply(ret, length) == 1L)) {
+                return(unlist(ret))
+            } else {
+                warning("Object couldn't be simplified")
+                return(ret)
+            }
+        } else {
+            return(ret)
+        }
+    }
+
+}
+
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all
 ##' names that include the queried name as a possible synonym. This
@@ -186,24 +239,4 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 ##' }
 ##' @export
 
-
-match_names_method_factory <- function(list_name) {
-
-    function(tax, row_number, taxon_name, ott_id) {
-        response <- tax
-        i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-
-        res <- attr(response, "original_response")
-        list_content <- lapply(res$results[[i]][["matches"]], function(x) {
-            unlist(x[[list_name]])
-        })
-        name_content <- lapply(res$results[[i]][["matches"]], function(x) {
-            x[["unique_name"]]
-        })
-        names(list_content) <- name_content
-        list_content
-    }
-
-}
-##' @export
 synonyms.match_names <- match_names_method_factory("synonyms")
