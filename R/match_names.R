@@ -152,7 +152,7 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
 
 
-get_list_element <- function(response, i, all, list_name) {
+get_list_element <- function(response, i, list_name) {
     list_content <- lapply(response$results[[i]][["matches"]], function(x) {
         unlist(x[[list_name]])
     })
@@ -163,7 +163,7 @@ get_list_element <- function(response, i, all, list_name) {
     list_content
 }
 
-match_names_method_factory <- function(list_name, all, simplify) {
+match_names_method_factory <- function(list_name) {
 
     function(tax, row_number, taxon_name, ott_id) {
 
@@ -174,35 +174,21 @@ match_names_method_factory <- function(list_name, all, simplify) {
 
         if (no_args) {
             ret <- lapply(attr(response, "original_order"), function(i) {
-                get_list_element(res, i, all = all, list_name)
+                get_list_element(res, i, list_name)
             })
             names(ret) <- sapply(attr(response, "original_order"), function(i) {
-                get_list_element(res, i, all = all, "matched_name")[[1]]
+                get_list_element(res, i, "matched_name")[[1]]
             })
-            if (!all) {
-                ret <- lapply(ret, function(x) x[[1]])
-            }
         } else {
             i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-            ret <- get_list_element(res, i, all = all, list_name)
+            ret <- get_list_element(res, i, list_name)
         }
 
-        if (simplify) {
-            if (all(sapply(ret, length) == 1L)) {
-                return(unlist(ret))
-            } else {
-                warning("Object couldn't be simplified")
-                return(ret)
-            }
-        } else {
-            return(ret)
-        }
+        ret
     }
 
 }
 
-ott_id.match_names <- match_names_method_factory("ot:ottId", all = FALSE,
-                                                 simplify = TRUE)
 
 ##' @export
 ##' @rdname match_names-methods
@@ -210,14 +196,11 @@ flags <- function(tax, ...) UseMethod("flags")
 
 ##' @export
 ##' @rdname match_names-methods
-flags.match_names <- match_names_method_factory("flags", all = FALSE,
-                                                simplify = FALSE)
+flags.match_names <- match_names_method_factory("flags")
 
 ##' @export
 ##' @rdname match_names-methods
-node_id.match_names <- match_names_method_factory("matched_node_id",
-                                                  all = FALSE,
-                                                  simplify = TRUE)
+node_id.match_names <- match_names_method_factory("matched_node_id")
 
 
 ##' When querying the Taxonomic Name Resolution Services for a
@@ -256,5 +239,4 @@ node_id.match_names <- match_names_method_factory("matched_node_id",
 ##' }
 ##' @export
 
-synonyms.match_names <- match_names_method_factory("synonyms", all = TRUE,
-                                                   simplify = FALSE)
+synonyms.match_names <- match_names_method_factory("synonyms")
