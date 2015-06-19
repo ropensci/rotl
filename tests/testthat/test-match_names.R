@@ -263,7 +263,7 @@ test_that("flags with no arguments", {
     skip_on_cran()
     flags_rsp <- flags(rsp)
     expect_equal(length(flags_rsp), 5)
-    expect_equivalent(sapply(flags_rsp, length),  c(2, 2, 2, 0, 0))
+    expect_equivalent(sapply(flags_rsp, length),  c(1, 1, 1, 4, 1))
 })
 
 test_that("flags with row number", {
@@ -311,30 +311,30 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 test_that("node_id with no arguments", {
     skip_on_cran()
-    expect_true(inherits(node_id(rsp), "integer"))
+    expect_true(inherits(node_id(rsp), "list"))
     expect_equal(names(node_id(rsp)), tax_rsp)
-    expect_equal(node_id(rsp)["Holothuria"], 3315679)
+    expect_equal(node_id(rsp)[["Holothuria"]][[1]], 3315679)
 })
 
 test_that("node_id with row number", {
     skip_on_cran()
     expect_equal(length(node_id(rsp, 4)), 4)
-    expect_true(inherits(node_id(rsp, 4), "integer"))
-    expect_equivalent(node_id(rsp, 4)[1], 3315679)
+    expect_true(inherits(node_id(rsp, 4), "list"))
+    expect_equivalent(node_id(rsp, 4)[[1]], 3315679)
 })
 
 test_that("node_id with taxon name", {
     skip_on_cran()
     expect_equal(length(node_id(rsp, taxon_name = "Holothuria")), 4)
-    expect_true(inherits(node_id(rsp, taxon_name = "Holothuria"), "integer"))
-    expect_equivalent(node_id(rsp, taxon_name = "Holothuria")[1], 3315679)
+    expect_true(inherits(node_id(rsp, taxon_name = "Holothuria"), "list"))
+    expect_equivalent(node_id(rsp, taxon_name = "Holothuria")[[1]], 3315679)
 })
 
 test_that("node_id with ott id", {
     skip_on_cran()
     expect_equal(length(node_id(rsp, ott_id=924443)), 4)
-    expect_true(inherits(node_id(rsp, ott_id=924443), "integer"))
-    expect_equivalent(node_id(rsp, ott_id=924443)[1], 3315679)
+    expect_true(inherits(node_id(rsp, ott_id=924443), "list"))
+    expect_equivalent(node_id(rsp, ott_id=924443)[[1]], 3315679)
 })
 
 
@@ -352,28 +352,28 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 test_that("ott_id with no arguments", {
     skip_on_cran()
-    expect_true(inherits(ott_id(rsp), "integer"))
+    expect_true(inherits(ott_id(rsp), "list"))
     expect_equal(names(ott_id(rsp)), tax_rsp)
-    expect_equal(ott_id(rsp)["Holothuria"], 924443)
+    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 924443)
 })
 
 test_that("ott_id with row number", {
     skip_on_cran()
     expect_equal(length(ott_id(rsp, 4)), 4)
-    expect_true(inherits(ott_id(rsp, 4), "integer"))
-    expect_equivalent(ott_id(rsp, 4)[1], 924443)
+    expect_true(inherits(ott_id(rsp, 4), "list"))
+    expect_equivalent(ott_id(rsp, 4)[[1]], 924443)
 })
 
 test_that("ott_id with taxon name", {
     skip_on_cran()
     expect_equal(length(ott_id(rsp, taxon_name = "Holothuria")), 4)
-    expect_true(inherits(ott_id(rsp, taxon_name = "Holothuria"), "integer"))
-    expect_equivalent(ott_id(rsp, taxon_name = "Holothuria")[1], 924443)
+    expect_true(inherits(ott_id(rsp, taxon_name = "Holothuria"), "list"))
+    expect_equivalent(ott_id(rsp, taxon_name = "Holothuria")[[1]], 924443)
 })
 
 test_that("ott_id with ott id", {
     skip_on_cran()
     expect_equal(length(ott_id(rsp, ott_id=924443)), 4)
-    expect_true(inherits(ott_id(rsp, ott_id=924443), "integer"))
-    expect_equivalent(ott_id(rsp, ott_id=924443)[1], 924443)
+    expect_true(inherits(ott_id(rsp, ott_id=924443), "list"))
+    expect_equivalent(ott_id(rsp, ott_id=924443)[[1]], 924443)
 })
