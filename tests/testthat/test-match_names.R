@@ -336,3 +336,44 @@ test_that("node_id with ott id", {
     expect_true(inherits(node_id(rsp, ott_id=924443), "integer"))
     expect_equivalent(node_id(rsp, ott_id=924443)[1], 3315679)
 })
+
+
+############################################################################
+## ott_id method                                                          ##
+############################################################################
+
+context("ott_id method for class match_names")
+
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    tax_rsp <- c("Tyrannosaurus", "Helicoplacus", "Ctenocystis",
+                 "Holothuria", "Echinoidea")
+    rsp <- tnrs_match_names(tax_rsp)
+}
+
+test_that("ott_id with no arguments", {
+    skip_on_cran()
+    expect_true(inherits(ott_id(rsp), "integer"))
+    expect_equal(names(ott_id(rsp)), tax_rsp)
+    expect_equal(ott_id(rsp)["Holothuria"], 924443)
+})
+
+test_that("ott_id with row number", {
+    skip_on_cran()
+    expect_equal(length(ott_id(rsp, 4)), 4)
+    expect_true(inherits(ott_id(rsp, 4), "integer"))
+    expect_equivalent(ott_id(rsp, 4)[1], 924443)
+})
+
+test_that("ott_id with taxon name", {
+    skip_on_cran()
+    expect_equal(length(ott_id(rsp, taxon_name = "Holothuria")), 4)
+    expect_true(inherits(ott_id(rsp, taxon_name = "Holothuria"), "integer"))
+    expect_equivalent(ott_id(rsp, taxon_name = "Holothuria")[1], 924443)
+})
+
+test_that("ott_id with ott id", {
+    skip_on_cran()
+    expect_equal(length(ott_id(rsp, ott_id=924443)), 4)
+    expect_true(inherits(ott_id(rsp, ott_id=924443), "integer"))
+    expect_equivalent(ott_id(rsp, ott_id=924443)[1], 924443)
+})
