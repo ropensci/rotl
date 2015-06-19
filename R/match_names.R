@@ -78,18 +78,7 @@ inspect.match_names <- function(response, row_number, taxon_name, ott_id, ...) {
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
 
     res <- attr(response, "original_response")
-    summary_match <- do.call("rbind", lapply(res$results[[i]]$match, function(x) {
-            searchStr <- x$search_string
-            uniqNames <- x$unique_name
-            approxMatch <- x$is_approximate_match
-            ott_id <- x$'ot:ottId'
-            isSynonym <- x$is_synonym
-            isDeprecated <- x$is_deprecated
-            c(searchStr, uniqNames, approxMatch, ott_id, isSynonym, isDeprecated)
-        }))
-    summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
-    names(summary_match) <- c("search_string", "unique_name", "approximate_match",
-                              "ott_id", "is_synonym", "is_deprecated")
+    summary_match <- build_summary_match(res, res_id = i)
     summary_match
 }
 
@@ -139,14 +128,9 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
     }
     if (length(j) > 1) stop("You must supply a single element for each argument.")
 
-    searchStr <- tmpRes$matches[[j]]$search_string
-    uniqNames <- tmpRes$matches[[j]]$unique_name
-    approxMatch <- tmpRes$matches[[j]]$is_approximate_match
-    ott_id <- tmpRes$matches[[j]]$'ot:ottId'
-    isSynonym <- tmpRes$matches[[j]]$is_synonym
-    isDeprecated <- tmpRes$matches[[j]]$is_deprecated
-    nMatch <- length(tmpRes$match)
-    response[rnb, ] <- c(searchStr, uniqNames, approxMatch, ott_id, nMatch, isSynonym, isDeprecated)
+    summ_match <- summary_row_factory(res, res_id = i, match_id = j)
+
+    response[rnb, ] <- summ_match
     response
 }
 
