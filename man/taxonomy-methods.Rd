@@ -12,9 +12,9 @@ tax_rank(tax)
 
 ott_taxon_name(tax)
 
-node_id(tax)
+node_id(tax, ...)
 
-ott_id(tax)
+ott_id(tax, ...)
 
 synonyms(tax, ...)
 }

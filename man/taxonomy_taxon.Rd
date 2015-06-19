@@ -14,7 +14,7 @@ taxonomy_taxon(ott_ids, ...)
 
 \method{ott_taxon_name}{taxon_info}(tax)
 
-\method{node_id}{taxon_info}(tax)
+\method{node_id}{taxon_info}(tax, ...)
 
 \method{synonyms}{taxon_info}(tax, ...)
 }

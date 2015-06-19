@@ -14,9 +14,9 @@ taxonomy_lica(ott_ids = NULL, ...)
 
 \method{ott_taxon_name}{taxon_lica}(tax)
 
-\method{node_id}{taxon_lica}(tax)
+\method{node_id}{taxon_lica}(tax, ...)
 
-\method{ott_id}{taxon_lica}(tax)
+\method{ott_id}{taxon_lica}(tax, ...)
 }
 \arguments{
 \item{ott_ids}{a vector of ott ids for the taxa whose LICA is to

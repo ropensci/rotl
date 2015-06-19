@@ -196,13 +196,13 @@ tax_rank.gol_node <- function(tax) {
 
 ##' @export
 ##' @rdname gol_node_info
-node_id.gol_node <- function(tax) {
+node_id.gol_node <- function(tax, ...) {
     tax[["node_id"]]
 }
 
 ##' @export
 ##' @rdname gol_node_info
-ott_id.gol_node <- function(tax) {
+ott_id.gol_node <- function(tax, ...) {
     tax[["ott_id"]]
 }
 
