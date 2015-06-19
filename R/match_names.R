@@ -163,9 +163,9 @@ get_list_element <- function(response, i, all, list_name) {
     list_content
 }
 
-match_names_method_factory <- function(list_name, all_, simplify_) {
+match_names_method_factory <- function(list_name, all, simplify) {
 
-    function(tax, row_number, taxon_name, ott_id, all = all_, simplify = simplify_) {
+    function(tax, row_number, taxon_name, ott_id) {
 
         response <- tax
         res <- attr(response, "original_response")
@@ -201,14 +201,25 @@ match_names_method_factory <- function(list_name, all_, simplify_) {
 
 }
 
+ott_id.match_names <- match_names_method_factory("ot:ottId", all = FALSE,
+                                                 simplify = TRUE)
+
 ##' @export
 ##' @rdname match_names-methods
 flags <- function(tax, ...) UseMethod("flags")
 
 ##' @export
 ##' @rdname match_names-methods
-flags.match_names <- match_names_method_factory("flags", first.only = FALSE,
-                                                simplify_= FALSE)
+flags.match_names <- match_names_method_factory("flags", all = FALSE,
+                                                simplify = FALSE)
+
+##' @export
+##' @rdname match_names-methods
+node_id.match_names <- match_names_method_factory("matched_node_id",
+                                                  all = FALSE,
+                                                  simplify = TRUE)
+
+
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all
 ##' names that include the queried name as a possible synonym. This
@@ -245,4 +256,5 @@ flags.match_names <- match_names_method_factory("flags", first.only = FALSE,
 ##' }
 ##' @export
 
-synonyms.match_names <- match_names_method_factory("synonyms")
+synonyms.match_names <- match_names_method_factory("synonyms", all = TRUE,
+                                                   simplify = FALSE)
