@@ -1,14 +1,15 @@
 context("match names")
 
- if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-     rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
- }
-
 ############################################################################
 ## check_args_match_names                                                 ##
 ############################################################################
 
 context("check_args_match_names")
+
+ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+     rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+ }
+
 
 test_that("error generated if object provided isn't created by tnrs_match_names",
           expect_error(rotl:::check_args_match_names(letters),
@@ -108,6 +109,11 @@ test_that("error generated if more than 1 value for ott_id is provided", {
 
 context("inspect.match_names")
 
+ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+     rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+ }
+
+
 test_that("correct data is being returned when asked to lookup by taxon name", {
     skip_on_cran()
     tt <- inspect(rsp, taxon_name = "holothuria")[["ott_id"]]
@@ -134,6 +140,19 @@ test_that("correct data is being returned when asked to lookup by row number", {
 ############################################################################
 
 context("list_synonym_match_names")
+
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    tax_rsp <- c("Holothuria", "Diadema", "Fromia")
+    rsp <- tnrs_match_names(names = tax_rsp)
+}
+
+
+test_that("synonyms with no arguments", {
+    skip_on_cran()
+    tt <- synonyms(rsp)
+    expect_true(inherits(tt, "list"))
+    expect_equal(names(tt), tax_rsp)
+})
 
 test_that("correct synonyms are being returned when asked to look up by taxon name", {
     skip_on_cran()
@@ -174,6 +193,10 @@ test_that("correct synonyms are being returned when asked to look up by ott id",
 ############################################################################
 
 context("update.match_names")
+
+ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+     rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+ }
 
 test_that("error message if missing both new arguments", {
     skip_on_cran()
