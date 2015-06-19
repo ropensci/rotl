@@ -222,3 +222,53 @@ test_that("it works correctly when providing a new ott id", {
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
                  "631176")
 })
+
+
+############################################################################
+## flags method                                                           ##
+############################################################################
+
+context("flags method for class match_names")
+
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    tax_rsp <- c("Tyrannosaurus", "Helicoplacus", "Ctenocystis",
+                 "Holothuria", "Echinoidea")
+    rsp <- tnrs_match_names(tax_rsp)
+}
+
+test_that("flags with no arguments", {
+    skip_on_cran()
+    flags_rsp <- flags(rsp)
+    expect_equal(length(flags_rsp), 5)
+    expect_equivalent(sapply(flags_rsp, length),  c(2, 2, 2, 0, 0))
+})
+
+test_that("flags with row number", {
+    skip_on_cran()
+    flags_rsp <- flags(rsp, 1)
+    expect_true(inherits(flags_rsp, "list"))
+    expect_equal(length(flags_rsp), 1)
+    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_true(inherits(flags_rsp[[1]], "character"))
+    expect_equal(names(flags_rsp), tax_rsp[1])
+})
+
+test_that("flags with taxon name", {
+    skip_on_cran()
+    flags_rsp <- flags(rsp, taxon_name = "Tyrannosaurus")
+    expect_true(inherits(flags_rsp, "list"))
+    expect_equal(length(flags_rsp), 1)
+    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_true(inherits(flags_rsp[[1]], "character"))
+    expect_equal(names(flags_rsp), tax_rsp[1])
+})
+
+test_that("flags with ott id", {
+    skip_on_cran()
+    flags_rsp <- flags(rsp, ott_id = 664348)
+    expect_true(inherits(flags_rsp, "list"))
+    expect_equal(length(flags_rsp), 1)
+    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_true(inherits(flags_rsp[[1]], "character"))
+    expect_equal(names(flags_rsp), tax_rsp[1])
+})
