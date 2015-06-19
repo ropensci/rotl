@@ -213,11 +213,11 @@ ott_taxon_name <- function(tax) { UseMethod("ott_taxon_name") }
 
 ##' @export
 ##' @rdname taxonomy-methods
-node_id <- function(tax) { UseMethod("node_id") }
+node_id <- function(tax, ...) { UseMethod("node_id") }
 
 ##' @export
 ##' @rdname taxonomy-methods
-ott_id <- function(tax) { UseMethod("ott_id") }
+ott_id <- function(tax, ...) { UseMethod("ott_id") }
 
 ##' @export
 ##' @rdname taxonomy-methods
