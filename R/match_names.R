@@ -153,10 +153,10 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
 
 get_list_element <- function(response, i, all, list_name) {
-    list_content <- lapply(res$results[[i]][["matches"]], function(x) {
+    list_content <- lapply(response$results[[i]][["matches"]], function(x) {
         unlist(x[[list_name]])
     })
-    name_content <- lapply(res$results[[i]][["matches"]], function(x) {
+    name_content <- lapply(response$results[[i]][["matches"]], function(x) {
         x[["unique_name"]]
     })
     names(list_content) <- name_content
