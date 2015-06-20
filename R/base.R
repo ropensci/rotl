@@ -75,16 +75,17 @@ phylo_from_otl <- function(res) {
     fnm <- tempfile()
     if (is.list(res)) {
         if (!is.null(res$newick)) {
-            cat(res$newick, file=fnm)
+            tree <- res$newick
         } else if (!is.null(res$subtree)) {
-            cat(res$subtree, file=fnm)
+            tree <- res$subtree
         } else {
             stop("Cannot find tree")
         }
     } else if (is.character(res)) {
-        cat(res, file=fnm)
+        tree <- res
     } else stop("I don't know how to deal with this format.")
-    phy <- rncl::make_phylo(fnm, file.format="newick")
+    cat(tree, file = fnm)
+    phy <- rncl::read_newick_phylo(fnm)
     unlink(fnm)
     return(phy)
 }
