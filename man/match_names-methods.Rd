@@ -8,13 +8,16 @@
 \title{\code{node_id}, \code{ott_id} and \code{flags} for
     taxonomic names matched by \code{tnrs_match_names}}
 \usage{
-\method{ott_id}{match_names}(tax, row_number, taxon_name, ott_id, ...)
+\method{ott_id}{match_names}(tax, row_number, taxon_name, ott_id,
+  only_current = TRUE, ...)
 
 flags(tax, ...)
 
-\method{flags}{match_names}(tax, row_number, taxon_name, ott_id, ...)
+\method{flags}{match_names}(tax, row_number, taxon_name, ott_id,
+  only_current = TRUE, ...)
 
-\method{node_id}{match_names}(tax, row_number, taxon_name, ott_id, ...)
+\method{node_id}{match_names}(tax, row_number, taxon_name, ott_id,
+  only_current = TRUE, ...)
 }
 \arguments{
 \item{tax}{an object returned by \code{\link{tnrs_match_names}}}
@@ -27,6 +30,11 @@ which to list the synonyms}
 
 \item{ott_id}{the ott id corresponding to the name for which to
 list the synonyms}
+
+\item{only_current}{logical (default \code{TRUE}), should the
+results include data for all matched names, or only the one
+listed in the object returned by
+\code{\link{tnrs_match_names}}?}
 
 \item{...}{currently ignored}
 }
@@ -46,12 +54,10 @@ These methods optionally accept one of the arguments
 the corresponding information for one of the matches in the object
 returned by the \code{\link{tnrs_match_names}} function.
 
-These methods will return the information for all the matches of
-the searched names, and not only the match currently used in data
-frame returned by \code{\link{tnrs_match_names}}. In other words,
-if \code{tax} is an object created by
-\code{\link{tnrs_match_names}}, \code{ott_id(tax)} and
-\code{tax$ott_id} are not identical (see the examples).
+If these arguments are not provided, these methods can return
+information for the matches currently listed in the object
+returned by \code{\link{tnrs_match_names}} (the default) or all
+the matches (using \code{only_current = FALSE}).
 }
 \examples{
 \dontrun{
