@@ -113,6 +113,13 @@ test_that("taxonomy subtree returns valid internal + species names", {
     expect_equal(length(tt), 16)
 })
 
+test_that("taxonomy subtree works if taxa has only 1 descendant", {
+    skip_on_cran()
+    tt <- taxonomy_subtree(ott_id = 3658331, output_format = "taxa_all")
+    expect_equal(length(tt), 2)
+    expect_true(inherits(tt), "character")
+})
+
 ############################################################################
 ## taxonomic LICA                                                         ##
 ############################################################################

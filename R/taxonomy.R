@@ -126,14 +126,16 @@ taxonomy_subtree <- function (ott_id=NULL,
             cat(res, file = file)
             invisible(return(file.exists(file)))
         }
-    } else { ## in all other cases, need to convert to phylo object
+    } else if (identical(output_format, "phylo")) {
         res <- phylo_from_otl(res)
+    } else { ## in all other cases use tree_to_labels
+        res <- tree_to_labels(res)
         if (identical(output_format, "taxa_internal")) {
-            res <- res$node.label
+            res <- res$edge_label
         } else if (identical(output_format, "taxa_species")) {
-            res <- res$tip.label
+            res <- res$tip_label
         } else if (identical(output_format, "taxa_all")) {
-            res <- c(res$tip.label, res$node.label)
+            res <- c(res$tip_label, res$edge_label)
         }
     }
     return(res)
