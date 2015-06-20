@@ -131,6 +131,7 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
     summ_match <- summary_row_factory(res, res_id = i, match_id = j)
 
     response[rnb, ] <- summ_match
+    attr(response, "match_id")[rnb] <- j
     response
 }
 
