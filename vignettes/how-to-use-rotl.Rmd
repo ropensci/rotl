@@ -178,7 +178,7 @@ If you are looking to get the tree for a particular taxonomic group, you need to
 first identify it by its node id or ott id, and then use the `tol_subtree()`
 function:
 
-```{r}
+```{r, fig.width=7, fig.height=4}
 mono_id <- tnrs_match_names("Monotremes")
 mono_tree <- tol_subtree(ott_id = mono_id$ott_id[1])
 plot(mono_tree)
