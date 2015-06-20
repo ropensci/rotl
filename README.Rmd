@@ -40,6 +40,11 @@ library(devtools)
 install_github("fmichonneau/rotl", build_vignette=TRUE)
 ```
 
+To build the vignette, you will need to have pandoc 1.12.3 or higher
+installed. If you use RStudio, make sure you have v0.99 (as it comes with pandoc
+1.13.1); if you don't use RStudio, you can find pandoc for you operating system
+[here](http://pandoc.org/installing.html)
+
 ## Vignettes
 
 There are two vignettes:

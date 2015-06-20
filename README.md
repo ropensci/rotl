@@ -36,6 +36,11 @@ library(devtools)
 install_github("fmichonneau/rotl", build_vignette=TRUE)
 ```
 
+To build the vignette, you will need to have pandoc 1.12.3 or higher
+installed. If you use RStudio, make sure you have v0.99 (as it comes with pandoc
+1.13.1); if you don't use RStudio, you can find pandoc for you operating system
+[here](http://pandoc.org/installing.html)
+
 ## Vignettes
 
 There are two vignettes:
@@ -67,14 +72,14 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ## 5     hylobates Hylobates (genus in family Hylobatidae)             FALSE
 ## 6       hoolock                                 Hoolock             FALSE
 ## 7          homo                                    Homo             FALSE
-##   ott_id number_matches is_synonym is_deprecated
-## 1 417957              2      FALSE         FALSE
-## 2 417949              2      FALSE         FALSE
-## 3 417957              2      FALSE         FALSE
-## 4 417969              3      FALSE         FALSE
-## 5 166552              1      FALSE         FALSE
-## 6 712902              1      FALSE         FALSE
-## 7 770309              1      FALSE         FALSE
+##   ott_id node_id is_synonym is_deprecated number_matches
+## 1 417957 3553975      FALSE         FALSE              2
+## 2 417949 3553850      FALSE         FALSE              2
+## 3 417957 3553975      FALSE         FALSE              2
+## 4 417969 3554008      FALSE         FALSE              3
+## 5 166552 3554156      FALSE         FALSE              1
+## 6 712902 3554210      FALSE         FALSE              1
+## 7 770309 3553873      FALSE         FALSE              1
 ```
 
 Now get the tree with just those tips:
@@ -85,7 +90,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/DMz7oLZ.png) 
+![plot of chunk get_tr](http://i.imgur.com/r5sp7Mv.png) 
 
 ### Code of Conduct
 
