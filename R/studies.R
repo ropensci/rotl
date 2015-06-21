@@ -242,8 +242,9 @@ get_study_meta <- function(study_id, ...) {
     res
 }
 
+##' @export
 print.study_meta <- function(x, ...) {
-    cat("Metadata for OToL study ", attr(x, "study_id"), ". Contents:\n", sep="")
+    cat("Metadata for OToL study ", attr(x, "study_id"), " . Contents:\n", sep="")
     cat(paste0("  $nexml$", names(x$nexml)), sep="\n")
 }
 
