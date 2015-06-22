@@ -147,12 +147,20 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 }
 
 
-test_that("synonyms with no arguments", {
+test_that("synonyms with only_current = FALSE", {
     skip_on_cran()
-    tt <- synonyms(rsp)
+    tt <- synonyms(rsp, only_current = FALSE)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt), tax_rsp)
 })
+
+test_that("synonyms with only_current = TRUE", {
+    skip_on_cran()
+    tt <- synonyms(rsp, only_current = TRUE)
+    expect_true(inherits(tt, "list"))
+    expect_equal(names(tt), rsp$unique_name)
+})
+
 
 test_that("correct synonyms are being returned when asked to look up by taxon name", {
     skip_on_cran()
@@ -259,11 +267,18 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("flags with no arguments", {
+test_that("flags with no arguments and only_current = FALSE", {
     skip_on_cran()
-    flags_rsp <- flags(rsp)
+    flags_rsp <- flags(rsp, only_current = FALSE)
     expect_equal(length(flags_rsp), 5)
     expect_equivalent(sapply(flags_rsp, length),  c(1, 1, 1, 4, 1))
+})
+
+test_that("flags with no arguments and only_current = TRUE", {
+    skip_on_cran()
+    flags_rsp <- flags(rsp, only_current = TRUE)
+    expect_equal(length(flags_rsp), 5)
+    expect_equivalent(sapply(flags_rsp, length),  c(2, 2, 2, 0, 0))
 })
 
 test_that("flags with row number", {
@@ -309,11 +324,18 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("node_id with no arguments", {
+test_that("node_id with no arguments and only_current = FALSE", {
     skip_on_cran()
-    expect_true(inherits(node_id(rsp), "list"))
-    expect_equal(names(node_id(rsp)), tax_rsp)
-    expect_equal(node_id(rsp)[["Holothuria"]][[1]], 3315679)
+    expect_true(inherits(node_id(rsp, only_current = FALSE), "list"))
+    expect_equal(names(node_id(rsp, only_current = FALSE)), tax_rsp)
+    expect_equal(node_id(rsp, only_current = FALSE)[["Holothuria"]][[1]], 3315679)
+})
+
+test_that("node_id with no arguments and only_current = TRUE", {
+    skip_on_cran()
+    expect_true(inherits(node_id(rsp, only_current = TRUE), "integer"))
+    expect_equal(names(node_id(rsp, only_current = TRUE)), rsp$unique_name)
+    expect_equal(node_id(rsp, only_current = TRUE)[4], setNames(3315679, rsp$unique_name[4]))
 })
 
 test_that("node_id with row number", {
@@ -350,11 +372,18 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("ott_id with no arguments", {
+test_that("ott_id with no arguments and only_current=FALSE", {
     skip_on_cran()
-    expect_true(inherits(ott_id(rsp), "list"))
-    expect_equal(names(ott_id(rsp)), tax_rsp)
-    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 924443)
+    expect_true(inherits(ott_id(rsp, only_current = FALSE), "list"))
+    expect_equal(names(ott_id(rsp, only_current = FALSE)), tax_rsp)
+    expect_equal(ott_id(rsp, only_current = FALSE)[["Holothuria"]][[1]], 924443)
+})
+
+test_that("ott_id with no arguments and only_current=TRUE", {
+    skip_on_cran()
+    expect_true(inherits(ott_id(rsp, only_current = TRUE), "integer"))
+    expect_equal(names(ott_id(rsp, only_current = TRUE)), rsp$unique_name)
+    expect_equal(unname(ott_id(rsp, only_current = TRUE)[4]), 924443)
 })
 
 test_that("ott_id with row number", {

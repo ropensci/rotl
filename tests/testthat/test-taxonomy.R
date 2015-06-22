@@ -97,27 +97,19 @@ test_that("taxonomy subtree returns a valid phylo object", {
 
 test_that("taxonomy subtree returns valid internal node names", {
     skip_on_cran()
-    tt <- taxonomy_subtree(515698, output_format = "taxa_internal")
+    tt <- taxonomy_subtree(515698, output_format = "taxa")
+    expect_true(inherits(tt, "list"))
     expect_equal(length(tt), 2)
-})
-
-test_that("taxonomy subtree returns valid species names", {
-    skip_on_cran()
-    tt <- taxonomy_subtree(515698, output_format = "taxa_species")
-    expect_equal(length(tt), 14)
-})
-
-test_that("taxonomy subtree returns valid internal + species names", {
-    skip_on_cran()
-    tt <- taxonomy_subtree(515698, output_format = "taxa_all")
-    expect_equal(length(tt), 16)
+    expect_equal(length(tt$tip_label), 14)
+    expect_equal(length(tt$edge_label), 2)
 })
 
 test_that("taxonomy subtree works if taxa has only 1 descendant", {
     skip_on_cran()
-    tt <- taxonomy_subtree(ott_id = 3658331, output_format = "taxa_all")
+    tt <- taxonomy_subtree(ott_id = 3658331, output_format = "taxa")
+    expect_true(inherits(tt, "list"))
     expect_equal(length(tt), 2)
-    expect_true(inherits(tt), "character")
+    expect_true(inherits(tt$tip_label, "character"))
 })
 
 ############################################################################

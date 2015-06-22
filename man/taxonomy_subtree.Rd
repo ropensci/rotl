@@ -4,8 +4,8 @@
 \alias{taxonomy_subtree}
 \title{Taxonomy subtree}
 \usage{
-taxonomy_subtree(ott_id = NULL, output_format = c("taxa_all", "newick",
-  "phylo", "raw", "taxa_species", "taxa_internal"), file, ...)
+taxonomy_subtree(ott_id = NULL, output_format = c("taxa", "newick", "phylo",
+  "raw"), file, ...)
 }
 \arguments{
 \item{ott_id}{The ott id of the taxon of interest.}
@@ -23,10 +23,10 @@ function. Ignored unless \code{output_format} is set to
 \value{
 If the \code{file} argument is missing: \itemize{
 
-    \item{\dQuote{\code{taxa_all}}} { a character vector listing
-    all the taxa names (species and higher-level taxanomy, e.g.,
-    families, genera) descending from the taxa corresponding to
-    the \code{ott_id} provided. }
+    \item{\dQuote{\code{taxa}}} { a list of the taxa names
+    (species) in slot \code{tip_label}, and higher-level taxanomy
+    (e.g., families, genera) in slot \code{edge_label}, descending
+    from the taxa corresponding to the \code{ott_id} provided. }
 
     \item{\dQuote{\code{newick}}} { a character vector containing
     the newick formatted string corresponding to the taxonomic
@@ -38,14 +38,6 @@ If the \code{file} argument is missing: \itemize{
     \item{\dQuote{\code{raw}}} { the direct output from the API,
     i.e., a list with an element named \sQuote{subtree} that
     contains the subtree as a newick formatted string. }
-
-    \item{\dQuote{\code{taxa_species}}} { a character vector
-    listing the species descending from the taxa corresponding to
-    the \code{ott_id} provided. }
-
-    \item{\dQuote{\code{taxa_internal}}} { a character vector
-    listing the higher taxonomy descending from the taxa
-    corresponding to the \code{ott_id} provided. }
 
     }
 

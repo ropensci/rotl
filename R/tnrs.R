@@ -80,6 +80,7 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
+    attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
 }
