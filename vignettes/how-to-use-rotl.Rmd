@@ -209,3 +209,123 @@ candidate_for_synth(furry_meta) ## None of these trees are yet included in the O
 Using `get_study("pg_2550")` would returns a `multiPhylo` object (default) with
 all the trees associated with this particular study, while
 `get_study_tree("pg_2550", "tree5513")` would return one of these trees.
+
+##Combining data from OToL and other sources. 
+
+One of the major goals of `rotl` is to help users combine data from other
+sources with the phylogenetic trees in OToL. As an example, let's see if we can
+combine data from [`fishbase`](http://www.fishbase.org/), using the ROpenSci
+package [`rfishbase`](https://github.com/ropensci/rfishbase). 
+
+
+### Find a tree for your focal taxon
+
+Since we are using fishbase in our example, let's focus on one of the most
+diverse fish clades, the cyprinids (carps, true minnows and their kin). We could 
+use `tol_induced_subtree` to get the synthetic tree for this group, or
+`studies_find_studies` to see if there are any published papers available for
+the group. Let's start with the second approach:
+
+```{r, find_study}
+cyp_studies <- studies_find_studies("ot:focalCladeOTTTaxonName", value="Cyprinidae")
+cyp_studies
+```
+
+So there is at least one study on the cyprinids, we can get some more
+information on it using `get_study_meta`:
+
+```{r, meta}
+meta <- get_study_meta("pg_1909")
+meta
+```
+
+`rotl` provides some helper functions to extract elements from this metadata, so
+we can the title and DOI for this study:
+
+```{r, pub}
+get_publication(meta)
+```
+
+OK, this look like a good study. Let's get the trees from this study and check
+them out:
+
+```{r, get_study_tr}
+get_tree_ids(meta)
+tr <- get_study_tree(study="pg_1909", tree_id=get_tree_ids(meta))
+tr
+```
+### Now find some data to attach to the tips in the tree
+
+The `rfishbase` package provides us with a local version of the fishbase
+database, and some tools to extract information from it. Let's load the data,
+and check it out
+
+```{r, fishbase_intro}
+library(rfishbase)
+data(fishbase)
+typeof(fish.data)
+length(fish.data)
+```
+So, `fish.data` is a big list. Each element of the list has data from one
+species, with each of the following sub-elements:
+
+```{r, data}
+names(fish.data[[1]])
+```
+
+We want to match up data in this list to the tips in our tree, unfortunately the
+names are formatted slightly differently:
+
+```{r, compare_labels}
+tr$tip.label[14]
+fish.data[[23210]]$ScientificName
+```
+
+So before we can match the tip labels to the data in the list we have to
+substitute the underscores in the tip labels for spaces. We can then extract the
+`SceintificName` from each `fishbase` entry to see if they match something in
+our tree:
+
+```{r, fishy_data}
+tr$tip.label <- sub("_", " ", tr$tip.label)
+fishbase_in_tree <- fish.data[sapply(fish.data, "[[", "ScientificName") %in% tr$tip.label]
+length(fishbase_in_tree)
+```
+
+###Red Fish Blue Fish
+
+OK, so we have a tree and we have data for 142 of the species in that tree.
+Let's drop the tips representing fish we have no data on:
+
+```{r, drop}
+to_drop <- tr$tip.label[!tr$tip.label %in% sapply(fishbase_in_tree, "[[", "ScientificName")]
+subtree <- drop.tip(tr, to_drop, rooted=TRUE)
+subtree
+```
+We now have a tree with 142 tips, and a datset with 142 entries, but each one of
+those datasets is in a different order. Let's line them up by extracting the
+names from the fishbase data and matching them against the tree:
+
+
+```{r, fbsorted}
+fb_names <- sapply(fishbase_in_tree, "[[", "ScientificName")
+fishbase_in_tree_sorted <- fishbase_in_tree[match(fb_names , subtree$tip.label)]
+```
+
+fascinating theory should we test? Let's follow up [Suess (1960)](https://en.wikipedia.org/wiki/One_Fish_Two_Fish_Red_Fish_Blue_Fish) and explore the distribution of coloration in 
+these fish. Specifically, we can use the `rfishbase` function `which_fish` to
+find red fish and blue fish in our phylogeny:
+
+```{r, redfishbluefish}
+bluefish<- which_fish("grey|green|blue", using="diagnostic", fish.data=fishbase_in_tree_sorted)
+redfish <- which_fish("red|orange", using="diagnostic", fish.data=fishbase_in_tree_sorted)
+```
+
+
+```{r, plot,  fig.width=7, fig.height=4}
+cols <- rep("#FFFFFF00", length(subtree$tip.label))
+cols[redfish] <- "red"
+cols[bluefish] <- "blue"
+plot(subtree, show.tip.label=F)
+tiplabels(pch=16, col=cols, adj=2)
+```
