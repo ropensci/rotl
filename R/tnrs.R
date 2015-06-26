@@ -98,7 +98,6 @@ tnrs_columns <- c("search_string" = "search_string",
                   "unique_name" = "unique_name",
                   "approximate_match" = "is_approximate_match",
                   "ott_id" = "ot:ottId",
-                  "node_id" = "matched_node_id",
                   "is_synonym" = "is_synonym",
                   "is_deprecated" = "is_deprecated")
 

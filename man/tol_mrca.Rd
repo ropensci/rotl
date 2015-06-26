@@ -11,7 +11,8 @@ tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
 (character or numeric vector)}
 
 \item{node_ids}{the node ids for which the MRCA is desired
-(character or numeric vector)}
+(character or numeric vector). It is not recommended to use
+\code{node_ids} to identify taxa, instead use \code{ott_ids}.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}

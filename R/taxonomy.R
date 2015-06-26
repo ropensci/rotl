@@ -228,6 +228,7 @@ ott_taxon_name.taxon_info <- function(tax) {
 ##' @export
 ##' @rdname taxonomy_taxon
 node_id.taxon_info <- function(tax, ...) {
+    warn_node_id()
     vapply(tax, function(x) x[["node_id"]], integer(1) )
 }
 
@@ -257,6 +258,7 @@ ott_taxon_name.taxon_lica <- function(tax) {
 ##' @export
 ##' @rdname taxonomy_lica
 node_id.taxon_lica <- function(tax, ...) {
+    warn_node_id()
     tax[["lica"]][["node_id"]]
 }
 

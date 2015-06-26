@@ -8,7 +8,8 @@ tol_induced_subtree(node_ids = NULL, ott_ids = NULL, file, ...)
 }
 \arguments{
 \item{node_ids}{Node ids indicating nodes to be used as tips in
-the induced tree}
+the induced tree. It is not recommended to use them to
+identify taxa, instead use ott_ids.}
 
 \item{ott_ids}{OTT ids indicating nodes to be used as tips in the
 induced tree}

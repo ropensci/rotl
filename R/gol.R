@@ -99,7 +99,7 @@ print.gol <- function(x, ...) {
 ##'     name, rank, OpenTree Taxonomy ID (ottID), and source taxonomy
 ##'     IDs.
 ##' @param ott_id The OpenTree taxonomic identifier.
-##' @param node_id The idenitifer of the node in the graph.
+##' @param node_id The identifier of the node in the graph.
 ##' @param include_lineage Boolean. Whether to return the lineage of
 ##'     the node from the synthetic tree. Optional; default = FALSE.
 ##' @param ... additional arguments to customize the API call (see
@@ -111,8 +111,9 @@ print.gol <- function(x, ...) {
 ##'
 ##'    \item {in_graph} {Boolean. Whether the queried node is present in the graph.}
 ##'
-##'    \item {node_id} {Numeric. The node ID of the queried node in
-##'     the graph.}
+##'     \item {node_id} {Numeric. The node ID of the queried node in
+##'     the graph. Those are not recommended to use, hence the warning
+##'     issued by default.}
 ##'
 ##'    \item {in_synth_tree} {Boolean. Whether the queried node is
 ##'     present in the synthetic tree.}
@@ -197,6 +198,7 @@ tax_rank.gol_node <- function(tax) {
 ##' @export
 ##' @rdname gol_node_info
 node_id.gol_node <- function(tax, ...) {
+    warn_node_id()
     tax[["node_id"]]
 }
 

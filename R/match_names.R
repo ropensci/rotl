@@ -152,6 +152,11 @@ match_names_method_factory <- function(list_name) {
 
     function(tax, row_number, taxon_name, ott_id, only_current = TRUE, ...) {
 
+        ## warning if trying to use node_id
+        if (identical(list_name, "matched_node_id")) {
+            warn_node_id()
+        }
+
         response <- tax
         res <- attr(response, "original_response")
 
@@ -198,6 +203,9 @@ match_names_method_factory <- function(list_name) {
 ##' information for the matches currently listed in the object
 ##' returned by \code{\link{tnrs_match_names}} (the default) or all
 ##' the matches (using \code{only_current = FALSE}).
+##'
+##' \code{node_ids} are not persistent and their use is strongly
+##' discouraged unless you know exactly why you are using them.
 ##'
 ##' @title \code{node_id}, \code{ott_id} and \code{flags} for
 ##'     taxonomic names matched by \code{tnrs_match_names}

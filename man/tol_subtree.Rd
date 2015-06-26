@@ -8,8 +8,10 @@ tol_subtree(node_id = NULL, ott_id = NULL, tree_id = NULL, file, ...)
 }
 \arguments{
 \item{node_id}{the node id of the node in the tree that should
-serve as the root of the tree returned. This argument cannot
-be used in combination with ott_id.}
+serve as the root of the tree returned. It is not recommended
+to use \code{node_id} to identify a taxon, use \code{ott_id}
+instead. This argument cannot be used in combination with
+ott_id.}
 
 \item{ott_id}{the ott id of the node in the tree that should serve
 as the root of the tree returned. This argument may not be

@@ -22,7 +22,7 @@ synth_sources(tax)
 \method{synth_sources}{gol_node}(tax)
 }
 \arguments{
-\item{node_id}{The idenitifer of the node in the graph.}
+\item{node_id}{The identifier of the node in the graph.}
 
 \item{ott_id}{The OpenTree taxonomic identifier.}
 
@@ -42,8 +42,9 @@ the node from the synthetic tree. Optional; default = FALSE.}
 
    \item {in_graph} {Boolean. Whether the queried node is present in the graph.}
 
-   \item {node_id} {Numeric. The node ID of the queried node in
-    the graph.}
+    \item {node_id} {Numeric. The node ID of the queried node in
+    the graph. Those are not recommended to use, hence the warning
+    issued by default.}
 
    \item {in_synth_tree} {Boolean. Whether the queried node is
     present in the synthetic tree.}

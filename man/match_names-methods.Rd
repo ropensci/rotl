@@ -58,6 +58,9 @@ If these arguments are not provided, these methods can return
 information for the matches currently listed in the object
 returned by \code{\link{tnrs_match_names}} (the default) or all
 the matches (using \code{only_current = FALSE}).
+
+\code{node_ids} are not persistent and their use is strongly
+discouraged unless you know exactly why you are using them.
 }
 \examples{
 \dontrun{

@@ -101,6 +101,8 @@ nexml_from_otl <- function(res) {
     phy
 }
 
+## check if the argument provided looks like a number (can be coerced
+## to integer/numeric).
 check_numeric <- function(x) {
     if (length(x) != 1) {
         stop("only 1 element should be provided")
@@ -111,5 +113,13 @@ check_numeric <- function(x) {
         return(grepl("^[0-9]+$", x))
     } else {
         return(x %% 1 == 0)
+    }
+}
+
+### warning if using node_id
+warn_node_id <- function(warn = TRUE) {
+    if (warn) {
+        warning("node_ids are not persistent, and typically not intended for human consumption. ",
+                "Use ott_ids instead.")
     }
 }

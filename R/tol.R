@@ -116,7 +116,8 @@ study_list.tol_summary <- function(tol) {
 ##' @param ott_ids the ott ids for which the MRCA is desired
 ##'     (character or numeric vector)
 ##' @param node_ids the node ids for which the MRCA is desired
-##'     (character or numeric vector)
+##'     (character or numeric vector). It is not recommended to use
+##'     \code{node_ids} to identify taxa, instead use \code{ott_ids}.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##' @return A list
@@ -136,8 +137,10 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##' @title Extract a subtree from the synthetic tree
 ##'
 ##' @param node_id the node id of the node in the tree that should
-##'     serve as the root of the tree returned. This argument cannot
-##'     be used in combination with ott_id.
+##'     serve as the root of the tree returned. It is not recommended
+##'     to use \code{node_id} to identify a taxon, use \code{ott_id}
+##'     instead. This argument cannot be used in combination with
+##'     ott_id.
 ##' @param ott_id the ott id of the node in the tree that should serve
 ##'     as the root of the tree returned. This argument may not be
 ##'     used in combination with node_id.
@@ -197,7 +200,8 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
 ##'
 ##' @title induced subtree
 ##' @param node_ids Node ids indicating nodes to be used as tips in
-##'     the induced tree
+##'     the induced tree. It is not recommended to use them to
+##'     identify taxa, instead use ott_ids.
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##'     induced tree
 ##' @param file if specified, the function will write the subtree to a
