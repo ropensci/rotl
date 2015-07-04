@@ -127,11 +127,3 @@ check_numeric <- function(x) {
         return(x %% 1 == 0)
     }
 }
-
-### warning if using node_id
-warn_node_id <- function(warn = TRUE) {
-    if (warn) {
-        warning("node_ids are not persistent, and typically not intended for human consumption. ",
-                "Use ott_ids instead.")
-    }
-}

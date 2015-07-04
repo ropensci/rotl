@@ -99,7 +99,6 @@ print.gol <- function(x, ...) {
 ##'     name, rank, OpenTree Taxonomy ID (ottID), and source taxonomy
 ##'     IDs.
 ##' @param ott_id The OpenTree taxonomic identifier.
-##' @param node_id The identifier of the node in the graph.
 ##' @param include_lineage Boolean. Whether to return the lineage of
 ##'     the node from the synthetic tree. Optional; default = FALSE.
 ##' @param ... additional arguments to customize the API call (see
@@ -109,11 +108,8 @@ print.gol <- function(x, ...) {
 ##'
 ##' \itemize{
 ##'
-##'    \item {in_graph} {Boolean. Whether the queried node is present in the graph.}
-##'
-##'     \item {node_id} {Numeric. The node ID of the queried node in
-##'     the graph. Those are not recommended to use, hence the warning
-##'     issued by default.}
+##'     \item {in_graph} {Boolean. Whether the queried node is present
+##'     in the graph.}
 ##'
 ##'    \item {in_synth_tree} {Boolean. Whether the queried node is
 ##'     present in the synthetic tree.}
@@ -166,8 +162,8 @@ print.gol <- function(x, ...) {
 ##'
 ##'     } }
 ##'
-##'     \code{tax_rank}, \code{node_id}, \code{ott_id} return vectors
-##'     (character, numeric, numeric respectively).
+##'     \code{tax_rank} and \code{ott_id} return vectors (character,
+##'     and numeric respectively).
 ##'
 ##'     \code{synth_sources} returns a data frame listing information
 ##'     about the synthetic sources used.
@@ -176,13 +172,12 @@ print.gol <- function(x, ...) {
 ##' birds <- gol_node_info(ott_id=81461)
 ##' synth_sources(birds)
 ##' tax_rank(birds)
-##' node_id(birds)
 ##' ott_id(birds)
 ##' }
 ##' @export
-gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE, ...) {
-    res <- .gol_node_info(node_id = node_id, ott_id = ott_id,
-                          include_lineage = include_lineage, ...)
+gol_node_info <- function(ott_id=NULL, include_lineage=FALSE, ...) {
+    res <- .gol_node_info(ott_id = ott_id, include_lineage = include_lineage,
+                          ...)
     class(res) <- "gol_node"
     return(res)
 }
@@ -193,13 +188,6 @@ gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE, ...)
 ##' @rdname gol_node_info
 tax_rank.gol_node <- function(tax) {
     tax[["rank"]]
-}
-
-##' @export
-##' @rdname gol_node_info
-node_id.gol_node <- function(tax, ...) {
-    warn_node_id()
-    tax[["node_id"]]
 }
 
 ##' @export

@@ -4,18 +4,11 @@
 \alias{tol_subtree}
 \title{Extract a subtree from the synthetic tree}
 \usage{
-tol_subtree(node_id = NULL, ott_id = NULL, tree_id = NULL, file, ...)
+tol_subtree(ott_id = NULL, tree_id = NULL, file, ...)
 }
 \arguments{
-\item{node_id}{the node id of the node in the tree that should
-serve as the root of the tree returned. It is not recommended
-to use \code{node_id} to identify a taxon, use \code{ott_id}
-instead. This argument cannot be used in combination with
-ott_id.}
-
 \item{ott_id}{the ott id of the node in the tree that should serve
-as the root of the tree returned. This argument may not be
-used in combination with node_id.}
+as the root of the tree returned.}
 
 \item{tree_id}{the identifier for the synthesis tree. Currently a
 single draft tree is supported, so this argument is
@@ -35,14 +28,14 @@ If no value is specified to the \code{file} argument
     whether the file was successfully created.
 }
 \description{
-Extract a subtree from the synthetic tree from a node or an ott id.
+Extract a subtree from the synthetic tree from an ott id.
 }
 \details{
 Return a complete subtree of the draft tree descended
     from some specified node. The node to use as the start node
-    may be specified using either a node id or an ott id, but not
-    both. If the specified node is not in the synthetic tree (or
-    is entirely absent from the graph), an error will be returned.
+    may be specified using an ott id. If the specified node is not
+    in the synthetic tree (or is entirely absent from the graph),
+    an error will be returned.
 }
 \examples{
 \dontrun{

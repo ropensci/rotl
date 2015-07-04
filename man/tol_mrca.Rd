@@ -4,15 +4,11 @@
 \alias{tol_mrca}
 \title{MRCA of taxa from the synthetic tree}
 \usage{
-tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
+tol_mrca(ott_ids = NULL, ...)
 }
 \arguments{
 \item{ott_ids}{the ott ids for which the MRCA is desired
 (character or numeric vector)}
-
-\item{node_ids}{the node ids for which the MRCA is desired
-(character or numeric vector). It is not recommended to use
-\code{node_ids} to identify taxa, instead use \code{ott_ids}.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
