@@ -79,7 +79,6 @@ otl_ottid_from_label <- function(label) {
 
 ##' @importFrom rncl read_newick_phylo
 phylo_from_otl <- function(res) {
-    fnm <- tempfile()
     if (is.list(res)) {
         if (!is.null(res$newick)) {
             tree <- res$newick
@@ -91,9 +90,14 @@ phylo_from_otl <- function(res) {
     } else if (is.character(res)) {
         tree <- res
     } else stop("I don't know how to deal with this format.")
-    cat(tree, file = fnm)
-    phy <- rncl::read_newick_phylo(fnm)
-    unlink(fnm)
+    if (grepl("\\(", tree)) {
+        fnm <- tempfile()
+        cat(tree, file = fnm)
+        phy <- rncl::read_newick_phylo(fnm)
+        unlink(fnm)
+    } else {
+        phy <- tree_to_labels(tree)$tip_label
+    }
     return(phy)
 }
 
