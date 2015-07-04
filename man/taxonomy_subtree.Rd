@@ -58,6 +58,7 @@ will be silently overwritten.
 \examples{
 \dontrun{
 req <- taxonomy_subtree(ott_id=515698)
+plot(taxonomy_subtree(ott_id=515698, output_format="phylo"))
 }
 }
 

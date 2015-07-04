@@ -44,6 +44,7 @@
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_about()
+##' studies <- study_list(tol_about(study_list=TRUE))
 ##' }
 ##' @export
 tol_about <- function(study_list = FALSE, ...) {
@@ -71,9 +72,10 @@ print.tol_summary <- function(x, ...) {
 ##' the Tree of Life.
 ##'
 ##' This function takes the object resulting from
-##' `tol_about(study_list = TRUE)` and returns a data frame listing
-##' the \code{tree_id}, \code{study_id} and \code{git_sha} for the
-##' studies currently included in the Tree of Life.
+##' \code{tol_about(study_list = TRUE)} and returns a data frame
+##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
+##' the studies currently included in the Tree of Life.
+##'
 ##' @title List of studies used for the Tree of Life
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
 ##' @return a data frame
@@ -216,6 +218,9 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' tree_file <- tempfile(fileext=".tre")
+##' tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458),
+##'                     file=tree_file)
 ##' }
 ##' @export
 

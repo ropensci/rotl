@@ -49,6 +49,9 @@ from an object created by the \code{taxonomy_taxon} function.
 \examples{
 \dontrun{
 req <- taxonomy_taxon(ott_id=515698)
+tax_rank(req)
+ott_taxon_name(req)
+synonyms(req)
 }
 }
 \seealso{

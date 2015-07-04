@@ -47,6 +47,11 @@ overwritten.
 \examples{
 \dontrun{
 that_one_study <- get_study(study_id="pg_719", object_format="phylo")
+if (require(RNeXML)) { ## if RNeXML is installed get the object directly
+   nexml_study <- get_study(study_id="pg_719", object_format="nexml")
+} else { ## otherwise write it to a file
+   get_study(study_id="pg_719", file_format="nexml", file=tempfile(fileext=".nexml"))
+}
 }
 }
 \seealso{

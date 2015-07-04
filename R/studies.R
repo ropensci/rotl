@@ -115,13 +115,17 @@ studies_properties <- function(...) {
 ##' @examples
 ##' \dontrun{
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
+##' if (require(RNeXML)) { ## if RNeXML is installed get the object directly
+##'    nexml_study <- get_study(study_id="pg_719", object_format="nexml")
+##' } else { ## otherwise write it to a file
+##'    get_study(study_id="pg_719", file_format="nexml", file=tempfile(fileext=".nexml"))
+##' }
 ##' }
 get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
                       file_format, file, ...) {
     object_format <- match.arg(object_format)
     if (!missing(file)) {
         if (!missing(file_format)) {
-            if (missing(file)) stop("You must specify a file to write your output")
             file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
             res <- .get_study(study_id, format = file_format)
             unlink(file)
@@ -174,6 +178,11 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##' @examples
 ##' \dontrun{
 ##'  tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+##'
+##'  ## comparison of the first few tip labels depending on the options used
+##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="original_label")$tip.label)
+##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="ott_id")$tip.label)
+##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="ott_taxon_name")$tip.label)
 ##' }
 
 get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
@@ -243,7 +252,9 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##' @examples
 ##' \dontrun{
 ##' req <- get_study_meta("pg_719")
-##' req$nexml$`^ot:studyPublication`
+##' get_tree_ids(req)
+##' candidate_for_synth(req)
+##' get_publication(req)
 ##' }
 get_study_meta <- function(study_id, ...) {
     res <- .get_study_meta(study_id = study_id, ...)
@@ -295,12 +306,12 @@ candidate_for_synth.study_meta <- function(sm) {
 ##'     function (default, and currently only possibility \code{phylo}
 ##'     from the \code{\link[ape]{ape}} package)
 ##' @param file_format character, the file format to use to save the
-##'     results of the query.
+##'     results of the query (possible values, \sQuote{newick},
+##'     \sQuote{nexus}, \sQuote{json}).
 ##' @param file character, the path and file name where the output
 ##'     should be written.
 ##' @param subtree_id, either a node id that specifies a subtree or
-##'     "ingroup" which returns the ingroup is for this subtree, a 400
-##'     error otherwise
+##'     \dQuote{ingroup} which returns the ingroup for this subtree.
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @export
@@ -309,6 +320,9 @@ candidate_for_synth.study_meta <- function(sm) {
 ##' \dontrun{
 ##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+##' nexus_file <- tempfile(fileext=".nex")
+##' get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup", file=nexus_file,
+##'                   file_format="nexus")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
                               file_format, file, ...) {

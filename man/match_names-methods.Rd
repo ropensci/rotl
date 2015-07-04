@@ -66,7 +66,8 @@ discouraged unless you know exactly why you are using them.
 \dontrun{
   rsp <- tnrs_match_names(c("Diadema", "Tyrannosaurus"))
   rsp$ott_id    # ott id for match currently in use
-  ott_id(rsp)   # ott id for all possible taxonomic matches
+  ott_id(rsp)   # similar as above but elements are named
+  ott_id(rsp, only_current=FALSE) # ott id for all possible taxonomic matches
 
   ## flags() is useful for instance to determine if a taxon is extinct
   flags(rsp, taxon_name="Tyrannosaurus")

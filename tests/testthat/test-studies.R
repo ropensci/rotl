@@ -39,12 +39,6 @@ test_that("get_study generates a nexml object", {
     expect_true(inherits(tr, "nexml"))
 })
 
-test_that("get_study throws error if no file name given, but asking for one", {
-    skip_on_cran()
-    expect_error(get_study("pg_719", file_format = "newick"),
-                 "must specify a file")
-})
-
 test_that("get_study generates a newick file", {
     skip_on_cran()
     ff <- tempfile()

@@ -46,6 +46,9 @@ taxonomy_about <- function (...) {
 ##' @examples
 ##' \dontrun{
 ##' req <- taxonomy_taxon(ott_id=515698)
+##' tax_rank(req)
+##' ott_taxon_name(req)
+##' synonyms(req)
 ##' }
 ##' @export
 taxonomy_taxon <- function (ott_ids, ...) {
@@ -100,6 +103,7 @@ taxonomy_taxon <- function (ott_ids, ...) {
 ##' @examples
 ##' \dontrun{
 ##' req <- taxonomy_subtree(ott_id=515698)
+##' plot(taxonomy_subtree(ott_id=515698, output_format="phylo"))
 ##' }
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL,

@@ -52,6 +52,7 @@ Summary information about the current draft tree of life,
 \examples{
 \dontrun{
 res <- tol_about()
+studies <- study_list(tol_about(study_list=TRUE))
 }
 }
 \seealso{

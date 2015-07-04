@@ -21,8 +21,8 @@ the Tree of Life.
 }
 \details{
 This function takes the object resulting from
-`tol_about(study_list = TRUE)` and returns a data frame listing
-the \code{tree_id}, \code{study_id} and \code{git_sha} for the
-studies currently included in the Tree of Life.
+\code{tol_about(study_list = TRUE)} and returns a data frame
+listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
+the studies currently included in the Tree of Life.
 }
 

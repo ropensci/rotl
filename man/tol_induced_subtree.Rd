@@ -47,6 +47,9 @@ taxa) node ids.
 \examples{
 \dontrun{
 res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+tree_file <- tempfile(fileext=".tre")
+tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458),
+                    file=tree_file)
 }
 }
 
