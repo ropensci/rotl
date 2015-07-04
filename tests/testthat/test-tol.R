@@ -10,6 +10,18 @@ test_that("tol_subtree fails if ott_id is invalid", {
                  "Invalid")
 })
 
+test_that("tol_subtree fails if more than one ott_id is provided", {
+    skip_on_cran()
+    expect_error(tol_subtree(ott_id = c(666666, 6666667)),
+                 "A subtree can only be inferred from a single")
+})
+
+test_that("tol_subtree fails if ott_id doesn't look like a number", {
+    skip_on_cran()
+    expect_error(tol_subtree(ott_id = "111A1111"),
+                 "needs to look like a number")
+})
+
 test_that("tol_subtree fails if node_id is invalid", {
     skip_on_cran()
     expect_error(tol_subtree(node_id = 9999999),
@@ -43,6 +55,12 @@ test_that("warning for node ids that are not in TOL graph", {
                    "not in graph")
 })
 
+test_that("error if ott_ids provided don't look like numbers", {
+    skip_on_cran()
+    expect_error(tol_induced_subtree(ott_ids = c("13242", "kitten")),
+                 "must look like numbers")
+})
+
 test_that("warning for ott ids that are not in TOL graph", {
     skip_on_cran()
     expect_warning(tol_induced_subtree(node_ids = c(77777777),
@@ -64,6 +82,12 @@ test_that("tol_induced_subtree generates a newick file when providing a file arg
 ############################################################################
 ## tol_mrca                                                               ##
 ############################################################################
+
+test_that("tol_mrca fails if ott_ids are not numbers", {
+    skip_on_cran()
+    expect_error(tol_mrca(ott_ids = c(13243, "a13415")),
+                 "must look like numbers")
+})
 
 test_that("tol_mrca returns a list", {
     skip_on_cran()
