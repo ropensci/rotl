@@ -39,11 +39,6 @@ test_that("gol_node tax_rank method", {
     expect_equal(tax_rank(gol_info), "class")
 })
 
-test_that("gol_node node_id method", {
-    skip_on_cran()
-    expect_equal(node_id(gol_info), 788774)
-})
-
 test_that("gol_node ott_id method", {
     skip_on_cran()
     expect_equal(ott_id(gol_info), 81461)

@@ -4,13 +4,9 @@
 \alias{tol_induced_subtree}
 \title{induced subtree}
 \usage{
-tol_induced_subtree(node_ids = NULL, ott_ids = NULL, file, ...)
+tol_induced_subtree(ott_ids = NULL, file, ...)
 }
 \arguments{
-\item{node_ids}{Node ids indicating nodes to be used as tips in
-the induced tree. It is not recommended to use them to
-identify taxa, instead use ott_ids.}
-
 \item{ott_ids}{OTT ids indicating nodes to be used as tips in the
 induced tree}
 
@@ -28,21 +24,20 @@ If no value is specified to the \code{file} argument
     whether the file was successfully created.
 }
 \description{
-Extract a subtree based on a list of ott ids or node ids.
+Extract a subtree based on a vector of ott ids.
 }
 \details{
 Return a tree with tips corresponding to the nodes identified in
 the input set that is consistent with the topology of the current
 synthetic tree. This tree is equivalent to the minimal subtree
-induced on the draft tree by the set of identified nodes. Any
-combination of node ids and ott ids may be used as input. Nodes or
-ott ids that do not correspond to any found nodes in the graph, or
-which are in the graph but are absent from the synthetic tree,
-will be identified in the output (but obvisouly will be absent
-from the resulting induced tree). Branch lengths in the result may
-be arbitrary, and the leaf labels of the tree may either be
-taxonomic names or (for nodes not corresponding directly to named
-taxa) node ids.
+induced on the draft tree by the set of identified nodes. Ott ids
+that do not correspond to any nodes found in the graph, or which
+are in the graph but are absent from the synthetic tree, will be
+identified in the output (but obvisouly will be absent from the
+resulting induced tree). Branch lengths in the result may be
+arbitrary, and the tip labels of the tree may either be taxonomic
+names or (for nodes not corresponding directly to named taxa) node
+ids.
 }
 \examples{
 \dontrun{

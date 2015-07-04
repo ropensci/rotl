@@ -22,12 +22,6 @@ test_that("tol_subtree fails if ott_id doesn't look like a number", {
                  "needs to look like a number")
 })
 
-test_that("tol_subtree fails if node_id is invalid", {
-    skip_on_cran()
-    expect_error(tol_subtree(node_id = 9999999),
-                 "failure")
-})
-
 test_that("tol_subtree returns a phylo object by default", {
     skip_on_cran()
     expect_true(inherits(tol_subtree(ott_id = 81461), "phylo"))
@@ -63,8 +57,7 @@ test_that("error if ott_ids provided don't look like numbers", {
 
 test_that("warning for ott ids that are not in TOL graph", {
     skip_on_cran()
-    expect_warning(tol_induced_subtree(node_ids = c(77777777),
-                                       ott_ids = c(357968, 867416, 939325)),
+    expect_warning(tol_induced_subtree(ott_ids = c(357968, 867416, 939325, 777777777)),
                    "not in graph")
 })
 
