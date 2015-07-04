@@ -12,16 +12,16 @@
 ##'
 ##' @section Customizing API calls:
 ##'
-##'     All functions that call API end points can take 2 arguments to
-##'     customize the API call.
+##'     All functions that use API end points can take 2 arguments to
+##'     customize the API call and are passed as \code{...} arguments.
 ##'
 ##'     \itemize{
 ##'
-##'     \item{ \code{otl_v} } { This argument controls which version of
-##'     the API your call is using. The default value for this
-##'     argument is a call to the function \code{otl_version()} which
-##'     returns the current version of the Open Tree of Life APIs
-##'     (v2).}
+##'     \item{ \code{otl_v} } { This argument controls which version
+##'     of the API your call is using. The default value for this
+##'     argument is a call to the non-exported function
+##'     \code{otl_version()} which returns the current version of the
+##'     Open Tree of Life APIs (v2).}
 ##'
 ##'     \item{ \code{dev_url} } { This argument controls whether to use
 ##'     the development version of the API. By default, \code{dev_url}
@@ -29,6 +29,12 @@
 ##'     function calls will use the development version.}
 ##'
 ##'     }
+##'
+##'     For example, to use the development version of the API, you
+##'     could use: \code{tnrs_match_names("anas", dev_url=TRUE)}
+##'
+##'     Additional arguments can also be passed to the
+##'     \code{\link[httr]{GET}} and \code{\link[httr]{POST}} methods.
 ##'
 ##'
 ##' @section Acknowledgments:
