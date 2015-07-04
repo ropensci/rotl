@@ -117,9 +117,6 @@ study_list.tol_summary <- function(tol) {
 ##'     in the synthetic tree.
 ##' @param ott_ids the ott ids for which the MRCA is desired
 ##'     (character or numeric vector)
-##' @param node_ids the node ids for which the MRCA is desired
-##'     (character or numeric vector). It is not recommended to use
-##'     \code{node_ids} to identify taxa, instead use \code{ott_ids}.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##' @return A list
@@ -128,24 +125,18 @@ study_list.tol_summary <- function(tol) {
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ##' }
 ##' @export
-tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
-    res <- .tol_mrca(ott_ids = ott_ids, node_ids = node_ids, ...)
+tol_mrca <- function(ott_ids=NULL, ...) {
+    res <- .tol_mrca(ott_ids = ott_ids, ...)
     return(res)
 }
 
-##' Extract a subtree from the synthetic tree from a node or an ott id.
+##' Extract a subtree from the synthetic tree from an ott id.
 ##'
 ##'
 ##' @title Extract a subtree from the synthetic tree
 ##'
-##' @param node_id the node id of the node in the tree that should
-##'     serve as the root of the tree returned. It is not recommended
-##'     to use \code{node_id} to identify a taxon, use \code{ott_id}
-##'     instead. This argument cannot be used in combination with
-##'     ott_id.
 ##' @param ott_id the ott id of the node in the tree that should serve
-##'     as the root of the tree returned. This argument may not be
-##'     used in combination with node_id.
+##'     as the root of the tree returned.
 ##' @param tree_id the identifier for the synthesis tree. Currently a
 ##'     single draft tree is supported, so this argument is
 ##'     superfluous and may be safely ignored.
@@ -155,9 +146,9 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     \code{\link{rotl}} for more information).
 ##' @details Return a complete subtree of the draft tree descended
 ##'     from some specified node. The node to use as the start node
-##'     may be specified using either a node id or an ott id, but not
-##'     both. If the specified node is not in the synthetic tree (or
-##'     is entirely absent from the graph), an error will be returned.
+##'     may be specified using an ott id. If the specified node is not
+##'     in the synthetic tree (or is entirely absent from the graph),
+##'     an error will be returned.
 ##' @return If no value is specified to the \code{file} argument
 ##'     (default), a phyogenetic tree of class \code{phylo}.
 ##'
@@ -169,11 +160,9 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     }
 ##' @export
 
-tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
-                        file, ...) {
+tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 
-    res <- .tol_subtree(node_id = node_id, ott_id = ott_id,
-                        tree_id = tree_id, ...)
+    res <- .tol_subtree(ott_id = ott_id, tree_id = tree_id, ...)
 
     if (!missing(file)) {
         unlink(file)
@@ -185,25 +174,21 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
     }
 }
 
-##' Extract a subtree based on a list of ott ids or node ids.
+##' Extract a subtree based on a vector of ott ids.
 ##'
 ##' Return a tree with tips corresponding to the nodes identified in
 ##' the input set that is consistent with the topology of the current
 ##' synthetic tree. This tree is equivalent to the minimal subtree
-##' induced on the draft tree by the set of identified nodes. Any
-##' combination of node ids and ott ids may be used as input. Nodes or
-##' ott ids that do not correspond to any found nodes in the graph, or
-##' which are in the graph but are absent from the synthetic tree,
-##' will be identified in the output (but obvisouly will be absent
-##' from the resulting induced tree). Branch lengths in the result may
-##' be arbitrary, and the leaf labels of the tree may either be
-##' taxonomic names or (for nodes not corresponding directly to named
-##' taxa) node ids.
+##' induced on the draft tree by the set of identified nodes. Ott ids
+##' that do not correspond to any nodes found in the graph, or which
+##' are in the graph but are absent from the synthetic tree, will be
+##' identified in the output (but obvisouly will be absent from the
+##' resulting induced tree). Branch lengths in the result may be
+##' arbitrary, and the tip labels of the tree may either be taxonomic
+##' names or (for nodes not corresponding directly to named taxa) node
+##' ids.
 ##'
 ##' @title induced subtree
-##' @param node_ids Node ids indicating nodes to be used as tips in
-##'     the induced tree. It is not recommended to use them to
-##'     identify taxa, instead use ott_ids.
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##'     induced tree
 ##' @param file if specified, the function will write the subtree to a
@@ -224,8 +209,8 @@ tol_subtree <- function(node_id = NULL, ott_id = NULL, tree_id = NULL,
 ##' }
 ##' @export
 
-tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, file, ...) {
-    res <- .tol_induced_subtree(node_ids = node_ids, ott_ids = ott_ids, ...)
+tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
+    res <- .tol_induced_subtree(ott_ids = ott_ids, ...)
 
     if (length(res$node_ids_not_in_graph) > 0) {
         warning("node ids: ", paste0(res$node_ids_not_in_graph, collapse = ", "), " not in graph.")

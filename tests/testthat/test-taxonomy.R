@@ -46,13 +46,6 @@ test_that("taxonomy_taxon ott_taxon_name method", {
     expect_equal(unname(ott_taxon_name(tax_info)), c("Holothuria", "Acanthaster", "Diadema"))
 })
 
-test_that("taxonomy_taxon node_id method", {
-    skip_on_cran()
-    expect_warning(node_id(tax_info), "node_ids are not persistent")
-    expect_equal(names(node_id(tax_info)), as.character(tid))
-    expect_equal(unname(node_id(tax_info)), c(3315679, 3297625, 3312119))
-})
-
 test_that("taxonomy_taxon synonyms method", {
     skip_on_cran()
     expect_equal(names(synonyms(tax_info)), as.character(tid))
@@ -134,12 +127,6 @@ test_that("lica tax_rank method", {
 test_that("lica ott_taxon_name method", {
     skip_on_cran()
     expect_equal(ott_taxon_name(tax_lica), "Asterales")
-})
-
-test_that("lica node_id method", {
-    skip_on_cran()
-    expect_warning(node_id(tax_lica), "node_ids are not persistent")
-    expect_equal(node_id(tax_lica), 3940323)
 })
 
 test_that("lica ott_id method", {

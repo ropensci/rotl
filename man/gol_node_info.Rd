@@ -2,18 +2,15 @@
 % Please edit documentation in R/gol.R
 \name{gol_node_info}
 \alias{gol_node_info}
-\alias{node_id.gol_node}
 \alias{ott_id.gol_node}
 \alias{synth_sources}
 \alias{synth_sources.gol_node}
 \alias{tax_rank.gol_node}
 \title{Node info}
 \usage{
-gol_node_info(node_id = NULL, ott_id = NULL, include_lineage = FALSE, ...)
+gol_node_info(ott_id = NULL, include_lineage = FALSE, ...)
 
 \method{tax_rank}{gol_node}(tax)
-
-\method{node_id}{gol_node}(tax, ...)
 
 \method{ott_id}{gol_node}(tax, ...)
 
@@ -22,8 +19,6 @@ synth_sources(tax)
 \method{synth_sources}{gol_node}(tax)
 }
 \arguments{
-\item{node_id}{The identifier of the node in the graph.}
-
 \item{ott_id}{The OpenTree taxonomic identifier.}
 
 \item{include_lineage}{Boolean. Whether to return the lineage of
@@ -40,11 +35,8 @@ the node from the synthetic tree. Optional; default = FALSE.}
 
 \itemize{
 
-   \item {in_graph} {Boolean. Whether the queried node is present in the graph.}
-
-    \item {node_id} {Numeric. The node ID of the queried node in
-    the graph. Those are not recommended to use, hence the warning
-    issued by default.}
+    \item {in_graph} {Boolean. Whether the queried node is present
+    in the graph.}
 
    \item {in_synth_tree} {Boolean. Whether the queried node is
     present in the synthetic tree.}
@@ -97,8 +89,8 @@ the node from the synthetic tree. Optional; default = FALSE.}
 
     } }
 
-    \code{tax_rank}, \code{node_id}, \code{ott_id} return vectors
-    (character, numeric, numeric respectively).
+    \code{tax_rank} and \code{ott_id} return vectors (character,
+    and numeric respectively).
 
     \code{synth_sources} returns a data frame listing information
     about the synthetic sources used.
@@ -120,7 +112,6 @@ Summary information about a queried node, including 1)
 birds <- gol_node_info(ott_id=81461)
 synth_sources(birds)
 tax_rank(birds)
-node_id(birds)
 ott_id(birds)
 }
 }

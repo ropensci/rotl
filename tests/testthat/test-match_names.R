@@ -313,54 +313,6 @@ test_that("flags with ott id", {
 
 
 ############################################################################
-## node_id method                                                         ##
-############################################################################
-
-context("node_id method for class match_names")
-
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    tax_rsp <- c("Tyrannosaurus", "Helicoplacus", "Ctenocystis",
-                 "Holothuria", "Echinoidea")
-    rsp <- tnrs_match_names(tax_rsp)
-}
-
-test_that("node_id with no arguments and only_current = FALSE", {
-    skip_on_cran()
-    expect_true(inherits(node_id(rsp, only_current = FALSE), "list"))
-    expect_equal(names(node_id(rsp, only_current = FALSE)), tax_rsp)
-    expect_equal(node_id(rsp, only_current = FALSE)[["Holothuria"]][[1]], 3315679)
-})
-
-test_that("node_id with no arguments and only_current = TRUE", {
-    skip_on_cran()
-    expect_true(inherits(node_id(rsp, only_current = TRUE), "integer"))
-    expect_equal(names(node_id(rsp, only_current = TRUE)), rsp$unique_name)
-    expect_equal(node_id(rsp, only_current = TRUE)[4], setNames(3315679, rsp$unique_name[4]))
-})
-
-test_that("node_id with row number", {
-    skip_on_cran()
-    expect_equal(length(node_id(rsp, 4)), 4)
-    expect_true(inherits(node_id(rsp, 4), "list"))
-    expect_equivalent(node_id(rsp, 4)[[1]], 3315679)
-})
-
-test_that("node_id with taxon name", {
-    skip_on_cran()
-    expect_equal(length(node_id(rsp, taxon_name = "Holothuria")), 4)
-    expect_true(inherits(node_id(rsp, taxon_name = "Holothuria"), "list"))
-    expect_equivalent(node_id(rsp, taxon_name = "Holothuria")[[1]], 3315679)
-})
-
-test_that("node_id with ott id", {
-    skip_on_cran()
-    expect_equal(length(node_id(rsp, ott_id=924443)), 4)
-    expect_true(inherits(node_id(rsp, ott_id=924443), "list"))
-    expect_equivalent(node_id(rsp, ott_id=924443)[[1]], 3315679)
-})
-
-
-############################################################################
 ## ott_id method                                                          ##
 ############################################################################
 

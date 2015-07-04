@@ -152,11 +152,6 @@ match_names_method_factory <- function(list_name) {
 
     function(tax, row_number, taxon_name, ott_id, only_current = TRUE, ...) {
 
-        ## warning if trying to use node_id
-        if (identical(list_name, "matched_node_id")) {
-            warn_node_id()
-        }
-
         response <- tax
         res <- attr(response, "original_response")
 
@@ -204,11 +199,8 @@ match_names_method_factory <- function(list_name) {
 ##' returned by \code{\link{tnrs_match_names}} (the default) or all
 ##' the matches (using \code{only_current = FALSE}).
 ##'
-##' \code{node_ids} are not persistent and their use is strongly
-##' discouraged unless you know exactly why you are using them.
-##'
-##' @title \code{node_id}, \code{ott_id} and \code{flags} for
-##'     taxonomic names matched by \code{tnrs_match_names}
+##' @title \code{ott_id} and \code{flags} for taxonomic names matched
+##'     by \code{tnrs_match_names}
 ##' @param tax an object returned by \code{\link{tnrs_match_names}}
 ##' @param row_number the row number corresponding to the name for
 ##'     which to list the synonyms
@@ -221,9 +213,9 @@ match_names_method_factory <- function(list_name) {
 ##'     listed in the object returned by
 ##'     \code{\link{tnrs_match_names}}?
 ##' @param ... currently ignored
-##' @return A list of the ott ids, node ids or flags for the taxonomic
-##'     names matched with \code{\link{tnrs_match_names}}, for either
-##'     one or all the names.
+##' @return A list of the ott ids or flags for the taxonomic names
+##'     matched with \code{\link{tnrs_match_names}}, for either one or
+##'     all the names.
 ##' @examples
 ##' \dontrun{
 ##'   rsp <- tnrs_match_names(c("Diadema", "Tyrannosaurus"))
@@ -245,11 +237,6 @@ flags <- function(tax, ...) UseMethod("flags")
 ##' @export
 ##' @rdname match_names-methods
 flags.match_names <- match_names_method_factory("flags")
-
-##' @export
-##' @rdname match_names-methods
-node_id.match_names <- match_names_method_factory("matched_node_id")
-
 
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all

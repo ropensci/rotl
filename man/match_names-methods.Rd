@@ -3,10 +3,9 @@
 \name{ott_id.match_names}
 \alias{flags}
 \alias{flags.match_names}
-\alias{node_id.match_names}
 \alias{ott_id.match_names}
-\title{\code{node_id}, \code{ott_id} and \code{flags} for
-    taxonomic names matched by \code{tnrs_match_names}}
+\title{\code{ott_id} and \code{flags} for taxonomic names matched
+    by \code{tnrs_match_names}}
 \usage{
 \method{ott_id}{match_names}(tax, row_number, taxon_name, ott_id,
   only_current = TRUE, ...)
@@ -14,9 +13,6 @@
 flags(tax, ...)
 
 \method{flags}{match_names}(tax, row_number, taxon_name, ott_id,
-  only_current = TRUE, ...)
-
-\method{node_id}{match_names}(tax, row_number, taxon_name, ott_id,
   only_current = TRUE, ...)
 }
 \arguments{
@@ -39,9 +35,9 @@ listed in the object returned by
 \item{...}{currently ignored}
 }
 \value{
-A list of the ott ids, node ids or flags for the taxonomic
-    names matched with \code{\link{tnrs_match_names}}, for either
-    one or all the names.
+A list of the ott ids or flags for the taxonomic names
+    matched with \code{\link{tnrs_match_names}}, for either one or
+    all the names.
 }
 \description{
 \code{rotl} provides a collection of functions that allows users
@@ -58,9 +54,6 @@ If these arguments are not provided, these methods can return
 information for the matches currently listed in the object
 returned by \code{\link{tnrs_match_names}} (the default) or all
 the matches (using \code{only_current = FALSE}).
-
-\code{node_ids} are not persistent and their use is strongly
-discouraged unless you know exactly why you are using them.
 }
 \examples{
 \dontrun{
