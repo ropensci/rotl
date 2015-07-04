@@ -1,3 +1,5 @@
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Summary information about the OpenTree Tree of Life
 .tol_about <- function(study_list=FALSE, ...) {
     if (!is.logical(study_list)) {
@@ -10,6 +12,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get the MRCA of a set of nodes
 .tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
     if (is.null(ott_ids) && is.null(node_ids)) {
@@ -38,6 +41,8 @@
 }
 
 
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Get a subtree from the OpenTree Tree of Life
 .tol_subtree <- function(node_id=NULL, ott_id=NULL, tree_id=NULL, ...) {
     if (!is.null(node_id) && !is.null(ott_id)) {
@@ -61,6 +66,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
 .tol_induced_subtree <- function(node_ids=NULL, ott_ids=NULL, ...) {
     if (is.null(node_ids) && is.null(ott_ids)) {

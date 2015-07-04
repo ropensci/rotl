@@ -1,3 +1,5 @@
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Return a list of studies from the OpenTree docstore that match a given properties
 .studies_find_studies <- function(property = NULL, value = NULL, verbose = FALSE,
                                   exact = FALSE, ...) {
@@ -29,7 +31,8 @@
     return(cont)
 }
 
-
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Return a list of trees from the OpenTree docstore that match a given properties
 .studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                                 exact=FALSE, ...) {
@@ -66,6 +69,7 @@
 }
 
 
+##' @importFrom httr content
 ## Return a list of properties that can be used to search studies and trees
 .studies_properties <- function() {
     res <- otl_POST(path="studies/properties/", body=list())
@@ -74,6 +78,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get a study from the OpenTree docstore
 .get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json"),
                        ...) {
@@ -91,6 +96,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get a tree in a study from the OpenTree docstore
 .get_study_tree <- function(study_id=NULL, tree_id=NULL, format=c("json", "newick", "nexus"),
                             tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
@@ -114,11 +120,13 @@
     return(cont)
 }
 
+##' @importFrom httr content
 .get_study_meta <- function(study_id, ...) {
     httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/"), ...))
 }
 
 
+##' @importFrom httr content
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
                                format=c("newick", "nexus", "nexml", "json"), ...) {
     if (is.null(study_id)) {

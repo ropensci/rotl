@@ -111,6 +111,7 @@ studies_properties <- function(...) {
 ##'     whether the file was successfully created.
 ##' @seealso \code{\link{get_study_meta}}
 ##' @export
+##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
 ##' that_one_study <- get_study(study_id="pg_719", object_format="phylo")
@@ -165,6 +166,7 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##'     \code{phylo}, otherwise a logical indicating whether the file
 ##'     was successfully created.
 ##' @export
+##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
 ##'  tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
@@ -294,6 +296,7 @@ candidate_for_synth.study_meta <- function(sm) {
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @export
+##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
 ##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")

@@ -1,3 +1,5 @@
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Match taxon names
 .tnrs_match_names <- function(names=NULL, context_name=NULL, do_approximate_matching=TRUE,
                          ids=NULL, include_deprecated=FALSE, include_dubious=FALSE, ...) {
@@ -43,6 +45,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get OpenTree TNRS contexts
 .tnrs_contexts <- function(...) {
     res <- otl_POST("tnrs/contexts", body=list(), ...)

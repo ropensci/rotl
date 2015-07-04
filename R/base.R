@@ -14,6 +14,8 @@ otl_version <- function(version) {
     }
 }
 
+##' @importFrom httr content
+##' @importFrom jsonlite fromJSON
 otl_parse <- function(req) {
     txt <- httr::content(req, as="text")
     if (identical(txt, "")) {
@@ -32,12 +34,15 @@ otl_check <- function(req) {
     otl_check_error(req)
 }
 
+##' @importFrom httr GET
 otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
     req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
     req
 }
 
+##' @importFrom jsonlite toJSON
+##' @importFrom httr POST
 otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
     stopifnot(is.list(body))
 
@@ -50,6 +55,7 @@ otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
     req
 }
 
+##' @importFrom httr content
 otl_check_error <- function(req) {
     cont <- httr::content(req)
     if (is.list(cont) && exists("error", cont)) {
@@ -71,6 +77,7 @@ otl_ottid_from_label <- function(label) {
 	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
 }
 
+##' @importFrom rncl read_newick_phylo
 phylo_from_otl <- function(res) {
     fnm <- tempfile()
     if (is.list(res)) {
@@ -89,6 +96,7 @@ phylo_from_otl <- function(res) {
     unlink(fnm)
     return(phy)
 }
+
 
 nexml_from_otl <- function(res) {
     if (!requireNamespace("RNeXML", quietly = TRUE)) {

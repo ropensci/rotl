@@ -18,8 +18,7 @@ Depends:
 Imports:
     httr,
     jsonlite,
-    rncl,
-    ape
+    rncl
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr (>= 1.10.5),

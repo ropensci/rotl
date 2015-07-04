@@ -1,3 +1,4 @@
+##' @importFrom httr content
 ## Summary information about the Graph of Life
 .gol_about <- function(...) {
     res <- otl_POST(path="graph/about", body=list(), ...)
@@ -9,6 +10,8 @@
 }
 
 
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Get a source tree from the Graph of Life
 .gol_source_tree <- function(study_id=NULL, tree_id=NULL, git_sha=NULL, ...) {
     if (is.null(study_id)) {
@@ -34,7 +37,8 @@
     return(cont)
 }
 
-
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Get summary information about a node in the Graph of Life
 .gol_node_info <- function(node_id=NULL, ott_id=NULL, include_lineage=FALSE, ...) {
     if (!is.null(node_id) && !is.null(ott_id)) {

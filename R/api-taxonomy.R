@@ -1,3 +1,4 @@
+##' @importFrom httr content
 ## Summary information about the OpenTree Taxaonomy (OTT)
 .taxonomy_about <- function(...) {
     res <- otl_POST(path="/taxonomy/about", body=list(), ...)
@@ -6,6 +7,8 @@
 }
 
 
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Information about an OpenTree Taxonomy (OTT) taxon
 .taxonomy_taxon <- function(ott_id=NULL, ...) {
     if (is.null(ott_id)) {
@@ -22,6 +25,8 @@
 }
 
 
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
 ## Get a subtree from the OpenTree Taxonomy (OTT) taxonomic tree
 .taxonomy_subtree <- function(ott_id=NULL, ...) {
     if (is.null(ott_id)) {
@@ -38,6 +43,7 @@
 }
 
 
+##' @importFrom httr content
 ## Get the least inclusive common ancestor (LICA) from nodes in the OpenTree Taxonomy (OTT)
 .taxonomy_lica <- function (ott_ids = NULL, ...) {
     if (is.null(ott_ids)) {
