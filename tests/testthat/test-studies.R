@@ -27,6 +27,12 @@ test_that("get_study generates a phylo object", {
     expect_true(length(tr[[1]]$tip.label) > 1)
 })
 
+test_that("get_study returns an error if file is specied but file_format is not", {
+    skip_on_cran()
+    expect_error(get_study("pg_719", file = "test"),
+                 "must be specified")
+})
+
 test_that("get_study generates a nexml object", {
     skip_on_cran()
     tr <- get_study("pg_719", object_format = "nexml")
@@ -155,6 +161,12 @@ test_that("get_study_tree returns a phylo object and original labels for tip lab
 
 ### Test types of labels with files (skipping json for now because there is no good way of doing it)
 
+test_that("get_study_tree returns an error if file is given but file format is not", {
+    skip_on_cran()
+    expect_error(get_study_tree(study_id="pg_1144", tree="tree2324", file = "test"),
+                 "must be specified")
+})
+
 test_that("get_study_tree returns nexus file and ott_id for tip labels", {
     skip_on_cran()
     ff <- tempfile(fileext = ".nex")
@@ -205,6 +217,12 @@ test_that("get_study_subtree returns a phylo object", {
                             object_format = "phylo")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
+})
+
+test_that("get_study_subtree fails if file name is given but no file format", {
+    skip_on_cran()
+    expect_error(get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+                                   file = "test"), "must be specified")
 })
 
 test_that("get_study_subtree returns a nexus file", {

@@ -119,17 +119,21 @@ studies_properties <- function(...) {
 get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
                       file_format, file, ...) {
     object_format <- match.arg(object_format)
-    if (!missing(file_format)) {
-        if (missing(file)) stop("You must specify a file to write your output")
-        file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
-        res <- .get_study(study_id, format = file_format)
-        unlink(file)
-        if (identical(file_format, "json")) {
-            cat(jsonlite::toJSON(res), file=file)
+    if (!missing(file)) {
+        if (!missing(file_format)) {
+            if (missing(file)) stop("You must specify a file to write your output")
+            file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
+            res <- .get_study(study_id, format = file_format)
+            unlink(file)
+            if (identical(file_format, "json")) {
+                cat(jsonlite::toJSON(res), file=file)
+            } else {
+                cat(res, file=file)
+            }
+            return(invisible(file.exists(file)))
         } else {
-            cat(res, file=file)
+            stop(sQuote("file_format"), " must be specified.")
         }
-        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
         res <- .get_study(study_id = study_id, format=file_format, ...)
@@ -182,18 +186,22 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
                         original_labels = "ot:originallabel",
                         ott_id =  "ot:ottid",
                         ott_taxon_name = "ot:otttaxonname")
-    if (!missing(file_format)) {
-        file_format <- match.arg(file_format, c("newick", "nexus", "json"))
-        if (missing(file)) stop("You must specify a file to write your output")
-        res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
-                               format=file_format, tip_label = tip_label, ...)
-        unlink(file)
-        if (identical(file_format, "json")) {
-            cat(jsonlite::toJSON(res), file=file)
+    if (!missing(file)) {
+        if (!missing(file_format)) {
+            file_format <- match.arg(file_format, c("newick", "nexus", "json"))
+            if (missing(file)) stop("You must specify a file to write your output")
+            res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
+                                   format=file_format, tip_label = tip_label, ...)
+            unlink(file)
+            if (identical(file_format, "json")) {
+                cat(jsonlite::toJSON(res), file=file)
+            } else {
+                cat(res, file=file)
+            }
+            return(invisible(file.exists(file)))
         } else {
-            cat(res, file=file)
+            stop(sQuote("file_format"), " must be specified.")
         }
-        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
         res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
@@ -305,18 +313,22 @@ candidate_for_synth.study_meta <- function(sm) {
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
                               file_format, file, ...) {
     object_format <- match.arg(object_format)
-    if (!missing(file_format)) {
-        if (missing(file)) stop("You must specify a file to write your output")
-        file_format <- match.arg(file_format, c("newick", "nexus", "json"))
-        res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
-                                  subtree_id = subtree_id, format=file_format, ...)
-        unlink(file)
-        if (identical(file_format, "json")) {
-            cat(jsonlite::toJSON(res), file=file)
+    if (!missing(file)) {
+        if (!missing(file_format)) {
+            if (missing(file)) stop("You must specify a file to write your output")
+            file_format <- match.arg(file_format, c("newick", "nexus", "json"))
+            res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
+                                      subtree_id = subtree_id, format=file_format, ...)
+            unlink(file)
+            if (identical(file_format, "json")) {
+                cat(jsonlite::toJSON(res), file=file)
+            } else {
+                cat(res, file=file)
+            }
+            return(invisible(file.exists(file)))
         } else {
-            cat(res, file=file)
+            stop(sQuote("file_format"), " must be specified.")
         }
-        return(invisible(file.exists(file)))
     } else if (identical(object_format, "phylo")) {
         file_format <- "newick"
         res <-  .get_study_subtree(study_id = study_id, tree_id = tree_id,
