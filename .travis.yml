@@ -9,6 +9,7 @@ before_install: echo "options(repos=c(CRAN = 'http://cran.rstudio.com'))" > ~/.R
 r_check_args: --as-cran --run-dontrun
 
 r_github_packages:
+  - fmichonneau/rncl
   - jimhester/covr
 
 after_success:
