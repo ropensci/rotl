@@ -58,7 +58,10 @@ There are two vignettes:
 
 ### Get a little bit of the big Open Tree tree
 
-First find ott ids for a set of names:
+Taxonomic names are represented in the Open Tree by numeric identifiers, the
+`ott_ids` (Open Tree Taxonomy identifiers). To extract a portion of a tree from
+the Open Tree, you first need to find `ott_ids` for a set of names using the
+`tnrs_match_names` function:
 
 ```{r resolve}
 library(rotl)

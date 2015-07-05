@@ -54,7 +54,10 @@ There are two vignettes:
 
 ### Get a little bit of the big Open Tree tree
 
-First find ott ids for a set of names:
+Taxonomic names are represented in the Open Tree by numeric identifiers, the
+`ott_ids` (Open Tree Taxonomy identifiers). To extract a portion of a tree from
+the Open Tree, you first need to find `ott_ids` for a set of names using the
+`tnrs_match_names` function:
 
 
 ```r
@@ -72,14 +75,14 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ## 5     hylobates Hylobates (genus in family Hylobatidae)             FALSE
 ## 6       hoolock                                 Hoolock             FALSE
 ## 7          homo                                    Homo             FALSE
-##   ott_id node_id is_synonym is_deprecated number_matches
-## 1 417957 3553975      FALSE         FALSE              2
-## 2 417949 3553850      FALSE         FALSE              2
-## 3 417957 3553975      FALSE         FALSE              2
-## 4 417969 3554008      FALSE         FALSE              3
-## 5 166552 3554156      FALSE         FALSE              1
-## 6 712902 3554210      FALSE         FALSE              1
-## 7 770309 3553873      FALSE         FALSE              1
+##   ott_id is_synonym is_deprecated number_matches
+## 1 417957      FALSE         FALSE              2
+## 2 417949      FALSE         FALSE              2
+## 3 417957      FALSE         FALSE              2
+## 4 417969      FALSE         FALSE              3
+## 5 166552      FALSE         FALSE              1
+## 6 712902      FALSE         FALSE              1
+## 7 770309      FALSE         FALSE              1
 ```
 
 Now get the tree with just those tips:
@@ -87,10 +90,18 @@ Now get the tree with just those tips:
 
 ```r
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
+```
+
+```
+## storing implied block: TAXA
+## storing read block: TREES
+```
+
+```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/r5sp7Mv.png) 
+![plot of chunk get_tr](http://i.imgur.com/n7FQ6al.png) 
 
 ### Code of Conduct
 
