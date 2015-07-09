@@ -24,6 +24,7 @@ Suggests:
     knitr (>= 1.10.5),
     rmarkdown (>= 0.7),
     testthat,
-    RNeXML
+    RNeXML, 
+    phylobase,
 VignetteBuilder: knitr
 LazyData: true

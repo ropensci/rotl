@@ -209,3 +209,5 @@ candidate_for_synth(furry_meta) ## None of these trees are yet included in the O
 Using `get_study("pg_2550")` would returns a `multiPhylo` object (default) with
 all the trees associated with this particular study, while
 `get_study_tree("pg_2550", "tree5513")` would return one of these trees.
+
+

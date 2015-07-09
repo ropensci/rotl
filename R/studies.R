@@ -21,6 +21,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                                  exact=FALSE, ...) {
     res <- .studies_find_studies(property = property, value = value,
                                  verbose = verbose, exact = exact, ...)
+    class(res) <- c("found_studies", class(res))
     return(res)
 }
 
@@ -51,9 +52,15 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                                exact=FALSE, ...) {
     res <- .studies_find_trees(property = property, value = value,
                                verbose = verbose, exact = exact, ...)
+    class(res) <- c("found_studies", class(res))
     return(res)
 }
 
+##'@export
+print.found_studies <- function(x, ...){
+  
+ cat(" List of Open Tree studies with", length(x[[1]]), "hits \n")
+}
 ##' Return the list of study properties that can be used to search
 ##' studies and trees used in the synthetic tree.
 ##'
@@ -77,8 +84,10 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
 
 studies_properties <- function(...) {
     res <- .studies_properties(...)
-    return(res)
+    lapply(res, unlist)
 }
+
+
 
 
 ##' Returns a study for given ID
@@ -261,6 +270,12 @@ get_study_meta <- function(study_id, ...) {
     class(res) <- "study_meta"
     attr(res, "study_id") <- study_id
     res
+}
+
+##' @export
+print.study_meta <- function(x, ...) {
+    cat("Metadata for OToL study ", attr(x, "study_id"), " . Contents:\n", sep="")
+    cat(paste0("  $nexml$", names(x$nexml)), sep="\n")
 }
 
 ##' @export
