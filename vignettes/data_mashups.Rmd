@@ -37,6 +37,7 @@ taxonomic context for searches using `tnrs` function, so let's see if any of
 them apply to this group:
 
 ```{r, context}
+library(rotl)
 tnrs_contexts()
 ```
 
