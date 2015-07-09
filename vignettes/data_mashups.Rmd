@@ -1,0 +1,148 @@
+---
+title: "Connecting data to Open Tree trees"
+author: "David Winter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+##Combining data from OToL and other sources. 
+
+One of the major goals of `rotl` is to help users combine data from other
+sources with the phylogenetic trees in the Open Tree database. This examples
+demonstrates how a user might connect data they have collected to trees from
+Open Tree. 
+
+##Get Open Tree ids to match your data. 
+
+Let's say you have a dataset where each row represents a measurement taken from
+one species, and your goal is to put these measurements in some phylogenetic
+context. . Here's a small example, the best available estimates of the
+mutation rate for a set of single-celled Eukaryotes:
+
+
+```{r, data}
+csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
+mu <- read.csv(csv_path, stringsAsFactors=FALSE)
+mu
+```
+
+To get started, we want to know that each of these species are known to the Open
+Tree project and what their unique ID is. We can use the Taxonomic Name
+resolution Service (`tnrs`) functions to do this. It can be useful to provide a
+taxonomic context for searches using `tnrs` function, so let's see if any of
+them apply to this group:
+
+```{r, context}
+tnrs_contexts()
+```
+
+
+No then. If all of our species fell into one of those groups we could specify
+that group to avoid conflicts between different taxonomic codes. As it is we can 
+search using the `All life` context and the function `tnrs_match_names`:
+
+```{r, match}
+taxon_search <- tnrs_match_names(mu$species, context_name="All life")
+knitr::kable(taxon_search)
+```
+
+So, all the species are known to Open Tree. Note, though, that one of the names
+is a synonym. _Saccharomyces pombe_ is older name for what is now called 
+_Schizosaccharomyces pombe_. As the name suggests, the Taxonnomic Name
+Resolution Service is designed to deal with these problems (and similar ones
+like misspellings), but it is always a good idea to check the results of
+`tnrs_match_names` closely to ensure the results are what you expect.
+
+Let's keep out original data in line with the Open Tree names and IDS by adding them to
+the `data.frame`
+
+```{r, munge}
+mu$ott_name <- taxon_search$unique_name
+mu$ott_id <- taxon_search$ott_id
+```
+
+##Find a tree with your taxa
+
+Now let's find a tree. There are two possible options here: we can search for
+published studies that include our taxa or we can use the synthetic tree from
+Open Tree. Let's start by searching for studies. Before we can do that, we can
+find the names of the various properties of studies or trees that can be used
+for searching:
+
+###Published trees
+
+```{r, properties}
+studies_properties()
+```
+
+We have `ottIds` for our taxa, so let's use those IDs and `studies_find_studies`
+to work out many trees each of our taxa are represented in. Starting with our
+first species _Tetrahymena thermophila_:
+
+```{r taxon_count}
+studies_find_trees(property="ot:ottId", value="180195")
+```
+Well... that's not very promising. We can repeat that process for all of the IDs
+to see if the other species are better represented.
+
+
+
+```{r, all_taxa_count}
+hits <- sapply(mu$ott_id, studies_find_trees, property="ot:ottId")
+sapply(hits, length)
+```
+
+###A part of the synthesis tree
+
+Most of our species are not in any of the published trees available from Open
+Tree. Thankfully, we can still use the complete Tree of Life made from the
+combined results of all of those published trees. The function
+`tol_induced_subtree` will fetch a tree relating a set of IDs:
+
+
+```{r subtree,  fig.width=7, fig.height=4}
+tr <- tol_induced_subtree(ott_ids=mu$ott_id)
+plot(tr)
+```
+
+###Connect your data to the tips of your tree
+
+The package `phylobase` provides classes for storing phylogenetic trees and 
+data together. In order to align the tips of our tree with the rows in our
+`data.frame` we need to make sure the names match exactly. They don't quite do
+that now:
+
+```{r, match_names}
+mu$ott_name
+tr$tip.label
+```
+
+Let's use `sub` to changes the remove the underscores and `ottId` from the tree
+(check out `?regex` to see how these patterns work):
+
+```{r, sub}
+tr$tip.label <- sub("_ott\\d+", "", tr$tip.label)
+tr$tip.label <- sub("_", " ", tr$tip.label)
+tr$tip.label
+```
+
+Ok, now the tips are together we can make a new dataset and 
+
+
+
+```{r phylobase}
+library(phylobase)
+rownames(mu) <- mu$ott_name
+tree_data <- phylo4d(tr, mu[,2:4])
+```
+Now we can plot the data
+
+
+```{r,  fig.width=7, fig.height=4}
+plot(tree_data)
+```
+
