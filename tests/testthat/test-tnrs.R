@@ -13,7 +13,7 @@ test_that("tnrs_match_names fails if incorrect context is provided", {
 test_that("tnrs_match_names fails if invalid name provided (nothing returned)", {
     skip_on_cran()
     expect_error(tnrs_match_names("fluffy", do_approximate_matching = FALSE),
-                 "Nothing returned")
+                 "No matches for any of the provided taxa")
 })
 
 test_that("tnrs_match_names warns if a name is not matched", {
