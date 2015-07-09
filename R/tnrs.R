@@ -87,7 +87,7 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
 
 check_tnrs <- function(req) {
     if (length(req$results) < 1) {
-        stop("Nothing returned")
+        stop("No matches for any of the provided taxa")
     }
     if (length(req$unmatched_name_ids)) {
         warning(paste(req$unmatched_name_ids, collapse=", "), " are not matched")
