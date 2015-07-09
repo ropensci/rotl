@@ -26,6 +26,6 @@ Suggests:
     rmarkdown (>= 0.7),
     testthat,
     RNeXML, 
-    rfishbase
+    phylobase,
 VignetteBuilder: knitr
 LazyData: true
