@@ -148,7 +148,7 @@ the tree
 ```{r phylobase}
 library(phylobase)
 mu_numeric <- mu[,c("mu", "pop.size", "genome.size")]
-rownames_numeric <- mu$ott_name
+rownames(mu_numeric) <- mu$ott_name
 tree_data <- phylo4d(tr, mu_numeric)
 ```
 And now we can plot the data and the tree together
@@ -161,10 +161,10 @@ plot(tree_data)
 ##What next.
 
 The demonstration get's you to the point of visualizing your data in a
-phylogentic context. But there's a lot more you do with this sort of data in R.
+phylogenetic context. But there's a lot more you do with this sort of data in R.
 For instance, you could use packages like `ape`, `caper`, `phytools` and
 `mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could
-gather more data on your species using pcakages that connect to
+gather more data on your species using packages that connect to
 trait databases like `rfishbase`, `AntWeb` or `rnpn` which provides data from
 the US National Phenology Network. You could also use `rentrez` to find genetic 
 data for each of your species, and use that data to generate branch lengths for
