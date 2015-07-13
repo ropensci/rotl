@@ -18,13 +18,13 @@ Depends:
 Imports:
     httr,
     jsonlite,
-    rncl (>= 0.2.4)
+    rncl (>= 0.4.0.999)
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr (>= 1.10.5),
     rmarkdown (>= 0.7),
     testthat,
-    RNeXML, 
+    RNeXML,
     phylobase,
 VignetteBuilder: knitr
 LazyData: true
