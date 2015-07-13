@@ -28,7 +28,7 @@ will also need to install that package.
 install.packages(c("devtools", "rncl"))
 ```
 
-Then you can intall `rotl` using:
+Then you can install `rotl` using:
 
 
 ```r
