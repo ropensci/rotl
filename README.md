@@ -46,11 +46,14 @@ find pandoc for your operating system [here](http://pandoc.org/installing.html)
 ## Vignettes
 
 There are two vignettes:
+
 - start by checking out the "How to use `rotl`?" by typing:
   `vignette("how-to-use-rotl", package="rotl")` after installing the
   package.
-- then explore in a little more detail how to combine `rotl` with other packages
-  with [this vignette](http://dwinter.github.io/rotl-vignette/)
+
+- then explore how you can use `rotl` with other packages to combine your data
+  with trees from the Open Tree of Life project by typing:
+  `vignette("data_mashups",package="rotl")`.
 
 ## Quick start
 
@@ -95,7 +98,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/ahkUOvh.png) 
+![plot of chunk get_tr](http://i.imgur.com/eOtaEnV.png) 
 
 ### Code of Conduct
 
