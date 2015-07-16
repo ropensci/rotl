@@ -25,7 +25,7 @@ will also need to install that package.
 
 
 ```r
-install.packages(c("devtools", "rncl"))
+install.packages("devtools")
 ```
 
 Then you can install `rotl` using:
@@ -33,13 +33,15 @@ Then you can install `rotl` using:
 
 ```r
 library(devtools)
-install_github("fmichonneau/rotl", build_vignette=TRUE)
+install_github("fmichonneau/rncl")
+install_github("fmichonneau/rotl", dependencies = TRUE, build_vignette=TRUE)
 ```
 
 To build the vignette, you will need to have pandoc 1.12.3 or higher
-installed. If you use RStudio, make sure you have v0.99 (as it comes with pandoc
-1.13.1); if you don't use RStudio, you can find pandoc for you operating system
-[here](http://pandoc.org/installing.html)
+installed. If you use
+[RStudio](https://www.rstudio.com/products/rstudio/download/), make sure you
+have v0.99 (as it comes with pandoc 1.13.1); if you don't use RStudio, you can
+find pandoc for your operating system [here](http://pandoc.org/installing.html)
 
 ## Vignettes
 
@@ -90,18 +92,10 @@ Now get the tree with just those tips:
 
 ```r
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
-```
-
-```
-## storing implied block: TAXA
-## storing read block: TREES
-```
-
-```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/n7FQ6al.png) 
+![plot of chunk get_tr](http://i.imgur.com/ahkUOvh.png) 
 
 ### Code of Conduct
 
