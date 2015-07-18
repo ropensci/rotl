@@ -108,16 +108,15 @@ print.gol <- function(x, ...) {
 ##'
 ##' \itemize{
 ##'
-##'     \item {in_graph} {Boolean. Whether the queried node is present
-##'     in the graph.}
+##'     \item {tree_id} {The tree identifier for a given study.}
 ##'
-##'    \item {in_synth_tree} {Boolean. Whether the queried node is
-##'     present in the synthetic tree.}
+##'     \item {num_synth_tips} {Numeric. The number of synthetic
+##'            tree tip descendants.}
+##'
+##'     \item {name} {String. The taxonomic name of the queried node
+##'        (if it is a named node).}
 ##'
 ##'     \item {rank} {String. The taxonomic rank of the queried node
-##'     (if it is a named node).}
-##'
-##'	\item {name} {String. The taxonomic name of the queried node
 ##'     (if it is a named node).}
 ##'
 ##'    \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID) of
@@ -126,8 +125,22 @@ print.gol <- function(x, ...) {
 ##'    \item {num_tips} {Numeric. The number of taxonomic tip
 ##'     descendants.}
 ##'
-##'     \item {num_synth_children} {Numeric . The number of synthetic
-##'     tree tip descendants.}
+##'     \item {tree_sources} {A list of supporting source
+##'     trees in the graph. May differ from \code{"synth_sources"}, if
+##'     trees are in the graph, but were not used in constructing the
+##'     synthetic tree. Each source has:}
+##'
+##'     \itemize {
+##'
+##'         \item {study_id} {The study identifier. Will typically include
+##'         a prefix ("pg_" or "ot_").}
+##'
+##'         \item {tree_id} {The tree identifier for a given study.}
+##'
+##'         \item {git_sha} {The git SHA identifying a particular source
+##'     version.}
+##'
+##'     }
 ##'
 ##'	\item {tax_source} {String. Source taxonomy IDs (if it is a
 ##'     named node), e.g. "ncbi:9242,gbif:5289,irmng:104628".}
@@ -137,36 +150,30 @@ print.gol <- function(x, ...) {
 ##'
 ##'        \itemize{
 ##'
-##'     \item {study_id} {The study identifier. Will typically include
-##'     a prefix ("pg_" or "ot_").}
+##'           \item {git_sha} {The git SHA identifying a particular source
+##'            version.}
 ##'
-##'     \item {tree_id} {The tree identifier for a given study.}
+##'           \item {tree_id} {The tree id associated with the study id used.}
 ##'
-##'     \item {git_sha} {The git SHA identifying a particular source
-##'     version.}  }
+##'          \item {study_id} {The study identifier. Will typically include
+##'          a prefix ("pg_" or "ot_").}
 ##'
-##'     \item {tree_sources} {A list of supporting source
-##'     trees in the graph. May differ from \code{"synth_sources"}, if
-##'     trees are in the graph, but were not used in constructing the
-##'     synthetic tree. Each source has:}
 ##'
-##'     \itemize{
+##'        }
 ##'
-##'     \item {study_id} {The study identifier. Will typically include
-##'     a prefix ("pg_" or "ot_").}
+##'    \item {node_id} { The identifier for the node used by the neo4j
+##'       database. These identifiers are not persistent and shouldn't be
+##'       used.}
 ##'
-##'     \item {tree_id} {The tree identifier for a given study.}
+##'   \item {in_synth_tree} {Boolean. Whether the \code{ott_id} is
+##'       included in the synthetic tree.}
 ##'
-##'     \item {git_sha} {The git SHA identifying a particular source
-##'     version.}
 ##'
-##'     } }
+##' }
 ##'
 ##'     \code{tax_rank} and \code{ott_id} return vectors (character,
 ##'     and numeric respectively).
 ##'
-##'     \code{synth_sources} returns a data frame listing information
-##'     about the synthetic sources used.
 ##' @examples
 ##' \dontrun{
 ##' birds <- gol_node_info(ott_id=81461)

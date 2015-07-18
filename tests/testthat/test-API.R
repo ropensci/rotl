@@ -87,7 +87,7 @@ test_of_type <- function(response, test_block){
 
 test_deep_equals <- function(response, test_block){
     cat("*")
-   expect_true(TRUE)
+    expect_true(TRUE)
 }
 
 
@@ -187,7 +187,6 @@ apis <- c("graph_of_life",
           )
 for(i in 1:length(apis)){
     context( paste(apis[i], "API") )
-    if (apis[i] == "studies") next
     test_text <- httr::GET(paste0(base_url, apis[i], ".json"))
     test_description <- jsonlite::fromJSON(httr::content(test_text))
     run_shared_test(test_description)

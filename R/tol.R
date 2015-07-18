@@ -223,7 +223,7 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
     }
     if (!missing(file)) {
         unlink(file)
-        cat(res$subtree, file = file)
+        cat(res$newick, file = file)
         return(file.exists(file))
     } else {
         phy <- phylo_from_otl(res)

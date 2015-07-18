@@ -53,7 +53,7 @@ There are two vignettes:
 
 - then explore how you can use `rotl` with other packages to combine your data
   with trees from the Open Tree of Life project by typing:
-  `vignette("data_mashups",package="rotl")`.
+  `vignette("data_mashups", package="rotl")`.
 
 ## Quick start
 
@@ -98,7 +98,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/eOtaEnV.png) 
+![plot of chunk get_tr](http://i.imgur.com/C39iAPa.png) 
 
 ### Code of Conduct
 

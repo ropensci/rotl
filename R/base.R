@@ -27,11 +27,11 @@ otl_parse <- function(req) {
 }
 
 otl_check <- function(req) {
+    otl_check_error(req)
     if (!req$status_code <  400) {
         msg <- otl_parse(req)
         stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
     }
-    otl_check_error(req)
 }
 
 ##' @importFrom httr GET
@@ -58,8 +58,12 @@ otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
 ##' @importFrom httr content
 otl_check_error <- function(req) {
     cont <- httr::content(req)
-    if (is.list(cont) && exists("error", cont)) {
-        stop(paste("Error: ", cont$error, "\n", sep = ""))
+    if (is.list(cont)) {
+        if (exists("error", cont)) {
+            stop(paste("Error: ", cont$error, "\n", sep = ""))
+        } else if (exists("message", cont)) {
+            stop(paste("Message: ", cont$message, "\n", sep = ""))
+        }
     }
 }
 

@@ -57,7 +57,7 @@ There are two vignettes:
 
 - then explore how you can use `rotl` with other packages to combine your data
   with trees from the Open Tree of Life project by typing:
-  `vignette("data_mashups",package="rotl")`.
+  `vignette("data_mashups", package="rotl")`.
 
 ## Quick start
 
