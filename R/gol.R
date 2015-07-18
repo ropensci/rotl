@@ -130,7 +130,7 @@ print.gol <- function(x, ...) {
 ##'     trees are in the graph, but were not used in constructing the
 ##'     synthetic tree. Each source has:}
 ##'
-##'     \itemize {
+##'     \itemize{
 ##'
 ##'         \item {study_id} {The study identifier. Will typically include
 ##'         a prefix ("pg_" or "ot_").}
