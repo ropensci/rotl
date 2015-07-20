@@ -1,7 +1,7 @@
 
-[![Build Status](https://travis-ci.org/fmichonneau/rotl.svg)](https://travis-ci.org/fmichonneau/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/57rapgc0s7fwxwad?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl)
-[![Coverage Status](https://coveralls.io/repos/fmichonneau/rotl/badge.svg)](https://coveralls.io/r/fmichonneau/rotl)
+[![Build Status](https://travis-ci.org/ropensci/rotl.svg)](https://travis-ci.org/ropensci/rotl)
+[![Build status](https://ci.appveyor.com/api/projects/status/57rapgc0s7fwxwad?svg=true)](https://ci.appveyor.com/project/ropensci/rotl)
+[![Coverage Status](https://coveralls.io/repos/ropensci/rotl/badge.svg)](https://coveralls.io/r/ropensci/rotl)
 
 # An R interface to Open Tree API
 
@@ -34,7 +34,7 @@ Then you can install `rotl` using:
 ```r
 library(devtools)
 install_github("fmichonneau/rncl")
-install_github("fmichonneau/rotl", dependencies = TRUE, build_vignette=TRUE)
+install_github("ropensci/rotl", dependencies = TRUE, build_vignette=TRUE)
 ```
 
 To build the vignette, you will need to have pandoc 1.12.3 or higher
@@ -98,7 +98,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/C39iAPa.png) 
+![plot of chunk get_tr](http://i.imgur.com/EHRguyj.png) 
 
 ### Code of Conduct
 

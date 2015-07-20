@@ -11,8 +11,8 @@ Description: An interface to the 'Open Tree of Life' API to retrieve phylogeneti
    utilities to match taxonomic names to 'Open Tree identifiers'. The 'Open Tree of
    Life' aims at assembling a comprehensive phylogenetic tree for all named
    species.
-URL: https://github.com/fmichonneau/rotl
-BugReports: https://github.com/fmichonneau/rotl/issues
+URL: https://github.com/ropensci/rotl
+BugReports: https://github.com/ropensci/rotl/issues
 Depends:
     R (>= 3.1.1)
 Imports:
@@ -25,6 +25,6 @@ Suggests:
     rmarkdown (>= 0.7),
     testthat,
     RNeXML,
-    phylobase,
+    phylobase
 VignetteBuilder: knitr
 LazyData: true
