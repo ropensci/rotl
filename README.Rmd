@@ -7,7 +7,7 @@ opts_knit$set(upload.fun = imgur_upload)
 ```
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg)](https://travis-ci.org/ropensci/rotl)
 [![Build status](https://ci.appveyor.com/api/projects/status/5y8rxmehag512d9j?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-i7l3q)
-[![Coverage Status](https://coveralls.io/repos/ropensci/rotl/badge.svg)](https://coveralls.io/r/ropensci/rotl)
+[![Coverage Status](https://coveralls.io/repos/ropensci/rotl/badge.svg?branch=master&service=github)](https://coveralls.io/github/ropensci/rotl?branch=master)
 
 # An R interface to Open Tree API
 
