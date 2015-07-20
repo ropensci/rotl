@@ -1,6 +1,6 @@
 
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/57rapgc0s7fwxwad?svg=true)](https://ci.appveyor.com/project/ropensci/rotl)
+[![Build status](https://ci.appveyor.com/api/projects/status/5y8rxmehag512d9j?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-i7l3q)
 [![Coverage Status](https://coveralls.io/repos/ropensci/rotl/badge.svg)](https://coveralls.io/r/ropensci/rotl)
 
 # An R interface to Open Tree API
@@ -98,7 +98,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/EHRguyj.png) 
+![plot of chunk get_tr](http://i.imgur.com/hfLLq28.png) 
 
 ### Code of Conduct
 
