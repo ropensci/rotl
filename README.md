@@ -98,10 +98,12 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/tt1o0nr.png) 
+![plot of chunk get_tr](http://i.imgur.com/Pz3qclh.png) 
 
 ### Code of Conduct
 
 Please note that this project is released with a
 [Contributor Code of Conduct](CONDUCT.md). By participating in this project you
 agree to abide by its terms.
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
