@@ -4,3 +4,4 @@
 figure/
 tmp/
 ^CONDUCT\.md$
+^cran-comments.md$
