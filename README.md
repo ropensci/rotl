@@ -10,7 +10,7 @@ initially developed as part of the
 [NESCENT/OpenTree/Arbor hackathon](http://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/).
 
 Client libraries to interact with the Open Tree of Life API also exists for
-[Python](https://github.com/OpenTreeOfLife/opentree-interfaces/tree/master/python)
+[Python](https://github.com/OpenTreeOfLife/pyopentree)
 and [Ruby](https://github.com/SpeciesFileGroup/bark).
 
 
@@ -98,7 +98,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/Pz3qclh.png) 
+![plot of chunk get_tr](http://i.imgur.com/uUE9ow4.png) 
 
 ### Code of Conduct
 
