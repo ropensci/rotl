@@ -46,4 +46,5 @@
 ##'
 ##' @name rotl
 ##' @docType package
+##' @import ape
 NULL
