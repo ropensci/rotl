@@ -2,6 +2,25 @@
 
 - fixed LICENSE file as requested by Kurt Hornik
 
+## R CMD check results
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Francois Michonneau <francois.michonneau@gmail.com>’
+New submission
+
+License components with restrictions and base license permitting such:
+  BSD_2_clause + file LICENSE
+File 'LICENSE':
+  YEAR: 2015
+  COPYRIGHT HOLDER: Francois Michonneau, Joseph W. Brown, David Winter
+
+Possibly mis-spelled words in DESCRIPTION:
+  phylogenetic (9:70, 12:45)
+
+--------------------
+
+# Original submission
+
 ## Test environments
 
 - local Ubuntu 15.04, R 3.2.1
