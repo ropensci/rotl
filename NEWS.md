@@ -2,4 +2,4 @@
 
 ## rotl 0.4.1
 
-* Inital CRAN release on July, 24th 2015
+* Initial CRAN release on July, 24th 2015
