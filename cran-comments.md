@@ -1,3 +1,7 @@
+## Resubmission
+
+- fixed LICENSE file as requested by Kurt Hornik
+
 ## Test environments
 
 - local Ubuntu 15.04, R 3.2.1
