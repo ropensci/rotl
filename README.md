@@ -16,12 +16,16 @@ and [Ruby](https://github.com/SpeciesFileGroup/bark).
 
 ## Installation
 
-If you want to install this package, you first need to install
-[devtools](https://github.com/hadley/devtools), as `rotl` is not yet available
-on CRAN.
+The current stable version is available from CRAN, and can be installed by
+typing the following at the prompt in R:
 
-`rotl` uses [rncl](https://github.com/fmichonneau/rncl) to parse trees, so you
-will also need to install that package.
+
+```r
+install.packages("rotl")
+```
+
+If you want to test the development version, you first need to install
+[devtools](https://github.com/hadley/devtools).
 
 
 ```r
@@ -33,12 +37,11 @@ Then you can install `rotl` using:
 
 ```r
 library(devtools)
-install_github("fmichonneau/rncl")
 install_github("ropensci/rotl", dependencies = TRUE, build_vignette=TRUE)
 ```
 
-To build the vignette, you will need to have pandoc 1.12.3 or higher
-installed. If you use
+To build the vignettes with the development version, you will need to have
+pandoc 1.12.3 or higher installed. If you use
 [RStudio](https://www.rstudio.com/products/rstudio/download/), make sure you
 have v0.99 (as it comes with pandoc 1.13.1); if you don't use RStudio, you can
 find pandoc for your operating system [here](http://pandoc.org/installing.html)
@@ -54,6 +57,10 @@ There are two vignettes:
 - then explore how you can use `rotl` with other packages to combine your data
   with trees from the Open Tree of Life project by typing:
   `vignette("data_mashups", package="rotl")`.
+
+The vignettes are also available from CRAN:
+[How to use `rotl`?](https://cran.r-project.org/web/packages/rotl/vignettes/how-to-use-rotl.html)
+and [Data mashups](https://cran.r-project.org/web/packages/rotl/vignettes/data_mashups.html)
 
 ## Quick start
 
@@ -98,7 +105,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/uUE9ow4.png) 
+![plot of chunk get_tr](http://i.imgur.com/LEbacv3.png) 
 
 ### Code of Conduct
 
