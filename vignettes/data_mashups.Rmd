@@ -4,25 +4,25 @@ author: "David Winter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Connecting data to Open Tree trees?}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-##Combining data from OToL and other sources. 
+##Combining data from OToL and other sources.
 
 One of the major goals of `rotl` is to help users combine data from other
 sources with the phylogenetic trees in the Open Tree database. This examples
 demonstrates how a user might connect data they have collected to trees from
-Open Tree. 
+Open Tree.
 
-##Get Open Tree ids to match your data. 
+##Get Open Tree ids to match your data.
 
 Let's say you have a dataset where each row represents a measurement taken from
 one species, and your goal is to put these measurements in some phylogenetic
 context. Here's a small example: the best estimate of the mutation rate for a
 set of unicellular Eukaryotes along with some other property of those species
-which might explain the mutation rate: 
+which might explain the mutation rate:
 
 ```{r, data}
 csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
@@ -31,7 +31,7 @@ mu
 ```
 
 If we want to get a tree for these species we need to start by finding the
-unique ID for each of these species in the Open Tree database. We can use the 
+unique ID for each of these species in the Open Tree database. We can use the
 Taxonomic Name Resolution Service (`tnrs`) functions to do this. Before we do
 that we should see if any of the taxonomic contexts, which can be used to narrow
 a search and avoid conflicts between different codes, apply to our group of species:
@@ -41,7 +41,7 @@ library(rotl)
 tnrs_contexts()
 ```
 
-Hmm, none of those groups contain all of our species. In this case we can 
+Hmm, none of those groups contain all of our species. In this case we can
 search using the `All life` context and the function `tnrs_match_names`:
 
 ```{r, match}
@@ -50,13 +50,13 @@ knitr::kable(taxon_search)
 ```
 
 Good, all of our  species are known to Open Tree. Note, though, that one of the names
-is a synonym. _Saccharomyces pombe_ is older name for what is now called 
+is a synonym. _Saccharomyces pombe_ is older name for what is now called
 _Schizosaccharomyces pombe_. As the name suggests, the Taxonomic Name
 Resolution Service is designed to deal with these problems (and similar ones
 like misspellings), but it is always a good idea to check the results of
-`tnrs_match_names` closely to ensure the results are what you expect. 
+`tnrs_match_names` closely to ensure the results are what you expect.
 
-In this case we have a good ID for each of our species so we can move on. Before 
+In this case we have a good ID for each of our species so we can move on. Before
 we do that, let's ensure we can match up our original data to the Open Tree
 names and IDs by adding them to our `data.frame`:
 
@@ -96,13 +96,13 @@ sapply(hits, length)
 ```
 OK, most of our species are not in any of the published trees available. You can
 help fix this sort of problem by [making sure you submit your published trees to
-Open Tree](https://tree.opentreeoflife.org/curator). 
+Open Tree](https://tree.opentreeoflife.org/curator).
 
 ###A part of the synthesis tree
 
 Thankfully, we can still use the complete Tree of Life made from the
 combined results of all of the published trees and taxonomies that go into Open
-Tree. The function `tol_induced_subtree` will fetch a tree relating a set of IDs. 
+Tree. The function `tol_induced_subtree` will fetch a tree relating a set of IDs.
 
 Using the default arguments you can get a tree object into your R session:
 
@@ -166,11 +166,6 @@ For instance, you could use packages like `ape`, `caper`, `phytools` and
 `mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could
 gather more data on your species using packages that connect to
 trait databases like `rfishbase`, `AntWeb` or `rnpn` which provides data from
-the US National Phenology Network. You could also use `rentrez` to find genetic 
+the US National Phenology Network. You could also use `rentrez` to find genetic
 data for each of your species, and use that data to generate branch lengths for
-the phylogeny. 
-
-
-
-
-
+the phylogeny.
