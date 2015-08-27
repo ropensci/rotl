@@ -82,7 +82,7 @@ otl_ottid_from_label <- function(label) {
 }
 
 ##' @importFrom rncl read_newick_phylo
-phylo_from_otl <- function(res) {
+phylo_from_otl <- function(res, dedup = FALSE) {
     if (is.list(res)) {
         if (!is.null(res$newick)) {
             tree <- res$newick
@@ -97,7 +97,13 @@ phylo_from_otl <- function(res) {
     if (grepl("\\(", tree)) {
         fnm <- tempfile()
         cat(tree, file = fnm)
-        phy <- rncl::read_newick_phylo(fnm)
+        if (!dedup) {
+            phy <- rncl::read_newick_phylo(fnm)
+        } else {
+            dedup_tr <- deduplicate_labels(fnm)
+            phy <- rncl::read_newick_phylo(dedup_tr)
+            unlink(dedup_tr)
+        }
         unlink(fnm)
     } else {
         phy <- tree_to_labels(tree)$tip_label

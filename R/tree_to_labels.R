@@ -2,7 +2,7 @@
 ## useful when the tree is too small to be read in by ape/rncl.
 ## tr needs to be a newick formatted tree string
 ## - missing tips are removed (OK for OTL as it won't happen)
-tree_to_labels <- function(tr) {
+tree_to_labels <- function(tr, remove_quotes = TRUE) {
 
     n_right <- unlist(gregexpr("\\)", tr))
     n_left <- unlist(gregexpr("\\(", tr))
@@ -38,6 +38,10 @@ tree_to_labels <- function(tr) {
         tip_lbl <- gsub("^\\(*", "", tip_lbl)
         tip_lbl <- gsub("\\).*$", "", tip_lbl)
         tip_lbl <- tip_lbl[nzchar(tip_lbl)]
+    }
+
+    if (remove_quotes) {
+        tip_lbl <- gsub("^(\\\"|\\\')(.+)(\\\'|\\\")$", "\\2", tip_lbl)
     }
 
     list(tip_label = tip_lbl, edge_label = edge_lbl)

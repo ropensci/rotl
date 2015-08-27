@@ -6,7 +6,7 @@
 \usage{
 get_study_tree(study_id = NULL, tree_id = NULL,
   object_format = c("phylo"), tip_label = c("original_label", "ott_id",
-  "ott_taxon_name"), file_format, file, ...)
+  "ott_taxon_name"), file_format, file, deduplicate = TRUE, ...)
 }
 \arguments{
 \item{study_id}{the identifier of a study (character)}
@@ -29,6 +29,13 @@ Open Tree Taxonomy taxon name.}
 
 \item{file}{the file name where the output of the function will be
 saved.}
+
+\item{deduplicate}{logical (default \code{TRUE}). If the tree
+returned by the study contains duplicated taxon names, should they
+be made unique? It is normally illegal for NEXUS/Newick tree
+strings to contain duplicated tip names. This is a workaround to
+circumvent this requirement. If \code{TRUE}, duplicated tip labels
+will be appended \code{_1}, \code{_2}, etc.}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
