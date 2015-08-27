@@ -209,3 +209,31 @@ candidate_for_synth(furry_meta) ## None of these trees are yet included in the O
 Using `get_study("pg_2550")` would returns a `multiPhylo` object (default) with
 all the trees associated with this particular study, while
 `get_study_tree("pg_2550", "tree5513")` would return one of these trees.
+
+### The tree returned by the API has duplicated tip labels, how can I work around it?
+
+You may encounter the following error message:
+
+```
+Error in rncl(file = file, ...) : Taxon number 39 (coded by the token Pratia
+angulata) has already been encountered in this tree. Duplication of taxa in a
+tree is prohibited.
+```
+
+This message occurs as duplicate labels are not allowed in the NEXUS format and
+it is stricly enforced by the part of the code used by `rotl` to import the
+trees in memory.
+
+If you use a version of `rotl` more recent than 0.4.1, this should not happen by
+default for the function `get_study_tree`. If it happens with another function,
+please [let us know](https://github.com/ropensci/rotl/issues).
+
+The easiest way to work around this is to save the tree in a file, and use APE
+to read it in memory:
+
+```{r, eval=FALSE}
+get_study_tree(study_id="pg_710", tree_id="tree1277",
+               tip_label='ott_taxon_name', file = "/tmp/tree.tre",
+               file_format = "newick")
+tr <- ape::read.tree(file = "/tmp/tree.tre")
+```
