@@ -2,7 +2,7 @@
 % Please edit documentation in R/studies.R
 \name{studies_find_trees}
 \alias{studies_find_trees}
-\title{find trees}
+\title{Find Trees}
 \usage{
 studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
   exact = FALSE, ...)

@@ -76,7 +76,7 @@ print.tol_summary <- function(x, ...) {
 ##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
 ##' the studies currently included in the Tree of Life.
 ##'
-##' @title List of studies used for the Tree of Life
+##' @title List of studies used in the Tree of Life
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
 ##' @return a data frame
 ##' @export
@@ -188,7 +188,7 @@ tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 ##' names or (for nodes not corresponding directly to named taxa) node
 ##' ids.
 ##'
-##' @title induced subtree
+##' @title Subtree from the Open Tree of Life
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##'     induced tree
 ##' @param file if specified, the function will write the subtree to a

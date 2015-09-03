@@ -2,7 +2,7 @@
 % Please edit documentation in R/studies.R
 \name{studies_properties}
 \alias{studies_properties}
-\title{Studies properties}
+\title{Properties of the Studies}
 \usage{
 studies_properties(...)
 }
@@ -20,9 +20,10 @@ studies and trees used in the synthetic tree.
 }
 \details{
 The list returned has 2 elements \code{tree_properties} and
-\code{studies_properties}. Each of these elements lists theadditional arguments to customize the API request
-properties that can be used to search for trees and studies that
-are contributing to the synthetic tree.
+\code{studies_properties}. Each of these elements lists
+theadditional arguments to customize the API request properties
+that can be used to search for trees and studies that are
+contributing to the synthetic tree.
 }
 \examples{
 \dontrun{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tol.R
 \name{tol_induced_subtree}
 \alias{tol_induced_subtree}
-\title{induced subtree}
+\title{Subtree from the Open Tree of Life}
 \usage{
 tol_induced_subtree(ott_ids = NULL, file, ...)
 }

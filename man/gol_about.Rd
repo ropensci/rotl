@@ -2,7 +2,7 @@
 % Please edit documentation in R/gol.R
 \name{gol_about}
 \alias{gol_about}
-\title{Information about the graph of life}
+\title{Information about the Graph of Life}
 \usage{
 gol_about(...)
 }
@@ -37,7 +37,7 @@ An invisible list of graph attributes:
 Graph of Life
 }
 \details{
-Basic information about the graph
+Basic information about the Graph of Life.
 
 Returns summary information about the entire graph
     database, including identifiers for the taxonomy and source

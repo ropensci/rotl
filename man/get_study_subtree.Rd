@@ -2,7 +2,7 @@
 % Please edit documentation in R/studies.R
 \name{get_study_subtree}
 \alias{get_study_subtree}
-\title{Study subtree}
+\title{Study Subtree}
 \usage{
 get_study_subtree(study_id, tree_id, subtree_id, object_format = c("phylo"),
   file_format, file, ...)

@@ -1,6 +1,6 @@
 ##' Return a list of studies that match given properties
 ##'
-##' @title find_study
+##' @title Find a Study
 ##' @param exact Should exact matching be used? (logical, default
 ##'     \code{FALSE})
 ##' @param property The property to be searched on (character)
@@ -31,7 +31,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' \code{property} can be found using the function
 ##' \code{\link{studies_properties}}.
 ##'
-##' @title find trees
+##' @title Find Trees
 ##' @param property The property to be searched on (character)
 ##' @param value The property-value to be searched on (character)
 ##' @param verbose Should the output include all metadata? (logical,
@@ -65,11 +65,12 @@ print.found_studies <- function(x, ...){
 ##' studies and trees used in the synthetic tree.
 ##'
 ##' The list returned has 2 elements \code{tree_properties} and
-##' \code{studies_properties}. Each of these elements lists theadditional arguments to customize the API request
-##' properties that can be used to search for trees and studies that
-##' are contributing to the synthetic tree.
+##' \code{studies_properties}. Each of these elements lists
+##' theadditional arguments to customize the API request properties
+##' that can be used to search for trees and studies that are
+##' contributing to the synthetic tree.
 ##'
-##' @title Studies properties
+##' @title Properties of the Studies
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @return A list of the study properties that can be used to find
@@ -320,7 +321,7 @@ candidate_for_synth.study_meta <- function(sm) {
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
 ##'
-##' @title Study subtree
+##' @title Study Subtree
 ##' @param study_id the study identifier (character)
 ##' @param tree_id the tree identifier (character)
 ##' @param object_format the class of the object returned by the

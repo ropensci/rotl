@@ -1,8 +1,8 @@
 ##' Graph of Life
 ##'
-##' Basic information about the graph
+##' Basic information about the Graph of Life.
 ##'
-##' @title Information about the graph of life
+##' @title Information about the Graph of Life
 ##' @details Returns summary information about the entire graph
 ##'     database, including identifiers for the taxonomy and source
 ##'     trees used to build it.

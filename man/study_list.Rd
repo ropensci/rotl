@@ -3,7 +3,7 @@
 \name{study_list}
 \alias{study_list}
 \alias{study_list.tol_summary}
-\title{List of studies used for the Tree of Life}
+\title{List of studies used in the Tree of Life}
 \usage{
 study_list(tol)
 

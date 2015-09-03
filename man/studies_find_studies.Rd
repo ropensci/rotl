@@ -2,7 +2,7 @@
 % Please edit documentation in R/studies.R
 \name{studies_find_studies}
 \alias{studies_find_studies}
-\title{find_study}
+\title{Find a Study}
 \usage{
 studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
   exact = FALSE, ...)
