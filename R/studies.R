@@ -41,7 +41,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @seealso \code{\link{studies_properties}} which lists properties
-##'     against which the studies can be searched
+##'     the studies can be searched on.
 ##' @export
 ##' @examples
 ##' \dontrun{
