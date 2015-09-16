@@ -31,11 +31,11 @@ The list of possible values to be used as values for the argument
 }
 \examples{
 \dontrun{
-res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
+res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
 }
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties
-    against which the studies can be searched
+    the studies can be searched on.
 }
 

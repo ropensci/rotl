@@ -2,7 +2,7 @@
 % Please edit documentation in R/studies.R
 \name{get_study}
 \alias{get_study}
-\title{Get Study}
+\title{Get all the trees associated with a particular study}
 \usage{
 get_study(study_id = NULL, object_format = c("phylo", "nexml"), file_format,
   file, ...)
@@ -29,7 +29,7 @@ if \code{file_format} is missing, an object of class
     whether the file was successfully created.
 }
 \description{
-Returns a study for given ID
+Returns the trees associated with a given study
 }
 \details{
 If \code{file_format} is missing, the function returns an object
