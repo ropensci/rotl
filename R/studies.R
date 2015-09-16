@@ -45,7 +45,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Garcinia")
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
 ##' }
 
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
