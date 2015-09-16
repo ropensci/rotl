@@ -91,7 +91,7 @@ studies_properties <- function(...) {
 
 
 
-##' Returns a study for given ID
+##' Returns the trees associated with a given study
 ##'
 ##' If \code{file_format} is missing, the function returns an object
 ##' of the class \code{phylo} from the \code{\link[ape]{ape}} package
@@ -105,7 +105,7 @@ studies_properties <- function(...) {
 ##' with the same name already exists, it will be silently
 ##' overwritten.
 ##'
-##' @title Get Study
+##' @title Get all the trees associated with a particular study
 ##' @param study_id the study ID for the study of interest (character)
 ##' @param object_format the class of the object the query should
 ##'     return (either \code{phylo} or \code{nexml}). Ignored if
@@ -281,7 +281,7 @@ get_study_meta <- function(study_id, ...) {
 
 ##' @export
 print.study_meta <- function(x, ...) {
-    cat("Metadata for OToL study ", attr(x, "study_id"), " . Contents:\n", sep="")
+    cat("Metadata for OToL study ", attr(x, "study_id"), ". Contents:\n", sep="")
     cat(paste0("  $nexml$", names(x$nexml)), sep="\n")
 }
 
