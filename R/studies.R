@@ -253,8 +253,11 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##'
 ##'   \item {candidate_for_synth} { The identifier of the tree(s) from
 ##'   the study used in the synthetic tree. This is a subset of the
-##'   result of \code{get_tree_ids}.}
+##'   result of \code{get_tree_ids}.
 ##'
+##'   \item {get_study_year} { The year of publication of the study. }
+##'
+##'   }
 ##' }
 ##'
 ##' @title Study Metadata
@@ -271,6 +274,7 @@ get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo")
 ##' get_tree_ids(req)
 ##' candidate_for_synth(req)
 ##' get_publication(req)
+##' get_study_year(req)
 ##' }
 get_study_meta <- function(study_id, ...) {
     res <- .get_study_meta(study_id = study_id, ...)
@@ -299,6 +303,10 @@ candidate_for_synth <- function(sm) UseMethod("candidate_for_synth")
 
 ##' @export
 ##' @rdname get_study_meta
+get_study_year <- function(sm) UseMethod("get_study_year")
+
+##' @export
+##' @rdname get_study_meta
 get_tree_ids.study_meta <- function(sm) {
     ## only keep the number of the ID
     st_id <- gsub("[^0-9]", "", sm[["nexml"]][["^ot:studyId"]])
@@ -317,6 +325,12 @@ get_publication.study_meta <- function(sm) {
 ##' @rdname get_study_meta
 candidate_for_synth.study_meta <- function(sm) {
     unlist(sm[["nexml"]][["^ot:candidateTreeForSynthesis"]])
+}
+
+##' @export
+##' @rdname get_study_meta
+get_study_year.study_meta <- function(sm) {
+    sm[["nexml"]][["^ot:studyYear"]]
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store

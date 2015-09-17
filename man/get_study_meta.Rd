@@ -6,6 +6,8 @@
 \alias{get_publication}
 \alias{get_publication.study_meta}
 \alias{get_study_meta}
+\alias{get_study_year}
+\alias{get_study_year.study_meta}
 \alias{get_tree_ids}
 \alias{get_tree_ids.study_meta}
 \title{Study Metadata}
@@ -18,11 +20,15 @@ get_publication(sm)
 
 candidate_for_synth(sm)
 
+get_study_year(sm)
+
 \method{get_tree_ids}{study_meta}(sm)
 
 \method{get_publication}{study_meta}(sm)
 
 \method{candidate_for_synth}{study_meta}(sm)
+
+\method{get_study_year}{study_meta}(sm)
 }
 \arguments{
 \item{study_id}{the study identifier (character)}
@@ -55,8 +61,11 @@ helper functions exists: \itemize{
 
 \item {candidate_for_synth} { The identifier of the tree(s) from
   the study used in the synthetic tree. This is a subset of the
-  result of \code{get_tree_ids}.}
+  result of \code{get_tree_ids}.
 
+\item {get_study_year} { The year of publication of the study. }
+
+}
 }
 }
 \examples{
@@ -65,6 +74,7 @@ req <- get_study_meta("pg_719")
 get_tree_ids(req)
 candidate_for_synth(req)
 get_publication(req)
+get_study_year(req)
 }
 }
 

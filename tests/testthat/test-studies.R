@@ -275,6 +275,10 @@ test_that("candidate_for_synth method for study_meta", {
     expect_true(candidate_for_synth(sm) %in% get_tree_ids(sm))
 })
 
+test_that("get_study_year method for study_meta", {
+     skip_on_cran()
+     expect_equal(get_study_year(sm), "2011")
+ })
 
 ############################################################################
 ## tol_about                                                              ##
