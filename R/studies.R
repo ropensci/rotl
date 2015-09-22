@@ -308,9 +308,7 @@ get_study_year <- function(sm) UseMethod("get_study_year")
 ##' @export
 ##' @rdname get_study_meta
 get_tree_ids.study_meta <- function(sm) {
-    ## only keep the number of the ID
-    st_id <- gsub("[^0-9]", "", sm[["nexml"]][["^ot:studyId"]])
-    unlist(sm[["nexml"]][["treesById"]][[paste0("trees", st_id)]][["^ot:treeElementOrder"]])
+    unlist(sm[["nexml"]][["treesById"]][[sm[["nexml"]][["^ot:treesElementOrder"]][[1]]]][["^ot:treeElementOrder"]])
 }
 
 ##' @export
