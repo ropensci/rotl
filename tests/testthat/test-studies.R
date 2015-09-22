@@ -277,7 +277,7 @@ test_that("candidate_for_synth method for study_meta", {
 
 test_that("get_study_year method for study_meta", {
      skip_on_cran()
-     expect_equal(get_study_year(sm), "2011")
+     expect_equal(get_study_year(sm), 2011)
  })
 
 ############################################################################
