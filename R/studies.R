@@ -58,8 +58,11 @@ studies_properties <- function(...) {
 ##' @examples
 ##' \dontrun{
 ##' one_study <- studies_find_studies(property="ot:studyId", value="pg_719")
+##' list_trees(one_study)
 ##' mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
 ##'                                 value="mammalia")
+##' list_trees(mammals)
+##' list_trees(mammals, "ot_308")
 ##' }
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
@@ -157,6 +160,10 @@ extract_title <- function(pub_orig, split_char = "\\.") {
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
 ##' ## summary of the trees and associated studies that match this criterion
 ##' res
+##' ## the full list of trees for each study
+##' list_trees(res)
+##' ## the trees for a given study
+##' list_trees(res, study_id = "pg_2769")
 ##' }
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                                exact=FALSE, ...) {
