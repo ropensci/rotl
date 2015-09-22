@@ -1,3 +1,31 @@
+##' Return the list of study properties that can be used to search
+##' studies and trees used in the synthetic tree.
+##'
+##' The list returned has 2 elements \code{tree_properties} and
+##' \code{studies_properties}. Each of these elements lists
+##' theadditional arguments to customize the API request properties
+##' that can be used to search for trees and studies that are
+##' contributing to the synthetic tree.
+##'
+##' @title Properties of the Studies
+##' @param ...  additional arguments to customize the API request (see
+##'     \code{\link{rotl}} package documentation).
+##' @return A list of the study properties that can be used to find
+##'     studies and trees that are contributing to the synthetic tree.
+##' @seealso \code{\link{studies_find_trees}}
+##' @export
+##' @examples
+##' \dontrun{
+##'  all_the_properties <- studies_properties()
+##'  unlist(all_the_properties$tree_properties)
+##' }
+
+studies_properties <- function(...) {
+    res <- .studies_properties(...)
+    lapply(res, unlist)
+}
+
+
 ##' Return a list of studies that match given properties
 ##'
 ##' @title Find a Study
@@ -61,31 +89,6 @@ print.found_studies <- function(x, ...){
 
  cat(" List of Open Tree studies with", length(x[[1]]), "hits \n")
 }
-##' Return the list of study properties that can be used to search
-##' studies and trees used in the synthetic tree.
-##'
-##' The list returned has 2 elements \code{tree_properties} and
-##' \code{studies_properties}. Each of these elements lists
-##' theadditional arguments to customize the API request properties
-##' that can be used to search for trees and studies that are
-##' contributing to the synthetic tree.
-##'
-##' @title Properties of the Studies
-##' @param ...  additional arguments to customize the API request (see
-##'     \code{\link{rotl}} package documentation).
-##' @return A list of the study properties that can be used to find
-##'     studies and trees that are contributing to the synthetic tree.
-##' @seealso \code{\link{studies_find_trees}}
-##' @export
-##' @examples
-##' \dontrun{
-##'  all_the_properties <- studies_properties()
-##'  unlist(all_the_properties$tree_properties)
-##' }
-
-studies_properties <- function(...) {
-    res <- .studies_properties(...)
-    lapply(res, unlist)
 }
 
 
