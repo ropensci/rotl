@@ -296,3 +296,80 @@ test_that("study_about", {
     expect_true(nrow(ta) > 100)
     expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))
 })
+
+############################################################################
+## studies_find_studies                                                   ##
+############################################################################
+
+test_that("single study detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:studyId",
+                                          value = "ot_248", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "candidate",
+                                                "study_year", "title", "study_doi")))
+              expect_true(nrow(res) >= 1L)
+              expect_equal(res[["study_ids"]], "ot_248")
+              expect_equal(res[["n_trees"]], "1")
+              expect_equal(res[["candidate"]], "Tr76302")
+              expect_equal(res[["study_year"]], "2014")
+              expect_equal(res[["study_doi"]], "http://dx.doi.org/10.1016/j.cub.2014.06.060")
+              expect_equal(res[["title"]], "'Phylogenomic Resolution of the Class Ophiuroidea Unlocks a Global Microfossil Record'")
+})
+
+test_that("single study detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:studyId",
+                                          value = "ot_248", detailed = FALSE)
+              expect_true(inherits(res, "study_ids"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_match(attr(res, "found_trees"), "list of the trees associated")
+              attributes(res) <- NULL
+              expect_equal(res, "ot_248")
+          })
+
+test_that("multiple studies detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "candidate",
+                                                "study_year", "title", "study_doi")))
+              expect_true(nrow(res) >= 8L)
+          })
+
+test_that("multiple studies detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = FALSE)
+              expect_true(inherits(res, "study_ids"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(inherits(res, "character"))
+          })
+
+
+############################################################################
+## list_trees                                                             ##
+############################################################################
+
+test_that("list_trees with detailed = FALSE", {
+              skip_on_cran()
+              expect_match(list_trees(studies_find_studies(
+                                          property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = FALSE)),
+                           "If you want to get a list of the trees associated with the studies")
+          })
+
+test_that("list_trees with detailed = TRUE",  {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = TRUE)
+              expect_true(inherits(list_trees(res), "list"))
+              expect_true(length(list_trees(res)) >= 8)
+              expect_true(all(names(list_trees(res)) %in% c("pg_435", "ot_428",
+                                                            "pg_420", "ot_429",
+                                                            "ot_214", "ot_117",
+                                                            "ot_116", "pg_2799")))
+          })
