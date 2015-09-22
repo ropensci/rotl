@@ -104,10 +104,16 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
         attr(dat, "found_trees") <- paste("If you want to get a list of the",
                                           "trees associated with the studies,",
                                           "use", sQuote("detailed = TRUE"))
+        class(dat) <- c("study_ids", class(dat))
     }
     attr(dat, "metadata") <- meta_raw
-    class(res) <- c("matched_studies", class(res))
+    class(dat) <- c("matched_studies", class(dat))
     dat
+}
+
+##' @export
+print.study_ids <- function(x, ...) {
+    print(format(x), ...)
 }
 
 ## Unexported function that attempts to extract title from the
