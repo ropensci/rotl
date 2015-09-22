@@ -30,30 +30,105 @@ studies_properties <- function(...) {
 ##'
 ##' @title Find a Study
 ##' @param exact Should exact matching be used? (logical, default
-##'     \code{FALSE})
+##'   \code{FALSE})
 ##' @param property The property to be searched on (character)
-##' @param value The property-value to be searched on (character)
+##' @param value The property value to be searched on (character)
+##' @param detailed If \code{TRUE} (default), the function will return
+##'   a data frame that summarizes information about the study (see
+##'   \sQuote{Value}). Otherwise, it returns a vector (character) of
+##'   the study ids.
 ##' @param verbose Should the output include all metadata (logical
-##'     default \code{FALSE})
+##'   default \code{FALSE})
 ##' @param ...  additional arguments to customize the API request (see
-##'     \code{\link{rotl}} package documentation).
+##'   \code{\link{rotl}} package documentation).
+##' @return If \code{detailed=TRUE}, the function returns a data frame
+##'   listing the study id (\code{study_ids}), the number of trees
+##'   associated with this study (\code{n_trees}), the tree id that is
+##'   a candidate for the synthetic tree if any (\code{candidate}),
+##'   the year of publication of the study (\code{study_year}), the
+##'   title of the publication for the study (\code{title}), and the
+##'   DOI (Digital Object Identifier) for the study
+##'   (\code{study_doi}).
+##'
+##' If \code{detailed=FALSE}, the function returns a vector
+##' (character) of the study ids that match the query.
 ##' @seealso \code{\link{studies_properties}} which lists properties
-##'     against which the studies can be searched
+##'   against which the studies can be searched. \code{\link{list_trees}}
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' study <- studies_find_studies(property="ot:studyId", value="pg_719")
+##' one_study <- studies_find_studies(property="ot:studyId", value="pg_719")
+##' mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
+##'                                 value="mammalia")
 ##' }
 
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
-                                 exact=FALSE, ...) {
-    res <- .studies_find_studies(property = property, value = value,
+                                 exact=FALSE, detailed = TRUE, ...) {
+    .res <- .studies_find_studies(property = property, value = value,
                                  verbose = verbose, exact = exact, ...)
-    class(res) <- c("found_studies", class(res))
-    return(res)
+    res <- vapply(.res[["matched_studies"]],
+                  function(x) x[["ot:studyId"]],
+                  character(1))
+    if (detailed) {
+        meta_raw <- lapply(res, function(x) get_study_meta(x))
+        meta <- lapply(meta_raw, function(m) {
+                           c(tree_ids =  list(get_tree_ids(m)),
+                             study_year = get_study_year(m),
+                             publication = get_publication(m),
+                             doi = attr(get_publication(m), "DOI"),
+                             candidate = candidate_for_synth(m)
+                             )
+        })
+        found_trees <- lapply(meta, function(m) {
+          m[["tree_ids"]]
+        })
+        found_trees <- setNames(found_trees, res)
+        dat <- lapply(meta, function(m) {
+                          c(n_trees = length(m[["tree_ids"]]),
+                            candidate = paste(m[["candidate"]], collapse = ", "), ## there should only be one, but just in case
+                            study_year = m[["study_year"]],
+                            title =  extract_title(m[["publication"]]),
+                            study_doi = m[["doi"]])
+        })
+        dat <- do.call("rbind", dat)
+        dat <- cbind(study_ids = res, dat)
+        rownames(dat) <- NULL
+        dat <- data.frame(dat, stringsAsFactors = FALSE)
+        attr(dat, "found_trees") <- found_trees
+    } else {
+        meta_raw <- .res
+        dat <- res
+        attr(dat, "found_trees") <- paste("If you want to get a list of the",
+                                          "trees associated with the studies,",
+                                          "use", sQuote("detailed = TRUE"))
+    }
+    attr(dat, "metadata") <- meta_raw
+    class(res) <- c("matched_studies", class(res))
+    dat
 }
 
-##' Return a list of trees that match a given properties
+## Unexported function that attempts to extract title from the
+## citation information associated with the study information. The
+## function gets the element that follows what looks like a year in
+## the string.
+## pub_orig: the publication string extracted from the study metadata
+## split_char: the character on which the bibliographic elements are
+## separated with. (currently only deals with . and ,)
+extract_title <- function(pub_orig, split_char = "\\.") {
+    pub <- unlist(strsplit(pub_orig, split = split_char))
+    pub <- gsub("^\\s|\\s$", "",  pub)
+    which_year <- grep("^\\d{4}$", pub)
+    res <- pub[which_year + 1]
+    if (length(res) > 0)
+        return(res)
+    else if (split_char == ",") {
+        return(character(0))
+    } else {
+        extract_title(pub_orig, ",")
+    }
+}
+
+##' Return a list of trees that match a given set of properties
 ##'
 ##' The list of possible values to be used as values for the argument
 ##' \code{property} can be found using the function
@@ -63,34 +138,53 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' @param property The property to be searched on (character)
 ##' @param value The property-value to be searched on (character)
 ##' @param verbose Should the output include all metadata? (logical,
-##'     default \code{FALSE})
+##'   default \code{FALSE})
 ##' @param exact Should exact matching be used? (logical, default
-##'     \code{FALSE})
+##'   \code{FALSE})
 ##' @param ... additional arguments to customize the API request (see
-##'     \code{\link{rotl}} package documentation).
+##'   \code{\link{rotl}} package documentation).
+##' @return A data frame that summarizes the trees found (and their
+##'   associated studies) for the requested criteria. If a study has
+##'   more than 5 trees, the \code{tree_ids} of the first ones will be
+##'   shown followed by \code{...} to indicate that more are present.
+##'
 ##' @seealso \code{\link{studies_properties}} which lists properties
-##'     the studies can be searched on.
+##'   the studies can be searched on. \code{\link{list_trees}} for
+##'   listing the trees that match the query.
 ##' @export
 ##' @examples
 ##' \dontrun{
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
+##' ## summary of the trees and associated studies that match this criterion
+##' res
 ##' }
-
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                                exact=FALSE, ...) {
     res <- .studies_find_trees(property = property, value = value,
                                verbose = verbose, exact = exact, ...)
-    class(res) <- c("found_studies", class(res))
-    return(res)
+    study_ids <- vapply(res[["matched_studies"]],
+                        function(x) x[["ot:studyId"]],
+                        character(1))
+    n_trees <- vapply(res[["matched_studies"]],
+                      function(x) length(x[["matched_trees"]]),
+                      numeric(1))
+    tree_ids <- lapply(res[["matched_studies"]],
+                       function(x) {
+                         sapply(x[["matched_trees"]],
+                                function(y) y[["nexson_id"]])
+                       })
+    tree_str <- vapply(tree_ids,
+                       function(x) {
+                         if (length(x) > 4)
+                           x <- c(x[1:5], "...")
+                         paste(x, collapse = ", ")
+                       }, character(1))
+    res <- data.frame(study_ids, n_trees, tree_ids = tree_str,
+                      stringsAsFactors = FALSE)
+    attr(res, "found_trees") <- setNames(tree_ids, study_ids)
+    class(res) <- c("matched_studies", class(res))
+    res
 }
-
-##'@export
-print.found_studies <- function(x, ...){
-
- cat(" List of Open Tree studies with", length(x[[1]]), "hits \n")
-}
-}
-
 
 
 
