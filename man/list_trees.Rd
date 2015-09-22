@@ -9,7 +9,7 @@
 \usage{
 list_trees(matched_studies, ...)
 
-\method{list_trees}{matched_studies}(matched_studies, study_id)
+\method{list_trees}{matched_studies}(matched_studies, study_id, ...)
 }
 \arguments{
 \item{matched_studies}{an object created by

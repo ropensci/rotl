@@ -22,7 +22,7 @@ list_trees <- function(matched_studies, ...) UseMethod("list_trees")
 
 ##' @rdname list_trees
 ##' @export
-list_trees.matched_studies <- function(matched_studies, study_id) {
+list_trees.matched_studies <- function(matched_studies, study_id, ...) {
   res <- attr(matched_studies, "found_trees")
   if (missing(study_id)) {
     res
