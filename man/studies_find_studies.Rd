@@ -5,12 +5,12 @@
 \title{Find a Study}
 \usage{
 studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE, ...)
+  exact = FALSE, detailed = TRUE, ...)
 }
 \arguments{
 \item{property}{The property to be searched on (character)}
 
-\item{value}{The property-value to be searched on (character)}
+\item{value}{The property value to be searched on (character)}
 
 \item{verbose}{Should the output include all metadata (logical
 default \code{FALSE})}
@@ -18,19 +18,42 @@ default \code{FALSE})}
 \item{exact}{Should exact matching be used? (logical, default
 \code{FALSE})}
 
+\item{detailed}{If \code{TRUE} (default), the function will return
+a data frame that summarizes information about the study (see
+\sQuote{Value}). Otherwise, it returns a vector (character) of
+the study ids.}
+
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
+}
+\value{
+If \code{detailed=TRUE}, the function returns a data frame
+  listing the study id (\code{study_ids}), the number of trees
+  associated with this study (\code{n_trees}), the tree id that is
+  a candidate for the synthetic tree if any (\code{candidate}),
+  the year of publication of the study (\code{study_year}), the
+  title of the publication for the study (\code{title}), and the
+  DOI (Digital Object Identifier) for the study
+  (\code{study_doi}).
+
+If \code{detailed=FALSE}, the function returns a vector
+(character) of the study ids that match the query.
 }
 \description{
 Return a list of studies that match given properties
 }
 \examples{
 \dontrun{
-study <- studies_find_studies(property="ot:studyId", value="pg_719")
+one_study <- studies_find_studies(property="ot:studyId", value="pg_719")
+list_trees(one_study)
+mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
+                                value="mammalia")
+list_trees(mammals)
+list_trees(mammals, "ot_308")
 }
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties
-    against which the studies can be searched
+  against which the studies can be searched. \code{\link{list_trees}}
 }
 

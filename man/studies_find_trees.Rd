@@ -21,8 +21,14 @@ default \code{FALSE})}
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
 }
+\value{
+A data frame that summarizes the trees found (and their
+  associated studies) for the requested criteria. If a study has
+  more than 5 trees, the \code{tree_ids} of the first ones will be
+  shown followed by \code{...} to indicate that more are present.
+}
 \description{
-Return a list of trees that match a given properties
+Return a list of trees that match a given set of properties
 }
 \details{
 The list of possible values to be used as values for the argument
@@ -32,10 +38,17 @@ The list of possible values to be used as values for the argument
 \examples{
 \dontrun{
 res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
+## summary of the trees and associated studies that match this criterion
+res
+## the full list of trees for each study
+list_trees(res)
+## the trees for a given study
+list_trees(res, study_id = "pg_2769")
 }
 }
 \seealso{
 \code{\link{studies_properties}} which lists properties
-    the studies can be searched on.
+  the studies can be searched on. \code{\link{list_trees}} for
+  listing the trees that match the query.
 }
 
