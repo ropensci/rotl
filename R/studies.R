@@ -201,7 +201,7 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="ott_taxon_name")$tip.label)
 ##' }
 
-get_study_tree <- function(study_id=NULL, tree_id=NULL, object_format=c("phylo"),
+get_study_tree <- function(study_id = NULL, tree_id = NULL, object_format = c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
                            file_format, file, deduplicate = TRUE, ...) {
 
