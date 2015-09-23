@@ -5,7 +5,7 @@
 \title{Find Trees}
 \usage{
 studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE, ...)
+  exact = FALSE, detailed = TRUE, ...)
 }
 \arguments{
 \item{property}{The property to be searched on (character)}
@@ -15,20 +15,41 @@ studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
 \item{verbose}{Should the output include all metadata? (logical,
 default \code{FALSE})}
 
-\item{exact}{Should exact matching be used? (logical, default
-\code{FALSE})}
+\item{exact}{Should exact matching be used for the value?
+(logical, default \code{FALSE})}
+
+\item{detailed}{Should a detailed report be provided? If
+\code{TRUE} (default), the output will include metadata about
+the study that include trees matching the property. Otherwise,
+only information about the trees will be provided.}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
 }
 \value{
 A data frame that summarizes the trees found (and their
-  associated studies) for the requested criteria. If a study has
-  more than 5 trees, the \code{tree_ids} of the first ones will be
-  shown followed by \code{...} to indicate that more are present.
+    associated studies) for the requested criteria. If a study has
+    more than 5 trees, the \code{tree_ids} of the first ones will
+    be shown, followed by \code{...} to indicate that more are
+    present.
+
+    If \code{detailed=FALSE}, the data frame will include the
+    study ids of the study (\code{study_ids}), the number of trees
+    in this study that match the search criteria
+    (\code{n_matched_trees}), the tree ids that match the search
+    criteria (\code{study_ids}).
+
+    If \code{detailed=TRUE}, in addition of the fields listed
+    above, the data frame will also contain the total number of
+    trees associated with the study (\code{n_trees}), the tree id
+    that is a potential candidate for inclusion in the synthetic
+    tree (if any) (\code{candidate}), the year the study was
+    published (\code{study_year}), the title of the study
+    (\code{title}), the DOI for the study (\code{study_doi}).
 }
 \description{
-Return a list of trees that match a given set of properties
+Return a list of studies for which trees match a given set of
+properties
 }
 \details{
 The list of possible values to be used as values for the argument
@@ -37,10 +58,14 @@ The list of possible values to be used as values for the argument
 }
 \examples{
 \dontrun{
-res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
+res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+                          detailed=FALSE)
 ## summary of the trees and associated studies that match this criterion
 res
-## the full list of trees for each study
+## With metadata about the studies (default)
+res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+                          detailed=TRUE)
+## The list of trees for each study that match the search criteria
 list_trees(res)
 ## the trees for a given study
 list_trees(res, study_id = "pg_2769")

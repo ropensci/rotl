@@ -26,45 +26,54 @@ studies_properties <- function(...) {
 }
 
 
-##' Return a list of studies that match given properties
+##' Return the identifiers of studies that match given properties
 ##'
 ##' @title Find a Study
 ##' @param exact Should exact matching be used? (logical, default
-##'   \code{FALSE})
+##'     \code{FALSE})
 ##' @param property The property to be searched on (character)
 ##' @param value The property value to be searched on (character)
 ##' @param detailed If \code{TRUE} (default), the function will return
-##'   a data frame that summarizes information about the study (see
-##'   \sQuote{Value}). Otherwise, it returns a vector (character) of
-##'   the study ids.
+##'     a data frame that summarizes information about the study (see
+##'     \sQuote{Value}). Otherwise, it only returns the study
+##'     identifiers.
 ##' @param verbose Should the output include all metadata (logical
-##'   default \code{FALSE})
+##'     default \code{FALSE})
 ##' @param ...  additional arguments to customize the API request (see
-##'   \code{\link{rotl}} package documentation).
+##'     \code{\link{rotl}} package documentation).
 ##' @return If \code{detailed=TRUE}, the function returns a data frame
-##'   listing the study id (\code{study_ids}), the number of trees
-##'   associated with this study (\code{n_trees}), the tree id that is
-##'   a candidate for the synthetic tree if any (\code{candidate}),
-##'   the year of publication of the study (\code{study_year}), the
-##'   title of the publication for the study (\code{title}), and the
-##'   DOI (Digital Object Identifier) for the study
-##'   (\code{study_doi}).
+##'     listing the study id (\code{study_ids}), the number of trees
+##'     associated with this study (\code{n_trees}), the tree id that
+##'     is a candidate for the synthetic tree if any
+##'     (\code{candidate}), the year of publication of the study
+##'     (\code{study_year}), the title of the publication for the
+##'     study (\code{title}), and the DOI (Digital Object Identifier)
+##'     for the study (\code{study_doi}).
 ##'
-##' If \code{detailed=FALSE}, the function returns a vector
-##' (character) of the study ids that match the query.
+##'     If \code{detailed=FALSE}, the function returns a data frame
+##'     with a single column containing the study identifiers.
 ##' @seealso \code{\link{studies_properties}} which lists properties
-##'   against which the studies can be searched. \code{\link{list_trees}}
+##'     against which the studies can be
+##'     searched. \code{\link{list_trees}}
 ##' @export
 ##' @examples
 ##' \dontrun{
+##' ## To match a study for which the identifier is already known
 ##' one_study <- studies_find_studies(property="ot:studyId", value="pg_719")
 ##' list_trees(one_study)
+##'
+##' ## To find studies pertaining to Mammals
 ##' mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
 ##'                                 value="mammalia")
+##' ## To extract the tree identifiers for each of the studies
 ##' list_trees(mammals)
+##' ## ... or for a given study
 ##' list_trees(mammals, "ot_308")
+##'
+##' ## Just the identifiers without other information about the studies
+##' mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
+##'                                 value="mammalia", detailed=FALSE)
 ##' }
-
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                                  exact=FALSE, detailed = TRUE, ...) {
     .res <- .studies_find_studies(property = property, value = value,
@@ -92,7 +101,8 @@ print.study_ids <- function(x, ...) {
     print(format(x), ...)
 }
 
-##' Return a list of trees that match a given set of properties
+##' Return a list of studies for which trees match a given set of
+##' properties
 ##'
 ##' The list of possible values to be used as values for the argument
 ##' \code{property} can be found using the function
@@ -102,15 +112,34 @@ print.study_ids <- function(x, ...) {
 ##' @param property The property to be searched on (character)
 ##' @param value The property-value to be searched on (character)
 ##' @param verbose Should the output include all metadata? (logical,
-##'   default \code{FALSE})
-##' @param exact Should exact matching be used? (logical, default
-##'   \code{FALSE})
+##'     default \code{FALSE})
+##' @param exact Should exact matching be used for the value?
+##'     (logical, default \code{FALSE})
+##' @param detailed Should a detailed report be provided? If
+##'     \code{TRUE} (default), the output will include metadata about
+##'     the study that include trees matching the property. Otherwise,
+##'     only information about the trees will be provided.
 ##' @param ... additional arguments to customize the API request (see
-##'   \code{\link{rotl}} package documentation).
+##'     \code{\link{rotl}} package documentation).
 ##' @return A data frame that summarizes the trees found (and their
-##'   associated studies) for the requested criteria. If a study has
-##'   more than 5 trees, the \code{tree_ids} of the first ones will be
-##'   shown followed by \code{...} to indicate that more are present.
+##'     associated studies) for the requested criteria. If a study has
+##'     more than 5 trees, the \code{tree_ids} of the first ones will
+##'     be shown, followed by \code{...} to indicate that more are
+##'     present.
+##'
+##'     If \code{detailed=FALSE}, the data frame will include the
+##'     study ids of the study (\code{study_ids}), the number of trees
+##'     in this study that match the search criteria
+##'     (\code{n_matched_trees}), the tree ids that match the search
+##'     criteria (\code{study_ids}).
+##'
+##'     If \code{detailed=TRUE}, in addition of the fields listed
+##'     above, the data frame will also contain the total number of
+##'     trees associated with the study (\code{n_trees}), the tree id
+##'     that is a potential candidate for inclusion in the synthetic
+##'     tree (if any) (\code{candidate}), the year the study was
+##'     published (\code{study_year}), the title of the study
+##'     (\code{title}), the DOI for the study (\code{study_doi}).
 ##'
 ##' @seealso \code{\link{studies_properties}} which lists properties
 ##'   the studies can be searched on. \code{\link{list_trees}} for
@@ -118,10 +147,14 @@ print.study_ids <- function(x, ...) {
 ##' @export
 ##' @examples
 ##' \dontrun{
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia")
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##'                           detailed=FALSE)
 ##' ## summary of the trees and associated studies that match this criterion
 ##' res
-##' ## the full list of trees for each study
+##' ## With metadata about the studies (default)
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##'                           detailed=TRUE)
+##' ## The list of trees for each study that match the search criteria
 ##' list_trees(res)
 ##' ## the trees for a given study
 ##' list_trees(res, study_id = "pg_2769")
