@@ -127,16 +127,16 @@ print.study_ids <- function(x, ...) {
 ##' list_trees(res, study_id = "pg_2769")
 ##' }
 studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
-                               exact=FALSE, ...) {
-    res <- .studies_find_trees(property = property, value = value,
+                               exact=FALSE, detailed = TRUE, ...) {
+    .res <- .studies_find_trees(property = property, value = value,
                                verbose = verbose, exact = exact, ...)
-    study_ids <- vapply(res[["matched_studies"]],
+    study_ids <- vapply(.res[["matched_studies"]],
                         function(x) x[["ot:studyId"]],
                         character(1))
-    n_trees <- vapply(res[["matched_studies"]],
+    n_matched_trees <- vapply(.res[["matched_studies"]],
                       function(x) length(x[["matched_trees"]]),
                       numeric(1))
-    tree_ids <- lapply(res[["matched_studies"]],
+    tree_ids <- lapply(.res[["matched_studies"]],
                        function(x) {
                          sapply(x[["matched_trees"]],
                                 function(y) y[["nexson_id"]])
@@ -147,8 +147,15 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                            x <- c(x[1:5], "...")
                          paste(x, collapse = ", ")
                        }, character(1))
-    res <- data.frame(study_ids, n_trees, tree_ids = tree_str,
+    res <- data.frame(study_ids, n_matched_trees, tree_ids = tree_str,
                       stringsAsFactors = FALSE)
+    if (detailed) {
+        meta <- summarize_meta(study_ids)
+        res <- merge(meta, res)
+        attr(res, "metadata") <- attr(meta, "metadata")
+    } else {
+        attr(res, "metadata") <- .res
+    }
     attr(res, "found_trees") <- setNames(tree_ids, study_ids)
     class(res) <- c("matched_studies", class(res))
     res
