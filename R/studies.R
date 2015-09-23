@@ -73,31 +73,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                   function(x) x[["ot:studyId"]],
                   character(1))
     if (detailed) {
-        meta_raw <- lapply(res, function(x) get_study_meta(x))
-        meta <- lapply(meta_raw, function(m) {
-                           c(tree_ids =  list(get_tree_ids(m)),
-                             study_year = get_study_year(m),
-                             publication = get_publication(m),
-                             doi = attr(get_publication(m), "DOI"),
-                             candidate = candidate_for_synth(m)
-                             )
-        })
-        found_trees <- lapply(meta, function(m) {
-          m[["tree_ids"]]
-        })
-        found_trees <- setNames(found_trees, res)
-        dat <- lapply(meta, function(m) {
-                          c(n_trees = length(m[["tree_ids"]]),
-                            candidate = paste(m[["candidate"]], collapse = ", "), ## there should only be one, but just in case
-                            study_year = m[["study_year"]],
-                            title =  extract_title(m[["publication"]]),
-                            study_doi = m[["doi"]])
-        })
-        dat <- do.call("rbind", dat)
-        dat <- cbind(study_ids = res, dat)
-        rownames(dat) <- NULL
-        dat <- data.frame(dat, stringsAsFactors = FALSE)
-        attr(dat, "found_trees") <- found_trees
+      dat <- summarize_meta(res)
     } else {
         meta_raw <- .res
         dat <- res
@@ -114,27 +90,6 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' @export
 print.study_ids <- function(x, ...) {
     print(format(x), ...)
-}
-
-## Unexported function that attempts to extract title from the
-## citation information associated with the study information. The
-## function gets the element that follows what looks like a year in
-## the string.
-## pub_orig: the publication string extracted from the study metadata
-## split_char: the character on which the bibliographic elements are
-## separated with. (currently only deals with . and ,)
-extract_title <- function(pub_orig, split_char = "\\.") {
-    pub <- unlist(strsplit(pub_orig, split = split_char))
-    pub <- gsub("^\\s|\\s$", "",  pub)
-    which_year <- grep("^\\d{4}$", pub)
-    res <- pub[which_year + 1]
-    if (length(res) > 0)
-        return(res)
-    else if (split_char == ",") {
-        return(character(0))
-    } else {
-        extract_title(pub_orig, ",")
-    }
 }
 
 ##' Return a list of trees that match a given set of properties
