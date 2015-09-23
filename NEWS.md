@@ -4,10 +4,10 @@
   studies. The function takes the output of `studies_find_studies` or
   `studies_find_trees`.
 
-* `studies_find_studies` gains argument `detailed` (default set to `TRUE`), that
-  produces a data frame summarizing information (title of the study, year of
-  publication, DOI, ids of associated trees, ...) about the studies matching the
-  query.
+* `studies_find_studies` and `studies_find_trees` gain argument `detailed`
+  (default set to `TRUE`), that produces a data frame summarizing information
+  (title of the study, year of publication, DOI, ids of associated trees, ...)
+  about the studies matching the search criteria.
 
 * `get_study_tree` gains argument `deduplicate`. When `TRUE`, if the tree
   returned for a given study contains duplicated tip labels, they will be made
@@ -16,6 +16,9 @@
 
 * New method `get_study_year` for objects of class `study_meta` that returns the
   year of publication of the study.
+
+* A more robust approach is used by `get_tree_ids` to identify the tree ids in
+  the metadata returned by the API
 
 ## rotl 0.4.1
 
