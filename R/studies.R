@@ -76,13 +76,13 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
       dat <- summarize_meta(res)
     } else {
         meta_raw <- .res
-        dat <- res
+        dat <- data.frame(study_ids = res, stringsAsFactors = FALSE)
         attr(dat, "found_trees") <- paste("If you want to get a list of the",
                                           "trees associated with the studies,",
                                           "use", sQuote("detailed = TRUE"))
         class(dat) <- c("study_ids", class(dat))
+        attr(dat, "metadata") <- meta_raw
     }
-    attr(dat, "metadata") <- meta_raw
     class(dat) <- c("matched_studies", class(dat))
     dat
 }
