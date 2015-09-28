@@ -4,7 +4,7 @@ author: "David Winter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Connecting data to Open Tree trees?}
+  %\VignetteIndexEntry{Connecting data to Open Tree trees}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
