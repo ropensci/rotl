@@ -13,3 +13,4 @@
 .DS_Store
 tmp/
 inst/doc
+/.projectile
