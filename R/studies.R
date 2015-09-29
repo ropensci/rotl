@@ -43,8 +43,9 @@ studies_properties <- function(...) {
 ##'     \code{\link{rotl}} package documentation).
 ##' @return If \code{detailed=TRUE}, the function returns a data frame
 ##'     listing the study id (\code{study_ids}), the number of trees
-##'     associated with this study (\code{n_trees}), the tree id that
-##'     is a candidate for the synthetic tree if any
+##'     associated with this study (\code{n_trees}), the tree ids (at
+##'     most 5) associated with the studies (\code{tree_ids}), the
+##'     tree id that is a candidate for the synthetic tree if any
 ##'     (\code{candidate}), the year of publication of the study
 ##'     (\code{study_year}), the title of the publication for the
 ##'     study (\code{title}), and the DOI (Digital Object Identifier)
@@ -54,7 +55,8 @@ studies_properties <- function(...) {
 ##'     with a single column containing the study identifiers.
 ##' @seealso \code{\link{studies_properties}} which lists properties
 ##'     against which the studies can be
-##'     searched. \code{\link{list_trees}}
+##'     searched. \code{\link{list_trees}} that returns a list for all
+##'     tree ids associated with a study.
 ##' @export
 ##' @examples
 ##' \dontrun{
@@ -82,7 +84,7 @@ studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                   function(x) x[["ot:studyId"]],
                   character(1))
     if (detailed) {
-      dat <- summarize_meta(res)
+        dat <- summarize_meta(res)
     } else {
         meta_raw <- .res
         dat <- data.frame(study_ids = res, stringsAsFactors = FALSE)
@@ -131,11 +133,12 @@ print.study_ids <- function(x, ...) {
 ##'     study ids of the study (\code{study_ids}), the number of trees
 ##'     in this study that match the search criteria
 ##'     (\code{n_matched_trees}), the tree ids that match the search
-##'     criteria (\code{study_ids}).
+##'     criteria (\code{match_tree_ids}).
 ##'
 ##'     If \code{detailed=TRUE}, in addition of the fields listed
 ##'     above, the data frame will also contain the total number of
-##'     trees associated with the study (\code{n_trees}), the tree id
+##'     trees associated with the study (\code{n_trees}), all the tree
+##'     ids associated with the study (\code{tree_ids}), the tree id
 ##'     that is a potential candidate for inclusion in the synthetic
 ##'     tree (if any) (\code{candidate}), the year the study was
 ##'     published (\code{study_year}), the title of the study
@@ -167,20 +170,15 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
                         function(x) x[["ot:studyId"]],
                         character(1))
     n_matched_trees <- vapply(.res[["matched_studies"]],
-                      function(x) length(x[["matched_trees"]]),
-                      numeric(1))
-    tree_ids <- lapply(.res[["matched_studies"]],
-                       function(x) {
-                         sapply(x[["matched_trees"]],
-                                function(y) y[["nexson_id"]])
-                       })
-    tree_str <- vapply(tree_ids,
-                       function(x) {
-                         if (length(x) > 4)
-                           x <- c(x[1:5], "...")
-                         paste(x, collapse = ", ")
-                       }, character(1))
-    res <- data.frame(study_ids, n_matched_trees, tree_ids = tree_str,
+                              function(x) length(x[["matched_trees"]]),
+                              numeric(1))
+    match_tree_ids <- lapply(.res[["matched_studies"]],
+                             function(x) {
+        sapply(x[["matched_trees"]],
+               function(y) y[["nexson_id"]])
+    })
+    tree_str <- vapply(match_tree_ids, limit_trees, character(1))
+    res <- data.frame(study_ids, n_matched_trees, match_tree_ids = tree_str,
                       stringsAsFactors = FALSE)
     if (detailed) {
         meta <- summarize_meta(study_ids)
@@ -189,7 +187,7 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
     } else {
         attr(res, "metadata") <- .res
     }
-    attr(res, "found_trees") <- setNames(tree_ids, study_ids)
+    attr(res, "found_trees") <- setNames(match_tree_ids, study_ids)
     class(res) <- c("matched_studies", class(res))
     res
 }

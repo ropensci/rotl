@@ -29,8 +29,9 @@ identifiers.}
 \value{
 If \code{detailed=TRUE}, the function returns a data frame
     listing the study id (\code{study_ids}), the number of trees
-    associated with this study (\code{n_trees}), the tree id that
-    is a candidate for the synthetic tree if any
+    associated with this study (\code{n_trees}), the tree ids (at
+    most 5) associated with the studies (\code{tree_ids}), the
+    tree id that is a candidate for the synthetic tree if any
     (\code{candidate}), the year of publication of the study
     (\code{study_year}), the title of the publication for the
     study (\code{title}), and the DOI (Digital Object Identifier)
@@ -64,6 +65,7 @@ mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
 \seealso{
 \code{\link{studies_properties}} which lists properties
     against which the studies can be
-    searched. \code{\link{list_trees}}
+    searched. \code{\link{list_trees}} that returns a list for all
+    tree ids associated with a study.
 }
 

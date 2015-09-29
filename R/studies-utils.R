@@ -21,11 +21,12 @@ summarize_meta <- function(study_ids) {
     })
     ## Convert into a data frame
     dat <- lapply(meta, function(m) {
-      r <- c(n_trees = length(m[["tree_ids"]]),
-             candidate = paste(m[["candidate"]], collapse = ", "),
-             study_year = m[["study_year"]],
-             title =  fill(extract_title(m[["publication"]])),
-             study_doi = m[["doi"]])
+        c(n_trees = length(m[["tree_ids"]]),
+          tree_ids = limit_trees(m[["tree_ids"]]),
+          candidate = paste(m[["candidate"]], collapse = ", "),
+          study_year = m[["study_year"]],
+          title =  fill(extract_title(m[["publication"]])),
+          study_doi = m[["doi"]])
     })
     dat <- do.call("rbind", dat)
     dat <- cbind(study_ids = study_ids, dat)
@@ -64,4 +65,12 @@ extract_title <- function(pub_orig, split_char = "\\.") {
     } else {
         extract_title(pub_orig, ",")
     }
+}
+
+## Unexported function that limit the display of tree_ids to the first
+## 5 values.
+limit_trees <- function(x) {
+    if (length(x) > 4)
+        x <- c(x[1:5], "...")
+    paste(x, collapse = ", ")
 }

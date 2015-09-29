@@ -13,7 +13,7 @@ list_trees(matched_studies, ...)
 }
 \arguments{
 \item{matched_studies}{an object created by
-\code{studies_find_trees}}
+\code{studies_find_trees} or \code{studies_find_studies}.}
 
 \item{...}{Currently unused}
 
@@ -27,8 +27,10 @@ list_trees(matched_studies, ...)
     as a vector.
 }
 \description{
-List trees ids in objects returned by
-\code{\link{studies_find_studies}} and
+\code{list_trees} returns all trees associated with a particular
+study when used on an object returned by
+\code{\link{studies_find_studies}}, but only the trees that match
+the search criteria when used on objects returned by
 \code{\link{studies_find_trees}}.
 }
 \seealso{

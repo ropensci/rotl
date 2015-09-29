@@ -307,8 +307,9 @@ test_that("single study detailed=TRUE", {
                                           value = "ot_248", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_true(all(names(res) %in% c("study_ids", "n_trees", "candidate",
-                                                "study_year", "title", "study_doi")))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
+                                                "candidate", "study_year", "title",
+                                                "study_doi")))
               expect_true(nrow(res) >= 1L)
               expect_equal(res[["study_ids"]], "ot_248")
               expect_equal(res[["n_trees"]], "1")
@@ -342,8 +343,9 @@ test_that("multiple studies detailed=TRUE", {
                                           value = "Aves", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_true(all(names(res) %in% c("study_ids", "n_trees", "candidate",
-                                                "study_year", "title", "study_doi")))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
+                                                "candidate", "study_year",
+                                                "title", "study_doi")))
               expect_true(nrow(res) >= 8L)
               expect_true(length(attr(res, "metadata")) > 0)
               expect_true(length(attr(res, "found_trees")) > 0)
@@ -375,7 +377,9 @@ test_that("studies_find_trees single study detailed=FALSE", {
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
               expect_match(attr(res, "found_trees"), "Tr76302")
-              expect_equal(names(res), c("study_ids", "n_matched_trees", "tree_ids"))
+              expect_equal(names(res), c("study_ids",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
               expect_equal(res[1, 1], "ot_248")
               expect_equal(nrow(res), 1L)
               expect_equal(ncol(res), 3L)
@@ -389,9 +393,12 @@ test_that("studies_find_trees single study detailed=TRUE", {
                                         value = "ot_248", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_equal(names(res), c("study_ids", "n_trees", "candidate",
-                                         "study_year", "title", "study_doi",
-                                         "n_matched_trees", "tree_ids"))
+              expect_equal(names(res), c("study_ids", "n_trees",
+                                         "tree_ids", "candidate",
+                                         "study_year", "title",
+                                         "study_doi",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
               expect_equal(nrow(res), 1L)
               expect_equal(res[["study_ids"]], "ot_248")
               expect_equal(res[["n_trees"]], "1")
@@ -410,9 +417,12 @@ test_that("studies_find_trees multiple studies detailed=TRUE", {
                                         value = "Echinodermata", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_equal(names(res), c("study_ids", "n_trees", "candidate",
-                                         "study_year", "title", "study_doi",
-                                         "n_matched_trees", "tree_ids"))
+              expect_equal(names(res), c("study_ids", "n_trees",
+                                         "tree_ids", "candidate",
+                                         "study_year", "title",
+                                         "study_doi",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
               expect_true(nrow(res) >= 5L)
               expect_true(length(attr(res, "metadata")) > 0)
               expect_true(length(attr(res, "found_trees")) > 0)
@@ -425,7 +435,8 @@ test_that("studies_find_trees multiple studies detailed=FALSE", {
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
               expect_equal(names(res), c("study_ids",
-                                         "n_matched_trees", "tree_ids"))
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
               expect_true(nrow(res) >= 5L)
               expect_true(length(attr(res, "metadata")) > 0)
               expect_true(length(attr(res, "found_trees")) > 0)

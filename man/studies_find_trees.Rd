@@ -37,11 +37,12 @@ A data frame that summarizes the trees found (and their
     study ids of the study (\code{study_ids}), the number of trees
     in this study that match the search criteria
     (\code{n_matched_trees}), the tree ids that match the search
-    criteria (\code{study_ids}).
+    criteria (\code{match_tree_ids}).
 
     If \code{detailed=TRUE}, in addition of the fields listed
     above, the data frame will also contain the total number of
-    trees associated with the study (\code{n_trees}), the tree id
+    trees associated with the study (\code{n_trees}), all the tree
+    ids associated with the study (\code{tree_ids}), the tree id
     that is a potential candidate for inclusion in the synthetic
     tree (if any) (\code{candidate}), the year the study was
     published (\code{study_year}), the title of the study
