@@ -24,7 +24,7 @@ summarize_meta <- function(study_ids) {
       r <- c(n_trees = length(m[["tree_ids"]]),
              candidate = paste(m[["candidate"]], collapse = ", "),
              study_year = m[["study_year"]],
-             title =  extract_title(m[["publication"]]),
+             title =  fill(extract_title(m[["publication"]])),
              study_doi = m[["doi"]])
     })
     dat <- do.call("rbind", dat)
@@ -55,7 +55,7 @@ summarize_meta <- function(study_ids) {
 extract_title <- function(pub_orig, split_char = "\\.") {
     pub <- unlist(strsplit(pub_orig, split = split_char))
     pub <- gsub("^\\s|\\s$", "",  pub)
-    which_year <- grep("^\\d{4}$", pub)
+    which_year <- grep("^\\d{4}[a-z]?$", pub)
     res <- pub[which_year + 1]
     if (length(res) > 0)
         return(res)
