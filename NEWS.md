@@ -1,5 +1,9 @@
 ## rotl 0.4.1.999
 
+* New utility function `strip_ott_ids` removes OTT id information from 
+  a character vector, making it easier to match tip labels in trees returned by
+  `tol_induced_subtree` to taxonomic names in other data sources.
+
 * New method `list_trees` returns a list of tree ids associated with
   studies. The function takes the output of `studies_find_studies` or
   `studies_find_trees`.
