@@ -96,3 +96,16 @@ test_that("tol_mrca returns a list", {
                         "invalid_ott_ids","mrca_node_id",
                         "nearest_taxon_mrca_rank")))
 })
+
+############################################################################
+## strip_ott_ids                                                          ##
+############################################################################
+
+test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
+    skip_on_cran()
+    genera <- c("Dendroica", "Cinclus", "Stellula", "Struthio")
+    tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104))
+    expect_true(all(strip_ott_ids(tr$tip.label) %in% genera))
+
+})
+

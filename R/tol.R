@@ -230,3 +230,23 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
         return(phy)
     }
 }
+
+
+##' Strip OTT ids from tip labels
+##' @param tip_labels a character vector containing tip labels (most likely 
+##'     the \code{tip.label} element from a tree returned by
+##'     \code{\link{tol_induced_subtree}}
+##' @return A character vector containing the contents of \code{tip_labels}
+##'     with any OTT ids removed.
+##' @examples
+##' \dontrun{
+##' genera <- c("Perdix", "Clangula", "Dendroica", "Cinclus", "Stellula", "Struthio")
+##' tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' tr$tip.label %in% genera
+##' tr$tip.label <- strip_ott_ids(tr$tip.label)
+##' tr$tip.label %in% genera
+##'}
+##'@export
+strip_ott_ids <- function(tip_labels){
+    sub("_ott\\d+$", "", tip_labels)
+}
