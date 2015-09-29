@@ -16,13 +16,13 @@ summarize_meta <- function(study_ids) {
         study_year = fill(get_study_year(m)),
         publication = fill(get_publication(m)),
         doi = fill(attr(get_publication(m), "DOI")),
-        candidate = fill(candidate_for_synth(m))
+        candidate = fill(list(candidate_for_synth(m)))
         )
     })
     ## Convert into a data frame
     dat <- lapply(meta, function(m) {
       r <- c(n_trees = length(m[["tree_ids"]]),
-             candidate = paste(m[["candidate"]], collapse = ", "), ## there should only be one, but just in case
+             candidate = paste(m[["candidate"]], collapse = ", "),
              study_year = m[["study_year"]],
              title =  extract_title(m[["publication"]]),
              study_doi = m[["doi"]])
