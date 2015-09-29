@@ -3,7 +3,7 @@
 ## to generate the output when using the argument detailed=TRUE
 summarize_meta <- function(study_ids) {
     fill <- function(x) {
-        if (length(x)) {
+        if (length(unlist(x))) {
             x
         } else {
             ""
