@@ -1,0 +1,142 @@
+---
+title: "Using the Open Tree synthesis in a comparative analysis"
+author: "David Winter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the Open Tree synthesis in a comparative analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Phylogenetic Comparative Methods
+
+The development of phylogenetic comparative methods has made phylogenies and
+important source of data in fields as diverse as ecology, genomics and medicine.
+Comarative  methods can be used to investigate patterns in the evolution of 
+traits or the diversification of lineages. In other cases a phylogeny is treated
+as a "nusissance paramater", allowing with the autocorrelation created by the shared
+evolutionary history of the different species included to be controlled for. 
+
+In many cases finding a tree that relates the species for which trait data are
+available is a rate-limiting step in such comparative analyses. Here we show
+how the synthetic tree provided by Open Tree of Life (and made availale in R via 
+`rotl`) can help to fill this gap. 
+
+## A phylogenetic meta-analysis
+
+To demonstrate the use of `rotl` in a comparative analysis, we will partially
+reproduce the results of [Rutkowska _et al_ 2014](dx.doi.org/10.1111/jeb.12282).
+Very briefly, this study is a meta-analysis summarising the results of multiple
+studies testing for systematic differences in the size of eggs which contain 
+male and female offspring. Such a difference might mean that birds invest more 
+heavily in one sex than the other. 
+
+Because this study involves data from 51 different species, Rutkowska _et al_ 
+used a phylogenetic comparative approach to account for the shared evolution
+history among some of the studied-species.
+
+### Gather the data
+
+If we are going to reproduce this analysis, we will first need to gather the
+data. Thankfully, the data is available as supplementary material from the
+publisher's website. We can collect the data from using `fulltext` (with the
+papers DOI as input) and read it into memory with `readxl`: 
+
+```{r egg_data, cache=TRUE}
+library(readxl)
+library(rotl)
+library(fulltext)
+
+doi <- "10.1111/jeb.12282"
+egg_data <- read_excel( ft_get_si(doi, 1, save.name="egg.xls") )
+egg_data
+```
+
+In order to use this data later on we need to first convert it to a standard
+`data.frame`. We can also convert the `animal` column (the species names) to
+lower case which will make matching the names easier:
+
+```{r, clean_eggs}
+egg_data <- as.data.frame(egg_data)
+egg_data$animal <- tolower(egg_data$animal)
+```
+### Find the species in OTT
+
+We can use the OTL synthesis tree to relate these species, but we first need to
+find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
+Taxonomic Name Resolution Service function `tnrs_match_names`:
+
+```{r, birds, cache=TRUE}
+taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
+head(taxa)
+```
+
+All of these species are in OTT, but a few of them go by different names in the
+Open Tree than we have in our data set. Because the tree we get `rotl` fetches
+with have Open Tree names, we need to create a named vector that maps the names
+we have for each species to the names Open Tree uses for them:
+
+
+```{r bird_map}
+taxon_map <- structure(taxa$search_string, names=taxa$unique_name)
+```
+
+### Get a tree
+
+Now we can get the tree. There are really too many tips here to show so let's
+skip them:
+
+```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
+tr <- tol_induced_subtree(taxa$ott_id)
+plot(tr, show.tip.label=FALSE)
+```
+
+There are a few things to note here. First, the tree has not branch lengths.
+At present this is true for the whole of the Open Tree synthetic tree. Some
+comparative methods require and ultrametric tree, in which case you'll need some
+way to introduce branch lengths. You could possibly to this by fetching DNA
+sequencing from the NCBI with `rentrez`, or "hanging" the tree on nodes of known
+age using the penalized likelihood method in `ape::chronos`. In this case we
+will use only the topology of the tree. 
+
+Second, the tip labels contain OTT IDs. We can use the convenience function
+`strip_ott_ids` to remove them. Finally the tree contains node labels, some
+methods do not expect nodes to be labled and an thus crash when they encountr
+them. Here we clean up the tip labels and remove the node labels:
+
+
+```{r clean_tips}
+otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
+tr$tip.label <- taxon_map[ otl_tips ]
+tr$node.label <- NULL
+```
+
+
+### Perform the meta-analysis
+
+
+```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
+plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16, 
+     ylab="Effect size (Zr)",
+     xlab="Precision (1/SE)", 
+     main="Effect sizes for sex bias in egg size in 51 brid species" )
+```
+
+
+```{r model, echo=FALSE}
+library(MCMCglmm)
+model <- MCMCglmm(Zr~1,random=~animal, 
+                       pedigree=tr,
+                       data=egg_data, 
+                       verbose=FALSE)
+```
+
+```{r PhyH}
+var_comps <- colMeans(model$VCV )
+var_comps["animal"] / sum(var_comps)
+```
+
+
+
+
