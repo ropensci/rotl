@@ -53,9 +53,28 @@ egg_data <- read_excel( ft_get_si(doi, 1, save.name="egg.xls") )
 egg_data
 ```
 
+The most important variable in this dataset is `Zr`, which is a [normalized
+effect size](https://en.wikipedia.org/wiki/Fisher_transformation) for difference 
+in size between eggs that contain males and females. Values close to zero come 
+from studies that found the sex of an egg's inhabitant had little effect in its size,  
+while large positive or negative values correspond to studies with substantial
+sex biases (towards males and females respectively). Since this is a
+meta-analysis we should prodce the classic [funnel plot](https://en.wikipedia.org/wiki/Funnel_plot)
+with effects-size on the y-axis and precision (the inverse of the sample
+standard error) on the x-axis. Here we calcualte precision from the sample
+variance (`Vzr`):
+
+```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
+plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16, 
+     ylab="Effect size (Zr)",
+     xlab="Precision (1/SE)", 
+     main="Effect sizes for sex bias in egg size among 51 brid species" )
+```
+
+
 In order to use this data later on we need to first convert it to a standard
 `data.frame`. We can also convert the `animal` column (the species names) to
-lower case which will make matching the names easier:
+lower case which will make it easier to match names later on:
 
 ```{r, clean_eggs}
 egg_data <- as.data.frame(egg_data)
@@ -63,7 +82,7 @@ egg_data$animal <- tolower(egg_data$animal)
 ```
 ### Find the species in OTT
 
-We can use the OTL synthesis tree to relate these species, but we first need to
+We can use the OTL synthesis tree to relate these species. To do so we first need to
 find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
 Taxonomic Name Resolution Service function `tnrs_match_names`:
 
@@ -73,8 +92,8 @@ head(taxa)
 ```
 
 All of these species are in OTT, but a few of them go by different names in the
-Open Tree than we have in our data set. Because the tree we get `rotl` fetches
-with have Open Tree names, we need to create a named vector that maps the names
+Open Tree than we have in our data set. Because the tree `rotl` fetches
+will have Open Tree names, we need to create a named vector that maps the names
 we have for each species to the names Open Tree uses for them:
 
 
@@ -84,8 +103,8 @@ taxon_map <- structure(taxa$search_string, names=taxa$unique_name)
 
 ### Get a tree
 
-Now we can get the tree. There are really too many tips here to show so let's
-skip them:
+Now we can get the tree. There are really too many tips here to show nicely, so
+we will leave them out of this plot
 
 ```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
 tr <- tol_induced_subtree(taxa$ott_id)
@@ -94,17 +113,23 @@ plot(tr, show.tip.label=FALSE)
 
 There are a few things to note here. First, the tree has not branch lengths.
 At present this is true for the whole of the Open Tree synthetic tree. Some
-comparative methods require and ultrametric tree, in which case you'll need some
-way to introduce branch lengths. You could possibly to this by fetching DNA
-sequencing from the NCBI with `rentrez`, or "hanging" the tree on nodes of known
-age using the penalized likelihood method in `ape::chronos`. In this case we
-will use only the topology of the tree. 
+comparative methods require either branch lengths or an ultrametric tree. If 
+you want to use those methods you will to use one of the published trees from
+`studies_find_trees` (many of which have branc lengths) or estimate branch lengths
+from the toplogies returned by `tol_induced_subtree`.  You could possibly to this by 
+fetching DNA sequences for each species NCBI with `rentrez`, or "hanging" the 
+tree on nodes of known age using the penalized likelihood method in `ape::chronos`.
+In this case we will use only the topology of the tree as input to our
+comparative method, so we can skip these steps.
 
-Second, the tip labels contain OTT IDs. We can use the convenience function
-`strip_ott_ids` to remove them. Finally the tree contains node labels, some
-methods do not expect nodes to be labled and an thus crash when they encountr
-them. Here we clean up the tip labels and remove the node labels:
-
+Second, the tip labels contain OTT IDs, which means they will not perfectly
+match the species names in our dataset or the taxon map that we created earlier. 
+We can use the convenience function `strip_ott_ids` to remove the IDs. Finally 
+the tree contains node labels for those nodes that match a higher taxonomic
+group, and empty chractcer vectors (`""`)for all other node labels. Some
+comparative methods either do no expect node labels at all, or require all nodes
+to be labled uniquely. We can deal with this by simply setting the `node.label`
+attribute of the tree to `NULL`:
 
 ```{r clean_tips}
 otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
@@ -112,31 +137,50 @@ tr$tip.label <- taxon_map[ otl_tips ]
 tr$node.label <- NULL
 ```
 
-
 ### Perform the meta-analysis
 
 
-```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
-plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16, 
-     ylab="Effect size (Zr)",
-     xlab="Precision (1/SE)", 
-     main="Effect sizes for sex bias in egg size in 51 brid species" )
-```
+Now we have data, a tree, and the knowdge that the species names in each match
+each other. It's time to the comparative analysis. Rutkowska used `MCMCglmm`, a
+Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis 
+and we will follow suit. Of course, analysing these results well could require
+careful consideration of the best priors to use and inspection of the results.
+
+Since we are really interested in using this as a demonstration, we will just
+run a simple model. We wont include any predictors that might explain the values
+of `Zr` other than the random factor `animal` which corresponds to the
+phylogenetic relationsips among species. We also use `Zvr` as the measurement
+error variance, effectively adding extra weight to the results of more powerful 
+studies. Here's how we the model:
 
 
 ```{r model, echo=FALSE}
 library(MCMCglmm)
+set.seed(123)
+
+pr<-list(R=list(V=1,nu=0.002),
+             G=list(G1=list(V=1,nu=0.002))
+)
+
 model <- MCMCglmm(Zr~1,random=~animal, 
                        pedigree=tr,
+                       mev=egg_data$VZr,
+                       prior=pr,                  
                        data=egg_data, 
                        verbose=FALSE)
 ```
+
+We can use the object resutned by `MCMCglmm` to get an estimate of how much
+phylogenetic signal exists for `Zr`. In a multi-level model we can use variance
+components to look at this, specifically the proportions of the total variance
+that can be explained by phylogeny is called the phylogenetic hertiability:
+
 
 ```{r PhyH}
 var_comps <- colMeans(model$VCV )
 var_comps["animal"] / sum(var_comps)
 ```
 
-
-
-
+And in this case it eppears there is almost no phylogenetic signal to the data,
+it explains much less that one percent of the variance. If you were wondering, 
+Rutkowska et al report a very similar result.
