@@ -12,15 +12,15 @@ vignette: >
 ## Phylogenetic Comparative Methods
 
 The development of phylogenetic comparative methods has made phylogenies and
-important source of data in fields as diverse as ecology, genomics and medicine.
-Comarative  methods can be used to investigate patterns in the evolution of 
+important source of data in fields as diverse as ecology, genomic and medicine.
+Comparative  methods can be used to investigate patterns in the evolution of 
 traits or the diversification of lineages. In other cases a phylogeny is treated
-as a "nusissance paramater", allowing with the autocorrelation created by the shared
+as a "nuisance parameter", allowing with the autocorrelation created by the shared
 evolutionary history of the different species included to be controlled for. 
 
 In many cases finding a tree that relates the species for which trait data are
 available is a rate-limiting step in such comparative analyses. Here we show
-how the synthetic tree provided by Open Tree of Life (and made availale in R via 
+how the synthetic tree provided by Open Tree of Life (and made available in R via 
 `rotl`) can help to fill this gap. 
 
 ## A phylogenetic meta-analysis
@@ -33,7 +33,7 @@ male and female offspring. Such a difference might mean that birds invest more
 heavily in one sex than the other. 
 
 Because this study involves data from 51 different species, Rutkowska _et al_ 
-used a phylogenetic comparative approach to account for the shared evolution
+used a phylogenetic comparative approach to account for the shared evolutionary
 history among some of the studied-species.
 
 ### Gather the data
@@ -59,9 +59,9 @@ in size between eggs that contain males and females. Values close to zero come
 from studies that found the sex of an egg's inhabitant had little effect in its size,  
 while large positive or negative values correspond to studies with substantial
 sex biases (towards males and females respectively). Since this is a
-meta-analysis we should prodce the classic [funnel plot](https://en.wikipedia.org/wiki/Funnel_plot)
+meta-analysis we should produce the classic [funnel plot](https://en.wikipedia.org/wiki/Funnel_plot)
 with effects-size on the y-axis and precision (the inverse of the sample
-standard error) on the x-axis. Here we calcualte precision from the sample
+standard error) on the x-axis. Here we calculate precision from the sample
 variance (`Vzr`):
 
 ```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
@@ -70,7 +70,6 @@ plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
      xlab="Precision (1/SE)", 
      main="Effect sizes for sex bias in egg size among 51 brid species" )
 ```
-
 
 In order to use this data later on we need to first convert it to a standard
 `data.frame`. We can also convert the `animal` column (the species names) to
@@ -101,6 +100,13 @@ we have for each species to the names Open Tree uses for them:
 taxon_map <- structure(taxa$search_string, names=taxa$unique_name)
 ```
 
+Now we can use this map to retrieve "data set names" from "OTT names":
+
+
+```{r odd_duck}
+taxon_map["Anser caerulescens"]
+```
+
 ### Get a tree
 
 Now we can get the tree. There are really too many tips here to show nicely, so
@@ -113,23 +119,31 @@ plot(tr, show.tip.label=FALSE)
 
 There are a few things to note here. First, the tree has not branch lengths.
 At present this is true for the whole of the Open Tree synthetic tree. Some
-comparative methods require either branch lengths or an ultrametric tree. If 
-you want to use those methods you will to use one of the published trees from
-`studies_find_trees` (many of which have branc lengths) or estimate branch lengths
-from the toplogies returned by `tol_induced_subtree`.  You could possibly to this by 
-fetching DNA sequences for each species NCBI with `rentrez`, or "hanging" the 
-tree on nodes of known age using the penalized likelihood method in `ape::chronos`.
-In this case we will use only the topology of the tree as input to our
-comparative method, so we can skip these steps.
+comparative methods require either branch lengths or an ultrametric tree. Before
+you can use one of those methods you will need to get a tree with branch
+lengths. You could try looking for published trees made available by the Open 
+Tree with `studies_find_trees`. Alternatively, you could estimate branch lengths
+from the toplogy of a phylogeny returned by `tol_induced_subtree`, perhaps by
+downloading DNA sequences from the NCBI with `rentrez` or "hanging" the tree on
+nodes of known-age using  penalized likelihood method in `ape::chronos`.
+In this case, we will use only the topology of the tree as input to our
+comparative analysis, so we can skip these steps.
 
 Second, the tip labels contain OTT IDs, which means they will not perfectly
 match the species names in our dataset or the taxon map that we created earlier. 
-We can use the convenience function `strip_ott_ids` to remove the IDs. Finally 
-the tree contains node labels for those nodes that match a higher taxonomic
-group, and empty chractcer vectors (`""`)for all other node labels. Some
+Finally, the tree contains node labels for those nodes that match a higher taxonomic
+group, and empty character vectors (`""`) for all other nodes. Some
 comparative methods either do no expect node labels at all, or require all nodes
-to be labled uniquely. We can deal with this by simply setting the `node.label`
+to be labeled nodes to have a unique name. 
+
+We can deal with this the details easily. `rotl` provides  the convenience 
+function `strip_ott_ids` to remove the extra information from the tip labels.
+With those cleaned up, we can replace the tip labels with the species names in
+our dataset.
 attribute of the tree to `NULL`:
+
+We can use the convenience function `strip_ott_ids` to remove the IDs.
+
 
 ```{r clean_tips}
 otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
@@ -140,18 +154,19 @@ tr$node.label <- NULL
 ### Perform the meta-analysis
 
 
-Now we have data, a tree, and the knowdge that the species names in each match
+Now we have data, a tree, and the know age that the species names in each match
 each other. It's time to the comparative analysis. Rutkowska used `MCMCglmm`, a
 Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis 
-and we will follow suit. Of course, analysing these results well could require
-careful consideration of the best priors to use and inspection of the results.
+and we will follow suit. Of course, to properly analyse these results you would
+take some care in deciding on the appropriate priors to use and inspect the
+results carefully. In this case, we are really interested in using this as a 
+demonstration, so we will just run a simple model.
 
-Since we are really interested in using this as a demonstration, we will just
-run a simple model. We wont include any predictors that might explain the values
-of `Zr` other than the random factor `animal` which corresponds to the
-phylogenetic relationsips among species. We also use `Zvr` as the measurement
+Specifically we sill fit a model where the only variable that might explain the 
+values of `Zr` is the random factor `animal`, which corresponds to the
+phylogenetic relationships among species. We also provide `Zvr` as the measurement
 error variance, effectively adding extra weight to the results of more powerful 
-studies. Here's how we the model:
+studies. Here's how we specify that model with `MCMCglmm`:
 
 
 ```{r model, echo=FALSE}
@@ -170,10 +185,12 @@ model <- MCMCglmm(Zr~1,random=~animal,
                        verbose=FALSE)
 ```
 
-We can use the object resutned by `MCMCglmm` to get an estimate of how much
-phylogenetic signal exists for `Zr`. In a multi-level model we can use variance
+
+Now that we have a result we can find out how much phylogenetic signal exists
+for sex-biased differences in egg-size. In a multi-level model we can use variance
 components to look at this, specifically the proportions of the total variance
-that can be explained by phylogeny is called the phylogenetic hertiability:
+that can be explained by phylogeny is called the phylogenetic reliability, _H_. Let's
+calculate the _H_ for this model:
 
 
 ```{r PhyH}
@@ -181,6 +198,20 @@ var_comps <- colMeans(model$VCV )
 var_comps["animal"] / sum(var_comps)
 ```
 
-And in this case it eppears there is almost no phylogenetic signal to the data,
-it explains much less that one percent of the variance. If you were wondering, 
-Rutkowska et al report a very similar result.
+It appears there is almost no phylogenetic signal to the data. 
+The relationships among species explain much less that one percent of the total
+variance in the data. If you were wondering,  Rutkowska et al report a similar result, 
+even after adding more predictors to their model most of the variance in `Zr`
+was left unexplained.
+
+## What other comparative methods can I use in R?
+
+Here we have demonstrated just one comparative analysis that you might do in R.
+There are an ever-growing number of packages that allow an ever-growing number
+of analysis to performed in R. Some "classics" like ancestral state
+reconstruction,  phylogenetic independent contrasts and lineage through time plots
+are implemented in `ape`. Packages like `phytools`, `caper` and `diversitree`
+provide extensions to these methods.  The [CRAN Phylogenetics Taskview](https://cran.r-project.org/web/views/Phylogenetics.html)
+gives a good idea of the diversity of packages and analyses that can be
+completed in R.
+
