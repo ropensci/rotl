@@ -1,5 +1,8 @@
 ## rotl 0.4.1.999
 
+* Improve warning and format of the result if one of the taxa requested doesn't
+  match anything `tnrs_match_names`.
+
 * In the data frame returned by `tnrs_match_names`, the columns
   `approximate_match`, `is_synonym` and `is_deprecated` are now `logical`
   (instead of `character`) [issue #54]
