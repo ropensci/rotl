@@ -1,6 +1,10 @@
 ## rotl 0.4.1.999
 
-* New utility function `strip_ott_ids` removes OTT id information from 
+* In the data frame returned by `tnrs_match_names`, the columns
+  `approximate_match`, `is_synonym` and `is_deprecated` are now `logical`
+  (instead of `character`) [issue #54]
+
+* New utility function `strip_ott_ids` removes OTT id information from
   a character vector, making it easier to match tip labels in trees returned by
   `tol_induced_subtree` to taxonomic names in other data sources.
 

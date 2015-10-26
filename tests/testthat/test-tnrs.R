@@ -22,6 +22,15 @@ test_that("tnrs_match_names warns if a name is not matched", {
                    "are not matched")
 })
 
+test_that("object returned by tnrs_match_names have the correct data type", {
+    skip_on_cran()
+    birds <- c("stercorarius parasiticus", "ficedula albicollis", "sternadougallii")
+    taxa <- tnrs_match_names(birds, do_approximate_matching = FALSE)
+    expect_true(is.logical(taxa[["approximate_match"]]))
+    expect_true(is.logical(taxa[["is_synonym"]]))
+    expect_true(is.logical(taxa[["is_deprecated"]]))
+})
+
 ## everything else is covered by the match_names + the API tests
 
 ############################################################################

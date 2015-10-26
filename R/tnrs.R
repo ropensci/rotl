@@ -77,12 +77,25 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
 
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
     summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
+
+    summary_match[["approximate_match"]] <- convert_to_logical(summary_match[["approximate_match"]])
+    summary_match[["is_synonym"]] <- convert_to_logical(summary_match[["is_synonym"]])
+    summary_match[["is_deprecated"]] <- convert_to_logical(summary_match[["is_deprecated"]])
+
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
+}
+
+convert_to_logical <- function(x) {
+    if (all(x %in% c("TRUE", "FALSE"))) {
+        x <- as.logical(x)
+    } else {
+        x
+    }
 }
 
 check_tnrs <- function(req) {
