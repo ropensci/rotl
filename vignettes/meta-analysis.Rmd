@@ -130,34 +130,45 @@ In this case, we will use only the topology of the tree as input to our
 comparative analysis, so we can skip these steps.
 
 Second, the tip labels contain OTT IDs, which means they will not perfectly
-match the species names in our dataset or the taxon map that we created earlier. 
+match the species names in our dataset or the taxon map that we created earlier:
+
+
+```{r tip_lab}
+tr$tip.label[1:4]
+```
+
 Finally, the tree contains node labels for those nodes that match a higher taxonomic
 group, and empty character vectors (`""`) for all other nodes. Some
-comparative methods either do no expect node labels at all, or require all nodes
-to be labeled nodes to have a unique name. 
+comparative methods either do no expect node labels at all, or require all 
+labeled nodes to have a unique name (meaning multiple "empty" labels will cause
+and error). 
 
-We can deal with this the details easily. `rotl` provides  the convenience 
+We can deal with all these details easily. `rotl` provides  the convenience 
 function `strip_ott_ids` to remove the extra information from the tip labels.
-With those cleaned up, we can replace the tip labels with the species names in
-our dataset.
-attribute of the tree to `NULL`:
+With the IDs removed, we can use our taxon map to replace the tip labels in th tree
+with the species names from dataset. 
 
-We can use the convenience function `strip_ott_ids` to remove the IDs.
 
 
 ```{r clean_tips}
 otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
 tr$tip.label <- taxon_map[ otl_tips ]
+```
+
+Finally, we can remove the node labels by setting the `node.label` attribute of
+the tree to `NULL`.
+
+```{r remove_nodes}
 tr$node.label <- NULL
 ```
 
 ### Perform the meta-analysis
 
 
-Now we have data, a tree, and the know age that the species names in each match
-each other. It's time to the comparative analysis. Rutkowska used `MCMCglmm`, a
-Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis 
-and we will follow suit. Of course, to properly analyse these results you would
+Now we have data and a tree, and we know the names in the tree match the ones in
+the data. It's time to do the comparative analysis. Rutkowska _et al_. used `MCMCglmm`, a
+Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis, 
+and we will do the same. Of course, to properly analyse these data you would
 take some care in deciding on the appropriate priors to use and inspect the
 results carefully. In this case, we are really interested in using this as a 
 demonstration, so we will just run a simple model.
@@ -166,7 +177,7 @@ Specifically we sill fit a model where the only variable that might explain the
 values of `Zr` is the random factor `animal`, which corresponds to the
 phylogenetic relationships among species. We also provide `Zvr` as the measurement
 error variance, effectively adding extra weight to the results of more powerful 
-studies. Here's how we specify that model with `MCMCglmm`:
+studies. Here's how we specify and fit that model with `MCMCglmm`:
 
 
 ```{r model, echo=FALSE}
@@ -188,7 +199,7 @@ model <- MCMCglmm(Zr~1,random=~animal,
 
 Now that we have a result we can find out how much phylogenetic signal exists
 for sex-biased differences in egg-size. In a multi-level model we can use variance
-components to look at this, specifically the proportions of the total variance
+components to look at this, specifically the proportion of the total variance
 that can be explained by phylogeny is called the phylogenetic reliability, _H_. Let's
 calculate the _H_ for this model:
 
@@ -200,7 +211,7 @@ var_comps["animal"] / sum(var_comps)
 
 It appears there is almost no phylogenetic signal to the data. 
 The relationships among species explain much less that one percent of the total
-variance in the data. If you were wondering,  Rutkowska et al report a similar result, 
+variance in the data. If you were wondering,  Rutkowska _et al_. report a similar result, 
 even after adding more predictors to their model most of the variance in `Zr`
 was left unexplained.
 
