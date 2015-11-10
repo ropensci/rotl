@@ -29,6 +29,32 @@ test_that("taxonomy taxon info", {
     expect_true(inherits(tt, "taxon_info"))
 })
 
+test_that("taxonomy with include_lineage=TRUE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, include_lineage = TRUE)
+    expect_true(exists("taxonomic_lineage", tt[[1]]))
+    expect_true(length(tt[[1]]$taxonomic_lineage) > 1)
+})
+
+test_that("taxonomy with include_lineage=FALSE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, include_lineage = FALSE)
+    expect_false(exists("taxonomic_lineage", tt[[1]]))
+})
+
+test_that("taxonomy with list_terminal_descendants=TRUE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, list_terminal_descendants = TRUE)
+    expect_true(exists("terminal_descendants", tt[[1]]))
+    expect_true(length(tt[[1]][["terminal_descendants"]]) > 1)
+})
+
+test_that("taxonomy with list_terminal_descendants=FALSE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, list_terminal_descendants = FALSE)
+    expect_false(exists("terminal_descendants", tt[[1]]))
+})
+
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tid <- c(924443, 337928, 631176)
     tax_info <- taxonomy_taxon(tid)

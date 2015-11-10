@@ -1,5 +1,8 @@
 ## rotl 0.4.1.999
 
+* Added arguments `include_lineage` and `list_terminal_descendants` to
+  `taxonomy_taxon()`
+
 * Improve warning and format of the result if one of the taxa requested doesn't
   match anything `tnrs_match_names`.
 
