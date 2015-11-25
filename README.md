@@ -82,19 +82,19 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 
 ```
-##   search_string                             unique_name approximate_match
-## 1           pan      Pan (genus in subfamily Homininae)             FALSE
-## 2         pongo     Pongo (genus in subfamily Ponginae)             FALSE
-## 3           pan      Pan (genus in subfamily Homininae)             FALSE
-## 4       gorilla                                 Gorilla             FALSE
-## 5     hylobates Hylobates (genus in family Hylobatidae)             FALSE
-## 6       hoolock                                 Hoolock             FALSE
-## 7          homo                                    Homo             FALSE
+##   search_string                        unique_name approximate_match
+## 1           pan                                Pan             FALSE
+## 2         pongo                              Pongo             FALSE
+## 3           pan                                Pan             FALSE
+## 4       gorilla                            Gorilla             FALSE
+## 5     hylobates Hylobates (genus in Deuterostomia)             FALSE
+## 6       hoolock                            Hoolock             FALSE
+## 7          homo                               Homo             FALSE
 ##   ott_id is_synonym is_deprecated number_matches
-## 1 417957      FALSE         FALSE              2
-## 2 417949      FALSE         FALSE              2
-## 3 417957      FALSE         FALSE              2
-## 4 417969      FALSE         FALSE              3
+## 1 417957      FALSE         FALSE              1
+## 2 417949      FALSE         FALSE              1
+## 3 417957      FALSE         FALSE              1
+## 4 417969      FALSE         FALSE              1
 ## 5 166552      FALSE         FALSE              1
 ## 6 712902      FALSE         FALSE              1
 ## 7 770309      FALSE         FALSE              1
@@ -108,7 +108,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/6yIRCus.png) 
+![plot of chunk get_tr](http://i.imgur.com/pV8v3rU.png) 
 
 ### Code of Conduct
 
