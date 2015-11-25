@@ -100,7 +100,7 @@ test_that("taxonomy subtree writes a 'valid' newick file", {
     ff <- tempfile(fileext = ".tre")
     tt <- taxonomy_subtree(515698, output_format = "newick", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("taxonomy subtree returns a valid newick string", {
