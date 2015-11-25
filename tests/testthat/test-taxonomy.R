@@ -56,7 +56,7 @@ test_that("taxonomy with list_terminal_descendants=FALSE", {
 })
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    tid <- c(924443, 337928, 631176)
+    tid <- c(5004030, 337928, 631176)
     tax_info <- taxonomy_taxon(tid)
 }
 
@@ -75,7 +75,7 @@ test_that("taxonomy_taxon ott_taxon_name method", {
 test_that("taxonomy_taxon synonyms method", {
     skip_on_cran()
     expect_equal(names(synonyms(tax_info)), as.character(tid))
-    expect_equal(synonyms(tax_info)[[3]], c("Diadema", "Centrechinus"))
+    expect_true(all(c("Diadema", "Centrechinus") %in% synonyms(tax_info)[[3]]))
 })
 
 ############################################################################
