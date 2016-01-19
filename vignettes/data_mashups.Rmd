@@ -9,14 +9,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-##Combining data from OToL and other sources.
+## Combining data from OToL and other sources.
 
 One of the major goals of `rotl` is to help users combine data from other
 sources with the phylogenetic trees in the Open Tree database. This examples
 demonstrates how a user might connect data they have collected to trees from
 Open Tree.
 
-##Get Open Tree ids to match your data.
+## Get Open Tree ids to match your data.
 
 Let's say you have a dataset where each row represents a measurement taken from
 one species, and your goal is to put these measurements in some phylogenetic
@@ -45,7 +45,7 @@ Hmm, none of those groups contain all of our species. In this case we can
 search using the `All life` context and the function `tnrs_match_names`:
 
 ```{r, match}
-taxon_search <- tnrs_match_names(mu$species, context_name="All life")
+taxon_search <- tnrs_match_names(names=mu$species, context_name="All life")
 knitr::kable(taxon_search)
 ```
 
@@ -65,16 +65,17 @@ mu$ott_name <- taxon_search$unique_name
 mu$ott_id <- taxon_search$ott_id
 ```
 
-##Find a tree with your taxa
+## Find a tree with your taxa
 
 Now let's find a tree. There are two possible options here: we can search for
 published studies that include our taxa or we can use the 'synthetic tree' from
 Open Tree. We can try both approaches.
 
-###Published trees
+### Published trees
 
 Before we can search for published studies or trees, we should check out the
 list of properties we can use to perform such searches:
+
 ```{r, properties}
 studies_properties()
 ```
@@ -98,7 +99,7 @@ OK, most of our species are not in any of the published trees available. You can
 help fix this sort of problem by [making sure you submit your published trees to
 Open Tree](https://tree.opentreeoflife.org/curator).
 
-###A part of the synthesis tree
+### A part of the synthesis tree
 
 Thankfully, we can still use the complete Tree of Life made from the
 combined results of all of the published trees and taxonomies that go into Open
@@ -112,7 +113,7 @@ tr <- tol_induced_subtree(ott_ids=mu$ott_id)
 plot(tr)
 ```
 
-###Connect your data to the tips of your tree
+### Connect your data to the tips of your tree
 
 Now we have a tree for of our species, how can we use the tree and the data
 together?
@@ -158,7 +159,7 @@ And now we can plot the data and the tree together
 plot(tree_data)
 ```
 
-##What next.
+## What next
 
 The demonstration get's you to the point of visualizing your data in a
 phylogenetic context. But there's a lot more you do with this sort of data in R.
