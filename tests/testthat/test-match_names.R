@@ -122,7 +122,7 @@ test_that("correct data is being returned when asked to lookup by taxon name", {
 
 test_that("correct data is being returned when asked to lookup by ott_id", {
     skip_on_cran()
-    tt <- inspect(rsp, ott_id = 4930522)[["ott_id"]]
+    tt <- inspect(rsp, ott_id = 631176)[["ott_id"]]
     expect_true(all(tt %in% c(4930522, 631176)))
 })
 
@@ -234,7 +234,7 @@ test_that("it works correctly when providing a new row number", {
     new_rsp <- update(rsp, row_number = 2,
                       new_row_number = 2)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "631176")
+                 "4930522")
 })
 
 
