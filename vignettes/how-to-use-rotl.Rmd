@@ -2,7 +2,9 @@
 title: "How to use rotl?"
 author: "François Michonneau"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
 vignette: >
   %\VignetteIndexEntry{How to use rotl?}
   %\VignetteEngine{knitr::rmarkdown}
@@ -201,7 +203,7 @@ associated with this study:
 
 ```{r}
 furry_meta <- get_study_meta("pg_2550")
-knitr::kable(get_publication(furry_meta))     ## The citation for the source of the study
+get_publication(furry_meta)     ## The citation for the source of the study
 get_tree_ids(furry_meta)        ## This study has 10 trees associated with it
 candidate_for_synth(furry_meta) ## None of these trees are yet included in the OTL
 ```
