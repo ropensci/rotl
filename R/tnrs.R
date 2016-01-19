@@ -55,6 +55,7 @@
 ##'  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",
 ##'                                             "chordata", "hemichordata"))
 ##' }
+##' @importFrom stats setNames
 ##' @export
 tnrs_match_names <- function(names = NULL, context_name = NULL,
                              do_approximate_matching = TRUE,
@@ -90,8 +91,9 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
     summary_match
 }
 
+##' @importFrom stats na.omit
 convert_to_logical <- function(x) {
-    if (all(na.omit(x) %in% c("TRUE", "FALSE"))) {
+    if (all(stats::na.omit(x) %in% c("TRUE", "FALSE"))) {
         x <- as.logical(x)
     } else {
         x
@@ -153,7 +155,7 @@ build_summary_match <- function(res, res_id, match_id = NULL) {
     ## Add potential unmatched names
     if (length(res[["unmatched_name_ids"]])) {
         no_match <- lapply(res[["unmatched_name_ids"]], function(x) {
-            no_match_row <- setNames(rep(NA, length(tnrs_columns) + 1),
+            no_match_row <- stats::setNames(rep(NA, length(tnrs_columns) + 1),
                                      c(tnrs_columns, "number_matches"))
             no_match_row[1] <- x
             no_match_row

@@ -1,6 +1,7 @@
 ## Unexported function that generates a data frame summarizing the metadata.
 ## This function is used by both studies_find_studies and studies_find_trees,
 ## to generate the output when using the argument detailed=TRUE
+##' @importFrom stats setNames
 summarize_meta <- function(study_ids) {
     fill <- function(x) {
         if (length(unlist(x))) {
@@ -37,7 +38,7 @@ summarize_meta <- function(study_ids) {
     found_trees <- lapply(meta, function(m) {
       m[["tree_ids"]]
     })
-    found_trees <- setNames(found_trees, study_ids)
+    found_trees <- stats::setNames(found_trees, study_ids)
     attr(dat, "found_trees") <- found_trees
     attr(dat, "metadata") <- meta_raw
 

@@ -95,6 +95,7 @@ inspect <- function(response, ...) UseMethod("inspect")
 ##'     \code{ott_id}.
 ##' @export
 ##' @rdname match_names
+##' @importFrom stats update
 update.match_names <- function(object, row_number, taxon_name, ott_id,
                                new_row_number, new_ott_id, ...) {
 
