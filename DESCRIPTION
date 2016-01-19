@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 0.4.1.999
+Version: 0.5.0
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com"),
@@ -23,7 +23,7 @@ Imports:
     ape
 License: BSD_2_clause + file LICENSE
 Suggests:
-    knitr (>= 1.10.5),
+    knitr (>= 1.12),
     rmarkdown (>= 0.7),
     testthat,
     RNeXML,
@@ -33,4 +33,4 @@ Suggests:
     fulltext
 VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1

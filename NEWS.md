@@ -1,4 +1,4 @@
-## rotl 0.4.1.999
+## rotl 0.5.0
 
 * Added arguments `include_lineage` and `list_terminal_descendants` to
   `taxonomy_taxon()`
