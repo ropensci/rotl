@@ -1,40 +1,78 @@
-language: c
+language: r
+
 sudo: required
 
-before_install:
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
-  - echo "options(repos=c(CRAN = 'http://cran.rstudio.com'))" > ~/.Rprofile
+warnings_are_errors: true
 
-install:
-  - ./pkg-build.sh install_github fmichonneau/rncl
-  - ./pkg-build.sh install_r covr
-  - ./pkg-build.sh install_deps
+before_install: echo "options(repos=c(CRAN = 'http://cran.rstudio.com'))" > ~/.Rprofile
 
-script:
-  - ./pkg-build.sh run_tests
+r_check_args: --as-cran --run-dontrun
 
-after_failure:
-  - ./pkg-build.sh dump_logs
+r_packages:
+   - covr
 
+r_binary_packages:
+  - ade4
+  - ape
+  - aRxiv
+  - assertthat
+  - bibtex
+  - bitops
+  - bold
+  - caTools
+  - chron
+  - coda
+  - colorspace
+  - corpcor
+  - cubature
+  - data.table
+  - DBI
+  - dichromat
+  - dplyr
+  - foreach
+  - formatR
+  - fulltext
+  - ggplot2
+  - gtable
+  - highr
+  - iterators
+  - knitr
+  - labeling
+  - lubridate
+  - markdown
+  - MCMCglmm
+  - munsell
+  - NLP
+  - phylobase
+  - plyr
+  - R.cache
+  - R.methodsS3
+  - R.oo
+  - R.utils
+  - RColorBrewer
+  - rcrossref
+  - readxl
+  - rentrez
+  - reshape
+  - reshape2
+  - rjson
+  - rmarkdown
+  - RNeXML
+  - rplos
+  - rredis
+  - scales
+  - slam
+  - solr
+  - taxize
+  - tensorA
+  - tidyr
+  - tm
+  - uuid
+  - XML
+  - yaml
 
-# language: r
-
-# sudo: required
-
-# warnings_are_errors: true
-
-# before_install: echo "options(repos=c(CRAN = 'http://cran.rstudio.com'))" > ~/.Rprofile
-
-
-# r_check_args: --as-cran --run-dontrun
-
-# r_packages:
-#   - covr
-
-# r_github_packages:
-#   - fmichonneau/rncl
+r_github_packages:
+   - fmichonneau/rncl
 
 after_success:
    - Rscript -e 'library(covr); coveralls()'
@@ -42,10 +80,3 @@ after_success:
 notifications:
   slack:
     secure: chYOxbPBFVAMbDbNc/6tDn5749/qOfJkM+hfTraG9LGstCZC2C4I7rxb3BRkUHphIbFuQiH8BW/L+BKPXkLBL8Hrz4uMMyD3RtMX1A9fZ9WizkHMT4GLCHE011TITiYIeJvv41R7RBuy6rn3RLpID5KeMTTDphIz1TOZdl1zsxqds=
-
-env:
-  global: R_CHECK_ARGS="--as-cran --run-dontrun"
-  matrix:
-     #- RVERSION=oldrel
-     - RVERSION=release
-     - RVERSION=devel
