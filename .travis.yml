@@ -31,7 +31,6 @@ r_binary_packages:
   - dplyr
   - foreach
   - formatR
-  - fulltext
   - ggplot2
   - gtable
   - highr
@@ -50,7 +49,6 @@ r_binary_packages:
   - R.oo
   - R.utils
   - RColorBrewer
-  - rcrossref
   - readxl
   - rentrez
   - reshape
