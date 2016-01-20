@@ -44,9 +44,8 @@ notifications:
     secure: chYOxbPBFVAMbDbNc/6tDn5749/qOfJkM+hfTraG9LGstCZC2C4I7rxb3BRkUHphIbFuQiH8BW/L+BKPXkLBL8Hrz4uMMyD3RtMX1A9fZ9WizkHMT4GLCHE011TITiYIeJvv41R7RBuy6rn3RLpID5KeMTTDphIz1TOZdl1zsxqds=
 
 env:
-  global:
-    - R_CHECK_ARGS="--as-cran --run-dontrun"
-   matrix:
+  global: R_CHECK_ARGS="--as-cran --run-dontrun"
+  matrix:
      #- RVERSION=oldrel
      - RVERSION=release
      - RVERSION=devel
