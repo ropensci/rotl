@@ -74,21 +74,16 @@ intended:
 `r knitr::kable(resolved_names)`
 
 The column `unique_name` sometimes indicates the higher taxonomic level
-associated with the name. Here we queried on genera names, so the API indicates
-the family names associated with some the genera. The column `number_matches`
-indicates the number of `ott_id` that corresponds to a given name. In our
-example, our search on _Diadema_ returns 4 matches, and the one returned by
-default is a fungus and not the sea urchin that we want for our query.
-
-The argument `context_name` allows you to limit the taxonomic scope of your
-search. In this case, if we limit our search to animals, the genus _Diadema_ now
-matches the sea urchin (notice the family is Diadematidae):
+associated with the name. The column `number_matches` indicates the number of
+`ott_id` that corresponds to a given name. In this example, our search on
+_Diadema_ returns 2 matches, and the one returned by default is indeed the sea
+urchin that we want for our query. The argument `context_name` allows you to
+limit the taxonomic scope of your search. _Diadema_ is also the genus name of a
+fungus. To ensure that our search is limited to animal names, we could do:
 
 ```{r}
 resolved_names <- tnrs_match_names(taxa, context_name = "Animals")
 ```
-
-`r knitr::kable(resolved_names)`
 
 If you are trying to build a tree with deeply divergent taxa that the argument
 `context_name` cannot fix, see "How to change the ott ids assigned to my taxa?"
@@ -120,12 +115,11 @@ resulting from `tnrs_match_names()`, and either the row number, the taxon name
 (you used in your search in lowercase), or the `ott_id` returned by the initial
 query.
 
-To illustrate this, let's re-use the previous query but by adding a tree to our
-list of taxa (Oak tree, genus _Acer_), such that restricting our search to
-animals doesn't work.
+To illustrate this, let's re-use the previous query but this time pretending that
+we are interested in the fungus _Diadema_ and not the sea urchin:
 
 ```{r}
-taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus")
 resolved_names <- tnrs_match_names(taxa)
 resolved_names
 inspect(resolved_names, taxon_name = "diadema")
@@ -133,7 +127,7 @@ inspect(resolved_names, taxon_name = "diadema")
 
 In our case, we want the second row in this data frame to replace the
 information that initially matched for _Diadema_. We can now use the `update()`
-function, to change to the correct taxa (the sea urchin not the fungus):
+function, to change to the correct taxa (the fungus not the sea urchin):
 
 ```{r}
 resolved_names <- update(resolved_names, taxon_name = "diadema",
@@ -141,7 +135,7 @@ resolved_names <- update(resolved_names, taxon_name = "diadema",
 
 ## we could also have used the ott_id to replace this taxon:
 ## resolved_names <- update(resolved_names, taxon_name = "diadema",
-##                          new_ott_id = 631176)
+##                          new_ott_id = 4930522)
 ```
 
 And now our `resolved_names` data frame includes the taxon we want:
