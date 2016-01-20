@@ -19,19 +19,23 @@ r_binary_packages:
   - bibtex
   - bitops
   - bold
+  - brew
   - caTools
   - chron
   - coda
   - colorspace
   - corpcor
+  - crayon
   - cubature
   - data.table
   - DBI
+  - devtools
   - dichromat
   - dplyr
   - foreach
   - formatR
   - ggplot2
+  - git2r
   - gtable
   - highr
   - iterators
@@ -40,10 +44,12 @@ r_binary_packages:
   - lubridate
   - markdown
   - MCMCglmm
+  - memoise
   - munsell
   - NLP
   - phylobase
   - plyr
+  - praise
   - R.cache
   - R.methodsS3
   - R.oo
@@ -53,20 +59,26 @@ r_binary_packages:
   - rentrez
   - reshape
   - reshape2
+  - rex
   - rjson
   - rmarkdown
   - RNeXML
+  - roxygen2
   - rplos
   - rredis
+  - rstudioapi
+  - rversions
   - scales
   - slam
   - solr
   - taxize
   - tensorA
+  - testthat
   - tidyr
   - tm
   - uuid
   - XML
+  - xml2
   - yaml
 
 r_github_packages:
