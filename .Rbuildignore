@@ -4,4 +4,6 @@
 figure/
 tmp/
 ^CONDUCT\.md$
-^cran-comments.md$
+^cran-comments\.md$
+^.projectile$
+vignettes/meta-analysis\.Rmd$
