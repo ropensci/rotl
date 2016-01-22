@@ -30,7 +30,7 @@ Suggests:
     phylobase,
     readxl,
     MCMCglmm,
-    fulltext
+    fulltext (>= 0.1.6)
 VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 5.0.1
