@@ -9,14 +9,84 @@ before_install: echo "options(repos=c(CRAN = 'http://cran.rstudio.com'))" > ~/.R
 r_check_args: --as-cran --run-dontrun
 
 r_packages:
-  - covr
+   - covr
+
+r_binary_packages:
+  - ade4
+  - ape
+  - aRxiv
+  - assertthat
+  - bibtex
+  - bitops
+  - bold
+  - brew
+  - caTools
+  - chron
+  - coda
+  - colorspace
+  - corpcor
+  - crayon
+  - cubature
+  - data.table
+  - DBI
+  - devtools
+  - dichromat
+  - dplyr
+  - foreach
+  - formatR
+  - ggplot2
+  - git2r
+  - gtable
+  - highr
+  - iterators
+  - knitr
+  - labeling
+  - lubridate
+  - markdown
+  - MCMCglmm
+  - memoise
+  - munsell
+  - NLP
+  - phylobase
+  - plyr
+  - praise
+  - R.cache
+  - R.methodsS3
+  - R.oo
+  - R.utils
+  - RColorBrewer
+  - readxl
+  - rentrez
+  - reshape
+  - reshape2
+  - rex
+  - rjson
+  - rmarkdown
+  - RNeXML
+  - roxygen2
+  - rplos
+  - rredis
+  - rstudioapi
+  - rversions
+  - scales
+  - slam
+  - solr
+  - taxize
+  - tensorA
+  - testthat
+  - tidyr
+  - tm
+  - uuid
+  - XML
+  - xml2
+  - yaml
 
 r_github_packages:
-  - fmichonneau/rncl
+   - fmichonneau/rncl
 
 after_success:
    - Rscript -e 'library(covr); coveralls()'
 
 notifications:
   slack:
-    secure: YOxbPBFVAMbDbNc/6tDn5749/qOfJkM+hfTraG9LGstCZC2C4I7rxb3BRkUHphIbFuQiH8BW/L+BKPXkLBL8Hrz4uMMyD3RtMX1A9fZ9WizkHMT4GLCHE011TITiYIeJvv41R7RBuy6rn3RLpID5KeMTTDphIz1TOZdl1zsxqds=
+    secure: chYOxbPBFVAMbDbNc/6tDn5749/qOfJkM+hfTraG9LGstCZC2C4I7rxb3BRkUHphIbFuQiH8BW/L+BKPXkLBL8Hrz4uMMyD3RtMX1A9fZ9WizkHMT4GLCHE011TITiYIeJvv41R7RBuy6rn3RLpID5KeMTTDphIz1TOZdl1zsxqds=

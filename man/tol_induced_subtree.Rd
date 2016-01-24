@@ -32,7 +32,9 @@ the input set that is consistent with the topology of the current
 synthetic tree. This tree is equivalent to the minimal subtree
 induced on the draft tree by the set of identified nodes. Ott ids
 that do not correspond to any nodes found in the graph, or which
-are in the graph but are absent from the synthetic tree, will be
+are in the graph but are absent from the synthetic tree (e.g. groups
+included in the Open Tree Taxonomy but found to be paraphyletic in
+in studies contributing to the synthetic tree) , will be
 identified in the output (but obvisouly will be absent from the
 resulting induced tree). Branch lengths in the result may be
 arbitrary, and the tip labels of the tree may either be taxonomic

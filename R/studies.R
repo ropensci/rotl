@@ -148,6 +148,7 @@ print.study_ids <- function(x, ...) {
 ##'   the studies can be searched on. \code{\link{list_trees}} for
 ##'   listing the trees that match the query.
 ##' @export
+##' @importFrom stats setNames
 ##' @examples
 ##' \dontrun{
 ##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
@@ -187,7 +188,7 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
     } else {
         attr(res, "metadata") <- .res
     }
-    attr(res, "found_trees") <- setNames(match_tree_ids, study_ids)
+    attr(res, "found_trees") <- stats::setNames(match_tree_ids, study_ids)
     class(res) <- c("matched_studies", class(res))
     res
 }

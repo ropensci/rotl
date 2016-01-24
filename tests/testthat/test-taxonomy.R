@@ -29,8 +29,34 @@ test_that("taxonomy taxon info", {
     expect_true(inherits(tt, "taxon_info"))
 })
 
+test_that("taxonomy with include_lineage=TRUE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, include_lineage = TRUE)
+    expect_true(exists("taxonomic_lineage", tt[[1]]))
+    expect_true(length(tt[[1]]$taxonomic_lineage) > 1)
+})
+
+test_that("taxonomy with include_lineage=FALSE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, include_lineage = FALSE)
+    expect_false(exists("taxonomic_lineage", tt[[1]]))
+})
+
+test_that("taxonomy with list_terminal_descendants=TRUE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, list_terminal_descendants = TRUE)
+    expect_true(exists("terminal_descendants", tt[[1]]))
+    expect_true(length(tt[[1]][["terminal_descendants"]]) > 1)
+})
+
+test_that("taxonomy with list_terminal_descendants=FALSE", {
+    skip_on_cran()
+    tt <- taxonomy_taxon(515698, list_terminal_descendants = FALSE)
+    expect_false(exists("terminal_descendants", tt[[1]]))
+})
+
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    tid <- c(924443, 337928, 631176)
+    tid <- c(5004030, 337928, 631176)
     tax_info <- taxonomy_taxon(tid)
 }
 
@@ -49,7 +75,7 @@ test_that("taxonomy_taxon ott_taxon_name method", {
 test_that("taxonomy_taxon synonyms method", {
     skip_on_cran()
     expect_equal(names(synonyms(tax_info)), as.character(tid))
-    expect_equal(synonyms(tax_info)[[3]], c("Diadema", "Centrechinus"))
+    expect_true(all(c("Diadema", "Centrechinus") %in% synonyms(tax_info)[[3]]))
 })
 
 ############################################################################
@@ -74,7 +100,7 @@ test_that("taxonomy subtree writes a 'valid' newick file", {
     ff <- tempfile(fileext = ".tre")
     tt <- taxonomy_subtree(515698, output_format = "newick", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("taxonomy subtree returns a valid newick string", {

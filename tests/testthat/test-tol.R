@@ -32,7 +32,7 @@ test_that("tol_subtree returns a newick file when providing a file argument", {
     ff <- tempfile(fileext = ".tre")
     tr <- tol_subtree(ott_id = 81461,  file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 
@@ -67,9 +67,9 @@ test_that("warning for ott ids that are not in TOL graph", {
 test_that("tol_induced_subtree generates a newick file when providing a file argument", {
     skip_on_cran()
     ff <- tempfile(fileext = ".tre")
-    tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104), file = ff)
+    tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104), file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 ############################################################################
@@ -103,9 +103,7 @@ test_that("tol_mrca returns a list", {
 
 test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
     skip_on_cran()
-    genera <- c("Dendroica", "Cinclus", "Stellula", "Struthio")
-    tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104))
+    genera <- c("Setophaga", "Cinclus", "Struthio")
+    tr <- tol_induced_subtree(ott_ids=c(666104, 267845, 292466))
     expect_true(all(strip_ott_ids(tr$tip.label) %in% genera))
-
 })
-

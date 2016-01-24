@@ -1,8 +1,8 @@
 otl_url <- function(dev=FALSE) {
     if (dev) {
-        "http://devapi.opentreeoflife.org"
+        "https://devapi.opentreeoflife.org"
     } else {
-        "http://api.opentreeoflife.org"
+        "https://api.opentreeoflife.org"
     }
 }
 

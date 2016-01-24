@@ -5,7 +5,7 @@ context("test of studies")
 ############################################################################
 
 test_that("studies_properties is a list with 2 elements (if breaks, need to update documentation)", {
-        skip_on_cran()
+    skip_on_cran()
     expect_true(all(names(studies_properties() %in% c("tree_properties", "study_properties"))))
 })
 
@@ -16,7 +16,7 @@ test_that("studies_properties is a list with 2 elements (if breaks, need to upda
 
 test_that("get_study returns an error when asking for a study that doesn't exist", {
     skip_on_cran()
-    expect_error(get_study("tt_666666"), "GET failure")
+    expect_error(get_study("tt_666666"), "Error : XML")
 })
 
 test_that("get_study generates a phylo object", {
@@ -44,7 +44,7 @@ test_that("get_study generates a newick file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "newick", file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a nexus file", {
@@ -52,7 +52,7 @@ test_that("get_study generates a nexus file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "nexus", file = ff)
     expect_true(tr)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a nexml file", {
@@ -60,7 +60,7 @@ test_that("get_study generates a nexml file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "nexml", file = ff)
     expect_true(tr)
-    expect_true(grepl("^<\\?xml", readLines(ff, n = 1)))
+    expect_true(grepl("^<\\?xml", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a json file", {
@@ -68,7 +68,7 @@ test_that("get_study generates a json file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "json", file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 
@@ -78,15 +78,17 @@ test_that("get_study generates a json file", {
 ############################################################################
 
 test_that("get_study_tree returns error when tree doesn't exist", {
-        skip_on_cran()
+    skip_on_cran()
     expect_error(get_study_tree("2655", "tree5555"),
-                 "not found in study")
+                 "Error : XML")
+                 #"not found in study")
 })
 
 test_that("get_study_tree returns error when study doesn't exist", {
     skip_on_cran()
     expect_error(get_study_tree("5555555", "tree555555"),
-                 "GET failure")
+                 "Error : XML")
+                 #"GET failure")
 })
 
 
@@ -96,7 +98,7 @@ test_that("get_study_tree generates nexus file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "nexus",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree generates newick file", {
@@ -105,7 +107,7 @@ test_that("get_study_tree generates newick file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "newick",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree generates json file", {
@@ -114,7 +116,7 @@ test_that("get_study_tree generates json file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "json",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree returns a phylo object", {
@@ -191,14 +193,16 @@ test_that("get_study_tree returns a phylo object and ott_taxon_names for tip lab
 
 test_that("get_study_subtree returns an error when study_id doesn't exist", {
         skip_on_cran()
-    expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"),
-                 "GET failure")
+        expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"),
+                     "Error : XML")
+                     ##"GET failure")
 })
 
 test_that("get_study_subtree returns an error when tree_id doesn't exist", {
     skip_on_cran()
     expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"),
-                 "subresource .+ not found in study")
+                 "Error : XML")
+                                        #"subresource .+ not found in study")
 })
 
 ## API still returns object
@@ -225,7 +229,7 @@ test_that("get_study_subtree returns a nexus file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "nexus", file = ff)
     expect_true(tt)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_subtree returns a newick file", {
@@ -234,7 +238,7 @@ test_that("get_study_subtree returns a newick file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "newick", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_subtree returns a json file", {
@@ -243,7 +247,7 @@ test_that("get_study_subtree returns a json file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "json", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 
@@ -461,10 +465,10 @@ test_that("list_trees with studies_find_studies and detailed = TRUE",  {
                                           value = "Aves", detailed = TRUE)
               expect_true(inherits(list_trees(res), "list"))
               expect_true(length(list_trees(res)) >= 8)
-              expect_true(all(names(list_trees(res)) %in% c("pg_435", "ot_428",
+              expect_true(sum(names(list_trees(res)) %in% c("pg_435", "ot_428",
                                                             "pg_420", "ot_429",
                                                             "ot_214", "ot_117",
-                                                            "ot_116", "pg_2799")))
+                                                            "ot_116", "pg_2799")) >= 8)
           })
 
 test_that("list_trees with studies_find_trees and detailed=FALSE", {
