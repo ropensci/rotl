@@ -1,9 +1,37 @@
+##' Get external identifiers for data associated with an Open Tree study
+##'
+##' Data associated with studies contributing to the Open Tree synthesis may
+##' be available from other databases. In particular, trees and alignments 
+##' may be available from treebase and DNA sequences and bibliographic
+##' information associated with a given study may be available from the NCBI.
+##' This function retrieves that information for a given study.
+##'  
+##' @param study_id An open tree study ID
+##' @return A study_external_data object (which inherits from a list) which
+##' contains some of the following.
+##' @return doi, character, the DOI for the paper describing this study
+##' @return external_data_url, character, a URL to an external data repository 
+##' (e.g. a treebase entry) if one exists.
+##' @return pubmed_id character, the unique ID for this study in the NCBI's pubmed database
+##' @return popset_ids character, vector of IDs for the NCBI's popset database
+##' @return nucleotide_ids character, vector of IDs for the NCBI's nucleotide database 
+##' @seealso studies_find_studies (used to discover study IDs)
+##' @importFrom httr parse_url
+##' @importFrom rentrez entrez_search
+##' @importFrom rentrez entrez_link
+##' @examples
+##' \dontrun{
+##' flies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Drosophilidae")
+##' study_external_data(flies[2,]$study_ids)
+##' }
+##' @export
+
 study_external_IDs <- function(study_id){
     meta <- get_study_meta(study_id)
     data_deposit <- meta[["nexml"]][["^ot:dataDeposit"]][["@href"]]
-    url <- meta[["nexml"]][["^ot:studyPublication"]][["@href"]]
-    doi <- sub("http://dx.doi.org/", "", url)    
-    pmid <- get_pmid(study_id)
+    url <- attr(get_publication(meta), "DOI")
+    doi <- parse_url(url)$path    
+    pmid <- get_pmid(doi, study_id)
     res <- list( doi = doi, 
                  pubmed_id = pmid, 
                  external_data_url = data_deposit)
@@ -13,6 +41,24 @@ study_external_IDs <- function(study_id){
     }
     structure(res, class=c("study_external_data", "list"), id=study_id)
 }
+
+##' Get external identifiers for data associated with an Open Tree taxon
+##'
+##' The Open Tree taxonomy is a synthesis of multiple reference taxonomies. This
+##' function retrieves identifiers to external taxonomic records that have
+##' contributed the rank, position and definition of a given Open Tree taxon.
+##'
+##' @param study_id An open tree study ID
+##' @return a data.frame in which each row represents a unique record in an
+##' external databse. The column "source" provides and abbreviated name for the 
+##' database, and "id" the unique ID for the record.
+##' @seealso tnrs_matchnames, which can be used to search for taxa by name.
+##' @seealso taxonomy_taxon, for more information about a given taxon.
+##' @examples
+##' \dontrun{
+##'    gibbon_IDs <- taxon_external_IDs(712902) 
+##' }
+##' @export
 
 taxon_external_IDs <- function(taxon_id){
     taxon_info <- taxonomy_taxon(taxon_id)
@@ -55,9 +101,7 @@ summarize_popset_data <- function(id_vector){
 
 
 
-get_pmid <- function(study_id){
-    url <- attr(get_publication(get_study_meta(study_id)), "DOI")
-    doi <- sub("http://dx.doi.org/", "", url)
+get_pmid <- function(doi, study_id){
     pubmed_search <- entrez_search(db="pubmed", term=paste0(doi, "[DOI]"))
     if(length(pubmed_search$ids) == 0){
         warning("Could not find PMID for study'", study_id, "', skipping NCBI data")
