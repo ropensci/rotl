@@ -238,6 +238,8 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
 ##' @param tip_labels a character vector containing tip labels (most likely 
 ##'     the \code{tip.label} element from a tree returned by
 ##'     \code{\link{tol_induced_subtree}}
+##' @param remove_underscores logical (defaults to FALSE). If set to TRUE 
+##' underscores in tip labels are converted to spaces
 ##' @return A character vector containing the contents of \code{tip_labels}
 ##'     with any OTT ids removed.
 ##' @examples
@@ -249,6 +251,12 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
 ##' tr$tip.label %in% genera
 ##'}
 ##'@export
-strip_ott_ids <- function(tip_labels){
-    sub("_ott\\d+$", "", tip_labels)
+strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
+    stripped <- sub("_ott\\d+$", "", tip_labels)
+    if(remove_underscores){
+        return(gsub("_", " ", stripped))
+    }
+    stripped
 }
+
+
