@@ -4,20 +4,30 @@ study_external_IDs <- function(study_id){
     url <- meta[["nexml"]][["^ot:studyPublication"]][["@href"]]
     doi <- sub("http://dx.doi.org/", "", url)    
     pmid <- get_pmid(study_id)
-    pops <- entrez_link(dbfrom="pubmed", db="popset", id=pmid)[["links"]][["pubmed_popset"]]
-    nuc <- entrez_link(dbfrom="pubmed", db="nuccore", id=pmid)[["links"]][["pubmed_nuccore"]]
     res <- list( doi = doi, 
                  pubmed_id = pmid, 
-                 popset_ids = pops, 
-                 nucleotide_ids   = nuc, 
                  external_data_url = data_deposit)
-    structure(res, class=c("external_data", "list"), study_id=study_id)
+    if(!is.null(pmid)){
+        res$popset_ids <- entrez_link(dbfrom="pubmed", db="popset", id=pmid)[["links"]][["pubmed_popset"]]
+        res$nucleotide_ids <- entrez_link(dbfrom="pubmed", db="nuccore", id=pmid)[["links"]][["pubmed_nuccore"]]
+    }
+    structure(res, class=c("study_external_data", "list"), id=study_id)
 }
 
-print.external_data <- function(x, ...){
+taxon_external_IDs <- function(taxon_id){
+    taxon_info <- taxonomy_taxon(taxon_id)
+    srcs <- taxon_info[[1]][["tax_sources"]]
+    res <- do.call(rbind.data.frame, strsplit(unlist(srcs), ":"))
+    names(res) <- c("source", "id")
+    res
+}
+
+print.study_external_data <- function(x, ...){
     cat("External data identifiers for study", attr(x, "study_id"), "\n")
     cat(" $doi: ", x[["doi"]], "\n")
-    cat(" $pubmed_id: ", x[["pubmed_id"]], "\n")
+    if(!is.null(x$pubmed_id)){
+        cat(" $pubmed_id: ", x[["pubmed_id"]], "\n")
+    }
     if(!is.null(x$popset_ids)){
         cat(" $popset_ids: vector of",  length(x[["popset_ids"]]), "IDs \n")
     }
@@ -29,6 +39,7 @@ print.external_data <- function(x, ...){
     }
     cat("\n")
 }
+
 
 summarize_nucleotide_data <- function(id_vector){
     summs <- entrez_summary(db="nuccore", id=id_vector)
@@ -49,11 +60,11 @@ get_pmid <- function(study_id){
     doi <- sub("http://dx.doi.org/", "", url)
     pubmed_search <- entrez_search(db="pubmed", term=paste0(doi, "[DOI]"))
     if(length(pubmed_search$ids) == 0){
-        warning("Could not find PMID for study'", study_id, "', returning NULL")
+        warning("Could not find PMID for study'", study_id, "', skipping NCBI data")
         return(NULL)
     }
     if(length(pubmed_search$ids) > 1){
-        warning("Could found more than one PMID matching study'", study_id, "', returning NULL")
+        warning("Found more than one PMID matching study'", study_id, "', skipping NCBI data")
         return(NULL)
     }    
     pubmed_search$ids
