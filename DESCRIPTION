@@ -20,7 +20,8 @@ Imports:
     jsonlite,
     assertthat,
     rncl (>= 0.6.0),
-    ape
+    ape,
+    rentrez
 License: BSD_2_clause + file LICENSE
 Suggests:
     knitr (>= 1.12),
