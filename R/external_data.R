@@ -68,6 +68,7 @@ taxon_external_IDs <- function(taxon_id){
     res
 }
 
+#'@export
 print.study_external_data <- function(x, ...){
     cat("External data identifiers for study", attr(x, "study_id"), "\n")
     cat(" $doi: ", x[["doi"]], "\n")
@@ -86,7 +87,8 @@ print.study_external_data <- function(x, ...){
     cat("\n")
 }
 
-
+##Maybe include these functions to get summary information about a 
+## set of linked sequences?
 summarize_nucleotide_data <- function(id_vector){
     summs <- entrez_summary(db="nuccore", id=id_vector)
     interesting <- extract_from_esummary(summs, c("uid", "title", "slen", "organism", "completeness"), simplify=FALSE)
@@ -100,7 +102,8 @@ summarize_popset_data <- function(id_vector){
 }
 
 
-
+#Un-exported function to convert doi->pmid. Also takes study_id as an argument in
+#order to provide a helpful error message when 0 or >1 pmids are returned.
 get_pmid <- function(doi, study_id){
     pubmed_search <- entrez_search(db="pubmed", term=paste0(doi, "[DOI]"))
     if(length(pubmed_search$ids) == 0){
