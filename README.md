@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/ropensci/rotl.svg)](https://travis-ci.org/ropensci/rotl)
+[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
 [![Build status](https://ci.appveyor.com/api/projects/status/5y8rxmehag512d9j?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-i7l3q)
 [![Coverage Status](https://coveralls.io/repos/ropensci/rotl/badge.svg?branch=master&service=github)](https://coveralls.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
@@ -82,22 +82,22 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
 ```
 
 ```
-##   search_string                        unique_name approximate_match
-## 1           pan                                Pan             FALSE
-## 2         pongo                              Pongo             FALSE
-## 3           pan                                Pan             FALSE
-## 4       gorilla                            Gorilla             FALSE
-## 5     hylobates Hylobates (genus in Deuterostomia)             FALSE
-## 6       hoolock                            Hoolock             FALSE
-## 7          homo                               Homo             FALSE
-##   ott_id is_synonym is_deprecated number_matches
-## 1 417957      FALSE         FALSE              1
-## 2 417949      FALSE         FALSE              1
-## 3 417957      FALSE         FALSE              1
-## 4 417969      FALSE         FALSE              1
-## 5 166552      FALSE         FALSE              1
-## 6 712902      FALSE         FALSE              1
-## 7 770309      FALSE         FALSE              1
+##   search_string                      unique_name approximate_match  ott_id
+## 1           pan                              Pan             FALSE  417957
+## 2         pongo                            Pongo             FALSE  417949
+## 3           pan                              Pan             FALSE  417957
+## 4       gorilla                          Gorilla             FALSE  417969
+## 5     hylobates Hylobates (genus in Protostomia)             FALSE 5333940
+## 6       hoolock                          Hoolock             FALSE  712902
+## 7          homo                             Homo             FALSE  770309
+##   is_synonym is_deprecated number_matches
+## 1      FALSE         FALSE              1
+## 2      FALSE         FALSE              1
+## 3      FALSE         FALSE              1
+## 4      FALSE         FALSE              1
+## 5      FALSE         FALSE              2
+## 6      FALSE         FALSE              1
+## 7      FALSE         FALSE              1
 ```
 
 Now get the tree with just those tips:
@@ -105,10 +105,18 @@ Now get the tree with just those tips:
 
 ```r
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
+```
+
+```
+## Warning in tol_induced_subtree(ott_ids = resolved_names$ott_id): ott ids:
+## 5333940 not in graph.
+```
+
+```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/pV8v3rU.png) 
+![plot of chunk get_tr](http://i.imgur.com/wUcpWFD.png)
 
 ### Code of Conduct
 
