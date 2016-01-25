@@ -48,7 +48,7 @@ study_external_IDs <- function(study_id){
 ##' function retrieves identifiers to external taxonomic records that have
 ##' contributed the rank, position and definition of a given Open Tree taxon.
 ##'
-##' @param study_id An open tree study ID
+##' @param taxon_id An open tree study ID
 ##' @return a data.frame in which each row represents a unique record in an
 ##' external databse. The column "source" provides and abbreviated name for the 
 ##' database, and "id" the unique ID for the record.

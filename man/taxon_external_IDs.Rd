@@ -7,7 +7,7 @@
 taxon_external_IDs(taxon_id)
 }
 \arguments{
-\item{study_id}{An open tree study ID}
+\item{taxon_id}{An open tree study ID}
 }
 \value{
 a data.frame in which each row represents a unique record in an
