@@ -22,7 +22,7 @@
 ##' @examples
 ##' \dontrun{
 ##' flies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Drosophilidae")
-##' study_external_data(flies[2,]$study_ids)
+##' study_external_IDs(flies[2,]$study_ids)
 ##' }
 ##' @export
 
