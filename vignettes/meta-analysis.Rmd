@@ -41,7 +41,7 @@ history among some of the studied-species.
 If we are going to reproduce this analysis, we will first need to gather the
 data. Thankfully, the data is available as supplementary material from the
 publisher's website. We can collect the data from using `fulltext` (with the
-papers DOI as input) and read it into memory with `readxl`:
+papers DOI as input) and read it into memory with `gdata`:
 
 ```{r egg_data, cache=TRUE}
 library(gdata)
