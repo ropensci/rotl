@@ -23,6 +23,9 @@ File 'LICENSE':
   YEAR: 2015
   COPYRIGHT HOLDER: Francois Michonneau, Joseph W. Brown, David Winter
 
+Possibly mis-spelled words in DESCRIPTION:
+  phylogenetic (10:5, 12:60)
+
 ## CRAN Package Check Results
 
 * WARNING seen with R-devel on Linux have been addressed.
