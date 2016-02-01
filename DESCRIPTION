@@ -28,7 +28,7 @@ Suggests:
     testthat,
     RNeXML,
     phylobase,
-    readxl,
+    gdata (>= 2.17.0),
     MCMCglmm,
     fulltext (>= 0.1.6)
 VignetteBuilder: knitr
