@@ -233,3 +233,41 @@ get_study_tree(study_id="pg_710", tree_id="tree1277",
                file_format = "newick")
 tr <- ape::read.tree(file = "/tmp/tree.tre")
 ```
+
+### Why are OTT IDs discovered with ROTL missing from an induced subtree?
+
+Some taxonomic names that can be retrieved through the taxonomic name
+resolution service are not part of the Open Tree's synthesis tree. These are
+usually traditional higher-level taxa that have been found to be paraphyletic.
+
+For instance, if you wanted to fetch a tree relating the three birds that go
+into a [Turkducken](https://en.wikipedia.org/wiki/Turducken) you might search
+for the turkey, "duck" and chicken genera:
+
+```{r}
+turducken <- c("Meleagris", "Anas", "Gallus")
+taxa <- tnrs_match_names(turducken, context="Animals")
+taxa
+```
+
+Looks good, we have IDS for each genus. But if we try to get a subtree from the
+Open Tree we get an error:
+
+```{r, eval=FALSE}
+tr <- tol_induced_subtree(taxa$ott_id)
+```
+
+What's going on? It turns out that _Meleagris_ and _Anas_ are not included in
+the synthetic tree (the first because of uncertainty about the rank for that
+name and the second because _Anas_ as normally defined is not monophyletic).
+
+The best way to avoid these problems is to specify complete species names
+(species being the lowest level of classification in the Open Tree taxonomy they
+are guaranteed to be monophyletic):
+
+```{r}
+turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
+taxa <- tnrs_match_names(turducken_spp, context="Animals")
+tr <- tol_induced_subtree(taxa$ott_id)
+plot(tr)
+```
