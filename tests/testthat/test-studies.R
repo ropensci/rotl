@@ -16,7 +16,7 @@ test_that("studies_properties is a list with 2 elements (if breaks, need to upda
 
 test_that("get_study returns an error when asking for a study that doesn't exist", {
     skip_on_cran()
-    expect_error(get_study("tt_666666"), "Error : XML")
+    expect_error(get_study("tt_666666"))
 })
 
 test_that("get_study generates a phylo object", {
@@ -79,16 +79,12 @@ test_that("get_study generates a json file", {
 
 test_that("get_study_tree returns error when tree doesn't exist", {
     skip_on_cran()
-    expect_error(get_study_tree("2655", "tree5555"),
-                 "Error : XML")
-                 #"not found in study")
+    expect_error(get_study_tree("2655", "tree5555"))
 })
 
 test_that("get_study_tree returns error when study doesn't exist", {
     skip_on_cran()
-    expect_error(get_study_tree("5555555", "tree555555"),
-                 "Error : XML")
-                 #"GET failure")
+    expect_error(get_study_tree("5555555", "tree555555"))
 })
 
 
@@ -193,16 +189,12 @@ test_that("get_study_tree returns a phylo object and ott_taxon_names for tip lab
 
 test_that("get_study_subtree returns an error when study_id doesn't exist", {
         skip_on_cran()
-        expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"),
-                     "Error : XML")
-                     ##"GET failure")
+        expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"))
 })
 
 test_that("get_study_subtree returns an error when tree_id doesn't exist", {
     skip_on_cran()
-    expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"),
-                 "Error : XML")
-                                        #"subresource .+ not found in study")
+    expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"))
 })
 
 ## API still returns object
