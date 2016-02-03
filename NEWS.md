@@ -1,5 +1,7 @@
 ## rotl 0.5.0
 
+* New vignette: `meta-analysis`
+
 * Added arguments `include_lineage` and `list_terminal_descendants` to
   `taxonomy_taxon()`
 
@@ -12,7 +14,8 @@
 
 * New utility function `strip_ott_ids` removes OTT id information from
   a character vector, making it easier to match tip labels in trees returned by
-  `tol_induced_subtree` to taxonomic names in other data sources.
+  `tol_induced_subtree` to taxonomic names in other data sources. This function
+  can also remove underscores from the taxon names.
 
 * New method `list_trees` returns a list of tree ids associated with
   studies. The function takes the output of `studies_find_studies` or
