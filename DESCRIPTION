@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 0.5.0
+Version: 0.5.0.900
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com"),
