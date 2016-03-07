@@ -2,7 +2,7 @@
 ## Summary information about the Graph of Life
 .gol_about <- function(...) {
     res <- otl_POST(path="graph/about", body=list(), ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     if (length(cont) < 1) {
         warning("Nothing returned")
     }
@@ -33,7 +33,7 @@
     q <- list(study_id=jsonlite::unbox(study_id), tree_id=jsonlite::unbox(tree_id),
         git_sha=jsonlite::unbox(git_sha))
     res <- otl_POST(path="graph/source_tree", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(cont)
 }
 
@@ -53,6 +53,6 @@
         q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     }
     res <- otl_POST(path="graph/node_info", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(cont)
 }

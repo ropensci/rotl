@@ -7,7 +7,7 @@
     }
     q <- list(study_list=jsonlite::unbox(study_list))
     res <- otl_POST(path="tree_of_life/about", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(invisible(cont))
 }
 
@@ -26,7 +26,7 @@
         q <- list(ott_ids = ott_ids)
     }
     res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(cont)
 }
 
@@ -47,7 +47,7 @@
         q <- list(ott_id = jsonlite::unbox(ott_id))
     }
     res <- otl_POST(path="tree_of_life/subtree", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(cont)
 }
 
@@ -71,6 +71,6 @@
     q <- list(ott_ids  = ott_ids)
 
     res <- otl_POST("tree_of_life/induced_subtree", body=q, ...)
-    cont <- httr::content(res)
+    cont <- otl_parse(res)
     return(cont)
 }
