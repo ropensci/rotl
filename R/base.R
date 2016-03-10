@@ -21,9 +21,9 @@ otl_version <- function(version) {
 ##' @importFrom jsonlite fromJSON
 otl_parse <- function(req) {
     if (grepl("application/json", req[["headers"]][["content-type"]]) ){
-        return(jsonlite::fromJSON(httr::content(req, "text"), simplifyVector = FALSE))
+        return(jsonlite::fromJSON(httr::content(req, "text", encoding = "UTF-8"), simplifyVector = FALSE))
     }
-    txt <- httr::content(req, as="text")  
+    txt <- httr::content(req, as="text", encoding = "UTF-8")
     if(identical(txt, "")){
         stop("No output to parse; check your query.", call. = FALSE)
     }
