@@ -15,7 +15,7 @@ otl_version <- function(version) {
 }
 
 
-# Take a reqyest object and return list (if JSON) or plain text (if another
+# Take a request object and return list (if JSON) or plain text (if another
 # type)
 ##' @importFrom httr content
 ##' @importFrom jsonlite fromJSON
