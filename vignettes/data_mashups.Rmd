@@ -140,7 +140,7 @@ tr$tip.label %in% mu$ott_name
 ```
 
 Ok, now the tips are together we can make a new dataset. The `phylo4d()`
-functions matches tip lables to the row names of a `data.frame`, so let's make
+functions matches tip labels to the row names of a `data.frame`, so let's make
 a new dataset that contains just the relevant data and has row names to match
 the tree
 
