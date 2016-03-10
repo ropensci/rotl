@@ -161,7 +161,7 @@ plot(tree_data)
 
 ## What next
 
-The demonstration get's you to the point of visualizing your data in a
+The demonstration gets you to the point of visualizing your data in a
 phylogenetic context. But there's a lot more you do with this sort of data in R.
 For instance, you could use packages like `ape`, `caper`, `phytools` and
 `mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could
