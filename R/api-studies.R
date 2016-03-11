@@ -23,10 +23,11 @@
     } else {
     	    stop("Must supply a \'value\' argument")
     }
+    req_body$verbose <- jsonlite::unbox(verbose)
+    req_body$exact <- jsonlite::unbox(exact)
     res <- otl_POST(path="studies/find_studies/",
-                    body=c(req_body,
-                           jsonlite::unbox(verbose),
-                           jsonlite::unbox(exact)), ...)
+                    body=req_body,
+                    ...)
     cont <- otl_parse(res)
     return(cont)
 }

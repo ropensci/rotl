@@ -81,7 +81,8 @@ studies_properties <- function(...) {
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                                  exact=FALSE, detailed = TRUE, ...) {
     .res <- .studies_find_studies(property = property, value = value,
-                                 verbose = verbose, exact = exact, ...)
+                                  verbose = verbose, exact = exact, ...)
+
     res <- vapply(.res[["matched_studies"]],
                   function(x) x[["ot:studyId"]],
                   character(1))
