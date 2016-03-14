@@ -28,8 +28,7 @@
     res <- otl_POST(path="studies/find_studies/",
                     body=req_body,
                     ...)
-    cont <- otl_parse(res)
-    return(cont)
+    res
 }
 
 ##' @importFrom jsonlite unbox
@@ -65,8 +64,7 @@
                     body=c(req_body,
                            jsonlite::unbox(verbose),
                            jsonlite::unbox(exact)), ...)
-    cont <- otl_parse(res)
-    return(cont)
+    res
 }
 
 
@@ -74,8 +72,7 @@
 ## Return a list of properties that can be used to search studies and trees
 .studies_properties <- function() {
     res <- otl_POST(path="studies/properties/", body=list())
-    cont <- otl_parse(res)
-    return(cont)
+    res
 }
 
 
@@ -92,8 +89,7 @@
     res <- otl_GET(path=paste("study",
                               paste0(study_id, otl_formats(format)), sep="/"),
                    ...)
-    cont <- otl_parse(res)
-    return(cont)
+    res
 }
 
 
@@ -117,13 +113,12 @@
     tip_label <- paste0("/?tip_label=", tip_label)
     tree_file <- paste0(tree_id, otl_formats(format), tip_label)
     res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"), ...)
-    cont <- otl_parse(res)
-    return(cont)
+    res
 }
 
 ##' @importFrom httr content
 .get_study_meta <- function(study_id, ...) {
-    otl_parse(otl_GET(path= paste("study", study_id, "meta", sep="/"), ...))
+    otl_GET(path= paste("study", study_id, "meta", sep="/"), ...)
 }
 
 
@@ -149,7 +144,7 @@
     format <- otl_formats(format)
     url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
     res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""), ...)
-    otl_parse(res)
+    res
 }
 
 ### Let's not worry about those for now, as their results could be

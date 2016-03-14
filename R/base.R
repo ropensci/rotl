@@ -42,6 +42,7 @@ otl_check_error <- function(cont) {
     }
 }
 
+## Check and parse result of query
 otl_check <- function(req) {
     if (!req$status_code <  400) {
         msg <- otl_parse(req)
@@ -49,13 +50,13 @@ otl_check <- function(req) {
     }
     desc <- otl_parse(req)
     otl_check_error(desc)
+    desc
 }
 
 ##' @importFrom httr GET
 otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
     req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
-    req
 }
 
 ##' @importFrom jsonlite toJSON
@@ -69,7 +70,6 @@ otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
                       path=paste(otl_v, path, sep="/"),
                       body=body_json, ...)
     otl_check(req)
-    req
 }
 
 
