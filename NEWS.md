@@ -1,3 +1,10 @@
+## rotl 0.5.0.900
+
+* Fix bug in `studies_find_studies`, the arguments `verbose` and `exact` were
+  ignore
+
+* Refactor how result of query is checked and parsed.
+
 ## rotl 0.5.0
 
 * New vignette: `meta-analysis`
