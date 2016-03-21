@@ -20,10 +20,12 @@ studies and trees used in the synthetic tree.
 }
 \details{
 The list returned has 2 elements \code{tree_properties} and
-\code{studies_properties}. Each of these elements lists
-theadditional arguments to customize the API request properties
-that can be used to search for trees and studies that are
-contributing to the synthetic tree.
+\code{studies_properties}. Each of these elements lists additional
+arguments to customize the API request properties that can be used
+to search for trees and studies that are contributing to the
+synthetic tree. The definitions of these properties are available
+from
+\url{https://github.com/OpenTreeOfLife/phylesystem-api/wiki/NexSON}
 }
 \examples{
 \dontrun{

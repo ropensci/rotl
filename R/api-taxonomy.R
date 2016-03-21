@@ -2,8 +2,7 @@
 ## Summary information about the OpenTree Taxaonomy (OTT)
 .taxonomy_about <- function(...) {
     res <- otl_POST(path="/taxonomy/about", body=list(), ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -27,8 +26,7 @@
               include_lineage = jsonlite::unbox(include_lineage),
               list_terminal_descendants = jsonlite::unbox(list_terminal_descendants))
     res <- otl_POST(path="/taxonomy/taxon", body=q, ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -45,8 +43,7 @@
     }
     q <- list(ott_id=jsonlite::unbox(ott_id))
     res <- otl_POST(path="/taxonomy/subtree", body=q, ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -60,6 +57,5 @@
     }
     q <- list(ott_ids=ott_ids)
     res <- otl_POST(path="/taxonomy/lica", body=q, ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }

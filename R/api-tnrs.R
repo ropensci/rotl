@@ -40,8 +40,7 @@
     q <- q[!toKeep]
 
     res <- otl_POST("tnrs/match_names", body=q, ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -49,8 +48,7 @@
 ## Get OpenTree TNRS contexts
 .tnrs_contexts <- function(...) {
     res <- otl_POST("tnrs/contexts", body=list(), ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -63,6 +61,5 @@
     }
     q <- list(names=names)
     res <- otl_POST("tnrs/infer_context", body=q, ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }

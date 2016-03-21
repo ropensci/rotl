@@ -14,31 +14,49 @@ otl_version <- function(version) {
     }
 }
 
+
+# Take a request object and return list (if JSON) or plain text (if another
+# type)
 ##' @importFrom httr content
 ##' @importFrom jsonlite fromJSON
 otl_parse <- function(req) {
-    txt <- httr::content(req, as="text")
-    if (identical(txt, "")) {
+    if (grepl("application/json", req[["headers"]][["content-type"]]) ){
+        return(jsonlite::fromJSON(httr::content(req, "text", encoding = "UTF-8"), simplifyVector = FALSE))
+    }
+    txt <- httr::content(req, as="text", encoding = "UTF-8")
+    if(identical(txt, "")){
         stop("No output to parse; check your query.", call. = FALSE)
     }
-    if (substr(txt, 1, 1) == "{") {
-        jsonlite::fromJSON(txt, simplifyVector = FALSE)$description
-    } else txt
+    txt
 }
 
+otl_check_error <- function(cont) {
+    if (is.list(cont)) {
+        if (exists("description", cont)) {
+            if (exists("Error", cont$description)) {
+                stop(paste("Error: ", cont$description$error, "\n", sep = ""))
+            } else if (exists("message", cont)) {
+                stop(paste("Message: ", cont$descrption$message, "\n", sep = ""))
+            }
+        }
+    }
+}
+
+## Check and parse result of query
 otl_check <- function(req) {
-    otl_check_error(req)
     if (!req$status_code <  400) {
         msg <- otl_parse(req)
         stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
     }
+    desc <- otl_parse(req)
+    otl_check_error(desc)
+    desc
 }
 
 ##' @importFrom httr GET
 otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
     req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
-    req
 }
 
 ##' @importFrom jsonlite toJSON
@@ -52,20 +70,9 @@ otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
                       path=paste(otl_v, path, sep="/"),
                       body=body_json, ...)
     otl_check(req)
-    req
 }
 
-##' @importFrom httr content
-otl_check_error <- function(req) {
-    cont <- httr::content(req)
-    if (is.list(cont)) {
-        if (exists("error", cont)) {
-            stop(paste("Error: ", cont$error, "\n", sep = ""))
-        } else if (exists("message", cont)) {
-            stop(paste("Message: ", cont$message, "\n", sep = ""))
-        }
-    }
-}
+
 
 otl_formats <- function(format) {
     switch(tolower(format),
@@ -75,6 +82,7 @@ otl_formats <- function(format) {
            "json" = ".json",
            "") #fall through is no extension = nex(j)son
 }
+
 
 ## Strip all characters except the ottId from a OpenTree label (internal or terminal)
 otl_ottid_from_label <- function(label) {

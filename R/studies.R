@@ -2,10 +2,12 @@
 ##' studies and trees used in the synthetic tree.
 ##'
 ##' The list returned has 2 elements \code{tree_properties} and
-##' \code{studies_properties}. Each of these elements lists
-##' theadditional arguments to customize the API request properties
-##' that can be used to search for trees and studies that are
-##' contributing to the synthetic tree.
+##' \code{studies_properties}. Each of these elements lists additional
+##' arguments to customize the API request properties that can be used
+##' to search for trees and studies that are contributing to the
+##' synthetic tree. The definitions of these properties are available
+##' from
+##' \url{https://github.com/OpenTreeOfLife/phylesystem-api/wiki/NexSON}
 ##'
 ##' @title Properties of the Studies
 ##' @param ...  additional arguments to customize the API request (see
@@ -79,7 +81,8 @@ studies_properties <- function(...) {
 studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
                                  exact=FALSE, detailed = TRUE, ...) {
     .res <- .studies_find_studies(property = property, value = value,
-                                 verbose = verbose, exact = exact, ...)
+                                  verbose = verbose, exact = exact, ...)
+
     res <- vapply(.res[["matched_studies"]],
                   function(x) x[["ot:studyId"]],
                   character(1))
