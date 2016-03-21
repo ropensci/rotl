@@ -1,7 +1,7 @@
 ## rotl 0.5.0.900
 
 * Fix bug in `studies_find_studies`, the arguments `verbose` and `exact` were
-  ignore
+  ignored
 
 * Refactor how result of query is checked and parsed.
 
