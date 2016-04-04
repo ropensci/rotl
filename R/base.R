@@ -54,19 +54,19 @@ otl_check <- function(req) {
 }
 
 ##' @importFrom httr GET
-otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
-    req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
+otl_GET <- function(path, url = otl_url(...), otl_v = otl_version(...), ...) {
+    req <- httr::GET(url, path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
 }
 
 ##' @importFrom jsonlite toJSON
 ##' @importFrom httr POST
-otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
+otl_POST <- function(path, body, url = otl_url(...), otl_v = otl_version(...), ...) {
     stopifnot(is.list(body))
 
     body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
-    req <- httr::POST(otl_url(dev = dev_url),
+    req <- httr::POST(url,
                       path=paste(otl_v, path, sep="/"),
                       body=body_json, ...)
     otl_check(req)
