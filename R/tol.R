@@ -131,6 +131,150 @@ tol_mrca <- function(ott_ids=NULL, ...) {
     return(res)
 }
 
+
+
+
+
+
+##' Get summary information about a node in the synthetic tree
+##'
+##' @title Node info
+##' @details Summary information about a queried node, including 1)
+##'     whether it is in the graph database, 2) whether it is in the
+##'     synthetic tree, 3) supporting study sources, 4) number of
+##'     descendant tip taxa, 5) graph node ID, and 6) taxonomic
+##'     information (if it is a named node in the graph), including:
+##'     name, rank, OpenTree Taxonomy ID (ottID), and source taxonomy
+##'     IDs.
+##' @param ott_id The OpenTree taxonomic identifier.
+##' @param include_lineage Boolean. Whether to return the lineage of
+##'     the node from the synthetic tree. Optional; default = FALSE.
+##' @param ... additional arguments to customize the API call (see
+##'     ?rotl for more information)
+##' @return \code{tol_node_info} returns a list of summary information
+##'     about the queried node.
+##'
+##' \itemize{
+##'
+##'     \item {tree_id} {The tree identifier for a given study.}
+##'
+##'     \item {num_synth_tips} {Numeric. The number of synthetic
+##'            tree tip descendants.}
+##'
+##'     \item {name} {String. The taxonomic name of the queried node
+##'        (if it is a named node).}
+##'
+##'     \item {rank} {String. The taxonomic rank of the queried node
+##'     (if it is a named node).}
+##'
+##'    \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID) of
+##'     the queried node (if it is a named node).}
+##'
+##'    \item {num_tips} {Numeric. The number of taxonomic tip
+##'     descendants.}
+##'
+##'     \item {tree_sources} {A list of supporting source
+##'     trees in the graph. May differ from \code{"synth_sources"}, if
+##'     trees are in the graph, but were not used in constructing the
+##'     synthetic tree. Each source has:}
+##'
+##'     \itemize{
+##'
+##'         \item {study_id} {The study identifier. Will typically include
+##'         a prefix ("pg_" or "ot_").}
+##'
+##'         \item {tree_id} {The tree identifier for a given study.}
+##'
+##'         \item {git_sha} {The git SHA identifying a particular source
+##'     version.}
+##'
+##'     }
+##'
+##'	\item {tax_source} {String. Source taxonomy IDs (if it is a
+##'     named node), e.g. "ncbi:9242,gbif:5289,irmng:104628".}
+##'
+##'    \item {synth_sources} {A list of supporting synthesis source
+##'     trees, each with:}
+##'
+##'        \itemize{
+##'
+##'           \item {git_sha} {The git SHA identifying a particular source
+##'            version.}
+##'
+##'           \item {tree_id} {The tree id associated with the study id used.}
+##'
+##'          \item {study_id} {The study identifier. Will typically include
+##'          a prefix ("pg_" or "ot_").}
+##'
+##'
+##'        }
+##'
+##'    \item {node_id} { The identifier for the node used by the neo4j
+##'       database. These identifiers are not persistent and shouldn't be
+##'       used.}
+##'
+##'   \item {in_synth_tree} {Boolean. Whether the \code{ott_id} is
+##'       included in the synthetic tree.}
+##'
+##'
+##' }
+##'
+##'     \code{tax_rank} and \code{ott_id} return vectors (character,
+##'     and numeric respectively).
+##'
+##' @examples
+##' \dontrun{
+##' birds <- tol_node_info(ott_id=81461)
+##' synth_sources(birds)
+##' tax_rank(birds)
+##' ott_id(birds)
+##' }
+##' @export
+tol_node_info <- function(ott_id=NULL, include_lineage=FALSE, ...) {
+    res <- .tol_node_info(ott_id = ott_id, include_lineage = include_lineage,
+                          ...)
+    class(res) <- "tol_node"
+    return(res)
+}
+
+
+##' @export
+##' @param tax an object returned by \code{tol_node_info}.
+##' @rdname tol_node_info
+tax_rank.tol_node <- function(tax) {
+    tax[["rank"]]
+}
+
+##' @export
+##' @rdname tol_node_info
+ott_id.tol_node <- function(tax, ...) {
+    tax[["ott_id"]]
+}
+
+##' @export
+##' @rdname tol_node_info
+synth_sources <- function(tax) UseMethod("synth_sources")
+
+
+##' @export
+##' @rdname tol_node_info
+synth_sources.tol_node <- function(tax) {
+    tt <- lapply(tax$synth_sources, function(x) {
+        c(x["study_id"], x["tree_id"], x["git_sha"])
+    })
+    tt <- do.call("rbind", tt)
+    as.data.frame(tt, stringsAsFactors = FALSE)
+}
+
+
+
+
+
+
+
+
+
+
 ##' Extract a subtree from the synthetic tree from an ott id.
 ##'
 ##'
@@ -160,7 +304,6 @@ tol_mrca <- function(ott_ids=NULL, ...) {
 ##'       res <- tol_subtree(ott_id=81461)
 ##'     }
 ##' @export
-
 tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 
     res <- .tol_subtree(ott_id = ott_id, tree_id = tree_id, ...)
@@ -211,7 +354,6 @@ tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 ##'                     file=tree_file)
 ##' }
 ##' @export
-
 tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
     res <- .tol_induced_subtree(ott_ids = ott_ids, ...)
 

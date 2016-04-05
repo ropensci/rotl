@@ -30,6 +30,31 @@
 }
 
 
+
+
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
+## Get summary information about a node in the OpenTree Tree of Life
+.tol_node_info <- function(ott_id=NULL, include_lineage=FALSE, ...) {
+    if (!is.logical(include_lineage)) {
+        stop("Argument \'include_lineage\' must be of class \"logical\"")
+    }
+    if (is.null(ott_id)) {
+        stop(sQuote("ott_id"), " needs to be provided")
+    } else {
+        if (!check_numeric(ott_id)) {
+            stop("Argument \'ott_id\' must look like a number.")
+        }
+        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
+    }
+    res <- otl_POST(path="tree_of_life/node_info", body=q, ...)
+    res
+}
+
+
+
+
+
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
 ## Get a subtree from the OpenTree Tree of Life
