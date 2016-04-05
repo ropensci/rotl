@@ -7,8 +7,8 @@
 ##'     including information about the list of trees and the taxonomy
 ##'     used to build it.
 ##'
-##' @param study_list Whether to return the list of source
-##'     studies. (Logical, default = FALSE).
+##' @param source_list Whether to return the list of source
+##'     trees. (Logical, default = FALSE).
 ##'
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
@@ -47,8 +47,8 @@
 ##' studies <- study_list(tol_about(study_list=TRUE))
 ##' }
 ##' @export
-tol_about <- function(study_list = FALSE, ...) {
-    res <- .tol_about(study_list = study_list, ...)
+tol_about <- function(source_list = FALSE, ...) {
+    res <- .tol_about(source_list = source_list, ...)
     class(res) <- "tol_summary"
     res
 }
@@ -57,15 +57,16 @@ tol_about <- function(study_list = FALSE, ...) {
 ##' @export
 print.tol_summary <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
-    cat("\tTree version: ", x$tree_id, "\n", sep="")
+    cat("\tTree version: ", x$synth_id, "\n", sep="")
     cat("\tTaxonomy version: ", x$taxonomy_version, "\n", sep="")
-    cat("\tConstructed: ", x$date, "\n", sep="")
-    cat("\tNumber of terminal taxa: ", x$num_tips, "\n", sep="")
-    cat("\tNumber of source trees: ", x$num_source_studies, "\n", sep="")
-    cat("\tSource list present: ", ifelse(exists("study_list", x), "true", "false"), "\n", sep="")
-    cat("\tRoot taxon: ", x$root_taxon_name, "\n", sep="")
-    cat("\tRoot ott_id: ", x$root_ott_id, "\n", sep="")
-    cat("\tRoot node_id: ", x$root_node_id, "\n", sep="")
+    cat("\tConstructed on: ", x$date_created, "\n", sep="")
+    cat("\tNumber of terminal taxa: ", x$root$num_tips, "\n", sep="")
+    cat("\tNumber of source trees: ", x$num_source_trees, "\n", sep="")
+    cat("\tNumber of source studies: ", x$num_source_studies, "\n", sep = "")
+    cat("\tSource list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
+    cat("\tRoot taxon: ", x$root$taxon$name, "\n", sep="")
+    cat("\tRoot ott_id: ", x$root$taxon$ott_id, "\n", sep="")
+    cat("\tRoot node_id: ", x$root$node_id, "\n", sep="")
 }
 
 ##' Retrieve the detailed information for the list of studies used in
@@ -85,11 +86,11 @@ study_list <- function(tol) UseMethod("study_list")
 ##' @export
 ##' @rdname study_list
 study_list.tol_summary <- function(tol) {
-    if (! exists("study_list", tol)) {
+    if (! exists("source_list", tol)) {
         stop("Make sure that your object has been created using ",
              sQuote("tol_about(study_list = TRUE)"))
     }
-    tol <- lapply(tol[["study_list"]], function(x) {
+    tol <- lapply(tol[["source_id_map"]], function(x) {
         c("tree_id" = x[["tree_id"]],
           "study_id" = x[["study_id"]],
           "git_sha" = x[["git_sha"]])

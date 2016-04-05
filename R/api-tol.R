@@ -1,11 +1,12 @@
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
+##' @importFrom assertthat is.flag
 ## Summary information about the OpenTree Tree of Life
-.tol_about <- function(study_list=FALSE, ...) {
-    if (!is.logical(study_list)) {
-        stop("Argument \'study_list\' must be of class \"logical\"")
+.tol_about <- function(source_list=FALSE, ...) {
+    if (!assertthat::is.flag(source_list)) {
+        stop("Argument ", sQuote("source_list"), " must be of class ", sQuote("logical"))
     }
-    q <- list(study_list=jsonlite::unbox(study_list))
+    q <- list(include_source_list=jsonlite::unbox(source_list))
     res <- otl_POST(path="tree_of_life/about", body=q, ...)
     res
 }

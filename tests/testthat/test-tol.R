@@ -1,4 +1,26 @@
 ############################################################################
+## tol_about                                                              ##
+############################################################################
+
+context("test tol_about (and in turn print.tol_summary)")
+
+test_that("Names in object returned are correct/match the docs", {
+    skip_on_cran()
+    req <- tol_about(source_list = TRUE)
+    expect_true(all(names(req) %in%
+                    c("source_list", "date_created", "root", "num_source_trees",
+                      "taxonomy_version", "num_source_studies",
+                      "filtered_flags", "synth_id", "source_id_map")))
+    expect_true(all(names(req$root) %in%
+                    c("taxon", "num_tips", "node_id")))
+    expect_true(all(names(req$root$taxon) %in%
+                    c("tax_sources", "name", "unique_name", "rank", "ott_id")))
+})
+
+
+
+
+############################################################################
 ## tol_subtree                                                            ##
 ############################################################################
 

@@ -4,11 +4,11 @@
 \alias{tol_about}
 \title{Information about the Tree of Life}
 \usage{
-tol_about(study_list = FALSE, ...)
+tol_about(source_list = FALSE, ...)
 }
 \arguments{
-\item{study_list}{Whether to return the list of source
-studies. (Logical, default = FALSE).}
+\item{source_list}{Whether to return the list of source
+trees. (Logical, default = FALSE).}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
