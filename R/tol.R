@@ -7,7 +7,7 @@
 ##'     including information about the list of trees and the taxonomy
 ##'     used to build it.
 ##'
-##' @param source_list Whether to return the list of source
+##' @param include_source_list Whether to return the list of source
 ##'     trees. (Logical, default = FALSE).
 ##'
 ##' @param ... additional arguments to customize the API call (see
@@ -17,38 +17,74 @@
 ##'
 ##' \itemize{
 ##'
-##'     \item {tree_id} {The name identifier of the synthetic tree.}
-##'
-##'     \item {date} {The date that the synthetic tree was
-##'     constructed.}
-##'
-##'     \item {taxonomy_version} {The version of the taxonomy used to
-##'     initialize the graph.}
-##'
-##'     \item {num_source_studies} {The number of unique source trees
-##'     used in the synthetic tree.}
-##'
-##'     \item {num_tips} {The number of terminal (tip) taxa in the
-##'     synthetic tree.}
-##'
-##'     \item {root_taxon_name} {The taxonomic name of the root node
-##'     of the synthetic tree.}
-##'
-##'     \item {root_node_id} {The node ID of the root node of the
-##'     synthetic tree.}
-##'
-##'     \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the
-##'     root node of the synthetic tree.}  }
+##'     \item {date_created} {String. The creation date of the tree.}
+##'     
+##'     \item {num_source_studies} {Integer. The number of studies
+##'     (publications)used as sources.}
+##'     
+##'     \item {num_source_trees} {The number of trees used as sources (may
+##'     be >1 tree per study).}
+##'     
+##'     \item {taxonomy} {The Open Tree Taxonomy version used as a source.}
+##'     
+##'     \item {filtered_flags} {List. Taxa with these taxonomy flags were
+##'     not used in construction of the tree.}
+##'     
+##'     \item {root} {List. Describes the root node:}
+##'         \itemize{
+##'             \item {node_id} {String. The canonical identifier of the node.}
+##'             
+##'             \item {num_tips} {Numeric. The number of descendent tips.}
+##'             
+##'             \item {taxon} {A list of taxonomic properties:}
+##'             \itemize{
+##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'                 
+##'                 \item {name} {String. The taxonomic name of the queried node.}
+##'                 
+##'                 \item {unique_name} {String. The string that uniquely
+##'                 identifies the taxon in OTT.}
+##'                 
+##'                 \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'                 
+##'                 \item {tax_sources} {List. A list of identifiers for taxonomic
+##'                 sources, such as other taxonomies, that define taxa judged
+##'                 equivalent to this taxon.}
+##'             }
+##'         }
+##'     
+##'     \item {source_list} {List. Present only if \code{include_source_list} is
+##'     "true". The sourceid ordering is the precedence order for synthesis, with
+##'     relationships from earlier trees in the list having priority over those
+##'     from later trees in the list. See \code{source_id_map} below for study details.}
+##'     
+##'     \item {source_id_map} {Named list of lists. Present only if
+##'     \code{include_source_list} is "true". Names correspond to the
+##'     sourceids used in \code{source_list} above. Source trees will have the
+##'     following properties:}
+##'     
+##'         \itemize{
+##'             \item {git_sha} {The git SHA identifying a particular source
+##'             version.}
+##'             
+##'             \item {tree_id} {The tree id associated with the study id used.}
+##'             
+##'             \item {study_id} {The study identifier. Will typically include
+##'             a prefix ("pg_" or "ot_").}
+##'         }
+##'     
+##'     \item {synth_id} {The unique string for this version of the tree.}
+##' }
 ##' @seealso \code{\link{study_list}} to explore the list of studies
 ##'     used in the synthetic tree.
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_about()
-##' studies <- study_list(tol_about(study_list=TRUE))
+##' studies <- study_list(tol_about(include_source_list=TRUE))
 ##' }
 ##' @export
-tol_about <- function(source_list=FALSE, ...) {
-    res <- .tol_about(source_list=source_list, ...)
+tol_about <- function(include_source_list=FALSE, ...) {
+    res <- .tol_about(include_source_list=include_source_list, ...)
     class(res) <- "tol_summary"
     res
 }
@@ -58,7 +94,7 @@ tol_about <- function(source_list=FALSE, ...) {
 print.tol_summary <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
     cat("\tTree version: ", x$synth_id, "\n", sep="")
-    cat("\tTaxonomy version: ", x$taxonomy_version, "\n", sep="")
+    cat("\tTaxonomy version: ", x$taxonomy, "\n", sep="")
     cat("\tConstructed on: ", x$date_created, "\n", sep="")
     cat("\tNumber of terminal taxa: ", x$root$num_tips, "\n", sep="")
     cat("\tNumber of source trees: ", x$num_source_trees, "\n", sep="")
@@ -90,7 +126,7 @@ study_list <- function(tol) UseMethod("study_list")
 study_list.tol_summary <- function(tol) {
     if (! exists("source_list", tol)) {
         stop("Make sure that your object has been created using ",
-             sQuote("tol_about(study_list = TRUE)"))
+             sQuote("tol_about(include_source_list = TRUE)"))
     }
     tol <- lapply(tol[["source_id_map"]], function(x) {
         c("tree_id"=x[["tree_id"]],
