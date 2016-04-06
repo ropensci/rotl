@@ -4,7 +4,7 @@ context("Tree of Life API")
 ## .tol_about                                                             ##
 ############################################################################
 
-test_that("study_list is logical for .tol_about", {
+test_that("include_source_list is logical for .tol_about", {
     skip_on_cran()
     expect_error(.tol_about("true"),
                  "logical")
