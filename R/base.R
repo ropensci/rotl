@@ -8,7 +8,7 @@ otl_url <- function(dev=FALSE) {
 
 otl_version <- function(version) {
     if (missing(version)) {
-        return("v2")
+        return("v3")
     } else {
         return(version)
     }
