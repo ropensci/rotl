@@ -145,3 +145,13 @@ check_numeric <- function(x) {
         return(x %% 1 == 0)
     }
 }
+
+## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
+check_valid_node_id <- function(x) {
+    if (grepl('^mrcaott\\d+ott\\d+', x) || grepl('^ott\\d+', x)) {
+        return (TRUE)
+    } else {
+        return (FALSE)
+    }
+}
+

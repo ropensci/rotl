@@ -18,8 +18,6 @@ test_that("Names in object returned are correct/match the docs", {
 })
 
 
-
-
 ############################################################################
 ## tol_subtree                                                            ##
 ############################################################################
@@ -58,7 +56,6 @@ test_that("tol_subtree returns a newick file when providing a file argument", {
 })
 
 
-
 ############################################################################
 ## tol_induced_subtree                                                    ##
 ############################################################################
@@ -94,6 +91,7 @@ test_that("tol_induced_subtree generates a newick file when providing a file arg
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
+
 ############################################################################
 ## tol_mrca                                                               ##
 ############################################################################
@@ -119,6 +117,7 @@ test_that("tol_mrca returns a list", {
                         "nearest_taxon_mrca_rank")))
 })
 
+
 ############################################################################
 ## strip_ott_ids                                                          ##
 ############################################################################
@@ -129,3 +128,39 @@ test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
     tr <- tol_induced_subtree(ott_ids=c(666104, 267845, 292466))
     expect_true(all(strip_ott_ids(tr$tip.label) %in% genera))
 })
+
+
+############################################################################
+## tol_node_info                                                          ##
+############################################################################
+
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    tol_info <- tol_node_info(ott_id = 81461)
+}
+
+test_that("tol node info.", {
+    skip_on_cran()
+    expect_true(all(names(tol_info) %in%
+                      c("partial_path_of", "supported_by", "source_id_map", "taxon",
+                        "num_tips", "terminal", "node_id")))
+    expect_true(inherits(tol_info, "tol_node"))
+})
+
+# note that tax info is now contained in a taxon 'blob'
+test_that("tol_node tax_rank method", {
+    skip_on_cran()
+    expect_equal(tax_rank(tol_info), "class")
+})
+
+test_that("tol_node ott_id method", {
+    skip_on_cran()
+    expect_equal(ott_id(tol_info), 81461)
+})
+
+test_that("tol_node synth_sources method", {
+    skip_on_cran()
+    expect_true(inherits(synth_sources(tol_info), "data.frame"))
+    expect_true(all(names(synth_sources(tol_info)) %in%
+                      c("study_id", "tree_id", "git_sha")))
+})
+
