@@ -6,7 +6,7 @@ context("test tol_about (and in turn print.tol_summary)")
 
 test_that("Names in object returned are correct/match the docs", {
     skip_on_cran()
-    req <- tol_about(source_list = TRUE)
+    req <- tol_about(include_source_list = TRUE)
     expect_true(all(names(req) %in%
                     c("source_list", "date_created", "root", "num_source_trees",
                       "taxonomy_version", "num_source_studies",
@@ -26,8 +26,7 @@ context("test tol_subtree")
 
 test_that("tol_subtree fails if ott_id is invalid", {
     skip_on_cran()
-    expect_error(tol_subtree(ott_id = 6666666),
-                 "Invalid")
+    expect_error(tol_subtree(ott_id = 6666666))
 })
 
 test_that("tol_subtree fails if more than one ott_id is provided", {
@@ -64,8 +63,8 @@ context("test tol_induced_subtree")
 
 test_that("warning for node ids that are not in TOL graph", {
     skip_on_cran()
-    expect_warning(tol_induced_subtree(ott_ids = c(357968, 867416, 939325, 9999999)),
-                   "not in graph")
+    expect_error(tol_induced_subtree(ott_ids = c(357968, 867416, 939325, 9999999)),
+                   "not found")
 })
 
 test_that("error if ott_ids provided don't look like numbers", {
@@ -74,11 +73,6 @@ test_that("error if ott_ids provided don't look like numbers", {
                  "must look like numbers")
 })
 
-test_that("warning for ott ids that are not in TOL graph", {
-    skip_on_cran()
-    expect_warning(tol_induced_subtree(ott_ids = c(357968, 867416, 939325, 777777777)),
-                   "not in graph")
-})
 
 ## test_that("warning for ott ids not in tree",
 ##           ???)
@@ -107,14 +101,9 @@ test_that("tol_mrca returns a list", {
     birds <- tol_mrca(ott_ids = c(412129, 536234))
     expect_true(inherits(birds, "list"))
     expect_true(all(names(birds) %in%
-                      c("mrca_rank", "mrca_name",
-                        "nearest_taxon_mrca_node_id", "invalid_node_ids",
-                        "tree_id", "ott_id",
-                        "mrca_unique_name","node_ids_not_in_tree",
-                        "nearest_taxon_mrca_unique_name","nearest_taxon_mrca_ott_id",
-                        "ott_ids_not_in_tree","nearest_taxon_mrca_name",
-                        "invalid_ott_ids","mrca_node_id",
-                        "nearest_taxon_mrca_rank")))
+                    c("mrca",
+                      "source_id_map",
+                      "nearest_taxon")))
 })
 
 
@@ -163,4 +152,3 @@ test_that("tol_node synth_sources method", {
     expect_true(all(names(synth_sources(tol_info)) %in%
                       c("study_id", "tree_id", "git_sha")))
 })
-

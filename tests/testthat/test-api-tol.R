@@ -17,7 +17,7 @@ test_that("include_source_list is logical for .tol_about", {
 test_that("neither ott_ids nor node_ids are NULL for .tol_mrca", {
     skip_on_cran()
     expect_error(.tol_mrca(NULL),
-                 "Must supply")
+                 "must supply")
 })
 
 ############################################################################
@@ -43,7 +43,7 @@ test_that("providing tree_id gives a warning", {
 test_that("ott_ids is not NULL", {
     skip_on_cran()
     expect_error(.tol_induced_subtree(ott_ids = NULL),
-                 "must be provided")
+                 "must supply")
 })
 
 test_that("NAs are not accepted for ott_ids", {
@@ -73,4 +73,3 @@ test_that("node_id must be a character with .tol_node_info", {
     expect_error(.tol_node_info(node_id = 123),
                  "character")
 })
-

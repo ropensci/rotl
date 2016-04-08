@@ -11,20 +11,20 @@
     res
 }
 
+##' @importFrom jsonlite unbox
+.tol_node_info <- function(ott_id = NULL, include_lineage = FALSE, ...) {
+    check_ott_ids(ott_id)
+    q <- list(ott_id = jsonlite::unbox(ott_id),
+              include_lineage = jsonlite::unbox(include_lineage))
+    res <- otl_POST(path = "tree_of_life/node_info", body = q, ...)
+    res
+}
 
 ##' @importFrom httr content
 ## Get the MRCA of a set of nodes
 .tol_mrca <- function(ott_ids=NULL, ...) {
-    if (is.null(ott_ids)) {
-        stop("Must supply at least some \'ott_ids\'.")
-    }
-
-    if (!is.null(ott_ids)) {
-        if (!all(sapply(ott_ids, check_numeric))) {
-            stop("all ", sQuote("ott_ids"), " must look like numbers.")
-        }
-        q <- list(ott_ids = ott_ids)
-    }
+    check_ott_ids(ott_ids)
+    q <- list(ott_ids = ott_ids)
     res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
     res
 }
@@ -53,18 +53,11 @@
 ##' @importFrom httr content
 ## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
 .tol_induced_subtree <- function(ott_ids=NULL, ...) {
-    if (is.null(ott_ids)) {
-        stop("At least two valid ", sQuote("ott_ids"), " must be provided")
+    check_ott_ids(ott_ids)
+    if (length(ott_ids) < 2) {
+        stop("At least two valid ", sQuote("ott_ids"), " must be provided.")
     }
 
-    if (!is.null(ott_ids)) {
-        if (any(is.na(ott_ids))) {
-        	stop("NAs are not allowed for argument \'ott_ids\'")
-        }
-        if (!all(sapply(ott_ids, check_numeric))) {
-            stop(sQuote("ott_ids"), " must look like numbers")
-        }
-    }
     q <- list(ott_ids=ott_ids)
     res <- otl_POST("tree_of_life/induced_subtree", body=q, ...)
     res
@@ -100,4 +93,3 @@
     res <- otl_POST(path="tree_of_life/node_info", body=q, ...)
     res
 }
-

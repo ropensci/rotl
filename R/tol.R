@@ -18,61 +18,61 @@
 ##' \itemize{
 ##'
 ##'     \item {date_created} {String. The creation date of the tree.}
-##'     
+##'
 ##'     \item {num_source_studies} {Integer. The number of studies
 ##'     (publications)used as sources.}
-##'     
+##'
 ##'     \item {num_source_trees} {The number of trees used as sources (may
 ##'     be >1 tree per study).}
-##'     
+##'
 ##'     \item {taxonomy} {The Open Tree Taxonomy version used as a source.}
-##'     
+##'
 ##'     \item {filtered_flags} {List. Taxa with these taxonomy flags were
 ##'     not used in construction of the tree.}
-##'     
+##'
 ##'     \item {root} {List. Describes the root node:}
 ##'         \itemize{
 ##'             \item {node_id} {String. The canonical identifier of the node.}
-##'             
+##'
 ##'             \item {num_tips} {Numeric. The number of descendent tips.}
-##'             
+##'
 ##'             \item {taxon} {A list of taxonomic properties:}
 ##'             \itemize{
 ##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
-##'                 
+##'
 ##'                 \item {name} {String. The taxonomic name of the queried node.}
-##'                 
+##'
 ##'                 \item {unique_name} {String. The string that uniquely
 ##'                 identifies the taxon in OTT.}
-##'                 
+##'
 ##'                 \item {rank} {String. The taxonomic rank of the taxon in OTT.}
-##'                 
+##'
 ##'                 \item {tax_sources} {List. A list of identifiers for taxonomic
 ##'                 sources, such as other taxonomies, that define taxa judged
 ##'                 equivalent to this taxon.}
 ##'             }
 ##'         }
-##'     
+##'
 ##'     \item {source_list} {List. Present only if \code{include_source_list} is
 ##'     "true". The sourceid ordering is the precedence order for synthesis, with
 ##'     relationships from earlier trees in the list having priority over those
 ##'     from later trees in the list. See \code{source_id_map} below for study details.}
-##'     
+##'
 ##'     \item {source_id_map} {Named list of lists. Present only if
 ##'     \code{include_source_list} is "true". Names correspond to the
 ##'     sourceids used in \code{source_list} above. Source trees will have the
 ##'     following properties:}
-##'     
+##'
 ##'         \itemize{
 ##'             \item {git_sha} {The git SHA identifying a particular source
 ##'             version.}
-##'             
+##'
 ##'             \item {tree_id} {The tree id associated with the study id used.}
-##'             
+##'
 ##'             \item {study_id} {The study identifier. Will typically include
 ##'             a prefix ("pg_" or "ot_").}
 ##'         }
-##'     
+##'
 ##'     \item {synth_id} {The unique string for this version of the tree.}
 ##' }
 ##' @seealso \code{\link{study_list}} to explore the list of studies
@@ -223,7 +223,7 @@ tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 ##' induced on the draft tree by the set of identified nodes. Ott ids
 ##' that do not correspond to any nodes found in the graph, or which
 ##' are in the graph but are absent from the synthetic tree (e.g. groups
-##' included in the Open Tree Taxonomy but found to be paraphyletic in 
+##' included in the Open Tree Taxonomy but found to be paraphyletic in
 ##' in studies contributing to the synthetic tree) , will be
 ##' identified in the output (but obvisouly will be absent from the
 ##' resulting induced tree). Branch lengths in the result may be
@@ -275,7 +275,7 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
 
 
 ##' Strip OTT ids from tip labels
-##' @param tip_labels a character vector containing tip labels (most likely 
+##' @param tip_labels a character vector containing tip labels (most likely
 ##'     the \code{tip.label} element from a tree returned by
 ##'     \code{\link{tol_induced_subtree}}
 ##' @return A character vector containing the contents of \code{tip_labels}
@@ -313,58 +313,58 @@ strip_ott_ids <- function(tip_labels) {
 ##' \itemize{
 ##'
 ##'     \item {node_id} {String. The canonical identifier of the node.}
-##'      
+##'
 ##'     \item {num_tips} {Numeric. The number of descendent tips.}
-##'     
+##'
 ##'     \item {taxon} {A list of taxonomic properties. Only returned if
 ##'     the queried node is a taxon. Each source has:}
-##'     
+##'
 ##'         \itemize{
 ##'             \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
-##'             
+##'
 ##'             \item {name} {String. The taxonomic name of the queried node.}
-##'             
+##'
 ##'             \item {unique_name} {String. The string that uniquely
 ##'             identifies the taxon in OTT.}
-##'             
+##'
 ##'             \item {rank} {String. The taxonomic rank of the taxon in OTT.}
-##'             
+##'
 ##'             \item {tax_sources} {List. A list of identifiers for taxonomic
 ##'             sources, such as other taxonomies, that define taxa judged
 ##'             equivalent to this taxon.}
 ##'         }
-##'     
+##'
 ##'     The following properties list support/conflict for the node across
 ##'     synthesis source trees. All properties involve sourceid keys and
 ##'     nodeid values (see \code{source_id_map} below).
-##'     
+##'
 ##'     \item {partial_path_of} {List. The edge below this synthetic tree node
-##'     is compatible with the edge below each of these input tree nodes (one 
+##'     is compatible with the edge below each of these input tree nodes (one
 ##'     per tree). Each returned element is reported as sourceid:nodeid.}
-##'     
+##'
 ##'     \item {supported_by} {List. Input tree nodes (one per tree) that support
-##'     this synthetic tree node. Each returned element is reported as 
+##'     this synthetic tree node. Each returned element is reported as
 ##'     sourceid:nodeid.}
-##'     
+##'
 ##'     \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
 ##'     to this synthetic tree node (via an exact mapping, or the input tree
 ##'     terminal may be the only terminal descended from this synthetic tree node.
 ##'     Each returned element is reported as sourceid:nodeid.}
-##'     
-##'     \item {conflicts_with} {Named list of lists. Names correspond to 
+##'
+##'     \item {conflicts_with} {Named list of lists. Names correspond to
 ##'     sourceid keys. Each list contains input tree node ids (one or more per tree)
 ##'     that conflict with this synthetic node.}
-##'     
+##'
 ##'     \item {source_id_map} {Named list of lists. Names correspond to the
 ##'     sourceid keys used in the 4 properties above. Source trees will have the
 ##'     following properties:}
-##'     
+##'
 ##'         \itemize{
 ##'             \item {git_sha} {The git SHA identifying a particular source
 ##'             version.}
-##'             
+##'
 ##'             \item {tree_id} {The tree id associated with the study id used.}
-##'             
+##'
 ##'             \item {study_id} {The study identifier. Will typically include
 ##'             a prefix ("pg_" or "ot_").}
 ##'         }
@@ -423,4 +423,3 @@ synth_sources.tol_node <- function(tax) {
     tt <- do.call("rbind", tt)
     as.data.frame(tt, stringsAsFactors=FALSE)
 }
-

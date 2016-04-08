@@ -32,58 +32,58 @@ the node from the synthetic tree. Optional; default = FALSE.}
 \itemize{
 
     \item {node_id} {String. The canonical identifier of the node.}
-     
+
     \item {num_tips} {Numeric. The number of descendent tips.}
-    
+
     \item {taxon} {A list of taxonomic properties. Only returned if
     the queried node is a taxon. Each source has:}
-    
+
         \itemize{
             \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
-            
+
             \item {name} {String. The taxonomic name of the queried node.}
-            
+
             \item {unique_name} {String. The string that uniquely
             identifies the taxon in OTT.}
-            
+
             \item {rank} {String. The taxonomic rank of the taxon in OTT.}
-            
+
             \item {tax_sources} {List. A list of identifiers for taxonomic
             sources, such as other taxonomies, that define taxa judged
             equivalent to this taxon.}
         }
-    
+
     The following properties list support/conflict for the node across
     synthesis source trees. All properties involve sourceid keys and
     nodeid values (see \code{source_id_map} below).
-    
+
     \item {partial_path_of} {List. The edge below this synthetic tree node
-    is compatible with the edge below each of these input tree nodes (one 
+    is compatible with the edge below each of these input tree nodes (one
     per tree). Each returned element is reported as sourceid:nodeid.}
-    
+
     \item {supported_by} {List. Input tree nodes (one per tree) that support
-    this synthetic tree node. Each returned element is reported as 
+    this synthetic tree node. Each returned element is reported as
     sourceid:nodeid.}
-    
+
     \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
     to this synthetic tree node (via an exact mapping, or the input tree
     terminal may be the only terminal descended from this synthetic tree node.
     Each returned element is reported as sourceid:nodeid.}
-    
-    \item {conflicts_with} {Named list of lists. Names correspond to 
+
+    \item {conflicts_with} {Named list of lists. Names correspond to
     sourceid keys. Each list contains input tree node ids (one or more per tree)
     that conflict with this synthetic node.}
-    
+
     \item {source_id_map} {Named list of lists. Names correspond to the
     sourceid keys used in the 4 properties above. Source trees will have the
     following properties:}
-    
+
         \itemize{
             \item {git_sha} {The git SHA identifying a particular source
             version.}
-            
+
             \item {tree_id} {The tree id associated with the study id used.}
-            
+
             \item {study_id} {The study identifier. Will typically include
             a prefix ("pg_" or "ot_").}
         }

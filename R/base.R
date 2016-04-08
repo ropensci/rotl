@@ -8,7 +8,7 @@ otl_url <- function(dev=FALSE) {
 
 otl_version <- function(version) {
     if (missing(version)) {
-        return("v2")
+        return("v3")
     } else {
         return(version)
     }
@@ -155,3 +155,16 @@ check_valid_node_id <- function(x) {
     }
 }
 
+## Check that ott_ids are not NULL, not NAs and look like numbers
+check_ott_ids <- function(ott_ids) {
+    if (!is.null(ott_ids)) {
+        if (any(is.na(ott_ids))) {
+            stop("NAs are not allowed")
+        }
+        if (!all(sapply(ott_ids, check_numeric))) {
+            stop(sQuote("ott_ids"), " must look like numbers.")
+        }
+    } else {
+        stop("You must supply some OTT ids.")
+    }
+}
