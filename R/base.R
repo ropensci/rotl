@@ -72,8 +72,6 @@ otl_POST <- function(path, body, url = otl_url(...), otl_v = otl_version(...), .
     otl_check(req)
 }
 
-
-
 otl_formats <- function(format) {
     switch(tolower(format),
            "nexus" = ".nex",
@@ -82,7 +80,6 @@ otl_formats <- function(format) {
            "json" = ".json",
            "") #fall through is no extension = nex(j)son
 }
-
 
 ## Strip all characters except the ottId from a OpenTree label (internal or terminal)
 otl_ottid_from_label <- function(label) {
@@ -119,7 +116,6 @@ phylo_from_otl <- function(res, dedup = FALSE) {
     return(phy)
 }
 
-
 nexml_from_otl <- function(res) {
     if (!requireNamespace("RNeXML", quietly = TRUE)) {
         stop("The RNeXML package is needed to use the nexml file format")
@@ -146,15 +142,6 @@ check_numeric <- function(x) {
     }
 }
 
-## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
-check_valid_node_id <- function(x) {
-    if (grepl('^mrcaott\\d+ott\\d+', x) || grepl('^ott\\d+', x)) {
-        return (TRUE)
-    } else {
-        return (FALSE)
-    }
-}
-
 ## Check that ott_ids are not NULL, not NAs and look like numbers
 check_ott_ids <- function(ott_ids) {
     if (!is.null(ott_ids)) {
@@ -168,3 +155,30 @@ check_ott_ids <- function(ott_ids) {
         stop("You must supply some OTT ids.")
     }
 }
+
+## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
+check_valid_node_id <- function(x) {
+    if (!is.character(x)) {
+        return (FALSE)
+    }
+    if (grepl('^mrcaott\\d+ott\\d+', x) || grepl('^ott\\d+', x)) {
+        return (TRUE)
+    } else {
+        return (FALSE)
+    }
+}
+
+check_node_ids <- function(node_ids) {
+    if (!is.null(node_ids)) {
+        if (!is.character(node_ids)) {
+            stop("Argument ", sQuote("node_ids"), " must be of type character.")
+        }
+        if (any(is.na(node_ids))) {
+            stop("NAs are not allowed")
+        }
+        if (!all(sapply(node_ids, check_valid_node_id))) {
+            stop(sQuote("node_ids"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
+        }
+    }
+}
+

@@ -11,14 +11,6 @@
     res
 }
 
-##' @importFrom jsonlite unbox
-.tol_node_info <- function(ott_id = NULL, include_lineage = FALSE, ...) {
-    check_ott_ids(ott_id)
-    q <- list(ott_id = jsonlite::unbox(ott_id),
-              include_lineage = jsonlite::unbox(include_lineage))
-    res <- otl_POST(path = "tree_of_life/node_info", body = q, ...)
-    res
-}
 
 ##' @importFrom httr content
 ## Get the MRCA of a set of nodes
@@ -83,9 +75,7 @@
         }
         q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     } else {
-        if (!is.character(node_id)) {
-            stop("Argument ", sQuote("node_id"), " must be of type character.")
-        } else if (!check_valid_node_id(node_id)) {
+        if (!check_valid_node_id(node_id)) {
             stop("Argument ", sQuote("node_id"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
         }
         q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
@@ -93,3 +83,4 @@
     res <- otl_POST(path="tree_of_life/node_info", body=q, ...)
     res
 }
+
