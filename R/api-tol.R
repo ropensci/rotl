@@ -12,16 +12,6 @@
 }
 
 
-##' @importFrom httr content
-## Get the MRCA of a set of nodes
-.tol_mrca <- function(ott_ids=NULL, ...) {
-    check_ott_ids(ott_ids)
-    q <- list(ott_ids = ott_ids)
-    res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
-    res
-}
-
-
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
 ## Get a subtree from the OpenTree Tree of Life
@@ -67,7 +57,7 @@
         stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"))
     }
     if (!is.null(ott_id) && !is.null(node_id)) {
-        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"))
+        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), " not both.")
     }
     if (!is.null(ott_id)) {
         if (!check_numeric(ott_id)) {
@@ -81,6 +71,20 @@
         q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
     }
     res <- otl_POST(path="tree_of_life/node_info", body=q, ...)
+    res
+}
+
+
+##' @importFrom httr content
+## Get the MRCA of a set of nodes
+.tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
+    if (is.null(ott_ids) && is.null(node_ids)) {
+        stop("Must provide ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " (or both).")
+    }
+    check_ott_ids(ott_ids)
+    check_node_ids(node_ids)
+    q <- list(ott_ids=ott_ids, node_ids=node_ids)
+    res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
     res
 }
 

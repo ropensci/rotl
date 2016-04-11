@@ -130,6 +130,9 @@ nexml_from_otl <- function(res) {
 ## check if the argument provided looks like a number (can be coerced
 ## to integer/numeric).
 check_numeric <- function(x) {
+    if (is.null(x)) {
+        return(FALSE)
+    }
     if (length(x) != 1) {
         stop("only 1 element should be provided")
     }
@@ -158,6 +161,9 @@ check_ott_ids <- function(ott_ids) {
 
 ## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
 check_valid_node_id <- function(x) {
+    if (length(x) != 1) {
+        stop("only 1 element should be provided")
+    }
     if (!is.character(x)) {
         return (FALSE)
     }

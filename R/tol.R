@@ -156,7 +156,9 @@ study_list.tol_summary <- function(tol) {
 ##' @details Return the most recent common ancestor of a set of nodes
 ##'     in the synthetic tree.
 ##' @param ott_ids the ott ids for which the MRCA is desired
-##'     (character or numeric vector)
+##'     (numeric vector)
+##' @param node_ids the node ids for which the MRCA is desired
+##'     (character vector)
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##' @return A list
@@ -165,8 +167,8 @@ study_list.tol_summary <- function(tol) {
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ##' }
 ##' @export
-tol_mrca <- function(ott_ids=NULL, ...) {
-    res <- .tol_mrca(ott_ids=ott_ids, ...)
+tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
+    res <- .tol_mrca(ott_ids=ott_ids, node_ids=node_ids, ...)
     return(res)
 }
 
@@ -402,6 +404,10 @@ tax_rank.tol_node <- function(tax) {
 ott_id.tol_node <- function(tax, ...) {
     tax[["taxon"]]$ott_id
 }
+
+
+
+
 
 
 
