@@ -4,7 +4,7 @@
 \alias{tol_subtree}
 \title{Extract a subtree from the synthetic tree}
 \usage{
-tol_subtree(ott_id = NULL, node_id = NULL, file, ...)
+tol_subtree(ott_id = NULL, node_id = NULL, label_format = NULL, file, ...)
 }
 \arguments{
 \item{ott_id}{Numeric. The ott id of the node in the tree that should
@@ -18,9 +18,11 @@ file in newick format.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
+
+\item{label_format.}{Character. Defines the label type; one of “name”, “id”,}
 }
 \value{
-If no value is specified to the \code{file} argument
+If no value is specified to the \code{file} argument 
     (default), a phyogenetic tree of class \code{phylo}.
     Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.

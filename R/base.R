@@ -165,12 +165,12 @@ check_valid_node_id <- function(x) {
         stop("only 1 element should be provided")
     }
     if (!is.character(x)) {
-        return (FALSE)
+        return(FALSE)
     }
     if (grepl('^mrcaott\\d+ott\\d+', x) || grepl('^ott\\d+', x)) {
-        return (TRUE)
+        return(TRUE)
     } else {
-        return (FALSE)
+        return(FALSE)
     }
 }
 
@@ -185,6 +185,16 @@ check_node_ids <- function(node_ids) {
         if (!all(sapply(node_ids, check_valid_node_id))) {
             stop(sQuote("node_ids"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
         }
+    }
+}
+
+# node labels for tree_of_life subtree and induced_subtree
+# might also be useful for taxonomy queries
+check_label_format <- function (x) {
+    if (x %in% c("name", "id", "name_and_id")) {
+        return(TRUE)
+    } else {
+        return(FALSE)
     }
 }
 

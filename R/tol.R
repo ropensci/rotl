@@ -184,6 +184,8 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     serve as the root of the tree returned.
 ##' @param node_id Character. The node id of the node in the tree that should
 ##'     serve as the root of the tree returned.
+##' @param label_format. Character. Defines the label type; one of “name”, “id”,
+## '    or “name_and_id”; default = “name_and_id”.
 ##' @param file if specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
@@ -199,8 +201,8 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'       res <- tol_subtree(ott_id=81461)
 ##'     }
 ##' @export
-tol_subtree <- function(ott_id=NULL, node_id=NULL, file, ...) {
-    res <- .tol_subtree(ott_id=ott_id, node_id=node_id, ...)
+tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...) {
+    res <- .tol_subtree(ott_id=ott_id, node_id=node_id, label_format=label_format, ...)
 
     if (!missing(file)) {
         unlink(file)
