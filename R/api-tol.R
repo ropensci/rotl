@@ -12,20 +12,6 @@
 }
 
 
-##' @importFrom httr content
-## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
-.tol_induced_subtree <- function(ott_ids=NULL, ...) {
-    check_ott_ids(ott_ids)
-    if (length(ott_ids) < 2) {
-        stop("At least two valid ", sQuote("ott_ids"), " must be provided.")
-    }
-
-    q <- list(ott_ids=ott_ids)
-    res <- otl_POST("tree_of_life/induced_subtree", body=q, ...)
-    res
-}
-
-
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
 ## Get summary information about a node in the OpenTree Tree of Life
@@ -61,9 +47,15 @@
     if (is.null(ott_ids) && is.null(node_ids)) {
         stop("Must provide ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " (or both).")
     }
-    check_ott_ids(ott_ids)
-    check_node_ids(node_ids)
-    q <- list(ott_ids=ott_ids, node_ids=node_ids)
+    q <- list()
+    if (!is.null(ott_ids)) {
+        check_ott_ids(ott_ids)
+        q$ott_ids <- ott_ids
+    }
+    if (!is.null(node_ids)) {
+        check_node_ids(node_ids)
+        q$node_ids <- node_ids
+    }
     res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
     res
 }
@@ -91,6 +83,29 @@
         q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
     }
     res <- otl_POST(path="tree_of_life/subtree", body=q, ...)
+    res
+}
+
+
+##' @importFrom httr content
+## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
+.tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, ...) {
+    if (is.null(ott_ids) && is.null(node_ids)) {
+        stop("Must provide ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " (or both).")
+    }
+    q <- list()
+    if (!is.null(ott_ids)) {
+        check_ott_ids(ott_ids)
+        q$ott_ids <- ott_ids
+    }
+    if (!is.null(node_ids)) {
+        check_node_ids(node_ids)
+        q$node_ids <- node_ids
+    }
+    if ((length(ott_ids) + length(node_ids)) < 2) {
+        stop("At least two valid ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " must be provided.")
+    }
+    res <- otl_POST("tree_of_life/induced_subtree", body=q, ...)
     res
 }
 

@@ -9,7 +9,6 @@
 ##'
 ##' @param include_source_list Whether to return the list of source
 ##'     trees. (Logical, default = FALSE).
-##'
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -77,6 +76,7 @@
 ##' }
 ##' @seealso \code{\link{study_list}} to explore the list of studies
 ##'     used in the synthetic tree.
+##'
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_about()
@@ -115,7 +115,9 @@ print.tol_summary <- function(x, ...) {
 ##' the studies currently included in the Tree of Life.
 ##'
 ##' @title List of studies used in the Tree of Life
+##'
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
+##'
 ##' @return a data frame
 ##' @export
 study_list <- function(tol) UseMethod("study_list")
@@ -153,15 +155,19 @@ study_list.tol_summary <- function(tol) {
 ##' the MRCA calculation. Returns any unmatched node ids / ott ids.
 ##'
 ##' @title MRCA of taxa from the synthetic tree
+##'
 ##' @details Return the most recent common ancestor of a set of nodes
 ##'     in the synthetic tree.
+##'
 ##' @param ott_ids the ott ids for which the MRCA is desired
 ##'     (numeric vector)
 ##' @param node_ids the node ids for which the MRCA is desired
 ##'     (character vector)
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
+##'
 ##' @return A list
+##'
 ##' @examples
 ##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
@@ -186,16 +192,19 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
+##'
 ##' @details Given a node, return the subtree of the synthetic tree descended
 ##'     from that node, either in newick or ArguSON format. The start node may
 ##'     be specified using either a node id or an ott id, but not both. If the
 ##'     specified node is not in the synthetic tree (or is entirely absent from
 ##'     the graph), an error will be returned. There is a size limit of 25000
 ##'     tips for this method.
+##'
 ##' @return If no value is specified to the \code{file} argument
 ##'     (default), a phyogenetic tree of class \code{phylo}.
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
+##'
 ##' @examples
 ##'    \dontrun{
 ##'       res <- tol_subtree(ott_id=81461)
@@ -215,34 +224,26 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, file, ...) {
 }
 
 
-##' Extract a subtree based on a vector of ott ids.
-##'
 ##' Return a tree with tips corresponding to the nodes identified in
 ##' the input set that is consistent with the topology of the current
 ##' synthetic tree. This tree is equivalent to the minimal subtree
-##' induced on the draft tree by the set of identified nodes. Ott ids
-##' that do not correspond to any nodes found in the graph, or which
-##' are in the graph but are absent from the synthetic tree (e.g. groups
-##' included in the Open Tree Taxonomy but found to be paraphyletic in
-##' in studies contributing to the synthetic tree) , will be
-##' identified in the output (but obvisouly will be absent from the
-##' resulting induced tree). Branch lengths in the result may be
-##' arbitrary, and the tip labels of the tree may either be taxonomic
-##' names or (for nodes not corresponding directly to named taxa) node
-##' ids.
+##' induced on the draft tree by the set of identified nodes.
 ##'
 ##' @title Subtree from the Open Tree of Life
+##'
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##'     induced tree
 ##' @param file if specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
+##'
 ##' @return If no value is specified to the \code{file} argument
 ##'     (default), a phyogenetic tree of class \code{phylo}.
 ##'
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
+##'
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
@@ -251,21 +252,11 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, file, ...) {
 ##'                     file=tree_file)
 ##' }
 ##' @export
-tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
-    res <- .tol_induced_subtree(ott_ids = ott_ids, ...)
-
-    if (length(res$node_ids_not_in_graph) > 0) {
-        warning("node ids: ", paste0(res$node_ids_not_in_graph, collapse = ", "), " not in graph.")
-    }
-    if (length(res$ott_ids_not_in_tree) >  0) {
-        warning("ott ids: ", paste0(res$ott_ids_not_in_tree, collaspse = ", "),  " not in tree.")
-    }
-    if (length(res$ott_ids_not_in_graph) > 0) {
-        warning("ott ids: ", paste0(res$ott_ids_not_in_graph, collapse = ", "), " not in graph.")
-    }
+tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, file, ...) {
+    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids, ...)
     if (!missing(file)) {
         unlink(file)
-        cat(res$newick, file = file)
+        cat(res$newick, file=file)
         return(file.exists(file))
     } else {
         phy <- phylo_from_otl(res)
@@ -278,8 +269,10 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
 ##' @param tip_labels a character vector containing tip labels (most likely
 ##'     the \code{tip.label} element from a tree returned by
 ##'     \code{\link{tol_induced_subtree}}
+##'
 ##' @return A character vector containing the contents of \code{tip_labels}
 ##'     with any OTT ids removed.
+##'
 ##' @examples
 ##' \dontrun{
 ##' genera <- c("Perdix", "Clangula", "Dendroica", "Cinclus", "Stellula", "Struthio")
@@ -297,16 +290,19 @@ strip_ott_ids <- function(tip_labels) {
 ##' Get summary information about a node in the synthetic tree
 ##'
 ##' @title Node info
+##'
 ##' @details Returns summary information about a node in the graph. The
 ##'     node of interest may be specified using either a node id or an
 ##'     taxon id, but not both. If the specified node or OTT id is not
 ##'     in the graph, an error will be returned.
+##'
 ##' @param ott_id Numeric. The OpenTree taxonomic identifier.
 ##' @param node_id Character. The OpenTree node identifier.
 ##' @param include_lineage Boolean. Whether to return the lineage of
 ##'     the node from the synthetic tree. Optional; default = FALSE.
 ##' @param ... additional arguments to customize the API call (see
 ##'     ?rotl for more information)
+##'
 ##' @return \code{tol_node_info} returns a list of summary information
 ##'     about the queried node.
 ##'
