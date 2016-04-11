@@ -17,8 +17,8 @@ tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 
 \item{node_id}{Character. The OpenTree node identifier.}
 
-\item{include_lineage}{Boolean. Whether to return the lineage of
-the node from the synthetic tree. Optional; default = FALSE.}
+\item{include_lineage}{Logical (default = FALSE). Whether to return the
+lineage of the node from the synthetic tree.}
 
 \item{...}{additional arguments to customize the API call (see
 ?rotl for more information)}

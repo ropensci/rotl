@@ -7,8 +7,8 @@
 tol_about(include_source_list = FALSE, ...)
 }
 \arguments{
-\item{include_source_list}{Whether to return the list of source
-trees. (Logical, default = FALSE).}
+\item{include_source_list}{Logical (default = FALSE). Return an
+ordered list of source trees.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
@@ -65,12 +65,12 @@ An invisible list of synthetic tree summary statistics:
     following properties:}
 
         \itemize{
-            \item {git_sha} {The git SHA identifying a particular source
+            \item {git_sha} {String. The git SHA identifying a particular source
             version.}
 
-            \item {tree_id} {The tree id associated with the study id used.}
+            \item {tree_id} {String. The tree id associated with the study id used.}
 
-            \item {study_id} {The study identifier. Will typically include
+            \item {study_id} {String. The study identifier. Will typically include
             a prefix ("pg_" or "ot_").}
         }
 

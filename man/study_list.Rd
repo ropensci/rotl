@@ -3,7 +3,12 @@
 \name{study_list}
 \alias{study_list}
 \alias{study_list.tol_summary}
-\title{List of studies used in the Tree of Life}
+\title{List of studies used in the Tree of Life
+
+#details This function takes the object resulting from
+\code{tol_about(study_list = TRUE)} and returns a data frame
+listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
+the studies currently included in the Tree of Life.}
 \usage{
 study_list(tol)
 
@@ -18,11 +23,5 @@ a data frame
 \description{
 Retrieve the detailed information for the list of studies used in
 the Tree of Life.
-}
-\details{
-This function takes the object resulting from
-\code{tol_about(study_list = TRUE)} and returns a data frame
-listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
-the studies currently included in the Tree of Life.
 }
 

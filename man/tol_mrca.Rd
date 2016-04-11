@@ -4,11 +4,12 @@
 \alias{tol_mrca}
 \title{MRCA of taxa from the synthetic tree}
 \usage{
-tol_mrca(ott_ids = NULL, ...)
+tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
 }
 \arguments{
-\item{ott_ids}{the ott ids for which the MRCA is desired
-(character or numeric vector)}
+\item{ott_ids}{Numeric vector. The ott ids for which the MRCA is desired.}
+
+\item{node_ids}{Character vector. The node ids for which the MRCA is desired.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
@@ -16,9 +17,17 @@ tol_mrca(ott_ids = NULL, ...)
 \value{
 A list
 }
+\description{
+Most Recent Common Ancestor for a set of nodes
+}
 \details{
-Return the most recent common ancestor of a set of nodes
-    in the synthetic tree.
+Get the MRCA of a set of nodes on the current synthetic
+tree. Accepts any combination of node ids and ott ids as
+input. Returns information about the most recent common ancestor
+(MRCA) node as well as the most recent taxonomic ancestor (MRTA)
+node (the closest taxonomic node to the MRCA node in the synthetic
+tree; the MRCA and MRTA may be the same node). If any of the
+specified nodes is not in the synthetic tree an error will be returned.
 }
 \examples{
 \dontrun{

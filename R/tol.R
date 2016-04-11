@@ -7,8 +7,8 @@
 ##'     including information about the list of trees and the taxonomy
 ##'     used to build it.
 ##'
-##' @param include_source_list Whether to return the list of source
-##'     trees. (Logical, default = FALSE).
+##' @param include_source_list Logical (default = FALSE). Return an
+##'     ordered list of source trees.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -63,12 +63,12 @@
 ##'     following properties:}
 ##'
 ##'         \itemize{
-##'             \item {git_sha} {The git SHA identifying a particular source
+##'             \item {git_sha} {String. The git SHA identifying a particular source
 ##'             version.}
 ##'
-##'             \item {tree_id} {The tree id associated with the study id used.}
+##'             \item {tree_id} {String. The tree id associated with the study id used.}
 ##'
-##'             \item {study_id} {The study identifier. Will typically include
+##'             \item {study_id} {String. The study identifier. Will typically include
 ##'             a prefix ("pg_" or "ot_").}
 ##'         }
 ##'
@@ -109,12 +109,12 @@ print.tol_summary <- function(x, ...) {
 ##' Retrieve the detailed information for the list of studies used in
 ##' the Tree of Life.
 ##'
-##' This function takes the object resulting from
+##' @title List of studies used in the Tree of Life
+##'
+##' #details This function takes the object resulting from
 ##' \code{tol_about(study_list = TRUE)} and returns a data frame
 ##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
 ##' the studies currently included in the Tree of Life.
-##'
-##' @title List of studies used in the Tree of Life
 ##'
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
 ##'
@@ -142,27 +142,18 @@ study_list.tol_summary <- function(tol) {
 
 ##' Most Recent Common Ancestor for a set of nodes
 ##'
-##' Get the MRCA of a set of nodes on the current synthetic
+##' @title MRCA of taxa from the synthetic tree
+##'
+##' @details Get the MRCA of a set of nodes on the current synthetic
 ##' tree. Accepts any combination of node ids and ott ids as
 ##' input. Returns information about the most recent common ancestor
 ##' (MRCA) node as well as the most recent taxonomic ancestor (MRTA)
 ##' node (the closest taxonomic node to the MRCA node in the synthetic
-##' tree; the MRCA and MRTA may be the same node). Node ids that are
-##' not in the synthetic tree are dropped from the MRCA
-##' calculation. For a valid ott id that is not in the synthetic tree
-##' (i.e. it is not recovered as monophyletic from the source tree
-##' information), the taxonomic descendants of the node are used in
-##' the MRCA calculation. Returns any unmatched node ids / ott ids.
+##' tree; the MRCA and MRTA may be the same node). If any of the
+##' specified nodes is not in the synthetic tree an error will be returned.
 ##'
-##' @title MRCA of taxa from the synthetic tree
-##'
-##' @details Return the most recent common ancestor of a set of nodes
-##'     in the synthetic tree.
-##'
-##' @param ott_ids the ott ids for which the MRCA is desired
-##'     (numeric vector)
-##' @param node_ids the node ids for which the MRCA is desired
-##'     (character vector)
+##' @param ott_ids Numeric vector. The ott ids for which the MRCA is desired.
+##' @param node_ids Character vector. The node ids for which the MRCA is desired.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -181,8 +172,13 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 
 ##' Extract a subtree from the synthetic tree from an ott id.
 ##'
-##'
 ##' @title Extract a subtree from the synthetic tree
+##'
+##' @details Given a node, return the subtree of the synthetic tree descended
+##'     from that node, either in newick or ArguSON format. The start node may
+##'     be specified using either a node id or an ott id, but not both. If the
+##'     specified node is not in the synthetic tree an error will be returned.
+##'     There is a size limit of 25000 tips for this method.
 ##'
 ##' @param ott_id Numeric. The ott id of the node in the tree that should
 ##'     serve as the root of the tree returned.
@@ -192,13 +188,6 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
-##'
-##' @details Given a node, return the subtree of the synthetic tree descended
-##'     from that node, either in newick or ArguSON format. The start node may
-##'     be specified using either a node id or an ott id, but not both. If the
-##'     specified node is not in the synthetic tree (or is entirely absent from
-##'     the graph), an error will be returned. There is a size limit of 25000
-##'     tips for this method.
 ##'
 ##' @return If no value is specified to the \code{file} argument
 ##'     (default), a phyogenetic tree of class \code{phylo}.
@@ -224,16 +213,20 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, file, ...) {
 }
 
 
-##' Return a tree with tips corresponding to the nodes identified in
+##' Return the induced subtree on the synthetic tree that relates a list of nodes.
+##'
+##' @title Subtree from the Open Tree of Life
+##'
+##' @details Return a tree with tips corresponding to the nodes identified in
 ##' the input set that is consistent with the topology of the current
 ##' synthetic tree. This tree is equivalent to the minimal subtree
 ##' induced on the draft tree by the set of identified nodes.
 ##'
-##' @title Subtree from the Open Tree of Life
-##'
-##' @param ott_ids OTT ids indicating nodes to be used as tips in the
-##'     induced tree
-##' @param file if specified, the function will write the subtree to a
+##' @param ott_ids Numeric vector. OTT ids indicating nodes to be used 
+##'     as tips in the induced tree.
+##' @param node_ids Character vector. Node ids indicating nodes to be used 
+##'     as tips in the induced tree.
+##' @param file If specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
@@ -298,8 +291,8 @@ strip_ott_ids <- function(tip_labels) {
 ##'
 ##' @param ott_id Numeric. The OpenTree taxonomic identifier.
 ##' @param node_id Character. The OpenTree node identifier.
-##' @param include_lineage Boolean. Whether to return the lineage of
-##'     the node from the synthetic tree. Optional; default = FALSE.
+##' @param include_lineage Logical (default = FALSE). Whether to return the
+##'     lineage of the node from the synthetic tree.
 ##' @param ... additional arguments to customize the API call (see
 ##'     ?rotl for more information)
 ##'
