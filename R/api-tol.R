@@ -99,11 +99,20 @@
 
 ##' @importFrom httr content
 ## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
-.tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, ...) {
+.tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL, ...) {
     if (is.null(ott_ids) && is.null(node_ids)) {
         stop("Must provide ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " (or both).")
     }
     q <- list()
+    if (is.null(label_format)) {
+        label_format <- "name_and_id"
+    } else {
+        if (!check_label_format(label_format)) {
+            stop(sQuote("label_format"), " must be one of: ", sQuote("name"), ", ",
+                 sQuote("id"), ", or ", sQuote("name_and_id"))
+        }
+    }
+    q$label_format <- label_format
     if (!is.null(ott_ids)) {
         check_ott_ids(ott_ids)
         q$ott_ids <- ott_ids

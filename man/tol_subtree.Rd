@@ -22,7 +22,7 @@ file in newick format.}
 \item{label_format.}{Character. Defines the label type; one of “name”, “id”,}
 }
 \value{
-If no value is specified to the \code{file} argument 
+If no value is specified to the \code{file} argument
     (default), a phyogenetic tree of class \code{phylo}.
     Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.

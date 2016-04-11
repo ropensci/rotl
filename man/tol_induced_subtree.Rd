@@ -4,7 +4,8 @@
 \alias{tol_induced_subtree}
 \title{Subtree from the Open Tree of Life}
 \usage{
-tol_induced_subtree(ott_ids = NULL, node_ids = NULL, file, ...)
+tol_induced_subtree(ott_ids = NULL, node_ids = NULL, label_format = NULL,
+  file, ...)
 }
 \arguments{
 \item{ott_ids}{Numeric vector. OTT ids indicating nodes to be used 
@@ -18,6 +19,8 @@ file in newick format.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
+
+\item{label_format.}{Character. Defines the label type; one of “name”, “id”,}
 }
 \value{
 If no value is specified to the \code{file} argument

@@ -228,6 +228,8 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##'     as tips in the induced tree.
 ##' @param node_ids Character vector. Node ids indicating nodes to be used 
 ##'     as tips in the induced tree.
+##' @param label_format. Character. Defines the label type; one of “name”, “id”,
+## '    or “name_and_id”; default = “name_and_id”.
 ##' @param file If specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
@@ -247,8 +249,8 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##'                     file=tree_file)
 ##' }
 ##' @export
-tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, file, ...) {
-    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids, ...)
+tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL, file, ...) {
+    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids, label_format=label_format, ...)
     if (!missing(file)) {
         unlink(file)
         cat(res$newick, file=file)
