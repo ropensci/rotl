@@ -12,26 +12,6 @@
 }
 
 
-##' @importFrom jsonlite unbox
-##' @importFrom httr content
-## Get a subtree from the OpenTree Tree of Life
-.tol_subtree <- function(ott_id=NULL, tree_id=NULL, ...) {
-    if (is.null(ott_id)) {
-        stop("One \'ott_id\' must be provided")
-    }
-    if (!is.null(tree_id)) {
-        warning("\'tree_id\' is currently ignored as the OTL only supports one version of tree of life.")
-    }
-    if (!is.null(ott_id)) {
-        if (length(ott_id) > 1) stop("A subtree can only be inferred from a single ", sQuote("ott_id"), ".")
-        if (!check_numeric(ott_id)) stop(sQuote("ott_id"), " needs to look like a number.")
-        q <- list(ott_id = jsonlite::unbox(ott_id))
-    }
-    res <- otl_POST(path="tree_of_life/subtree", body=q, ...)
-    res
-}
-
-
 ##' @importFrom httr content
 ## Get an induced subtree from the OpenTree Tree of Life from a set of nodes
 .tol_induced_subtree <- function(ott_ids=NULL, ...) {
@@ -57,7 +37,7 @@
         stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"))
     }
     if (!is.null(ott_id) && !is.null(node_id)) {
-        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), " not both.")
+        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), ", not both.")
     }
     if (!is.null(ott_id)) {
         if (!check_numeric(ott_id)) {
@@ -85,6 +65,32 @@
     check_node_ids(node_ids)
     q <- list(ott_ids=ott_ids, node_ids=node_ids)
     res <- otl_POST(path="tree_of_life/mrca", body=q, ...)
+    res
+}
+
+
+##' @importFrom jsonlite unbox
+##' @importFrom httr content
+## Get a subtree from the OpenTree Tree of Life
+.tol_subtree <- function(ott_id=NULL, node_id=NULL, ...) {
+    if (is.null(ott_id) && is.null(node_id)) {
+        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"))
+    }
+    if (!is.null(ott_id) && !is.null(node_id)) {
+        stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), ", not both.")
+    }
+    if (!is.null(ott_id)) {
+        if (!check_numeric(ott_id)) {
+            stop("Argument ", sQuote("ott_id"), " must look like a number.")
+        }
+        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
+    } else {
+        if (!check_valid_node_id(node_id)) {
+            stop("Argument ", sQuote("node_id"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
+        }
+        q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
+    }
+    res <- otl_POST(path="tree_of_life/subtree", body=q, ...)
     res
 }
 

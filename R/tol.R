@@ -178,23 +178,22 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'
 ##' @title Extract a subtree from the synthetic tree
 ##'
-##' @param ott_id the ott id of the node in the tree that should serve
-##'     as the root of the tree returned.
-##' @param tree_id the identifier for the synthesis tree. Currently a
-##'     single draft tree is supported, so this argument is
-##'     superfluous and may be safely ignored.
+##' @param ott_id Numeric. The ott id of the node in the tree that should
+##'     serve as the root of the tree returned.
+##' @param node_id Character. The node id of the node in the tree that should
+##'     serve as the root of the tree returned.
 ##' @param file if specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
-##' @details Return a complete subtree of the draft tree descended
-##'     from some specified node. The node to use as the start node
-##'     may be specified using an ott id. If the specified node is not
-##'     in the synthetic tree (or is entirely absent from the graph),
-##'     an error will be returned.
+##' @details Given a node, return the subtree of the synthetic tree descended
+##'     from that node, either in newick or ArguSON format. The start node may
+##'     be specified using either a node id or an ott id, but not both. If the
+##'     specified node is not in the synthetic tree (or is entirely absent from
+##'     the graph), an error will be returned. There is a size limit of 25000
+##'     tips for this method.
 ##' @return If no value is specified to the \code{file} argument
 ##'     (default), a phyogenetic tree of class \code{phylo}.
-##'
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##' @examples
@@ -202,13 +201,12 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'       res <- tol_subtree(ott_id=81461)
 ##'     }
 ##' @export
-tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
-
-    res <- .tol_subtree(ott_id = ott_id, tree_id = tree_id, ...)
+tol_subtree <- function(ott_id=NULL, node_id=NULL, file, ...) {
+    res <- .tol_subtree(ott_id=ott_id, node_id=node_id, ...)
 
     if (!missing(file)) {
         unlink(file)
-        cat(res$newick, file = file)
+        cat(res$newick, file=file)
         return(invisible(file.exists(file)))
     } else {
         phy <- phylo_from_otl(res)
