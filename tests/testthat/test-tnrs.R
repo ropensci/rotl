@@ -28,7 +28,6 @@ test_that("object returned by tnrs_match_names have the correct data type", {
     taxa <- tnrs_match_names(birds, do_approximate_matching = FALSE)
     expect_true(is.logical(taxa[["approximate_match"]]))
     expect_true(is.logical(taxa[["is_synonym"]]))
-    expect_true(is.logical(taxa[["is_deprecated"]]))
 })
 
 test_that("tnrs_match_names deals correctly with non-exact matches", {
@@ -38,7 +37,7 @@ test_that("tnrs_match_names deals correctly with non-exact matches", {
                    "are not matched")
     expect_equal(nrow(taxa), 3L)
     expect_equivalent(taxa[match("sternadougallii", taxa[["search_string"]]), ],
-                 list("sternadougallii", NA_character_, NA, NA_character_, NA, NA, NA_character_))
+                 list("sternadougallii", NA_character_, NA, NA_character_, NA, NA_character_, NA_character_))
 
 })
 
