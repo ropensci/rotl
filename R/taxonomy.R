@@ -85,6 +85,9 @@ taxonomy_taxon <- function (ott_ids, include_lineage = FALSE,
 ##' @param ott_id The ott id of the taxon of interest.
 ##' @param output_format the format of the object to be returned. See
 ##'     the \sQuote{Return} section.
+##' @param label_format. Character. Defines the label type; one of 
+##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
+#'      \dQuote{\code{name_and_id}} (the default).
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @param file the file name where to save the output of the
@@ -122,9 +125,9 @@ taxonomy_taxon <- function (ott_ids, include_lineage = FALSE,
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL,
                               output_format = c("taxa", "newick", "phylo", "raw"),
-                              file, ...) {
+                              label_format=NULL, file, ...) {
     output_format <- match.arg(output_format)
-    res <- .taxonomy_subtree(ott_id = ott_id, ...)
+    res <- .taxonomy_subtree(ott_id = ott_id, label_format = label_format, ...)
     if (!missing(file) && !identical(output_format, "newick"))
         warning("'file' argument is ignored, you can only write newick tree strings to a file.")
     if (identical(output_format, "raw")) {
