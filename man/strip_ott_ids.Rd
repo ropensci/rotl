@@ -7,7 +7,7 @@
 strip_ott_ids(tip_labels)
 }
 \arguments{
-\item{tip_labels}{a character vector containing tip labels (most likely 
+\item{tip_labels}{a character vector containing tip labels (most likely
 the \code{tip.label} element from a tree returned by
 \code{\link{tol_induced_subtree}}}
 }
