@@ -13,15 +13,15 @@ serve as the root of the tree returned.}
 \item{node_id}{Character. The node id of the node in the tree that should
 serve as the root of the tree returned.}
 
+\item{label_format}{Character. Defines the label type; one of 
+\dQuote{\code{name}}, \dQuote{\code{id}}, or 
+ \dQuote{\code{name_and_id}} (the default).}
+
 \item{file}{if specified, the function will write the subtree to a
 file in newick format.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
-
-\item{label_format.}{Character. Defines the label type; one of 
-\dQuote{\code{name}}, \dQuote{\code{id}}, or 
- \dQuote{\code{name_and_id}} (the default).}
 }
 \value{
 If no value is specified to the \code{file} argument

@@ -184,7 +184,7 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     serve as the root of the tree returned.
 ##' @param node_id Character. The node id of the node in the tree that should
 ##'     serve as the root of the tree returned.
-##' @param label_format. Character. Defines the label type; one of 
+##' @param label_format Character. Defines the label type; one of 
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param file if specified, the function will write the subtree to a
@@ -229,7 +229,7 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##'     as tips in the induced tree.
 ##' @param node_ids Character vector. Node ids indicating nodes to be used 
 ##'     as tips in the induced tree.
-##' @param label_format. Character. Defines the label type; one of 
+##' @param label_format Character. Defines the label type; one of 
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param file If specified, the function will write the subtree to a

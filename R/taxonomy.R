@@ -98,7 +98,7 @@ taxonomy_taxon_info <- function (ott_ids, include_lineage = FALSE,
 ##' @param ott_id The ott id of the taxon of interest.
 ##' @param output_format the format of the object to be returned. See
 ##'     the \sQuote{Return} section.
-##' @param label_format. Character. Defines the label type; one of 
+##' @param label_format Character. Defines the label type; one of 
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param ... additional arguments to customize the API request (see

@@ -13,16 +13,16 @@ taxonomy_subtree(ott_id = NULL, output_format = c("taxa", "newick", "phylo",
 \item{output_format}{the format of the object to be returned. See
 the \sQuote{Return} section.}
 
+\item{label_format}{Character. Defines the label type; one of 
+\dQuote{\code{name}}, \dQuote{\code{id}}, or 
+ \dQuote{\code{name_and_id}} (the default).}
+
 \item{file}{the file name where to save the output of the
 function. Ignored unless \code{output_format} is set to
 \dQuote{\code{phylo}}.}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
-
-\item{label_format.}{Character. Defines the label type; one of 
-\dQuote{\code{name}}, \dQuote{\code{id}}, or 
- \dQuote{\code{name_and_id}} (the default).}
 }
 \value{
 If the \code{file} argument is missing: \itemize{
