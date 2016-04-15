@@ -144,18 +144,11 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 }
 
 
-test_that("synonyms with only_current = FALSE", {
+test_that("synonyms", {
     skip_on_cran()
-    tt <- synonyms(rsp, only_current = FALSE)
+    tt <- synonyms(rsp)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt), tax_rsp)
-})
-
-test_that("synonyms with only_current = TRUE", {
-    skip_on_cran()
-    tt <- synonyms(rsp, only_current = TRUE)
-    expect_true(inherits(tt, "list"))
-    expect_equal(names(tt), rsp$unique_name)
 })
 
 
@@ -241,9 +234,9 @@ test_that("it works correctly when providing a new row number", {
 test_that("it works correctly when providing a new ott id", {
     skip_on_cran()
     new_rsp <- update(rsp, row_number = 2,
-                      new_ott_id = 631176)
+                      new_ott_id = 4930522)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "631176")
+                 "4930522")
 })
 
 
@@ -259,19 +252,12 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("flags with no arguments and only_current = FALSE", {
+test_that("flags with no arguments", {
     skip_on_cran()
-    flags_rsp <- flags(rsp, only_current = FALSE)
+    flags_rsp <- flags(rsp)
     expect_equal(length(flags_rsp), 5)
-    expect_equivalent(sapply(flags_rsp, function(x) sapply(x, length)),
+    expect_equivalent(sapply(flags_rsp, length),
                       c(2, 3, 3, 0, 0))
-})
-
-test_that("flags with no arguments and only_current = TRUE", {
-    skip_on_cran()
-    flags_rsp <- flags(rsp, only_current = TRUE)
-    expect_equal(length(flags_rsp), 5)
-    expect_equivalent(sapply(flags_rsp, length),  c(2, 3, 3, 0, 0))
 })
 
 test_that("flags with row number", {
@@ -317,19 +303,13 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("ott_id with no arguments and only_current=FALSE", {
+test_that("ott_id with no arguments", {
     skip_on_cran()
-    expect_true(inherits(ott_id(rsp, only_current = FALSE), "list"))
-    expect_equal(names(ott_id(rsp, only_current = FALSE)), tax_rsp)
-    expect_equal(ott_id(rsp, only_current = FALSE)[["Holothuria"]][[1]], 5004030)
+    expect_true(inherits(ott_id(rsp), "list"))
+    expect_equal(names(ott_id(rsp)), tax_rsp)
+    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 5004030)
 })
 
-test_that("ott_id with no arguments and only_current=TRUE", {
-    skip_on_cran()
-    expect_true(inherits(ott_id(rsp, only_current = TRUE), "integer"))
-    expect_equal(names(ott_id(rsp, only_current = TRUE)), rsp$unique_name)
-    expect_equal(unname(ott_id(rsp, only_current = TRUE)[4]), 5004030)
-})
 
 test_that("ott_id with row number", {
     skip_on_cran()

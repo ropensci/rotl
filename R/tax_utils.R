@@ -32,23 +32,23 @@ tax_access_factory <- function(slot, flatten, optional) {
     }
 }
 
-tax_ott_id <- tax_access_factory("ott_id", flatten = FALSE, optional = FALSE)
+.tax_ott_id <- tax_access_factory("ott_id", flatten = FALSE, optional = FALSE)
 
-tax_name <- tax_access_factory("name", flatten = FALSE, optional = FALSE)
+.tax_name <- tax_access_factory("name", flatten = FALSE, optional = FALSE)
 
-tax_rank <- tax_access_factory("rank", flatten = FALSE, optional = FALSE)
+.tax_rank <- tax_access_factory("rank", flatten = FALSE, optional = FALSE)
 
-tax_sources <- tax_access_factory("tax_sources", flatten = TRUE,
+.tax_sources <- tax_access_factory("tax_sources", flatten = TRUE,
                                   optional = FALSE)
 
-tax_unique_name <- tax_access_factory("unique_name", flatten = FALSE,
+.tax_unique_name <- tax_access_factory("unique_name", flatten = FALSE,
                                       optional = FALSE)
 
 
 ## optional
-tax_flags <- tax_access_factory("flags", flatten = FALSE, optional = TRUE)
+.tax_flags <- tax_access_factory("flags", flatten = TRUE, optional = TRUE)
 
-tax_is_suppressed <- tax_access_factory("is_suppressed", flatten = FALSE,
+.tax_is_suppressed <- tax_access_factory("is_suppressed", flatten = FALSE,
                                         optional = TRUE)
 
-tax_synonyms <- tax_access_factory("synonyms", flatten = TRUE, optional = TRUE)
+.tax_synonyms <- tax_access_factory("synonyms", flatten = TRUE, optional = TRUE)

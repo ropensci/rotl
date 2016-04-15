@@ -113,11 +113,11 @@ check_tnrs <- function(req) {
 
 tnrs_columns <- list(
     "search_string" = function(x) x[["search_string"]],
-    "unique_name" = function(x) tax_unique_name(x[["taxon"]]),
+    "unique_name" = function(x) .tax_unique_name(x[["taxon"]]),
     "approximate_match" = function(x) x[["is_approximate_match"]],
-    "ott_id" = function(x) tax_ott_id(x[["taxon"]]),
+    "ott_id" = function(x) .tax_ott_id(x[["taxon"]]),
     "is_synonym" = function(x) x[["is_synonym"]],
-    "flags" = function(x) paste(tax_flags(x[["taxon"]]), collapse = ", ")
+    "flags" = function(x) paste(.tax_flags(x[["taxon"]]), collapse = ", ")
 )
 
 summary_row_factory <- function(res, res_id, match_id, columns = tnrs_columns) {
@@ -235,11 +235,4 @@ print.tnrs_contexts <- function(x, ...) {
 tnrs_infer_context <- function(names=NULL, ...) {
     res <- .tnrs_infer_context(names = names, ...)
     return(res)
-}
-
-
-######
-
-get_taxon_rank <- function(tax) {
-    tax[["rank"]]
 }
