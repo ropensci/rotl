@@ -87,7 +87,7 @@ taxonomy_taxon <- function (ott_ids, include_lineage = FALSE,
 ##'     the \sQuote{Return} section.
 ##' @param label_format. Character. Defines the label type; one of 
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
-#'      \dQuote{\code{name_and_id}} (the default).
+##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @param file the file name where to save the output of the
