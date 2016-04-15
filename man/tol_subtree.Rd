@@ -19,7 +19,9 @@ file in newick format.}
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
 
-\item{label_format.}{Character. Defines the label type; one of “name”, “id”,}
+\item{label_format.}{Character. Defines the label type; one of 
+\dQuote{\code{name}}, \dQuote{\code{id}}, or 
+ \dQuote{\code{name_and_id}} (the default).}
 }
 \value{
 If no value is specified to the \code{file} argument
