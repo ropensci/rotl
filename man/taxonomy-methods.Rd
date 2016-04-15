@@ -16,7 +16,7 @@ ott_id(tax, ...)
 synonyms(tax, ...)
 }
 \arguments{
-\item{tax}{an object returned by \code{\link{taxonomy_taxon}},
+\item{tax}{an object returned by \code{\link{taxonomy_taxon_info}},
 \code{\link{taxonomy_mrca}}, or \code{\link{tnrs_match_names}}}
 
 \item{...}{additional arguments (see
@@ -28,7 +28,7 @@ with the Taxonomy and the Taxonomic Name Resolution Services APIs.
 }
 \details{
 This is the page for the generic methods. See the help pages for
-\code{\link{taxonomy_taxon}}, \code{\link{taxonomy_mrca}}, and
+\code{\link{taxonomy_taxon_info}}, \code{\link{taxonomy_mrca}}, and
 \code{\link{tnrs_match_names}} for more information.
 }
 

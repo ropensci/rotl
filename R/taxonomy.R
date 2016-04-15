@@ -211,11 +211,11 @@ taxonomy_mrca <- function (ott_ids=NULL, ...) {
 ##' with the Taxonomy and the Taxonomic Name Resolution Services APIs.
 ##'
 ##' This is the page for the generic methods. See the help pages for
-##' \code{\link{taxonomy_taxon}}, \code{\link{taxonomy_mrca}}, and
+##' \code{\link{taxonomy_taxon_info}}, \code{\link{taxonomy_mrca}}, and
 ##' \code{\link{tnrs_match_names}} for more information.
 ##'
 ##' @title Methods for Taxonomy
-##' @param tax an object returned by \code{\link{taxonomy_taxon}},
+##' @param tax an object returned by \code{\link{taxonomy_taxon_info}},
 ##'     \code{\link{taxonomy_mrca}}, or \code{\link{tnrs_match_names}}
 ##' @param ... additional arguments (see
 ##'     \code{\link{tnrs_match_names}})
