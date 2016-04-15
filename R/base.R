@@ -83,7 +83,7 @@ otl_formats <- function(format) {
 
 ## Strip all characters except the ottId from a OpenTree label (internal or terminal)
 otl_ottid_from_label <- function(label) {
-	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
+    return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
 }
 
 ##' @importFrom rncl read_newick_phylo

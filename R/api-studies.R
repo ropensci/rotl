@@ -21,7 +21,7 @@
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
-    	    stop("Must supply a \'value\' argument")
+        stop("Must supply a \'value\' argument")
     }
     req_body$verbose <- jsonlite::unbox(verbose)
     req_body$exact <- jsonlite::unbox(exact)
@@ -44,20 +44,20 @@
     }
     req_body <- list()
     if (!is.null(property)) {
-    	    if (!is.character(property)) {
+        if (!is.character(property)) {
             stop("Argument \'property\' must be of class \"character\"")
         }
         req_body$property <- jsonlite::unbox(property)
     } else {
-    	    stop("Must supply a \'property\' argument")
+        stop("Must supply a \'property\' argument")
     }
     if (!is.null(value)) {
-    	    if (!is.character(value)) {
+        if (!is.character(value)) {
             stop("Argument \'value\' must be of class \"character\"")
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
-    	    stop("Must supply a \'value\' argument")
+        stop("Must supply a \'value\' argument")
     }
 
     res <- otl_POST(path="studies/find_trees/",
@@ -81,7 +81,7 @@
 .get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json"),
                        ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
@@ -99,7 +99,7 @@
                             tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
                             ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
@@ -126,7 +126,7 @@
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
                                format=c("newick", "nexus", "nexml", "json"), ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
