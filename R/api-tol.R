@@ -112,7 +112,7 @@
                  sQuote("id"), ", or ", sQuote("name_and_id"))
         }
     }
-    q$label_format <- label_format
+    q$label_format <- jsonlite::unbox(label_format)
     if (!is.null(ott_ids)) {
         check_ott_ids(ott_ids)
         q$ott_ids <- ott_ids
