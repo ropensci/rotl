@@ -7,8 +7,21 @@
 ##' @title About the Open Tree Taxonomy
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
-##' @return A list with at least the version and the location of the
-##'     taxonomy source files
+##' @return A list with the following properties:
+##' \itemize{
+##'
+##'     \item {weburl} {String. The release page for this version
+##'     of the taxonomy.}
+##'
+##'     \item {author} {String. The author string.}
+##'
+##'     \item {name} {String. The name of the taxonomy.}
+##'
+##'     \item {source} {String. The full identifying information for
+##'     this version of the taxonomy.}
+##'
+##'     \item {version} {String. The version number of the taxonomy.}
+##' }
 ##' @examples
 ##' \dontrun{
 ##' taxonomy_about()
