@@ -71,26 +71,23 @@
     if (!is.null(ott_id) && !is.null(node_id)) {
         stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), ", not both.")
     }
-    if (is.null(label_format)) {
-        label_format <- "name_and_id"
-    } else {
-        if (!check_label_format(label_format)) {
-            stop(sQuote("label_format"), " must be one of: ", sQuote("name"), ", ",
-                 sQuote("id"), ", or ", sQuote("name_and_id"))
-        }
-    }
     if (!is.null(ott_id)) {
         if (!check_numeric(ott_id)) {
             stop("Argument ", sQuote("ott_id"), " must look like a number.")
         }
-        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage),
-                  label_format=jsonlite::unbox(label_format))
+        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     } else {
         if (!check_valid_node_id(node_id)) {
             stop("Argument ", sQuote("node_id"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
         }
-        q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage),
-                  label_format=jsonlite::unbox(label_format))
+        q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
+    }
+    if (!is.null(label_format)) {
+        if (!check_label_format(label_format)) {
+            stop(sQuote("label_format"), " must be one of: ", sQuote("name"), ", ",
+                 sQuote("id"), ", or ", sQuote("name_and_id"))
+        }
+        q$label_format <- jsonlite::unbox(label_format)
     }
     res <- otl_POST(path="tree_of_life/subtree", body=q, ...)
     res
@@ -104,15 +101,13 @@
         stop("Must provide ", sQuote("ott_ids"), " or ", sQuote("node_ids"), " (or both).")
     }
     q <- list()
-    if (is.null(label_format)) {
-        label_format <- "name_and_id"
-    } else {
+    if (!is.null(label_format)) {
         if (!check_label_format(label_format)) {
             stop(sQuote("label_format"), " must be one of: ", sQuote("name"), ", ",
                  sQuote("id"), ", or ", sQuote("name_and_id"))
         }
+        q$label_format <- jsonlite::unbox(label_format)
     }
-    q$label_format <- jsonlite::unbox(label_format)
     if (!is.null(ott_ids)) {
         check_ott_ids(ott_ids)
         q$ott_ids <- ott_ids
