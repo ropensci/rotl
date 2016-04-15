@@ -258,11 +258,11 @@ tax_rank.taxon_mrca <- function(tax) {
 ##' @export
 ##' @rdname taxonomy_mrca
 ott_taxon_name.taxon_mrca <- function(tax) {
-    tax[["mrca"]][["ot:ottTaxonName"]]
+    tax[["mrca"]][["name"]]
 }
 
 ##' @export
 ##' @rdname taxonomy_mrca
 ott_id.taxon_mrca <- function(tax, ...) {
-    tax[["mrca"]][["ot:ottId"]]
+    tax[["mrca"]][["ott_id"]]
 }
