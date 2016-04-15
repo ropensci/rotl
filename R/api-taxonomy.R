@@ -11,7 +11,7 @@
 ##' @importFrom assertthat is.flag
 ##' @importFrom assertthat assert_that
 ## Information about an OpenTree Taxonomy (OTT) taxon
-.taxonomy_taxon <- function(ott_id=NULL, include_lineage = FALSE,
+.taxonomy_taxon_info <- function(ott_id=NULL, include_lineage = FALSE,
                             list_terminal_descendants = FALSE, ...) {
     if (is.null(ott_id)) {
         stop("Must supply an \'ott_id\' argument")
@@ -25,7 +25,7 @@
     q <- list(ott_id=jsonlite::unbox(ott_id),
               include_lineage = jsonlite::unbox(include_lineage),
               list_terminal_descendants = jsonlite::unbox(list_terminal_descendants))
-    res <- otl_POST(path="/taxonomy/taxon", body=q, ...)
+    res <- otl_POST(path="/taxonomy/taxon_info", body=q, ...)
     res
 }
 
