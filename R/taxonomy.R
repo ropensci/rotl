@@ -125,10 +125,8 @@ taxonomy_taxon <- function (ott_ids, include_lineage = FALSE,
 ##' @export
 taxonomy_subtree <- function (ott_id=NULL,
                               output_format = c("taxa", "newick", "phylo", "raw"),
-                              label_format = c("name_and_id", "name", "id"),
-                              file, ...) {
+                              label_format=NULL, file, ...) {
     output_format <- match.arg(output_format)
-    label_format <- match.arg(label_format)
     res <- .taxonomy_subtree(ott_id = ott_id, label_format = label_format, ...)
     if (!missing(file) && !identical(output_format, "newick"))
         warning("'file' argument is ignored, you can only write newick tree strings to a file.")
