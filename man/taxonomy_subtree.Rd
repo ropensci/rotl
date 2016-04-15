@@ -40,7 +40,7 @@ If the \code{file} argument is missing: \itemize{
     \code{phylo} from the \code{\link[ape]{ape}} package. }
 
     \item{\dQuote{\code{raw}}} { the direct output from the API,
-    i.e., a list with an element named \sQuote{subtree} that
+    i.e., a list with an element named \sQuote{newick} that
     contains the subtree as a newick formatted string. }
 
     }
