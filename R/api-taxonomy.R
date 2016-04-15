@@ -55,14 +55,14 @@
 
 
 ##' @importFrom httr content
-## Get the least inclusive common ancestor (LICA) from nodes in the OpenTree Taxonomy (OTT)
-.taxonomy_lica <- function (ott_ids = NULL, ...) {
+## Get the most recent common ancestor (MRCA) from nodes in the OpenTree Taxonomy (OTT)
+.taxonomy_mrca <- function (ott_ids = NULL, ...) {
     if (is.null(ott_ids)) {
         stop("Must supply an \'ott_ids\' argument")
     } else if (!all(sapply(ott_ids, check_numeric))) {
         stop("Argument \'ott_ids\' must look like a number.")
     }
     q <- list(ott_ids=ott_ids)
-    res <- otl_POST(path="/taxonomy/lica", body=q, ...)
+    res <- otl_POST(path="/taxonomy/mrca", body=q, ...)
     res
 }
