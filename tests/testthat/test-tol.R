@@ -32,13 +32,13 @@ test_that("tol_subtree fails if ott_id is invalid", {
 test_that("tol_subtree fails if more than one ott_id is provided", {
     skip_on_cran()
     expect_error(tol_subtree(ott_id = c(666666, 6666667)),
-                 "A subtree can only be inferred from a single")
+                 "only 1 element should be provided")
 })
 
 test_that("tol_subtree fails if ott_id doesn't look like a number", {
     skip_on_cran()
     expect_error(tol_subtree(ott_id = "111A1111"),
-                 "needs to look like a number")
+                 "must look like a number")
 })
 
 test_that("tol_subtree returns a phylo object by default", {
