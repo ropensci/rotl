@@ -144,13 +144,13 @@ And now our `resolved_names` data frame includes the taxon we want:
 
 ### How do I know that the taxa I'm asking for is the correct one?
 
-The function `taxonomy_taxon()` takes `ott_ids` as arguments and returns
+The function `taxonomy_taxon_info()` takes `ott_ids` as arguments and returns
 taxonomic information about the taxa. This output can be passed to some helpers
 functions to extract the relevant information. Let's illustrate this with our
 _Diadema_ example
 
 ```{r}
-diadema_info <- taxonomy_taxon(631176)
+diadema_info <- taxonomy_taxon_info(631176)
 tax_rank(diadema_info)
 synonyms(diadema_info)
 ott_taxon_name(diadema_info)
