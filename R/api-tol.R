@@ -61,6 +61,8 @@
 }
 
 
+# ignoring 'include_lineage' for subtree below. arguson only
+
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
 ## Get a subtree from the OpenTree Tree of Life
@@ -75,12 +77,12 @@
         if (!check_numeric(ott_id)) {
             stop("Argument ", sQuote("ott_id"), " must look like a number.")
         }
-        q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
+        q <- list(ott_id=jsonlite::unbox(ott_id))
     } else {
         if (!check_valid_node_id(node_id)) {
             stop("Argument ", sQuote("node_id"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
         }
-        q <- list(node_id=jsonlite::unbox(node_id), include_lineage=jsonlite::unbox(include_lineage))
+        q <- list(node_id=jsonlite::unbox(node_id))
     }
     if (!is.null(label_format)) {
         if (!check_label_format(label_format)) {
