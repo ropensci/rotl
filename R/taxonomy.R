@@ -248,7 +248,7 @@ tax_rank.taxon_info <- function(tax) {
 ##' @export
 ##' @rdname taxonomy_taxon_info
 ott_taxon_name.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["ot:ottTaxonName"]], character(1))
+    vapply(tax, function(x) x[["name"]], character(1))
 }
 
 ##' @export
