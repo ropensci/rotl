@@ -144,7 +144,8 @@ taxonomy_subtree <- function (ott_id=NULL,
     output_format <- match.arg(output_format)
     res <- .taxonomy_subtree(ott_id = ott_id, label_format = label_format, ...)
     if (!missing(file) && !identical(output_format, "newick"))
-        warning("'file' argument is ignored, you can only write newick tree strings to a file.")
+        warning(sQuote("file"),
+                " argument is ignored, you can only write newick tree strings to a file.")
     if (identical(output_format, "raw")) {
         return(res)
     } else if (identical(output_format, "newick")) {
@@ -163,7 +164,7 @@ taxonomy_subtree <- function (ott_id=NULL,
 }
 
 
-##' Taxonomic Least Inclusive Common Ancestor
+##' Taxonomic Least Inclusive Common Ancestor (MRCA)
 ##'
 ##' Given a set of OTT ids, get the taxon that is the most recent common
 ##' ancestor (the MRCA) of all the identified taxa.
@@ -252,17 +253,29 @@ tax_sources.taxon_info <- function(tax) {
 ##' @export
 ##' @rdname taxonomy_mrca
 tax_rank.taxon_mrca <- function(tax) {
-    tax[["mrca"]][["rank"]]
+    .tax_rank(tax[["mrca"]])
 }
 
 ##' @export
 ##' @rdname taxonomy_mrca
 tax_name.taxon_mrca <- function(tax) {
-    tax[["mrca"]][["name"]]
+    .tax_name(tax[["mrca"]])
 }
 
 ##' @export
 ##' @rdname taxonomy_mrca
 ott_id.taxon_mrca <- function(tax, ...) {
-    tax[["mrca"]][["ott_id"]]
+    .tax_ott_id(tax[["mrca"]])
+}
+
+##' @export
+##' @rdname taxonomy_mrca
+unique_name.taxon_mrca <- function(tax, ...) {
+    .tax_unique_name(tax[["mrca"]])
+}
+
+##' @export
+##' @rdname taxonomy_mrca
+tax_sources.taxon_mrca <- function(tax, ...) {
+    .tax_sources(tax[["mrca"]])
 }
