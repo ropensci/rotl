@@ -48,7 +48,7 @@ taxonomy_about <- function (...) {
 ##' @param include_lineage whether to include information about
 ##'     all the higher level taxa that include the \code{ott_ids}.
 ##'     Default \code{FALSE}.
-##' @param list_terminal_descendants whether to include the list of
+##' @param include_terminal_descendants whether to include the list of
 ##'     terminal \code{ott_ids} contained in the \code{ott_ids}
 ##'     provided.
 ##' @param ... additional arguments to customize the API request (see
@@ -70,13 +70,15 @@ taxonomy_about <- function (...) {
 ##' synonyms(req)
 ##' }
 ##' @export
-taxonomy_taxon_info <- function (ott_ids, include_lineage = FALSE,
-                            list_terminal_descendants = FALSE, ...) {
+taxonomy_taxon_info <- function (ott_ids, include_children = FALSE,
+                                 include_lineage = FALSE,
+                                 include_terminal_descendants = FALSE, ...) {
     res <- lapply(ott_ids, function(x) {
         .taxonomy_taxon_info(
             ott_id = x,
+            include_children = include_children,
             include_lineage = include_lineage,
-            list_terminal_descendants = list_terminal_descendants,
+            include_terminal_descendants = include_terminal_descendants,
             ...
         )
     })
@@ -98,8 +100,8 @@ taxonomy_taxon_info <- function (ott_ids, include_lineage = FALSE,
 ##' @param ott_id The ott id of the taxon of interest.
 ##' @param output_format the format of the object to be returned. See
 ##'     the \sQuote{Return} section.
-##' @param label_format Character. Defines the label type; one of 
-##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
+##' @param label_format Character. Defines the label type; one of
+##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).

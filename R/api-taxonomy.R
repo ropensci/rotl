@@ -11,8 +11,11 @@
 ##' @importFrom assertthat is.flag
 ##' @importFrom assertthat assert_that
 ## Information about an OpenTree Taxonomy (OTT) taxon
-.taxonomy_taxon_info <- function(ott_id=NULL, include_lineage = FALSE,
-                            list_terminal_descendants = FALSE, ...) {
+.taxonomy_taxon_info <- function(ott_id=NULL,
+                                 include_children = FALSE,
+                                 include_lineage = FALSE,
+                                 include_terminal_descendants = FALSE,
+                                  ...) {
     if (is.null(ott_id)) {
         stop("Must supply an \'ott_id\' argument")
     } else if (length(ott_id) > 1) {
@@ -20,11 +23,13 @@
     } else if (!check_numeric(ott_id)) {
         stop("Argument \'ott_id\' must look like a number.")
     }
+    assertthat::assert_that(assertthat::is.flag(include_children))
     assertthat::assert_that(assertthat::is.flag(include_lineage))
-    assertthat::assert_that(assertthat::is.flag(list_terminal_descendants))
+    assertthat::assert_that(assertthat::is.flag(include_terminal_descendants))
     q <- list(ott_id=jsonlite::unbox(ott_id),
+              include_children = jsonlite::unbox(include_children),
               include_lineage = jsonlite::unbox(include_lineage),
-              list_terminal_descendants = jsonlite::unbox(list_terminal_descendants))
+              include_terminal_descendants = jsonlite::unbox(include_terminal_descendants))
     res <- otl_POST(path="/taxonomy/taxon_info", body=q, ...)
     res
 }
