@@ -372,7 +372,7 @@ test_that("studies_find_trees single study detailed=FALSE", {
                                         value = "ot_248", detailed = FALSE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_match(attr(res, "found_trees"), "Tr76302")
+              expect_match(attr(res, "found_trees")[[1]], "Tr76302")
               expect_equal(names(res), c("study_ids",
                                          "n_matched_trees",
                                          "match_tree_ids"))

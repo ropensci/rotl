@@ -2,13 +2,13 @@ context("base functions")
 
 test_that("otl_url returns the correct strings", {
     skip_on_cran()
-    expect_match(otl_url(TRUE), "^https://devapi.opentreeoflife.org$")
-    expect_match(otl_url(FALSE), "^https://api.opentreeoflife.org$")
+    expect_match(otl_url(dev = TRUE), "^https://devapi.opentreeoflife.org$")
+    expect_match(otl_url(dev = FALSE), "^https://api.opentreeoflife.org$")
 })
 
 test_that("otl_version", {
     skip_on_cran()
-    expect_equal(otl_version(), "v2")
+    expect_equal(otl_version(), "v3")
     expect_equal(otl_version("foobar"), "foobar")
 })
 

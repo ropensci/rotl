@@ -13,7 +13,7 @@ test_that("taxonomy_about is a list", {
 test_that("taxonomy_about has the names listed in documentation (if it breaks update documentation)", {
     skip_on_cran()
     tt <- taxonomy_about()
-    expect_true(all(names(tt) %in% c("weburl", "author", "source")))
+    expect_true(all(names(tt) %in% c("weburl", "author", "name", "source", "version")))
 })
 
 
@@ -24,40 +24,40 @@ test_that("taxonomy_about has the names listed in documentation (if it breaks up
 test_that("taxonomy taxon info", {
     skip_on_cran()
     tid <- 515698
-    tt <- taxonomy_taxon(tid)
-    expect_equal(tt[[1]]$`ot:ottId`[1], tid)
+    tt <- taxonomy_taxon_info(tid)
+    expect_equal(tt[[1]][["ott_id"]], tid)
     expect_true(inherits(tt, "taxon_info"))
 })
 
 test_that("taxonomy with include_lineage=TRUE", {
     skip_on_cran()
-    tt <- taxonomy_taxon(515698, include_lineage = TRUE)
-    expect_true(exists("taxonomic_lineage", tt[[1]]))
-    expect_true(length(tt[[1]]$taxonomic_lineage) > 1)
+    tt <- taxonomy_taxon_info(515698, include_lineage = TRUE)
+    expect_true(exists("lineage", tt[[1]]))
+    expect_true(length(tt[[1]]$lineage) > 1)
 })
 
 test_that("taxonomy with include_lineage=FALSE", {
     skip_on_cran()
-    tt <- taxonomy_taxon(515698, include_lineage = FALSE)
-    expect_false(exists("taxonomic_lineage", tt[[1]]))
+    tt <- taxonomy_taxon_info(515698, include_lineage = FALSE)
+    expect_false(exists("lineage", tt[[1]]))
 })
 
-test_that("taxonomy with list_terminal_descendants=TRUE", {
+test_that("taxonomy with include_terminal_descendants=TRUE", {
     skip_on_cran()
-    tt <- taxonomy_taxon(515698, list_terminal_descendants = TRUE)
+    tt <- taxonomy_taxon_info(515698, include_terminal_descendants = TRUE)
     expect_true(exists("terminal_descendants", tt[[1]]))
     expect_true(length(tt[[1]][["terminal_descendants"]]) > 1)
 })
 
-test_that("taxonomy with list_terminal_descendants=FALSE", {
+test_that("taxonomy with include_terminal_descendants=FALSE", {
     skip_on_cran()
-    tt <- taxonomy_taxon(515698, list_terminal_descendants = FALSE)
+    tt <- taxonomy_taxon_info(515698, include_terminal_descendants = FALSE)
     expect_false(exists("terminal_descendants", tt[[1]]))
 })
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tid <- c(5004030, 337928, 631176)
-    tax_info <- taxonomy_taxon(tid)
+    tax_info <- taxonomy_taxon_info(tid)
 }
 
 test_that("taxonomy_taxon tax_rank method", {
@@ -68,14 +68,14 @@ test_that("taxonomy_taxon tax_rank method", {
 
 test_that("taxonomy_taxon ott_taxon_name method", {
     skip_on_cran()
-    expect_equal(names(ott_taxon_name(tax_info)), as.character(tid))
-    expect_equal(unname(ott_taxon_name(tax_info)), c("Holothuria", "Acanthaster", "Diadema"))
+    expect_equal(names(tax_name(tax_info)), as.character(tid))
+    expect_equal(unname(tax_name(tax_info)), c("Holothuria", "Acanthaster", "Diadema"))
 })
 
 test_that("taxonomy_taxon synonyms method", {
     skip_on_cran()
     expect_equal(names(synonyms(tax_info)), as.character(tid))
-    expect_true(all(c("Diadema", "Centrechinus") %in% synonyms(tax_info)[[3]]))
+    expect_true(all(c("Diamema", "Centrechinus") %in% synonyms(tax_info)[[3]]))
 })
 
 ############################################################################
@@ -86,7 +86,7 @@ test_that("taxonomy subtree raw output", {
     skip_on_cran()
     tt <- taxonomy_subtree(515698, output_format = "raw")
     expect_true(inherits(tt, "list"))
-    expect_identical(names(tt), "subtree")
+    expect_identical(names(tt), "newick")
 })
 
 test_that("taxonomy subtree returns warning if file is provided with something else than newick output", {
@@ -137,25 +137,37 @@ test_that("taxonomy subtree works if taxa has only 1 descendant", {
 ############################################################################
 
  if (identical(Sys.getenv("NOT_CRAN"), "true"))  {
-     tax_lica <- taxonomy_lica(ott_id = c(515698,590452,409712,643717))
+     tax_mrca <- taxonomy_mrca(ott_id = c(515698,590452,643717))
  }
 
 test_that("taxonomic least inclusive comman ancestor", {
     skip_on_cran()
-    expect_true(inherits(tax_lica, "taxon_lica"))
+    expect_true(inherits(tax_mrca, "taxon_mrca"))
 })
 
-test_that("lica tax_rank method", {
+test_that("mrca tax_rank method", {
     skip_on_cran()
-    expect_equal(tax_rank(tax_lica), "order")
+    expect_equal(tax_rank(tax_mrca), "order")
 })
 
-test_that("lica ott_taxon_name method", {
+test_that("mrca ott_taxon_name method", {
     skip_on_cran()
-    expect_equal(ott_taxon_name(tax_lica), "Asterales")
+    expect_equal(tax_name(tax_mrca), "Asterales")
 })
 
-test_that("lica ott_id method", {
+test_that("mrca ott_id method", {
     skip_on_cran()
-    expect_equal(ott_id(tax_lica), 1042120)
+    expect_equal(ott_id(tax_mrca), 1042120)
+})
+
+test_that("mrca unique_name method", {
+    skip_on_cran()
+    expect_equal(unique_name(tax_mrca), "Asterales")
+})
+
+test_that("mrca tax_sources method", {
+    skip_on_cran()
+    expect_equal(tax_sources(tax_mrca),
+                 c("ncbi:4209", "worms:234044",
+                   "gbif:414","irmng:10011"))
 })

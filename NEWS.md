@@ -5,6 +5,14 @@
 
 * Refactor how result of query is checked and parsed.
 
+* The argument `only_current` has been dropped for the methods associated with
+  objects returned by `tnrs_match_names`
+
+* New methods: `tax_sources`, `is_suppressed`, `tax_rank` (for class
+  `match_names`), `unique_name`, `name`.
+
+* Rename method `ott_taxon_name` to `tax_name` for consistency.
+
 ## rotl 0.5.0
 
 * New vignette: `meta-analysis`

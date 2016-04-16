@@ -3,7 +3,7 @@
         "test_function": "tol_mrca",
         "test_input": {"ott_ids":[412129, 536234]},
         "tests": {
-             "of_type": 
+             "of_type":
                         ["dict","Response is of wrong type"]
                         ,
              "equals":  [
@@ -55,44 +55,46 @@
         "test_function": "tol_subtree",
         "test_input": {"ott_id":3599390},
         "tests": {
-             "of_type": 
+             "of_type":
                  ["dict","Response is of wrong type"]
                  ,
              "contains": [
                  ["newick","Doesn't contain a newick string"]
                  ]
         }
-    },   
+    },
     "test_subtree_null": {
         "test_function": "tol_subtree",
         "test_input": {},
         "tests": {
             "error": [
                 ["ValueError","Return wrong kind of error, or did return error"]
-                ]
+            ],
+	    "of_type": ["jfdsm"]
         }
-    },  
+    },
     "test_induced_tree_good": {
         "test_function": "tol_induced_tree",
         "test_input": {"ott_ids":[292466, 501678, 267845, 666104, 316878, 102710, 176458]},
         "tests": {
-             "of_type": 
+             "of_type":
                  ["dict","Response is of wrong type"]
                  ,
              "contains": [
                  ["subtree","Doesn't contain a subtree string"]
                  ]
         }
-    },  
+    },
     "test_induced_tree_null": {
         "test_function": "tol_induced_tree",
         "test_input": {},
         "tests": {
             "error": [
                 ["ValueError","Return wrong kind of error, or did return error"]
-                ]
+            ],
+	    "of_type": ["something"]
         }
-    },  
+    },
     "test_about": {
         "test_function": "tol_about",
         "test_input": {},

@@ -5,13 +5,17 @@
 \title{Taxonomy subtree}
 \usage{
 taxonomy_subtree(ott_id = NULL, output_format = c("taxa", "newick", "phylo",
-  "raw"), file, ...)
+  "raw"), label_format = NULL, file, ...)
 }
 \arguments{
 \item{ott_id}{The ott id of the taxon of interest.}
 
 \item{output_format}{the format of the object to be returned. See
 the \sQuote{Return} section.}
+
+\item{label_format}{Character. Defines the label type; one of
+\dQuote{\code{name}}, \dQuote{\code{id}}, or
+ \dQuote{\code{name_and_id}} (the default).}
 
 \item{file}{the file name where to save the output of the
 function. Ignored unless \code{output_format} is set to
@@ -36,7 +40,7 @@ If the \code{file} argument is missing: \itemize{
     \code{phylo} from the \code{\link[ape]{ape}} package. }
 
     \item{\dQuote{\code{raw}}} { the direct output from the API,
-    i.e., a list with an element named \sQuote{subtree} that
+    i.e., a list with an element named \sQuote{newick} that
     contains the subtree as a newick formatted string. }
 
     }

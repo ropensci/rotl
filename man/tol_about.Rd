@@ -4,11 +4,11 @@
 \alias{tol_about}
 \title{Information about the Tree of Life}
 \usage{
-tol_about(study_list = FALSE, ...)
+tol_about(include_source_list = FALSE, ...)
 }
 \arguments{
-\item{study_list}{Whether to return the list of source
-studies. (Logical, default = FALSE).}
+\item{include_source_list}{Logical (default = FALSE). Return an
+ordered list of source trees.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
@@ -18,28 +18,64 @@ An invisible list of synthetic tree summary statistics:
 
 \itemize{
 
-    \item {tree_id} {The name identifier of the synthetic tree.}
+    \item {date_created} {String. The creation date of the tree.}
 
-    \item {date} {The date that the synthetic tree was
-    constructed.}
+    \item {num_source_studies} {Integer. The number of studies
+    (publications)used as sources.}
 
-    \item {taxonomy_version} {The version of the taxonomy used to
-    initialize the graph.}
+    \item {num_source_trees} {The number of trees used as sources (may
+    be >1 tree per study).}
 
-    \item {num_source_studies} {The number of unique source trees
-    used in the synthetic tree.}
+    \item {taxonomy} {The Open Tree Taxonomy version used as a source.}
 
-    \item {num_tips} {The number of terminal (tip) taxa in the
-    synthetic tree.}
+    \item {filtered_flags} {List. Taxa with these taxonomy flags were
+    not used in construction of the tree.}
 
-    \item {root_taxon_name} {The taxonomic name of the root node
-    of the synthetic tree.}
+    \item {root} {List. Describes the root node:}
+        \itemize{
+            \item {node_id} {String. The canonical identifier of the node.}
 
-    \item {root_node_id} {The node ID of the root node of the
-    synthetic tree.}
+            \item {num_tips} {Numeric. The number of descendent tips.}
 
-    \item {root_ott_id} {The OpenTree Taxonomy ID (ottID) of the
-    root node of the synthetic tree.}  }
+            \item {taxon} {A list of taxonomic properties:}
+            \itemize{
+                \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+
+                \item {name} {String. The taxonomic name of the queried node.}
+
+                \item {unique_name} {String. The string that uniquely
+                identifies the taxon in OTT.}
+
+                \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+
+                \item {tax_sources} {List. A list of identifiers for taxonomic
+                sources, such as other taxonomies, that define taxa judged
+                equivalent to this taxon.}
+            }
+        }
+
+    \item {source_list} {List. Present only if \code{include_source_list} is
+    "true". The sourceid ordering is the precedence order for synthesis, with
+    relationships from earlier trees in the list having priority over those
+    from later trees in the list. See \code{source_id_map} below for study details.}
+
+    \item {source_id_map} {Named list of lists. Present only if
+    \code{include_source_list} is "true". Names correspond to the
+    sourceids used in \code{source_list} above. Source trees will have the
+    following properties:}
+
+        \itemize{
+            \item {git_sha} {String. The git SHA identifying a particular source
+            version.}
+
+            \item {tree_id} {String. The tree id associated with the study id used.}
+
+            \item {study_id} {String. The study identifier. Will typically include
+            a prefix ("pg_" or "ot_").}
+        }
+
+    \item {synth_id} {The unique string for this version of the tree.}
+}
 }
 \description{
 Basic information about the Open Tree of Life (the synthetic tree)
@@ -52,7 +88,7 @@ Summary information about the current draft tree of life,
 \examples{
 \dontrun{
 res <- tol_about()
-studies <- study_list(tol_about(study_list=TRUE))
+studies <- study_list(tol_about(include_source_list=TRUE))
 }
 }
 \seealso{

@@ -9,26 +9,57 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     }
 
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'.")
+        stop("You must specify one of ", sQuote("row_number"),
+             sQuote("taxon_name"), " or ", sQuote("ott_id"))
     } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        if (!is.numeric(row_number)) stop("\'row_number\' must be a numeric.")
-        if (!row_number %in% orig_order) {
-            stop("\'row_number\' is not a valid row number.")
+        if (!is.numeric(row_number))
+            stop(sQuote("row_number"), " must be a numeric.")
+        if (!all(row_number %in% orig_order)) {
+            stop(sQuote("row_number"), " is not a valid row number.")
         }
         i <- orig_order[row_number]
     } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
-        if (!is.character(taxon_name)) stop("\'taxon_name\' must be a character.")
+        if (!is.character(taxon_name))
+            stop(sQuote("taxon_name"), " must be a character.")
         i <- orig_order[match(tolower(taxon_name), response$search_string)]
-        if (any(is.na(i))) stop("Can't find ", taxon_name)
+        if (any(is.na(i)))
+            stop("Can't find ", taxon_name)
     } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
-        if (!check_numeric(ott_id)) stop("\'ott_id\" must look like a number.")
+        if (!check_numeric(ott_id))
+            stop(sQuote("ott_id"), " must look like a number.")
         i <- orig_order[match(ott_id, response$ott_id)]
         if (any(is.na(i))) stop("Can't find ", ott_id)
     } else {
-        stop("You must use only one of \'row_number\', \'taxon_name\' or \'ott_id\'.")
+        stop("You must use only one of ",
+             sQuote("row_number"),
+             sQuote("taxon_name"),
+             " or ", sQuote("ott_id"), ".")
     }
 
-    if (length(i) > 1) stop("You must supply a single element for each argument.")
+    if (length(i) > 1)
+        stop("You must supply a single element for each argument.")
+    i
+}
+
+match_row_number <- function(response, row_number, taxon_name, ott_id) {
+    ## all the checks on the validity of the arguments are taken care
+    ## by check_args_match_names()
+    if (missing(row_number) && missing(taxon_name) &&
+        missing(ott_id)) {
+        stop("You must specify one of ", sQuote("row_number"), " ",
+             sQuote("taxon_name"), " ", sQuote("ott_id"))
+    } else if (!missing(row_number) && (missing(taxon_name) && missing(ott_id))) {
+        i <- row_number
+    } else if (!missing(taxon_name) && (missing(row_number) && missing(ott_id))) {
+        i <- match(tolower(taxon_name), response[["search_string"]])
+    } else if (!missing(ott_id) && (missing(row_number) && missing(taxon_name))) {
+        i <- match(ott_id, response[["ott_id"]])
+    } else {
+        stop("You must use only one of ", sQuote("row_number"),
+             " ", sQuote("taxon_name"), " ", sQuote("ott_id"))
+    }
+    if (length(i) > 1)
+        stop("You must supply a single element for each argument.")
     i
 }
 
@@ -76,9 +107,15 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
 inspect.match_names <- function(response, row_number, taxon_name, ott_id, ...) {
 
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+    j <- match_row_number(response, row_number, taxon_name, ott_id)
 
-    res <- attr(response, "original_response")
-    summary_match <- build_summary_match(res, res_id = i)
+    if (attr(response, "has_original_match")[j]) {
+        res <- attr(response, "original_response")
+        summary_match <- build_summary_match(res, res_id = i, match_id = NULL,
+                                             initial_creation = FALSE)
+    } else {
+        summary_match <- response[j, ]
+    }
     summary_match
 }
 
@@ -101,7 +138,16 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
     response <- object
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+    j <- match_row_number(response, row_number, taxon_name, ott_id)
+
     res <- attr(response, "original_response")
+
+    if (!attr(response, "has_original_match")[j]) {
+        warning("There is no match for this name, ",
+                 "so there is nothing to replace it with.")
+        return(response)
+    }
+
     tmpRes <- res$results[[i]]
 
     if (missing(row_number)) {
@@ -115,19 +161,23 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
     }
 
     if (missing(new_row_number) && missing(new_ott_id)) {
-        stop("You must specify either \'new_row_number\' or \'new_ott_id\'")
+        stop("You must specify either ", sQuote("new_row_number"),
+             " or ", sQuote("new_ott_id"))
     } else if (!missing(new_row_number) && missing(new_ott_id)) {
         if (! new_row_number %in% seq_len(length(tmpRes$matches)))
-            stop("\'new_row_number\' is not a valid row number.")
+            stop(sQuote("new_row_number"), " is not a valid row number.")
         j <- new_row_number
     } else if (missing(new_row_number) && !missing(new_ott_id)) {
-        allOttId <- sapply(tmpRes$matches, function(x) x$'ot:ottId')
-        j <- match(new_ott_id, allOttId)
+        all_ott_id <- sapply(lapply(tmpRes[["matches"]],
+                                  function(x) x[["taxon"]]),
+                           function(x) .tax_ott_id(x))
+        j <- match(new_ott_id, all_ott_id)
         if (any(is.na(j))) stop("Can't find ", new_ott_id)
     } else {
-        stop("You must use only one of \'new_row_number\' or \'new_ott_id\'")
+        stop("You must use only one of ", sQuote("new_row_number"),
+             " or ", sQuote("new_ott_id"))
     }
-    if (length(j) > 1) stop("You must supply a single element for each argument.")
+    if (length(j) > 1) stop("You must supply a single element for each argument")
 
     summ_match <- summary_row_factory(res, res_id = i, match_id = j)
 
@@ -137,47 +187,58 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 }
 
 
-
+## Access the elements for a given match:
+## is_synonym, score, nomenclature_code, is_approximate_match, taxon
 get_list_element <- function(response, i, list_name) {
-    list_content <- lapply(response$results[[i]][["matches"]], function(x) {
-        unlist(x[[list_name]])
+    list_content <- lapply(response[["results"]][[i]][["matches"]],
+                           function(x) {
+        x[[list_name]]
     })
-    name_content <- lapply(response$results[[i]][["matches"]], function(x) {
-        x[["unique_name"]]
-    })
-    names(list_content) <- name_content
     list_content
 }
 
 match_names_method_factory <- function(list_name) {
 
-    function(tax, row_number, taxon_name, ott_id, only_current = TRUE, ...) {
+    function(tax, row_number, taxon_name, ott_id, ...) {
 
         response <- tax
         res <- attr(response, "original_response")
 
-        no_args <- all(c(missing(row_number), missing(taxon_name), missing(ott_id)))
+        no_args <- all(c(missing(row_number), missing(taxon_name),
+                         missing(ott_id)))
 
         if (no_args) {
-            ret <- lapply(attr(response, "original_order"), function(i) {
+            res_i <- attr(response, "original_order")[attr(response, "has_original_match")]
+            ret <- lapply(res_i, function(i) {
                 get_list_element(res, i, list_name)
             })
-            names(ret) <- sapply(attr(response, "original_order"), function(i) {
+            names(ret) <- sapply(res_i, function(i) {
                 get_list_element(res, i, "matched_name")[[1]]
             })
-            if (only_current)  {
-                ## ret is already in the correct order so we can use a sequence
-                ## to extract the correct element
-                ret <- mapply(function(x, i) {
-                    ret[[x]][i]
-                }, seq_along(ret), attr(response, "match_id"))
-                if (all(sapply(ret, length) == 1)) {
-                    ret <- unlist(ret, use.names = T)
-                }
+            ## ret is already in the correct order so we can use a sequence
+            ## to extract the correct element
+            ret <- mapply(function(x, i) {
+                ret[[x]][i]
+            }, seq_along(ret), attr(response, "match_id")[attr(response, "has_original_match")])
+            if (all(sapply(ret, length) == 1)) {
+                ret <- unlist(ret, use.names = TRUE)
             }
         } else {
             i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-            ret <- get_list_element(res, i, list_name)
+            j <- match_row_number(response, row_number, taxon_name, ott_id)
+            if (attr(response, "has_original_match")[j]) {
+                ret <- get_list_element(res, i, list_name)[attr(response, "match_id")[j]]
+            } else {
+                ret <- list(ott_id = NA_character_,
+                            name = response[["search_string"]][j],
+                            unique_name = NA_character_,
+                            rank = NA_character_,
+                            tax_sources = NA_character_,
+                            flags = NA_character_,
+                            synonyms = NA_character_,
+                            is_suppressed = NA_character_)
+                ret <- list(ret)
+            }
         }
 
         ret
@@ -185,6 +246,17 @@ match_names_method_factory <- function(list_name) {
 
 }
 
+match_names_taxon_factory <- function(tax_fxn) {
+    function(tax, row_number, taxon_name, ott_id, ...) {
+        extract_tax_list <- match_names_method_factory("taxon")
+        tax_info <- extract_tax_list(tax, row_number = row_number,
+                                     taxon_name = taxon_name,
+                                     ott_id = ott_id)
+        res <- lapply(tax_info, function(x) tax_fxn(x))
+        names(res) <- vapply(tax_info, function(x) .tax_name(x), character(1))
+        res
+    }
+}
 
 ##' \code{rotl} provides a collection of functions that allows users
 ##' to extract relevant information from an object generated by
@@ -197,8 +269,7 @@ match_names_method_factory <- function(list_name) {
 ##'
 ##' If these arguments are not provided, these methods can return
 ##' information for the matches currently listed in the object
-##' returned by \code{\link{tnrs_match_names}} (the default) or all
-##' the matches (using \code{only_current = FALSE}).
+##' returned by \code{\link{tnrs_match_names}}.
 ##'
 ##' @title \code{ott_id} and \code{flags} for taxonomic names matched
 ##'     by \code{tnrs_match_names}
@@ -209,10 +280,6 @@ match_names_method_factory <- function(list_name) {
 ##'     which to list the synonyms
 ##' @param ott_id the ott id corresponding to the name for which to
 ##'     list the synonyms
-##' @param only_current logical (default \code{TRUE}), should the
-##'     results include data for all matched names, or only the one
-##'     listed in the object returned by
-##'     \code{\link{tnrs_match_names}}?
 ##' @param ... currently ignored
 ##' @return A list of the ott ids or flags for the taxonomic names
 ##'     matched with \code{\link{tnrs_match_names}}, for either one or
@@ -222,14 +289,13 @@ match_names_method_factory <- function(list_name) {
 ##'   rsp <- tnrs_match_names(c("Diadema", "Tyrannosaurus"))
 ##'   rsp$ott_id    # ott id for match currently in use
 ##'   ott_id(rsp)   # similar as above but elements are named
-##'   ott_id(rsp, only_current=FALSE) # ott id for all possible taxonomic matches
 ##'
 ##'   ## flags() is useful for instance to determine if a taxon is extinct
 ##'   flags(rsp, taxon_name="Tyrannosaurus")
 ##' }
 ##' @export
 ##' @rdname match_names-methods
-ott_id.match_names <- match_names_method_factory("ot:ottId")
+ott_id.match_names <- match_names_taxon_factory(.tax_ott_id)
 
 ##' @export
 ##' @rdname match_names-methods
@@ -237,7 +303,7 @@ flags <- function(tax, ...) UseMethod("flags")
 
 ##' @export
 ##' @rdname match_names-methods
-flags.match_names <- match_names_method_factory("flags")
+flags.match_names <- match_names_taxon_factory(.tax_flags)
 
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all
@@ -252,8 +318,7 @@ flags.match_names <- match_names_method_factory("flags")
 ##' the row number corresponding to the name in this object, the name
 ##' itself (as used in the original query), or the ott_id listed for
 ##' this name. Otherwise, the synonyms for all the currently matched
-##' names are returned. Using \code{only_current = FALSE} will return
-##' all synonyms for all possible matches.
+##' names are returned.
 ##'
 ##' @title List the synonyms for a given name
 ##' @param tax a data frame generated by the
@@ -264,10 +329,6 @@ flags.match_names <- match_names_method_factory("flags")
 ##'     which to list the synonyms
 ##' @param ott_id the ott id corresponding to the name for which to
 ##'     list the synonyms
-##' @param only_current logical (default \code{TRUE}), should the
-##'     results include data for all matched names, or only the one
-##'     listed in the object returned by
-##'     \code{\link{tnrs_match_names}}?
 ##' @param ... currently ignored
 ##' @return a list whose elements are all synomym names (as vectors of
 ##'     character) for the taxonomic names that match the query (the
@@ -282,4 +343,22 @@ flags.match_names <- match_names_method_factory("flags")
 ##' }
 ##' @export
 
-synonyms.match_names <- match_names_method_factory("synonyms")
+synonyms.match_names <- match_names_taxon_factory(.tax_synonyms)
+
+##' @export
+tax_sources.match_names <- match_names_taxon_factory(.tax_sources)
+
+##' @export
+tax_rank.match_names <- match_names_taxon_factory(.tax_rank)
+
+
+##' @export
+is_suppressed.match_names <- match_names_taxon_factory(.tax_is_suppressed)
+
+
+##' @export
+unique_name.match_names <- match_names_taxon_factory(.tax_unique_name)
+
+
+##' @export
+tax_name.match_names <- match_names_taxon_factory(.tax_name)

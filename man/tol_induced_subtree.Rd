@@ -4,13 +4,21 @@
 \alias{tol_induced_subtree}
 \title{Subtree from the Open Tree of Life}
 \usage{
-tol_induced_subtree(ott_ids = NULL, file, ...)
+tol_induced_subtree(ott_ids = NULL, node_ids = NULL, label_format = NULL,
+  file, ...)
 }
 \arguments{
-\item{ott_ids}{OTT ids indicating nodes to be used as tips in the
-induced tree}
+\item{ott_ids}{Numeric vector. OTT ids indicating nodes to be used
+as tips in the induced tree.}
 
-\item{file}{if specified, the function will write the subtree to a
+\item{node_ids}{Character vector. Node ids indicating nodes to be used
+as tips in the induced tree.}
+
+\item{label_format}{Character. Defines the label type; one of
+\dQuote{\code{name}}, \dQuote{\code{id}}, or
+ \dQuote{\code{name_and_id}} (the default).}
+
+\item{file}{If specified, the function will write the subtree to a
 file in newick format.}
 
 \item{...}{additional arguments to customize the API call (see
@@ -24,22 +32,13 @@ If no value is specified to the \code{file} argument
     whether the file was successfully created.
 }
 \description{
-Extract a subtree based on a vector of ott ids.
+Return the induced subtree on the synthetic tree that relates a list of nodes.
 }
 \details{
 Return a tree with tips corresponding to the nodes identified in
 the input set that is consistent with the topology of the current
 synthetic tree. This tree is equivalent to the minimal subtree
-induced on the draft tree by the set of identified nodes. Ott ids
-that do not correspond to any nodes found in the graph, or which
-are in the graph but are absent from the synthetic tree (e.g. groups
-included in the Open Tree Taxonomy but found to be paraphyletic in 
-in studies contributing to the synthetic tree) , will be
-identified in the output (but obvisouly will be absent from the
-resulting induced tree). Branch lengths in the result may be
-arbitrary, and the tip labels of the tree may either be taxonomic
-names or (for nodes not corresponding directly to named taxa) node
-ids.
+induced on the draft tree by the set of identified nodes.
 }
 \examples{
 \dontrun{

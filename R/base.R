@@ -8,7 +8,7 @@ otl_url <- function(dev=FALSE) {
 
 otl_version <- function(version) {
     if (missing(version)) {
-        return("v2")
+        return("v3")
     } else {
         return(version)
     }
@@ -54,25 +54,23 @@ otl_check <- function(req) {
 }
 
 ##' @importFrom httr GET
-otl_GET <- function(path, dev_url = FALSE, otl_v = otl_version(), ...) {
-    req <- httr::GET(otl_url(), path=paste(otl_v, path, sep="/"), ...)
+otl_GET <- function(path, url = otl_url(...), otl_v = otl_version(...), ...) {
+    req <- httr::GET(url, path=paste(otl_v, path, sep="/"), ...)
     otl_check(req)
 }
 
 ##' @importFrom jsonlite toJSON
 ##' @importFrom httr POST
-otl_POST <- function(path, body, dev_url = FALSE, otl_v = otl_version(), ...) {
+otl_POST <- function(path, body, url = otl_url(...), otl_v = otl_version(...), ...) {
     stopifnot(is.list(body))
 
     body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
 
-    req <- httr::POST(otl_url(dev = dev_url),
+    req <- httr::POST(url,
                       path=paste(otl_v, path, sep="/"),
                       body=body_json, ...)
     otl_check(req)
 }
-
-
 
 otl_formats <- function(format) {
     switch(tolower(format),
@@ -83,10 +81,9 @@ otl_formats <- function(format) {
            "") #fall through is no extension = nex(j)son
 }
 
-
 ## Strip all characters except the ottId from a OpenTree label (internal or terminal)
 otl_ottid_from_label <- function(label) {
-	return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
+    return(as.numeric(gsub("(.+[ _]ott)([0-9]+)", "\\2", label)));
 }
 
 ##' @importFrom rncl read_newick_phylo
@@ -119,7 +116,6 @@ phylo_from_otl <- function(res, dedup = FALSE) {
     return(phy)
 }
 
-
 nexml_from_otl <- function(res) {
     if (!requireNamespace("RNeXML", quietly = TRUE)) {
         stop("The RNeXML package is needed to use the nexml file format")
@@ -134,6 +130,9 @@ nexml_from_otl <- function(res) {
 ## check if the argument provided looks like a number (can be coerced
 ## to integer/numeric).
 check_numeric <- function(x) {
+    if (is.null(x)) {
+        return(FALSE)
+    }
     if (length(x) != 1) {
         stop("only 1 element should be provided")
     }
@@ -145,3 +144,57 @@ check_numeric <- function(x) {
         return(x %% 1 == 0)
     }
 }
+
+## Check that ott_ids are not NULL, not NAs and look like numbers
+check_ott_ids <- function(ott_ids) {
+    if (!is.null(ott_ids)) {
+        if (any(is.na(ott_ids))) {
+            stop("NAs are not allowed")
+        }
+        if (!all(sapply(ott_ids, check_numeric))) {
+            stop(sQuote("ott_ids"), " must look like numbers.")
+        }
+    } else {
+        stop("You must supply some OTT ids.")
+    }
+}
+
+## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
+check_valid_node_id <- function(x) {
+    if (length(x) != 1) {
+        stop("only 1 element should be provided")
+    }
+    if (!is.character(x)) {
+        return(FALSE)
+    }
+    if (grepl('^mrcaott\\d+ott\\d+', x) || grepl('^ott\\d+', x)) {
+        return(TRUE)
+    } else {
+        return(FALSE)
+    }
+}
+
+check_node_ids <- function(node_ids) {
+    if (!is.null(node_ids)) {
+        if (!is.character(node_ids)) {
+            stop("Argument ", sQuote("node_ids"), " must be of type character.")
+        }
+        if (any(is.na(node_ids))) {
+            stop("NAs are not allowed")
+        }
+        if (!all(sapply(node_ids, check_valid_node_id))) {
+            stop(sQuote("node_ids"), " must look like \'ott123\' or \'mrcaott123ott456\'.")
+        }
+    }
+}
+
+# node labels for tree_of_life subtree and induced_subtree
+# might also be useful for taxonomy queries
+check_label_format <- function (x) {
+    if (x %in% c("name", "id", "name_and_id")) {
+        return(TRUE)
+    } else {
+        return(FALSE)
+    }
+}
+

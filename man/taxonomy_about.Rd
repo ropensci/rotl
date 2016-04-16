@@ -11,8 +11,21 @@ taxonomy_about(...)
 \code{\link{rotl}} package documentation).}
 }
 \value{
-A list with at least the version and the location of the
-    taxonomy source files
+A list with the following properties:
+\itemize{
+
+    \item {weburl} {String. The release page for this version
+    of the taxonomy.}
+
+    \item {author} {String. The author string.}
+
+    \item {name} {String. The name of the taxonomy.}
+
+    \item {source} {String. The full identifying information for
+    this version of the taxonomy.}
+
+    \item {version} {String. The version number of the taxonomy.}
+}
 }
 \description{
 Summary information about the Open Tree Taxaonomy (OTT)

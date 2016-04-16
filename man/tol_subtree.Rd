@@ -4,15 +4,18 @@
 \alias{tol_subtree}
 \title{Extract a subtree from the synthetic tree}
 \usage{
-tol_subtree(ott_id = NULL, tree_id = NULL, file, ...)
+tol_subtree(ott_id = NULL, node_id = NULL, label_format = NULL, file, ...)
 }
 \arguments{
-\item{ott_id}{the ott id of the node in the tree that should serve
-as the root of the tree returned.}
+\item{ott_id}{Numeric. The ott id of the node in the tree that should
+serve as the root of the tree returned.}
 
-\item{tree_id}{the identifier for the synthesis tree. Currently a
-single draft tree is supported, so this argument is
-superfluous and may be safely ignored.}
+\item{node_id}{Character. The node id of the node in the tree that should
+serve as the root of the tree returned.}
+
+\item{label_format}{Character. Defines the label type; one of
+\dQuote{\code{name}}, \dQuote{\code{id}}, or
+ \dQuote{\code{name_and_id}} (the default).}
 
 \item{file}{if specified, the function will write the subtree to a
 file in newick format.}
@@ -23,7 +26,6 @@ file in newick format.}
 \value{
 If no value is specified to the \code{file} argument
     (default), a phyogenetic tree of class \code{phylo}.
-
     Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.
 }
@@ -31,11 +33,11 @@ If no value is specified to the \code{file} argument
 Extract a subtree from the synthetic tree from an ott id.
 }
 \details{
-Return a complete subtree of the draft tree descended
-    from some specified node. The node to use as the start node
-    may be specified using an ott id. If the specified node is not
-    in the synthetic tree (or is entirely absent from the graph),
-    an error will be returned.
+Given a node, return the subtree of the synthetic tree descended
+    from that node, either in newick or ArguSON format. The start node may
+    be specified using either a node id or an ott id, but not both. If the
+    specified node is not in the synthetic tree an error will be returned.
+    There is a size limit of 25000 tips for this method.
 }
 \examples{
    \dontrun{
