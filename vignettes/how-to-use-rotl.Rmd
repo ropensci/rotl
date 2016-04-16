@@ -153,7 +153,7 @@ _Diadema_ example
 diadema_info <- taxonomy_taxon_info(631176)
 tax_rank(diadema_info)
 synonyms(diadema_info)
-ott_taxon_name(diadema_info)
+tax_name(diadema_info)
 ```
 
 In some cases, it might also be useful to investigate the taxonomic tree
