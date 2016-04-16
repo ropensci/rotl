@@ -86,7 +86,7 @@ test_that("taxonomy subtree raw output", {
     skip_on_cran()
     tt <- taxonomy_subtree(515698, output_format = "raw")
     expect_true(inherits(tt, "list"))
-    expect_identical(names(tt), "subtree")
+    expect_identical(names(tt), "newick")
 })
 
 test_that("taxonomy subtree returns warning if file is provided with something else than newick output", {
@@ -137,25 +137,37 @@ test_that("taxonomy subtree works if taxa has only 1 descendant", {
 ############################################################################
 
  if (identical(Sys.getenv("NOT_CRAN"), "true"))  {
-     tax_lica <- taxonomy_lica(ott_id = c(515698,590452,409712,643717))
+     tax_mrca <- taxonomy_mrca(ott_id = c(515698,590452,643717))
  }
 
 test_that("taxonomic least inclusive comman ancestor", {
     skip_on_cran()
-    expect_true(inherits(tax_lica, "taxon_lica"))
+    expect_true(inherits(tax_mrca, "taxon_mrca"))
 })
 
-test_that("lica tax_rank method", {
+test_that("mrca tax_rank method", {
     skip_on_cran()
-    expect_equal(tax_rank(tax_lica), "order")
+    expect_equal(tax_rank(tax_mrca), "order")
 })
 
-test_that("lica ott_taxon_name method", {
+test_that("mrca ott_taxon_name method", {
     skip_on_cran()
-    expect_equal(ott_taxon_name(tax_lica), "Asterales")
+    expect_equal(tax_name(tax_mrca), "Asterales")
 })
 
-test_that("lica ott_id method", {
+test_that("mrca ott_id method", {
     skip_on_cran()
-    expect_equal(ott_id(tax_lica), 1042120)
+    expect_equal(ott_id(tax_mrca), 1042120)
+})
+
+test_that("mrca unique_name method", {
+    skip_on_cran()
+    expect_equal(unique_name(tax_mrca), "Asterales")
+})
+
+test_that("mrca tax_sources method", {
+    skip_on_cran()
+    expect_equal(tax_sources(tax_mrca),
+                 c("ncbi:4209", "worms:234044",
+                   "gbif:414","irmng:10011"))
 })
