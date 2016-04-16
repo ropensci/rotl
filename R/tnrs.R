@@ -75,7 +75,7 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
 
     check_tnrs(res)
     summary_match <- build_summary_match(res, res_id = seq_along(res[["results"]]),
-                                         match_id = 1)
+                                         match_id = 1, initial_creation = TRUE)
 
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
     summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
@@ -88,6 +88,7 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
+    attr(summary_match, "has_original_match") <- !is.na(summary_match[["number_matches"]])
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
 }
@@ -127,14 +128,22 @@ summary_row_factory <- function(res, res_id, match_id, columns = tnrs_columns) {
     c(ret, number_matches = n_match)
 }
 
-build_summary_match <- function(res, res_id, match_id = NULL) {
+build_summary_match <- function(res, res_id, match_id = NULL, initial_creation) {
+
+    build_empty_row <- function(x) {
+        no_match_row <- stats::setNames(
+            rep(NA, length(tnrs_columns) + 1),
+            c(names(tnrs_columns), "number_matches"))
+        no_match_row[1] <- x
+        no_match_row
+    }
 
     if (length(res_id) > 1 &&
        (!is.null(match_id) && length(match_id) > 1)) {
         stop("Something is wrong. Please contact us.")
     }
 
-    build_summary_row <- lapply(res_id, function(rid) {
+    build_summary_row <- function(rid) {
         if (is.null(match_id)) {
             match_id <- seq_len(length(res[["results"]][[rid]][["matches"]]))
         }
@@ -144,30 +153,26 @@ build_summary_match <- function(res, res_id, match_id = NULL) {
         if (identical(length(match_id), 1L)) {
             unlist(res)
         } else res
-    })
+    }
+
+    summary_row <- lapply(res_id, build_summary_row)
 
     if (identical(length(res_id), 1L)) {
-        build_summary_row <- unlist(build_summary_row,
-                                    recursive = FALSE)
+        summary_row <- unlist(summary_row, recursive = FALSE)
     }
 
     ## Needed if only 1 row returned
-    if (!inherits(build_summary_row, "list")) {
-        build_summary_row <- list(build_summary_row)
+    if (!inherits(summary_row, "list")) {
+        summary_row <- list(summary_row)
     }
 
     ## Add potential unmatched names
-    if (length(res[["unmatched_names"]])) {
-        no_match <- lapply(res[["unmatched_names"]], function(x) {
-            no_match_row <- stats::setNames(rep(NA, length(tnrs_columns) + 1),
-                                     c(names(tnrs_columns), "number_matches"))
-            no_match_row[1] <- x
-            no_match_row
-        })
-        build_summary_row <- c(build_summary_row, no_match)
+    if (initial_creation && length(res[["unmatched_names"]])) {
+        no_match <- lapply(res[["unmatched_names"]], build_empty_row)
+        summary_row <- c(summary_row, no_match)
     }
 
-    summary_match <- do.call("rbind", build_summary_row)
+    summary_match <- do.call("rbind", summary_row)
     summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c(names(tnrs_columns), "number_matches")
     summary_match

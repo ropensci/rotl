@@ -98,9 +98,15 @@ match_row_number <- function(response, row_number, taxon_name, ott_id) {
 inspect.match_names <- function(response, row_number, taxon_name, ott_id, ...) {
 
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+    j <- match_row_number(response, row_number, taxon_name, ott_id)
 
-    res <- attr(response, "original_response")
-    summary_match <- build_summary_match(res, res_id = i)
+    if (attr(response, "has_original_match")[j]) {
+        res <- attr(response, "original_response")
+        summary_match <- build_summary_match(res, res_id = i, match_id = NULL,
+                                             initial_creation = FALSE)
+    } else {
+        summary_match <- response[j, ]
+    }
     summary_match
 }
 
@@ -123,7 +129,16 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
     response <- object
     i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+    j <- match_row_number(response, row_number, taxon_name, ott_id)
+
     res <- attr(response, "original_response")
+
+    if (!attr(response, "has_original_match")[j]) {
+        warning("There is no match for this name, ",
+                 "so there is nothing to replace it with.")
+        return(response)
+    }
+
     tmpRes <- res$results[[i]]
 
     if (missing(row_number)) {
@@ -141,7 +156,7 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
              " or ", sQuote("new_ott_id"))
     } else if (!missing(new_row_number) && missing(new_ott_id)) {
         if (! new_row_number %in% seq_len(length(tmpRes$matches)))
-            stop("\'new_row_number\' is not a valid row number.")
+            stop(sQuote("new_row_number"), " is not a valid row number.")
         j <- new_row_number
     } else if (missing(new_row_number) && !missing(new_ott_id)) {
         all_ott_id <- sapply(lapply(tmpRes[["matches"]],
@@ -150,7 +165,8 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
         j <- match(new_ott_id, all_ott_id)
         if (any(is.na(j))) stop("Can't find ", new_ott_id)
     } else {
-        stop("You must use only one of \'new_row_number\' or \'new_ott_id\'")
+        stop("You must use only one of ", sQuote("new_row_number"),
+             " or ", sQuote("new_ott_id"))
     }
     if (length(j) > 1) stop("You must supply a single element for each argument")
 
@@ -183,24 +199,37 @@ match_names_method_factory <- function(list_name) {
                          missing(ott_id)))
 
         if (no_args) {
-            ret <- lapply(attr(response, "original_order"), function(i) {
+            res_i <- attr(response, "original_order")[attr(response, "has_original_match")]
+            ret <- lapply(res_i, function(i) {
                 get_list_element(res, i, list_name)
             })
-            names(ret) <- sapply(attr(response, "original_order"), function(i) {
+            names(ret) <- sapply(res_i, function(i) {
                 get_list_element(res, i, "matched_name")[[1]]
             })
             ## ret is already in the correct order so we can use a sequence
             ## to extract the correct element
             ret <- mapply(function(x, i) {
                 ret[[x]][i]
-            }, seq_along(ret), attr(response, "match_id"))
+            }, seq_along(ret), attr(response, "match_id")[attr(response, "has_original_match")])
             if (all(sapply(ret, length) == 1)) {
                 ret <- unlist(ret, use.names = TRUE)
             }
         } else {
             i <- check_args_match_names(response, row_number, taxon_name, ott_id)
             j <- match_row_number(response, row_number, taxon_name, ott_id)
-            ret <- get_list_element(res, i, list_name)[attr(response, "match_id")[j]]
+            if (attr(response, "has_original_match")[j]) {
+                ret <- get_list_element(res, i, list_name)[attr(response, "match_id")[j]]
+            } else {
+                ret <- list(ott_id = NA_character_,
+                            name = response[["search_string"]][j],
+                            unique_name = NA_character_,
+                            rank = NA_character_,
+                            tax_sources = NA_character_,
+                            flags = NA_character_,
+                            synonyms = NA_character_,
+                            is_suppressed = NA_character_)
+                ret <- list(ret)
+            }
         }
 
         ret
