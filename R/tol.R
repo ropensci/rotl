@@ -274,8 +274,8 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL, 
 ##'
 ##' @examples
 ##' \dontrun{
-##' genera <- c("Perdix", "Clangula", "Dendroica", "Cinclus", "Stellula", "Struthio")
-##' tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' genera <- c("Perdix", "Dendroica", "Cinclus", "Selasphorus", "Struthio")
+##' tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 501678, 102710))
 ##' tr$tip.label %in% genera
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
 ##' tr$tip.label %in% genera
