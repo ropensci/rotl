@@ -13,8 +13,8 @@ taxonomy_subtree(ott_id = NULL, output_format = c("taxa", "newick", "phylo",
 \item{output_format}{the format of the object to be returned. See
 the \sQuote{Return} section.}
 
-\item{label_format}{Character. Defines the label type; one of 
-\dQuote{\code{name}}, \dQuote{\code{id}}, or 
+\item{label_format}{Character. Defines the label type; one of
+\dQuote{\code{name}}, \dQuote{\code{id}}, or
  \dQuote{\code{name_and_id}} (the default).}
 
 \item{file}{the file name where to save the output of the

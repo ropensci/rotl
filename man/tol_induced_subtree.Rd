@@ -8,14 +8,14 @@ tol_induced_subtree(ott_ids = NULL, node_ids = NULL, label_format = NULL,
   file, ...)
 }
 \arguments{
-\item{ott_ids}{Numeric vector. OTT ids indicating nodes to be used 
+\item{ott_ids}{Numeric vector. OTT ids indicating nodes to be used
 as tips in the induced tree.}
 
-\item{node_ids}{Character vector. Node ids indicating nodes to be used 
+\item{node_ids}{Character vector. Node ids indicating nodes to be used
 as tips in the induced tree.}
 
-\item{label_format}{Character. Defines the label type; one of 
-\dQuote{\code{name}}, \dQuote{\code{id}}, or 
+\item{label_format}{Character. Defines the label type; one of
+\dQuote{\code{name}}, \dQuote{\code{id}}, or
  \dQuote{\code{name_and_id}} (the default).}
 
 \item{file}{If specified, the function will write the subtree to a

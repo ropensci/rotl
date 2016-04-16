@@ -2,18 +2,24 @@
 % Please edit documentation in R/taxonomy.R
 \name{taxonomy_mrca}
 \alias{ott_id.taxon_mrca}
-\alias{ott_taxon_name.taxon_mrca}
+\alias{tax_name.taxon_mrca}
 \alias{tax_rank.taxon_mrca}
+\alias{tax_sources.taxon_mrca}
 \alias{taxonomy_mrca}
+\alias{unique_name.taxon_mrca}
 \title{Taxonomic MRCA}
 \usage{
 taxonomy_mrca(ott_ids = NULL, ...)
 
-\method{tax_rank}{taxon_mrca}(tax)
+\method{tax_rank}{taxon_mrca}(tax, ...)
 
-\method{ott_taxon_name}{taxon_mrca}(tax)
+\method{tax_name}{taxon_mrca}(tax, ...)
 
 \method{ott_id}{taxon_mrca}(tax, ...)
+
+\method{unique_name}{taxon_mrca}(tax, ...)
+
+\method{tax_sources}{taxon_mrca}(tax, ...)
 }
 \arguments{
 \item{ott_ids}{a vector of ott ids for the taxa whose MRCA is to
@@ -44,7 +50,7 @@ function}
 }
 }
 \description{
-Taxonomic Least Inclusive Common Ancestor
+Taxonomic Least Inclusive Common Ancestor (MRCA)
 }
 \details{
 Given a set of OTT ids, get the taxon that is the most recent common

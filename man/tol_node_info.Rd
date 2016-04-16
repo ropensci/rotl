@@ -8,7 +8,7 @@
 \usage{
 tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 
-\method{tax_rank}{tol_node}(tax)
+\method{tax_rank}{tol_node}(tax, ...)
 
 \method{ott_id}{tol_node}(tax, ...)
 }
