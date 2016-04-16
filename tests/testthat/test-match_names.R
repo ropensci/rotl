@@ -86,7 +86,7 @@ test_that("error generated if invalid ott id", {
 
 test_that("error generated if more than 1 value for row_number is provided", {
     skip_on_cran()
-    expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
+    expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3)),
                  "You must supply a single element")
 })
 
