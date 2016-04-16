@@ -184,8 +184,8 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'     serve as the root of the tree returned.
 ##' @param node_id Character. The node id of the node in the tree that should
 ##'     serve as the root of the tree returned.
-##' @param label_format Character. Defines the label type; one of 
-##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
+##' @param label_format Character. Defines the label type; one of
+##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param file if specified, the function will write the subtree to a
 ##'     file in newick format.
@@ -225,12 +225,12 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##' synthetic tree. This tree is equivalent to the minimal subtree
 ##' induced on the draft tree by the set of identified nodes.
 ##'
-##' @param ott_ids Numeric vector. OTT ids indicating nodes to be used 
+##' @param ott_ids Numeric vector. OTT ids indicating nodes to be used
 ##'     as tips in the induced tree.
-##' @param node_ids Character vector. Node ids indicating nodes to be used 
+##' @param node_ids Character vector. Node ids indicating nodes to be used
 ##'     as tips in the induced tree.
-##' @param label_format Character. Defines the label type; one of 
-##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or 
+##' @param label_format Character. Defines the label type; one of
+##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
 ##'      \dQuote{\code{name_and_id}} (the default).
 ##' @param file If specified, the function will write the subtree to a
 ##'     file in newick format.
@@ -388,7 +388,7 @@ tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...)
 ##' @export
 ##' @param tax an object returned by \code{tol_node_info}.
 ##' @rdname tol_node_info
-tax_rank.tol_node <- function(tax) {
+tax_rank.tol_node <- function(tax, ...) {
     tax[["taxon"]]$rank
 }
 
@@ -422,4 +422,3 @@ synth_sources.tol_node <- function(tax) {
     tt <- do.call("rbind", tt)
     as.data.frame(tt, stringsAsFactors=FALSE)
 }
-

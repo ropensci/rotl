@@ -11,6 +11,8 @@
 * New methods: `tax_sources`, `is_suppressed`, `tax_rank` (for class
   `match_names`), `unique_name`, `name`.
 
+* Rename method `ott_taxon_name` to `tax_name` for consistency.
+
 ## rotl 0.5.0
 
 * New vignette: `meta-analysis`
