@@ -205,38 +205,6 @@ taxonomy_mrca <- function (ott_ids=NULL, ...) {
     return(res)
 }
 
-############################################################################
-## methods                                                                ##
-############################################################################
-
-##' Methods for dealing with objects returned by functions dealing
-##' with the Taxonomy and the Taxonomic Name Resolution Services APIs.
-##'
-##' This is the page for the generic methods. See the help pages for
-##' \code{\link{taxonomy_taxon_info}}, \code{\link{taxonomy_mrca}}, and
-##' \code{\link{tnrs_match_names}} for more information.
-##'
-##' @title Methods for Taxonomy
-##' @param tax an object returned by \code{\link{taxonomy_taxon_info}},
-##'     \code{\link{taxonomy_mrca}}, or \code{\link{tnrs_match_names}}
-##' @param ... additional arguments (see
-##'     \code{\link{tnrs_match_names}})
-##' @rdname taxonomy-methods
-##' @export
-
-tax_rank <- function(tax) { UseMethod("tax_rank") }
-
-##' @export
-##' @rdname taxonomy-methods
-ott_taxon_name <- function(tax) { UseMethod("ott_taxon_name") }
-
-##' @export
-##' @rdname taxonomy-methods
-ott_id <- function(tax, ...) { UseMethod("ott_id") }
-
-##' @export
-##' @rdname taxonomy-methods
-synonyms <- function(tax, ...) { UseMethod("synonyms") }
 
 
 ### methods for taxonomy_taxon_info ---------------------------------------------
@@ -244,22 +212,39 @@ synonyms <- function(tax, ...) { UseMethod("synonyms") }
 ##' @export
 ##' @rdname taxonomy_taxon_info
 tax_rank.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["rank"]], character(1))
+    vapply(tax, function(x) .tax_rank(x), character(1))
 }
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-ott_taxon_name.taxon_info <- function(tax) {
-    vapply(tax, function(x) x[["name"]], character(1))
+tax_name.taxon_info <- function(tax) {
+    vapply(tax, function(x) .tax_name(x), character(1))
+}
+
+##' @export
+##' @rdname taxonomy_taxon_info
+unique_name.taxon_info <- function(tax) {
+    vapply(tax, function(x) .tax_unique_name(x), character(1))
 }
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
 synonyms.taxon_info <- function(tax, ...) {
     sapply(tax, function(x) {
-        tt <- x[["synonyms"]]
-        unlist(as.character(tt))
+        .tax_synonyms(x)
     }, simplify = FALSE)
+}
+
+##' @export
+##' @rdname taxonomy_taxon_info
+ott_id.taxon_info <- function(tax) {
+    vapply(tax, function(x) .tax_ott_id(x), integer(1))
+}
+
+##' @export
+##' @rdname taxonomy_taxon_info
+tax_sources.taxon_info <- function(tax) {
+    sapply(tax, function(x) .tax_sources(x), simplify = FALSE)
 }
 
 ### methods for taxonomy_mrca ----------------------------------------------
@@ -272,7 +257,7 @@ tax_rank.taxon_mrca <- function(tax) {
 
 ##' @export
 ##' @rdname taxonomy_mrca
-ott_taxon_name.taxon_mrca <- function(tax) {
+tax_name.taxon_mrca <- function(tax) {
     tax[["mrca"]][["name"]]
 }
 

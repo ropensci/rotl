@@ -336,29 +336,20 @@ flags.match_names <- match_names_taxon_factory(.tax_flags)
 
 synonyms.match_names <- match_names_taxon_factory(.tax_synonyms)
 
-
 ##' @export
-tax_sources <- function(tax, ...) UseMethod("tax_sources")
-
 tax_sources.match_names <- match_names_taxon_factory(.tax_sources)
 
 ##' @export
 tax_rank.match_names <- match_names_taxon_factory(.tax_rank)
 
-##' @export
-is_suppressed <- function(tax, ...) UseMethod("is_suppressed")
 
 ##' @export
 is_suppressed.match_names <- match_names_taxon_factory(.tax_is_suppressed)
 
-##' @export
-unique_name <- function(tax, ...) UseMethod("unique_name")
 
 ##' @export
 unique_name.match_names <- match_names_taxon_factory(.tax_unique_name)
 
-##' @export
-name <- function(tax, ...) UseMethod("name")
 
 ##' @export
-name.match_names <- match_names_taxon_factory(.tax_name)
+tax_name.match_names <- match_names_taxon_factory(.tax_name)
