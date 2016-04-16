@@ -9,26 +9,35 @@ check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
     }
 
     if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        stop("You must specify one of \'row_number\', \'taxon_name\' or \'ott_id\'.")
+        stop("You must specify one of ", sQuote("row_number"),
+             sQuote("taxon_name"), " or ", sQuote("ott_id"))
     } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        if (!is.numeric(row_number)) stop("\'row_number\' must be a numeric.")
-        if (!row_number %in% orig_order) {
-            stop("\'row_number\' is not a valid row number.")
+        if (!is.numeric(row_number))
+            stop(sQuote("row_number"), " must be a numeric.")
+        if (!all(row_number %in% orig_order)) {
+            stop(sQuote("row_number"), " is not a valid row number.")
         }
         i <- orig_order[row_number]
     } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
-        if (!is.character(taxon_name)) stop("\'taxon_name\' must be a character.")
+        if (!is.character(taxon_name))
+            stop(sQuote("taxon_name"), " must be a character.")
         i <- orig_order[match(tolower(taxon_name), response$search_string)]
-        if (any(is.na(i))) stop("Can't find ", taxon_name)
+        if (any(is.na(i)))
+            stop("Can't find ", taxon_name)
     } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
-        if (!check_numeric(ott_id)) stop("\'ott_id\" must look like a number.")
+        if (!check_numeric(ott_id))
+            stop(sQuote("ott_id"), " must look like a number.")
         i <- orig_order[match(ott_id, response$ott_id)]
         if (any(is.na(i))) stop("Can't find ", ott_id)
     } else {
-        stop("You must use only one of \'row_number\', \'taxon_name\' or \'ott_id\'.")
+        stop("You must use only one of ",
+             sQuote("row_number"),
+             sQuote("taxon_name"),
+             " or ", sQuote("ott_id"), ".")
     }
 
-    if (length(i) > 1) stop("You must supply a single element for each argument.")
+    if (length(i) > 1)
+        stop("You must supply a single element for each argument.")
     i
 }
 
