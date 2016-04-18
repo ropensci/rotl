@@ -38,7 +38,7 @@ taxonomy_about <- function (...) {
 ##' Given a vector of ott ids, \code{taxonomy_taxon_info} returns
 ##' information about the specified taxa.
 ##'
-##' The functions \code{tax_rank}, \code{ott_taxon_name}, and
+##' The functions \code{tax_rank}, \code{tax_name}, and
 ##' \code{synonyms} can extract this information from an object
 ##' created by the \code{taxonomy_taxon_info} function.
 ##'
@@ -59,8 +59,8 @@ taxonomy_about <- function (...) {
 ##'     function
 ##' @return \code{taxonomy_taxon_info} returns a list detailing
 ##'     information about the taxa. \code{tax_rank} and
-##'     \code{ott_taxon_name} return a vector. \code{synonyms} returns
-##'     a list whose elements are the synonyms for each of the
+##'     \code{tax_name} return a vector. \code{synonyms} returns a
+##'     list whose elements are the synonyms for each of the
 ##'     \code{ott_id} requested.
 ##'
 ##' @seealso \code{\link{tnrs_match_names}} to obtain \code{ott_id}
@@ -69,7 +69,7 @@ taxonomy_about <- function (...) {
 ##' \dontrun{
 ##' req <- taxonomy_taxon_info(ott_id=515698)
 ##' tax_rank(req)
-##' ott_taxon_name(req)
+##' tax_name(req)
 ##' synonyms(req)
 ##' }
 ##' @export
@@ -188,7 +188,7 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##'     \item{\code{tax_rank}} { returns a character vector of the
 ##'     taxonomic rank for the MRCA. }
 ##'
-##'     \item{\code{ott_taxon_name}} { returns a character vector the
+##'     \item{\code{tax_name}} { returns a character vector the
 ##'     Open Tree Taxonomy name for the MRCA. }
 ##'
 ##'     \item{\code{ott_id}} { returns a numeric vector of the ott id
@@ -199,7 +199,7 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##' \dontrun{
 ##' req <- taxonomy_mrca(ott_ids=c(515698,590452,643717))
 ##' tax_rank(req)
-##' ott_taxon_name(req)
+##' tax_name(req)
 ##' ott_id(req)
 ##' }
 ##' @export

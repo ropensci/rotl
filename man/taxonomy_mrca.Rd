@@ -41,7 +41,7 @@ function}
     \item{\code{tax_rank}} { returns a character vector of the
     taxonomic rank for the MRCA. }
 
-    \item{\code{ott_taxon_name}} { returns a character vector the
+    \item{\code{tax_name}} { returns a character vector the
     Open Tree Taxonomy name for the MRCA. }
 
     \item{\code{ott_id}} { returns a numeric vector of the ott id
@@ -60,7 +60,7 @@ ancestor (the MRCA) of all the identified taxa.
 \dontrun{
 req <- taxonomy_mrca(ott_ids=c(515698,590452,643717))
 tax_rank(req)
-ott_taxon_name(req)
+tax_name(req)
 ott_id(req)
 }
 }

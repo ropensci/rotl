@@ -245,9 +245,9 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##'
 ##' @examples
 ##' \dontrun{
-##' res <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
 ##' tree_file <- tempfile(fileext=".tre")
-##' tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458),
+##' tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
 ##'                     file=tree_file)
 ##' }
 ##' @export

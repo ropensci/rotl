@@ -49,8 +49,8 @@ function}
 \value{
 \code{taxonomy_taxon_info} returns a list detailing
     information about the taxa. \code{tax_rank} and
-    \code{ott_taxon_name} return a vector. \code{synonyms} returns
-    a list whose elements are the synonyms for each of the
+    \code{tax_name} return a vector. \code{synonyms} returns a
+    list whose elements are the synonyms for each of the
     \code{ott_id} requested.
 }
 \description{
@@ -60,7 +60,7 @@ Information about taxa.
 Given a vector of ott ids, \code{taxonomy_taxon_info} returns
 information about the specified taxa.
 
-The functions \code{tax_rank}, \code{ott_taxon_name}, and
+The functions \code{tax_rank}, \code{tax_name}, and
 \code{synonyms} can extract this information from an object
 created by the \code{taxonomy_taxon_info} function.
 }
@@ -68,7 +68,7 @@ created by the \code{taxonomy_taxon_info} function.
 \dontrun{
 req <- taxonomy_taxon_info(ott_id=515698)
 tax_rank(req)
-ott_taxon_name(req)
+tax_name(req)
 synonyms(req)
 }
 }
