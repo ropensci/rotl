@@ -40,6 +40,24 @@ A list
 \description{
 Most Recent Common Ancestor for a set of nodes
 }
+\details{
+Get the MRCA of a set of nodes on the current synthetic
+    tree. Accepts any combination of node ids and ott ids as
+    input. Returns information about the most recent common
+    ancestor (MRCA) node as well as the most recent taxonomic
+    ancestor (MRTA) node (the closest taxonomic node to the MRCA
+    node in the synthetic tree; the MRCA and MRTA may be the same
+    node). If they are the same, the taxonomic information will be
+    in the \code{mrca} slot, otherwise they will be in the
+    \code{nearest_taxon} slot of the list. If any of the specified
+    nodes is not in the synthetic tree an error will be returned.
+
+    Taxonomic methods (\code{tax_sources()}, \code{ott_id()},
+    \code{unique_name()}, ...) are availble on the objects
+    returned by \code{tol_mrca()}. If the MRCA node is MRTA, the
+    name of the object returned by these methods will start with
+    \sQuote{ott}, otherwise it will start with \sQuote{mrca}.
+}
 \examples{
 \dontrun{
 birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
