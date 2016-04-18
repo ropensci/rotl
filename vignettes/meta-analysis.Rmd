@@ -44,14 +44,14 @@ publisher's website. We can collect the data from using `fulltext` (with the
 papers DOI as input) and read it into memory with `gdata`:
 
 ```{r egg_data, cache=TRUE}
-library(gdata)
+library(gdata, quiet=TRUE)
 library(rotl)
 library(fulltext)
 
 doi <- "10.1111/jeb.12282"
 xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
 egg_data <- read.xls(xls = xl_file)
-egg_data
+head(egg_data)
 ```
 
 The most important variable in this dataset is `Zr`, which is a [normalized
@@ -181,8 +181,8 @@ error variance, effectively adding extra weight to the results of more powerful
 studies. Here's how we specify and fit that model with `MCMCglmm`:
 
 
-```{r model, echo=FALSE}
-library(MCMCglmm)
+```{r model}
+library(MCMCglmm, quiet=TRUE)
 set.seed(123)
 
 pr<-list(R=list(V=1,nu=0.002),
