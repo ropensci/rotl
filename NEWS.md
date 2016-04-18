@@ -13,6 +13,8 @@
 
 * Rename method `ott_taxon_name` to `tax_name` for consistency.
 
+* Rename method `synth_sources` and `study_list` to `source_list`.
+
 ## rotl 0.5.0
 
 * New vignette: `meta-analysis`

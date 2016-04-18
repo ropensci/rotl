@@ -15,6 +15,12 @@ test_that("Names in object returned are correct/match the docs", {
                     c("taxon", "num_tips", "node_id")))
     expect_true(all(names(req$root$taxon) %in%
                     c("tax_sources", "name", "unique_name", "rank", "ott_id")))
+    expect_true(all(names(source_list(req)) %in% c("study_id",
+                                                   "tree_id",
+                                                   "git_sha")))
+    expect_true(nrow(source_list(req)) > 1)
+    expect_true(all(grepl("^(ot|pg)", source_list(req)[["study_id"]])))
+    expect_true(all(grepl("^tr", source_list(req)[["tree_id"]], ignore.case = TRUE)))
 })
 
 
@@ -110,13 +116,16 @@ test_that("tol_mrca returns a list", {
 test_that("methods for tol_mrca where the node is a taxon", {
     skip_on_cran()
     hol <- tol_mrca(c(431586, 957434))
-    expect_true(length(tax_sources(hol)) > 1)
+    expect_true(length(tax_sources(hol)[[1]]) > 1)
     expect_true(any(grepl("worms", tax_sources(hol)[[1]])))
     expect_equal(unique_name(hol)[[1]], "Holothuria")
     expect_equal(tax_name(hol)[[1]], "Holothuria")
     expect_equal(tax_rank(hol)[[1]], "genus")
     expect_equal(ott_id(hol)[[1]], 5004030)
     expect_equal(names(tax_sources(hol)), "ott5004030")
+    expect_true(all(names(source_list(hol)) %in% c("tree_id",
+                                                   "study_id",
+                                                   "git_sha")))
 })
 
 test_that("methods for tol_mrca where the node is not a taxon", {
@@ -129,6 +138,9 @@ test_that("methods for tol_mrca where the node is not a taxon", {
     expect_equal(tax_rank(birds_mrca)[[1]], "superorder")
     expect_equal(ott_id(birds_mrca)[[1]], 241846)
     expect_equal(names(ott_id(birds_mrca)), "mrcaott246ott5481")
+    expect_true(all(names(source_list(birds_mrca)) %in% c("tree_id",
+                                                          "study_id",
+                                                          "git_sha")))
 })
 
 
@@ -163,17 +175,37 @@ test_that("tol node info.", {
 # note that tax info is now contained in a taxon 'blob'
 test_that("tol_node tax_rank method", {
     skip_on_cran()
-    expect_equal(tax_rank(tol_info), "class")
+    expect_equal(tax_rank(tol_info)[[1]], "class")
 })
 
 test_that("tol_node ott_id method", {
     skip_on_cran()
-    expect_equal(ott_id(tol_info), 81461)
+    expect_equal(ott_id(tol_info)[[1]], 81461)
+    expect_equal(names(ott_id(tol_info)), "ott81461")
 })
 
-test_that("tol_node synth_sources method", {
+test_that("tol_node tax_sources", {
     skip_on_cran()
-    expect_true(inherits(synth_sources(tol_info), "data.frame"))
-    expect_true(all(names(synth_sources(tol_info)) %in%
+    expect_true(any(grepl("worms", tax_sources(tol_info)[[1]])))
+    expect_equal(names(tax_sources(tol_info)), "ott81461")
+})
+
+test_that("tol_node unique_name", {
+    skip_on_cran()
+    expect_equal(unique_name(tol_info)[[1]], "Aves")
+    expect_equal(names(unique_name(tol_info)), "ott81461")
+})
+
+test_that("tol_node tax_name", {
+    skip_on_cran()
+    expect_equal(tax_name(tol_info)[[1]], "Aves")
+    expect_equal(names(tax_name(tol_info)), "ott81461")
+})
+
+
+test_that("tol_node source_list method", {
+    skip_on_cran()
+    expect_true(inherits(source_list(tol_info), "data.frame"))
+    expect_true(all(names(source_list(tol_info)) %in%
                       c("study_id", "tree_id", "git_sha")))
 })

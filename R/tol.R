@@ -1,4 +1,19 @@
 
+.source_list <- function(tax, ...) {
+    if (! exists("source_id_map", tax)) {
+        ## it should only be missing with tol_about when using
+        ## include_source_list=FALSE
+        stop("Make sure that your object has been created using ",
+             sQuote("tol_about(include_source_list = TRUE)"))
+    }
+    tt <- lapply(tax[["source_id_map"]], function(x) {
+        c(x[["study_id"]], x[["tree_id"]], x[["git_sha"]])
+    })
+    tt <- do.call("rbind", tt)
+    setNames(as.data.frame(tt, stringsAsFactors=FALSE),
+             c("study_id", "tree_id", "git_sha"))
+}
+
 ##' Basic information about the Open Tree of Life (the synthetic tree)
 ##'
 ##' @title Information about the Tree of Life
@@ -82,7 +97,7 @@
 ##'
 ##'     \item {synth_id} {The unique string for this version of the tree.}
 ##' }
-##' @seealso \code{\link{study_list}} to explore the list of studies
+##' @seealso \code{\link{source_list}} to explore the list of studies
 ##'     used in the synthetic tree (see example).
 ##'
 ##' @examples
@@ -90,7 +105,7 @@
 ##' res <- tol_about()
 ##' tax_sources(res)
 ##' ott_id(res)
-##' studies <- study_list(tol_about(include_source_list=TRUE))
+##' studies <- source_list(tol_about(include_source_list=TRUE))
 ##' }
 ##' @rdname tol_about
 ##' @export
@@ -146,38 +161,10 @@ ott_id.tol_summary <- function(tax, ...) {
     .tax_ott_id(tax[["root"]][["taxon"]])
 }
 
-##' Retrieve the detailed information for the list of studies used in
-##' the Tree of Life.
-##'
-##' @title List of studies used in the Tree of Life
-##'
-##' @details This function takes the object resulting from
-##' \code{tol_about(study_list = TRUE)} and returns a data frame
-##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
-##' the studies currently included in the Tree of Life.
-##'
-##' @param tol an object created using \code{tol_about(study_list = TRUE)}
-##'
-##' @return a data frame
 ##' @export
-study_list <- function(tol) UseMethod("study_list")
+##' @rdname source_list
+source_list.tol_summary <- .source_list
 
-
-##' @export
-##' @rdname study_list
-study_list.tol_summary <- function(tol) {
-    if (! exists("source_list", tol)) {
-        stop("Make sure that your object has been created using ",
-             sQuote("tol_about(include_source_list = TRUE)"))
-    }
-    tol <- lapply(tol[["source_id_map"]], function(x) {
-        c("tree_id"=x[["tree_id"]],
-          "study_id"=x[["study_id"]],
-          "git_sha"=x[["git_sha"]])
-    })
-    tol <- do.call("rbind", tol)
-    data.frame(tol, stringsAsFactors=FALSE)
-}
 
 
 ##' Most Recent Common Ancestor for a set of nodes
@@ -252,6 +239,11 @@ tax_rank.tol_mrca <- tol_mrca_method_factory(.tax_rank)
 ##' @export
 ##' @rdname tol_mrca
 ott_id.tol_mrca <- tol_mrca_method_factory(.tax_ott_id)
+
+##' @export
+##' @rdname tol_mrca
+source_list.tol_mrca <- .source_list
+
 
 ##' Extract a subtree from the synthetic tree from an ott id.
 ##'
@@ -459,7 +451,7 @@ strip_ott_ids <- function(tip_labels) {
 ##' @examples
 ##' \dontrun{
 ##' birds <- tol_node_info(ott_id=81461)
-##' #synth_sources(birds)
+##' source_list(birds)
 ##' tax_rank(birds)
 ##' ott_id(birds)
 ##' }
@@ -471,41 +463,34 @@ tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...)
     return(res)
 }
 
+tol_node_method_factory <- function(.f) {
+    function(tax, ...) {
+        setNames(list(.f(tax[["taxon"]])),
+                tax[["node_id"]])
+    }
+}
 
 ##' @export
 ##' @param tax an object returned by \code{tol_node_info}.
 ##' @rdname tol_node_info
-tax_rank.tol_node <- function(tax, ...) {
-    tax[["taxon"]]$rank
-}
+tax_rank.tol_node <- tol_node_method_factory(.tax_rank)
 
 ##' @export
 ##' @rdname tol_node_info
-ott_id.tol_node <- function(tax, ...) {
-    tax[["taxon"]]$ott_id
-}
+tax_sources.tol_node <- tol_node_method_factory(.tax_sources)
 
+##' @export
+##' @rdname tol_node_info
+unique_name.tol_node <- tol_node_method_factory(.tax_unique_name)
 
+##' @export
+##' @rdname tol_node_info
+tax_name.tol_node <- tol_node_method_factory(.tax_name)
 
+##' @export
+##' @rdname tol_node_info
+ott_id.tol_node <- tol_node_method_factory(.tax_ott_id)
 
-
-
-
-
-## *** the following are deprecated ***
-## basically we need to update things for the new `source_id_map`
-
-## @export
-## @rdname tol_node_info
-synth_sources <- function(tax) UseMethod("synth_sources")
-
-
-## @export
-## @rdname tol_node_info
-synth_sources.tol_node <- function(tax) {
-    tt <- lapply(tax$synth_sources, function(x) {
-        c(x["study_id"], x["tree_id"], x["git_sha"])
-    })
-    tt <- do.call("rbind", tt)
-    as.data.frame(tt, stringsAsFactors=FALSE)
-}
+##' @export
+##' @rdname tol_node_info
+source_list.tol_node <- .source_list

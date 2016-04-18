@@ -287,7 +287,7 @@ test_that("tol_about returns class tol_summary", {
 
 test_that("study_about", {
     skip_on_cran()
-    ta <- study_list(tol_about(TRUE))
+    ta <- source_list(tol_about(TRUE))
     expect_true(inherits(ta, "data.frame"))
     expect_true(nrow(ta) > 100)
     expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))

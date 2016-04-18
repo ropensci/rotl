@@ -42,3 +42,21 @@ unique_name <- function(tax, ...) UseMethod("unique_name")
 ##' @export
 ##' @rdname taxonomy-methods
 tax_name <- function(tax, ...) UseMethod("tax_name")
+
+
+##' Retrieve the detailed information for the list of studies used in
+##' the Tree of Life.
+##'
+##' @title List of studies used in the Tree of Life
+##'
+##' @details This function takes the object resulting from
+##'     \code{tol_about(study_list = TRUE)}, \code{tol_mrca()},
+##'     \code{tol_node_info()}, and returns a data frame listing the
+##'     \code{tree_id}, \code{study_id} and \code{git_sha} for the
+##'     studies currently included in the Tree of Life.
+##'
+##' @param tol a list containing a \code{source_id_map} slot.
+##'
+##' @return a data frame
+##' @export
+source_list <- function(tol, ...) UseMethod("source_list")
