@@ -5,10 +5,15 @@
 ##'
 ##' @details Summary information about the current draft tree of life,
 ##'     including information about the list of trees and the taxonomy
-##'     used to build it.
+##'     used to build it. The object returned by \code{tol_about} can
+##'     be passed to the taxonomy methods (\code{tax_name()},
+##'     \code{tax_rank()}, \code{tax_sources()}, \code{ott_id}), to
+##'     extract relevant taxonomic information for the root of the
+##'     synthetic tree.
 ##'
-##' @param include_source_list Logical (default = FALSE). Return an
-##'     ordered list of source trees.
+##' @param include_source_list Logical (default =
+##'     \code{FALSE}). Return an ordered list of source trees.
+##' @param tax an object created with a call to \code{tol_about}.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -21,10 +26,11 @@
 ##'     \item {num_source_studies} {Integer. The number of studies
 ##'     (publications)used as sources.}
 ##'
-##'     \item {num_source_trees} {The number of trees used as sources (may
-##'     be >1 tree per study).}
+##'     \item {num_source_trees} {The number of trees used as sources
+##'     (may be >1 tree per study).}
 ##'
-##'     \item {taxonomy} {The Open Tree Taxonomy version used as a source.}
+##'     \item {taxonomy_version} {The Open Tree Taxonomy version used
+##'     as a source.}
 ##'
 ##'     \item {filtered_flags} {List. Taxa with these taxonomy flags were
 ##'     not used in construction of the tree.}
@@ -37,7 +43,7 @@
 ##'
 ##'             \item {taxon} {A list of taxonomic properties:}
 ##'             \itemize{
-##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ott_id).}
 ##'
 ##'                 \item {name} {String. The taxonomic name of the queried node.}
 ##'
@@ -52,15 +58,17 @@
 ##'             }
 ##'         }
 ##'
-##'     \item {source_list} {List. Present only if \code{include_source_list} is
-##'     "true". The sourceid ordering is the precedence order for synthesis, with
-##'     relationships from earlier trees in the list having priority over those
-##'     from later trees in the list. See \code{source_id_map} below for study details.}
+##'     \item {source_list} {List. Present only if
+##'     \code{include_source_list} is \code{TRUE}. The sourceid
+##'     ordering is the precedence order for synthesis, with
+##'     relationships from earlier trees in the list having priority
+##'     over those from later trees in the list. See
+##'     \code{source_id_map} below for study details.}
 ##'
 ##'     \item {source_id_map} {Named list of lists. Present only if
-##'     \code{include_source_list} is "true". Names correspond to the
-##'     sourceids used in \code{source_list} above. Source trees will have the
-##'     following properties:}
+##'     \code{include_source_list} is \code{TRUE}. Names correspond to
+##'     the \sQuote{sourceids} used in \code{source_list}
+##'     above. Source trees will have the following properties:}
 ##'
 ##'         \itemize{
 ##'             \item {git_sha} {String. The git SHA identifying a particular source
@@ -75,17 +83,20 @@
 ##'     \item {synth_id} {The unique string for this version of the tree.}
 ##' }
 ##' @seealso \code{\link{study_list}} to explore the list of studies
-##'     used in the synthetic tree.
+##'     used in the synthetic tree (see example).
 ##'
 ##' @examples
 ##' \dontrun{
 ##' res <- tol_about()
+##' tax_sources(res)
+##' ott_id(res)
 ##' studies <- study_list(tol_about(include_source_list=TRUE))
 ##' }
+##' @rdname tol_about
 ##' @export
 tol_about <- function(include_source_list=FALSE, ...) {
     res <- .tol_about(include_source_list=include_source_list, ...)
-    class(res) <- "tol_summary"
+    class(res) <- c("tol_summary", class(res))
     res
 }
 
@@ -105,13 +116,42 @@ print.tol_summary <- function(x, ...) {
     cat("\tRoot node_id: ", x$root$node_id, "\n", sep="")
 }
 
+##' @export
+##' @rdname tol_about
+tax_rank.tol_summary <- function(tax, ...) {
+    .tax_rank(tax[["root"]][["taxon"]])
+}
+
+##' @export
+##' @rdname tol_about
+tax_sources.tol_summary <- function(tax, ...) {
+    .tax_sources(tax[["root"]][["taxon"]])
+}
+
+##' @export
+##' @rdname tol_about
+unique_name.tol_summary <- function(tax, ...) {
+    .tax_unique_name(tax[["root"]][["taxon"]])
+}
+
+##' @export
+##' @rdname tol_about
+tax_name.tol_summary <- function(tax, ...) {
+    .tax_name(tax[["root"]][["taxon"]])
+}
+
+##' @export
+##' @rdname tol_about
+ott_id.tol_summary <- function(tax, ...) {
+    .tax_ott_id(tax[["root"]][["taxon"]])
+}
 
 ##' Retrieve the detailed information for the list of studies used in
 ##' the Tree of Life.
 ##'
 ##' @title List of studies used in the Tree of Life
 ##'
-##' #details This function takes the object resulting from
+##' @details This function takes the object resulting from
 ##' \code{tol_about(study_list = TRUE)} and returns a data frame
 ##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
 ##' the studies currently included in the Tree of Life.
@@ -163,12 +203,42 @@ study_list.tol_summary <- function(tol) {
 ##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ##' }
+##' @rdname tol_mrca
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
     res <- .tol_mrca(ott_ids=ott_ids, node_ids=node_ids, ...)
+    class(res) <- c("tol_mrca", class(res))
     return(res)
 }
 
+tol_mrca_method_factory <- function(.f) {
+    function(tax, ...) {
+        if (is_taxon(tax[["mrca"]][["taxon"]]))
+            .f(tax[["mrca"]][["taxon"]])
+        else
+            .f(tax[["nearest_taxon"]])
+    }
+}
+
+##' @export
+##' @rdname tol_mrca
+tax_sources.tol_mrca <- tol_mrca_method_factory(.tax_sources)
+
+##' @export
+##' @rdname tol_mrca
+unique_name.tol_mrca <- tol_mrca_method_factory(.tax_unique_name)
+
+##' @export
+##' @rdname tol_mrca
+tax_name.tol_mrca <- tol_mrca_method_factory(.tax_name)
+
+##' @export
+##' @rdname tol_mrca
+tax_rank.tol_mrca <- tol_mrca_method_factory(.tax_rank)
+
+##' @export
+##' @rdname tol_mrca
+ott_id.tol_mrca <- tol_mrca_method_factory(.tax_ott_id)
 
 ##' Extract a subtree from the synthetic tree from an ott id.
 ##'
@@ -202,8 +272,10 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 ##'       res <- tol_subtree(ott_id=81461)
 ##'     }
 ##' @export
-tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...) {
-    res <- .tol_subtree(ott_id=ott_id, node_id=node_id, label_format=label_format, ...)
+tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
+                        file, ...) {
+    res <- .tol_subtree(ott_id=ott_id, node_id=node_id,
+                        label_format=label_format, ...)
 
     if (!missing(file)) {
         unlink(file)
@@ -251,8 +323,10 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL, file, ...)
 ##'                     file=tree_file)
 ##' }
 ##' @export
-tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL, file, ...) {
-    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids, label_format=label_format, ...)
+tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
+                                file, ...) {
+    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids,
+                                label_format=label_format, ...)
     if (!missing(file)) {
         unlink(file)
         cat(res$newick, file=file)

@@ -52,3 +52,13 @@ tax_access_factory <- function(slot, flatten, optional) {
                                         optional = TRUE)
 
 .tax_synonyms <- tax_access_factory("synonyms", flatten = TRUE, optional = TRUE)
+
+## Does the slot element represent a taxon?
+is_taxon <- function(slot) {
+    if (all(c("ott_id", "name", "rank", "tax_sources",
+              "unique_name") %in% names(slot))) {
+        TRUE
+    } else {
+        FALSE
+    }
+}
