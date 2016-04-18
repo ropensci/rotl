@@ -249,17 +249,19 @@ turducken <- c("Meleagris", "Anas", "Gallus")
 taxa <- tnrs_match_names(turducken, context="Animals")
 taxa
 ```
+So, we have IDs for each genus but those messages in the `flag` column look
+concerning. `BARREN` means these taxa have no descendants and `MAJOR_RANK_CONFLICT`
+refers to inconsitancies between the rank of these taxa and some of their
+relatives. For thtese reasons,t _Meleagris_ and _Anas_ are not included in
+the synthetic tree.
 
-Looks good, we have IDS for each genus. But if we try to get a subtree from the
-Open Tree we get an error:
+If we tried to press on ahead with the IDs that we have, we'd get an
+error (because there are too few good IDs) or a tree with fewer tips that we had
+anticipated.
 
 ```{r, eval=FALSE}
 tr <- tol_induced_subtree(taxa$ott_id)
 ```
-
-What's going on? It turns out that _Meleagris_ and _Anas_ are not included in
-the synthetic tree (the first because of uncertainty about the rank for that
-name and the second because _Anas_ as normally defined is not monophyletic).
 
 The best way to avoid these problems is to specify complete species names
 (species being the lowest level of classification in the Open Tree taxonomy they
