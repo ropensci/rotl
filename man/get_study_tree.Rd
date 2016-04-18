@@ -21,7 +21,7 @@ the \code{\link[ape]{ape}} package).}
 labels. \dQuote{\code{original_label}} (default) returns the
 original labels as provided in the study,
 \dQuote{\code{ott_id}} labels are replaced by their ott IDs,
-\dQuote{\code{tax_name}} labels are replaced by their
+\dQuote{\code{ott_taxon_name}} labels are replaced by their
 Open Tree Taxonomy taxon name.}
 
 \item{file_format}{the format of the file to be generated

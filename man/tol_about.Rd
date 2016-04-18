@@ -81,8 +81,8 @@ An invisible list of synthetic tree summary statistics:
 
     \item {source_id_map} {Named list of lists. Present only if
     \code{include_source_list} is \code{TRUE}. Names correspond to
-    the sourceids used in \code{source_list} above. Source trees
-    will have the following properties:}
+    the \sQuote{sourceids} used in \code{source_list}
+    above. Source trees will have the following properties:}
 
         \itemize{
             \item {git_sha} {String. The git SHA identifying a particular source
@@ -105,18 +105,20 @@ Summary information about the current draft tree of life,
     including information about the list of trees and the taxonomy
     used to build it. The object returned by \code{tol_about} can
     be passed to the taxonomy methods (\code{tax_name()},
-    \code{tax_rank}
+    \code{tax_rank()}, \code{tax_sources()}, \code{ott_id}), to
+    extract relevant taxonomic information for the root of the
+    synthetic tree.
 }
 \examples{
 \dontrun{
 res <- tol_about()
 tax_sources(res)
 ott_id(res)
-studies <- study_list(tol_about(include_source_list=TRUE))
+studies <- source_list(tol_about(include_source_list=TRUE))
 }
 }
 \seealso{
-\code{\link{study_list}} to explore the list of studies
-    used in the synthetic tree.
+\code{\link{source_list}} to explore the list of studies
+    used in the synthetic tree (see example).
 }
 

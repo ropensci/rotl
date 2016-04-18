@@ -2,15 +2,27 @@
 % Please edit documentation in R/tol.R
 \name{tol_node_info}
 \alias{ott_id.tol_node}
+\alias{source_list.tol_node}
+\alias{tax_name.tol_node}
 \alias{tax_rank.tol_node}
+\alias{tax_sources.tol_node}
 \alias{tol_node_info}
+\alias{unique_name.tol_node}
 \title{Node info}
 \usage{
 tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 
 \method{tax_rank}{tol_node}(tax, ...)
 
+\method{tax_sources}{tol_node}(tax, ...)
+
+\method{unique_name}{tol_node}(tax, ...)
+
+\method{tax_name}{tol_node}(tax, ...)
+
 \method{ott_id}{tol_node}(tax, ...)
+
+\method{source_list}{tol_node}(tax, ...)
 }
 \arguments{
 \item{ott_id}{Numeric. The OpenTree taxonomic identifier.}
@@ -105,7 +117,7 @@ Returns summary information about a node in the graph. The
 \examples{
 \dontrun{
 birds <- tol_node_info(ott_id=81461)
-#synth_sources(birds)
+source_list(birds)
 tax_rank(birds)
 ott_id(birds)
 }
