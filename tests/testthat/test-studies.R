@@ -290,7 +290,7 @@ test_that("study_about", {
     ta <- source_list(tol_about(TRUE))
     expect_true(inherits(ta, "data.frame"))
     expect_true(nrow(ta) > 100)
-    expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))
+    expect_equal(names(ta), c("study_id","tree_id", "git_sha"))
 })
 
 ############################################################################
