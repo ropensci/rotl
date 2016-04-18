@@ -56,6 +56,7 @@ tax_name <- function(tax, ...) UseMethod("tax_name")
 ##'     studies currently included in the Tree of Life.
 ##'
 ##' @param tax a list containing a \code{source_id_map} slot.
+##' @param ... additional arguments (currently unused)
 ##'
 ##' @return a data frame
 ##' @export

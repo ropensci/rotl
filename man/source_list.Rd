@@ -11,6 +11,8 @@ source_list(tax, ...)
 }
 \arguments{
 \item{tax}{a list containing a \code{source_id_map} slot.}
+
+\item{...}{(currently unused)}
 }
 \value{
 a data frame
