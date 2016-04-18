@@ -116,6 +116,7 @@ test_that("methods for tol_mrca where the node is a taxon", {
     expect_equal(tax_name(hol), "Holothuria")
     expect_equal(tax_rank(hol), "genus")
     expect_equal(ott_id(hol), 5004030)
+    expect_equal(names(tax_sources(hol)), "ott5004030")
 })
 
 test_that("methods for tol_mrca where the node is not a taxon", {
@@ -127,6 +128,7 @@ test_that("methods for tol_mrca where the node is not a taxon", {
     expect_equal(tax_name(birds_mrca), "Neognathae")
     expect_equal(tax_rank(birds_mrca), "superorder")
     expect_equal(ott_id(birds_mrca), 241846)
+    expect_equal(names(ott_id(birds_mrca)), "mrcaott246ott5481")
 })
 
 
