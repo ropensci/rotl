@@ -58,7 +58,7 @@ ancestor (the MRCA) of all the identified taxa.
 }
 \examples{
 \dontrun{
-req <- taxonomy_mrca(ott_ids=c(515698,590452,409712,643717))
+req <- taxonomy_mrca(ott_ids=c(515698,590452,643717))
 tax_rank(req)
 ott_taxon_name(req)
 ott_id(req)
