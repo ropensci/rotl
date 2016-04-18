@@ -123,10 +123,10 @@ test_that("methods for tol_mrca where the node is not a taxon", {
     birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
     expect_true(length(tax_sources(birds_mrca)) >=  1)
     expect_true(any(grepl("ncbi", tax_sources(birds_mrca))))
-    expect_equal(unique_name(birds_mrca), "Holothuria")
-    expect_equal(tax_name(birds_mrca), "Holothuria")
-    expect_equal(tax_rank(birds_mrca), "genus")
-    expect_equal(ott_id(birds_mrca), 5004030)
+    expect_equal(unique_name(birds_mrca), "Neognathae")
+    expect_equal(tax_name(birds_mrca), "Neognathae")
+    expect_equal(tax_rank(birds_mrca), "superorder")
+    expect_equal(ott_id(birds_mrca), 241846)
 })
 
 
