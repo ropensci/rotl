@@ -55,8 +55,8 @@ tax_name <- function(tax, ...) UseMethod("tax_name")
 ##'     \code{tree_id}, \code{study_id} and \code{git_sha} for the
 ##'     studies currently included in the Tree of Life.
 ##'
-##' @param tol a list containing a \code{source_id_map} slot.
+##' @param tax a list containing a \code{source_id_map} slot.
 ##'
 ##' @return a data frame
 ##' @export
-source_list <- function(tol, ...) UseMethod("source_list")
+source_list <- function(tax, ...) UseMethod("source_list")

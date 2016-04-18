@@ -5,12 +5,12 @@
 \alias{source_list.tol_summary}
 \title{List of studies used in the Tree of Life}
 \usage{
-source_list(tol, ...)
+source_list(tax, ...)
 
 \method{source_list}{tol_summary}(tax, ...)
 }
 \arguments{
-\item{tol}{a list containing a \code{source_id_map} slot.}
+\item{tax}{a list containing a \code{source_id_map} slot.}
 }
 \value{
 a data frame
