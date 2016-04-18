@@ -100,10 +100,33 @@ test_that("tol_mrca returns a list", {
     skip_on_cran()
     birds <- tol_mrca(ott_ids = c(412129, 536234))
     expect_true(inherits(birds, "list"))
+    expect_true(inherits(birds, "tol_mrca"))
     expect_true(all(names(birds) %in%
                     c("mrca",
                       "source_id_map",
                       "nearest_taxon")))
+})
+
+test_that("methods for tol_mrca where the node is a taxon", {
+    skip_on_cran()
+    hol <- tol_mrca(c(431586, 957434))
+    expect_true(length(tax_sources(hol)) > 1)
+    expect_true(any(grepl("worms", tax_sources(hol))))
+    expect_equal(unique_name(hol), "Holothuria")
+    expect_equal(tax_name(hol), "Holothuria")
+    expect_equal(tax_rank(hol), "genus")
+    expect_equal(ott_id(hol), 5004030)
+})
+
+test_that("methods for tol_mrca where the node is not a taxon", {
+    skip_on_cran()
+    birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+    expect_true(length(tax_sources(birds_mrca)) >=  1)
+    expect_true(any(grepl("ncbi", tax_sources(birds_mrca))))
+    expect_equal(unique_name(birds_mrca), "Neognathae")
+    expect_equal(tax_name(birds_mrca), "Neognathae")
+    expect_equal(tax_rank(birds_mrca), "superorder")
+    expect_equal(ott_id(birds_mrca), 241846)
 })
 
 
