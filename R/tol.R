@@ -185,15 +185,25 @@ study_list.tol_summary <- function(tol) {
 ##' @title MRCA of taxa from the synthetic tree
 ##'
 ##' @details Get the MRCA of a set of nodes on the current synthetic
-##' tree. Accepts any combination of node ids and ott ids as
-##' input. Returns information about the most recent common ancestor
-##' (MRCA) node as well as the most recent taxonomic ancestor (MRTA)
-##' node (the closest taxonomic node to the MRCA node in the synthetic
-##' tree; the MRCA and MRTA may be the same node). If any of the
-##' specified nodes is not in the synthetic tree an error will be returned.
+##'     tree. Accepts any combination of node ids and ott ids as
+##'     input. Returns information about the most recent common
+##'     ancestor (MRCA) node as well as the most recent taxonomic
+##'     ancestor (MRTA) node (the closest taxonomic node to the MRCA
+##'     node in the synthetic tree; the MRCA and MRTA may be the same
+##'     node). If they are the same, the taxonomic information will be
+##'     in the \code{mrca} slot, otherwise they will be in the
+##'     \code{nearest_taxon} slot of the list. If any of the specified
+##'     nodes is not in the synthetic tree an error will be returned.
+##'
+##'     Taxonomic methods (\code{tax_sources()}, \code{ott_id()},
+##'     \code{unique_name()}, ...} are availble on the objects
+##'     returned by \code{tol_mrca()}. If the MRCA node is MRTA, the
+##'     name of the object returned by these methods will start with
+##'     \sQuote{ott}, otherwise it will start with \sQuote{mrca}.
 ##'
 ##' @param ott_ids Numeric vector. The ott ids for which the MRCA is desired.
 ##' @param node_ids Character vector. The node ids for which the MRCA is desired.
+##' @param tax an object returned by \code{tol_mrca()}.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -202,6 +212,8 @@ study_list.tol_summary <- function(tol) {
 ##' @examples
 ##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+##' ott_id(birds_mrca)
+##' tax_sources(birds_mrca)
 ##' }
 ##' @rdname tol_mrca
 ##' @export
