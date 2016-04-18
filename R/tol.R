@@ -214,9 +214,10 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 tol_mrca_method_factory <- function(.f) {
     function(tax, ...) {
         if (is_taxon(tax[["mrca"]][["taxon"]]))
-            .f(tax[["mrca"]][["taxon"]])
+            res <- .f(tax[["mrca"]][["taxon"]])
         else
-            .f(tax[["nearest_taxon"]])
+            res <- .f(tax[["nearest_taxon"]])
+        setNames(list(res), tax[["mrca"]][["node_id"]])
     }
 }
 
