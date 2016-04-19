@@ -79,7 +79,7 @@ the Open Tree, you first need to find `ott_ids` for a set of names using the
 
 ```{r resolve}
 library(rotl)
-apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
+apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 

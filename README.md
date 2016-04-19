@@ -77,27 +77,25 @@ the Open Tree, you first need to find `ott_ids` for a set of names using the
 
 ```r
 library(rotl)
-apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hylobates", "Hoolock", "Homo")
+apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
 ```
-##   search_string                      unique_name approximate_match  ott_id
-## 1           pan                              Pan             FALSE  417957
-## 2         pongo                            Pongo             FALSE  417949
-## 3           pan                              Pan             FALSE  417957
-## 4       gorilla                          Gorilla             FALSE  417969
-## 5     hylobates Hylobates (genus in Protostomia)             FALSE 5333940
-## 6       hoolock                          Hoolock             FALSE  712902
-## 7          homo                             Homo             FALSE  770309
-##   is_synonym is_deprecated number_matches
-## 1      FALSE         FALSE              1
-## 2      FALSE         FALSE              1
-## 3      FALSE         FALSE              1
-## 4      FALSE         FALSE              1
-## 5      FALSE         FALSE              2
-## 6      FALSE         FALSE              1
-## 7      FALSE         FALSE              1
+##   search_string unique_name approximate_match ott_id is_synonym flags
+## 1           pan         Pan             FALSE 417957      FALSE      
+## 2         pongo       Pongo             FALSE 417949      FALSE      
+## 3           pan         Pan             FALSE 417957      FALSE      
+## 4       gorilla     Gorilla             FALSE 417969      FALSE      
+## 5       hoolock     Hoolock             FALSE 712902      FALSE      
+## 6          homo        Homo             FALSE 770309      FALSE      
+##   number_matches
+## 1              1
+## 2              1
+## 3              1
+## 4              1
+## 5              1
+## 6              1
 ```
 
 Now get the tree with just those tips:
@@ -105,18 +103,10 @@ Now get the tree with just those tips:
 
 ```r
 tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
-```
-
-```
-## Warning in tol_induced_subtree(ott_ids = resolved_names$ott_id): ott ids:
-## 5333940 not in graph.
-```
-
-```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/wUcpWFD.png)
+![plot of chunk get_tr](http://i.imgur.com/9sZWJv7.png)
 
 ### Code of Conduct
 
