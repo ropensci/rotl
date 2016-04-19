@@ -1,4 +1,4 @@
-## rotl 0.5.0.900
+## rotl 3.0.0
 
 * Fix bug in `studies_find_studies`, the arguments `verbose` and `exact` were
   ignored
