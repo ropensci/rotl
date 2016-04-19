@@ -79,3 +79,7 @@ source_list <- function(tax, ...) UseMethod("source_list")
 ##' @rdname tax_lineage
 ##' @export
 tax_lineage <- function(tax, ...) UseMethod("tax_lineage")
+
+##' @export
+##' @rdname tol_node_info
+tol_lineage <- function(tax, ...) UseMethod("tol_lineage")

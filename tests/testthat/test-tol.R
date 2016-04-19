@@ -162,6 +162,7 @@ test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tol_info <- tol_node_info(ott_id = 81461)
+    tol_lin <- tol_node_info(ott_id = 81461, include_lineage = TRUE)
 }
 
 test_that("tol node info.", {
@@ -208,4 +209,27 @@ test_that("tol_node source_list method", {
     expect_true(inherits(source_list(tol_info), "data.frame"))
     expect_true(all(names(source_list(tol_info)) %in%
                       c("study_id", "tree_id", "git_sha")))
+})
+
+test_that("tol_node tol_lineage", {
+    skip_on_cran()
+    expect_error(tol_lineage(tol_info), "needs to be created")
+    expect_true(inherits(tol_lineage(tol_lin), "data.frame"))
+    expect_true(nrow(tol_lineage(tol_lin)) > 1)
+    expect_true(all(names(tol_lineage(tol_lin)) %in% c("node_id",
+                                                       "num_tips",
+                                                       "is_taxon")))
+    expect_true(all(grepl("^(ott|mrca)", tol_lineage(tol_lin)[["node_id"]])))
+})
+
+test_that("tol_node tax_lineage", {
+    skip_on_cran()
+    expect_error(tax_lineage(tol_info), "needs to be created")
+    expect_true(inherits(tax_lineage(tol_lin), "data.frame"))
+    expect_true(nrow(tax_lineage(tol_lin)) > 1)
+    expect_true(all(names(tax_lineage(tol_lin)) %in% c("rank",
+                                                       "name",
+                                                       "unique_name")))
+    expect_true(any(grepl("no rank", tax_lineage(tol_lin)[["rank"]])))
+    expect_true(any(grepl("cellular organisms", tax_lineage(tol_lin)[["name"]])))
 })

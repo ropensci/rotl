@@ -374,6 +374,12 @@ strip_ott_ids <- function(tip_labels) {
 ##'     taxon id, but not both. If the specified node or OTT id is not
 ##'     in the graph, an error will be returned.
 ##'
+##'     If the argument \code{include_lineage=TRUE} is used, you can
+##'     use \code{tax_lineage()} or \code{tol_lineage} to return the
+##'     taxonomic information or the node information for all the
+##'     ancestors to this node, down to the root of the tree.
+##'
+##'
 ##' @param ott_id Numeric. The OpenTree taxonomic identifier.
 ##' @param node_id Character. The OpenTree node identifier.
 ##' @param include_lineage Logical (default = FALSE). Whether to return the
@@ -446,14 +452,22 @@ strip_ott_ids <- function(tip_labels) {
 ##'     which will have the name "ott"+`taxonomy_version`, and the value is the
 ##'     ott_id of the taxon in that taxonomy version. "Taxonomy" will only ever
 ##'     appear in \code{supported_by}.
-##' }
+##'
+##'    }
+##'
+##'     \code{tol_lineage} and \code{tax_lineage} return data
+##'         frames. \code{tol_lineage} indicate for each ancestor its
+##'         node identifier, the number of tips descending from that
+##'         node, and whether it corresponds to a taxonomic level.
 ##'
 ##' @examples
 ##' \dontrun{
-##' birds <- tol_node_info(ott_id=81461)
+##' birds <- tol_node_info(ott_id=81461, include_lineage=TRUE)
 ##' source_list(birds)
 ##' tax_rank(birds)
 ##' ott_id(birds)
+##' tax_lineage(birds)
+##' tol_lineage(birds)
 ##' }
 ##' @export
 tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...) {
@@ -494,3 +508,33 @@ ott_id.tol_node <- tol_node_method_factory(.tax_ott_id)
 ##' @export
 ##' @rdname tol_node_info
 source_list.tol_node <- .source_list
+
+##' @export
+##' @rdname tol_node_info
+tax_lineage.tol_node <- function(tax, ...) {
+    check_lineage(tax)
+    lg <- lapply(tax[["lineage"]], function(x) {
+        if (exists("taxon", x)) {
+            build_lineage(x[["taxon"]])
+        } else {
+            NULL
+        }
+
+    })
+    lg <- do.call("rbind", lg)
+    as.data.frame(lg, stringsAsFactors = FALSE)
+}
+
+
+##' @export
+##' @rdname tol_node_info
+tol_lineage.tol_node <- function(tax, ...) {
+    check_lineage(tax)
+    lg <- lapply(tax[["lineage"]], function(x) {
+        c("node_id" = x[["node_id"]],
+          "num_tips" = x[["num_tips"]],
+          "is_taxon" = exists("taxon", x))
+    })
+    lg <- do.call("rbind", lg)
+    as.data.frame(lg, stringsAsFactors = FALSE)
+}

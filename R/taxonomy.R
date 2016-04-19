@@ -287,17 +287,23 @@ tax_sources.taxon_mrca <- function(tax, ...) {
 ### method for extracting higher taxonomy from taxonomy_taxon_info calls  -------
 
 get_lineage <- function(tax) {
+    check_lineage(tax)
+    lg <- lapply(tax[["lineage"]], build_lineage)
+    lg <- do.call("rbind", lg)
+    as.data.frame(lg, stringsAsFactors = FALSE)
+}
+
+build_lineage <- function(x) {
+        c("rank" = .tax_rank(x),
+          "name" = .tax_name(x),
+          "unique_name" = .tax_unique_name(x))
+}
+
+check_lineage <- function(tax) {
     if (!exists("lineage", tax)) {
         stop("The object needs to be created using ",
              sQuote("include_lineage=TRUE"))
     }
-    lg <- lapply(tax[["lineage"]], function(x) {
-        c("rank" = .tax_rank(x),
-          "name" = .tax_name(x),
-          "unique_name" = .tax_unique_name(x))
-    })
-    lg <- do.call("rbind", lg)
-    as.data.frame(lg, stringsAsFactors = FALSE)
 }
 
 ##' @export
