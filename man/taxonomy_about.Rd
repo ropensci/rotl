@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxonomy.R
 \name{taxonomy_about}
 \alias{taxonomy_about}
-\title{About the Open Tree Taxonomy}
+\title{Information about the Open Tree Taxonomy}
 \usage{
 taxonomy_about(...)
 }
@@ -33,7 +33,7 @@ Summary information about the Open Tree Taxaonomy (OTT)
 \details{
 Return metadata and information about the taxonomy
 itself. Currently, the available metadata is fairly sparse, but
-includes (at least) the eversion, and the location from which the
+includes (at least) the version, and the location from which the
 complete taxonomy source files can be downloaded.
 }
 \examples{

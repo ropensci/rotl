@@ -42,7 +42,7 @@
 ##'     provided, then ids and names must be identical in length.
 ##' @param include_suppressed Ordinarily, some quasi-taxa, such as
 ##'     incertae sedis buckets and other non-OTUs, are suppressed from
-##'     TNRS results.  If this parameter is true, these quasi-taxa are
+##'     TNRS results. If this parameter is true, these quasi-taxa are
 ##'     allowed as possible TNRS results.
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
@@ -71,24 +71,30 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
 
     res <- .tnrs_match_names(names = names, context_name = context_name,
                              do_approximate_matching = do_approximate_matching,
-                             ids = ids, include_suppressed = include_suppressed, ...)
+                             ids = ids, include_suppressed = include_suppressed,
+                             ...)
 
     check_tnrs(res)
-    summary_match <- build_summary_match(res, res_id = seq_along(res[["results"]]),
+    summary_match <- build_summary_match(res,
+                                         res_id = seq_along(res[["results"]]),
                                          match_id = 1, initial_creation = TRUE)
 
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
-    summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
+    summary_match <- summary_match[match(tolower(names),
+                                         summary_match$search_string), ]
 
-    summary_match[["approximate_match"]] <- convert_to_logical(summary_match[["approximate_match"]])
-    summary_match[["is_synonym"]] <- convert_to_logical(summary_match[["is_synonym"]])
+    summary_match[["approximate_match"]] <-
+        convert_to_logical(summary_match[["approximate_match"]])
+    summary_match[["is_synonym"]] <-
+        convert_to_logical(summary_match[["is_synonym"]])
     summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
 
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
-    attr(summary_match, "has_original_match") <- !is.na(summary_match[["number_matches"]])
+    attr(summary_match, "has_original_match") <-
+        !is.na(summary_match[["number_matches"]])
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
 }

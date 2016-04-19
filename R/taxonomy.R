@@ -2,9 +2,10 @@
 ##'
 ##' Return metadata and information about the taxonomy
 ##' itself. Currently, the available metadata is fairly sparse, but
-##' includes (at least) the eversion, and the location from which the
+##' includes (at least) the version, and the location from which the
 ##' complete taxonomy source files can be downloaded.
-##' @title About the Open Tree Taxonomy
+##'
+##' @title Information about the Open Tree Taxonomy
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @return A list with the following properties:
@@ -40,7 +41,7 @@ taxonomy_about <- function (...) {
 ##'
 ##' The functions \code{tax_rank}, \code{tax_name}, and
 ##' \code{synonyms} can extract this information from an object
-##' created by the \code{taxonomy_taxon_info} function.
+##' created by the \code{taxonomy_taxon_info()}.
 ##'
 ##' @title Taxon information
 ##' @param ott_ids the ott ids of the taxon of interest (numeric or

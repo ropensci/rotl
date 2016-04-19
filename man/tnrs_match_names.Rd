@@ -28,7 +28,7 @@ provided, then ids and names must be identical in length.}
 
 \item{include_suppressed}{Ordinarily, some quasi-taxa, such as
 incertae sedis buckets and other non-OTUs, are suppressed from
-TNRS results.  If this parameter is true, these quasi-taxa are
+TNRS results. If this parameter is true, these quasi-taxa are
 allowed as possible TNRS results.}
 
 \item{...}{additional arguments to customize the API request (see

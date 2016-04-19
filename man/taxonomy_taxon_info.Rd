@@ -62,7 +62,7 @@ information about the specified taxa.
 
 The functions \code{tax_rank}, \code{tax_name}, and
 \code{synonyms} can extract this information from an object
-created by the \code{taxonomy_taxon_info} function.
+created by the \code{taxonomy_taxon_info()}.
 }
 \examples{
 \dontrun{
