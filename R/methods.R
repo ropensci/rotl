@@ -43,6 +43,13 @@ unique_name <- function(tax, ...) UseMethod("unique_name")
 ##' @rdname taxonomy-methods
 tax_name <- function(tax, ...) UseMethod("tax_name")
 
+### flags -----------------------------------------------------------------------
+
+##' @export
+##' @rdname match_names-methods
+flags <- function(tax, ...) UseMethod("flags")
+
+###
 
 ##' Retrieve the detailed information for the list of studies used in
 ##' the Tree of Life.

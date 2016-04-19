@@ -131,35 +131,33 @@ print.tol_summary <- function(x, ...) {
     cat("\tRoot node_id: ", x$root$node_id, "\n", sep="")
 }
 
-##' @export
-##' @rdname tol_about
-tax_rank.tol_summary <- function(tax, ...) {
-    .tax_rank(tax[["root"]][["taxon"]])
+tol_about_method_factory <- function(.f) {
+    function(tax, ...) {
+        res <- .f(tax[["root"]][["taxon"]])
+        names(res) <- .tax_unique_name(tax[["root"]][["taxon"]])
+        res
+    }
 }
 
 ##' @export
 ##' @rdname tol_about
-tax_sources.tol_summary <- function(tax, ...) {
-    .tax_sources(tax[["root"]][["taxon"]])
-}
+tax_rank.tol_summary <- tol_about_method_factory(.tax_rank)
 
 ##' @export
 ##' @rdname tol_about
-unique_name.tol_summary <- function(tax, ...) {
-    .tax_unique_name(tax[["root"]][["taxon"]])
-}
+tax_sources.tol_summary <- tol_about_method_factory(.tax_sources)
 
 ##' @export
 ##' @rdname tol_about
-tax_name.tol_summary <- function(tax, ...) {
-    .tax_name(tax[["root"]][["taxon"]])
-}
+unique_name.tol_summary <- tol_about_method_factory(.tax_unique_name)
 
 ##' @export
 ##' @rdname tol_about
-ott_id.tol_summary <- function(tax, ...) {
-    .tax_ott_id(tax[["root"]][["taxon"]])
-}
+tax_name.tol_summary <- tol_about_method_factory(.tax_name)
+
+##' @export
+##' @rdname tol_about
+ott_id.tol_summary <- tol_about_method_factory(.tax_ott_id)
 
 ##' @export
 ##' @rdname source_list
@@ -212,11 +210,16 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
 
 tol_mrca_method_factory <- function(.f) {
     function(tax, ...) {
-        if (is_taxon(tax[["mrca"]][["taxon"]]))
-            res <- .f(tax[["mrca"]][["taxon"]])
-        else
-            res <- .f(tax[["nearest_taxon"]])
-        setNames(list(res), tax[["mrca"]][["node_id"]])
+        if (is_taxon(tax[["mrca"]][["taxon"]])) {
+            res <- list(.f(tax[["mrca"]][["taxon"]]))
+            names(res) <- .tax_unique_name(tax[["mrca"]][["taxon"]])
+            attr(res, "taxon_type") <- "mrca"
+        } else {
+            res <- list(.f(tax[["nearest_taxon"]]))
+            names(res) <- .tax_unique_name(tax[["nearest_taxon"]])
+            attr(res, "taxon_type") <- "nearest_taxon"
+        }
+        res
     }
 }
 
@@ -473,14 +476,14 @@ strip_ott_ids <- function(tip_labels) {
 tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...) {
     res <- .tol_node_info(ott_id=ott_id, node_id=node_id,
                           include_lineage=include_lineage, ...)
-    class(res) <- "tol_node"
+    class(res) <- c("tol_node", class(res))
     return(res)
 }
 
 tol_node_method_factory <- function(.f) {
     function(tax, ...) {
         setNames(list(.f(tax[["taxon"]])),
-                tax[["node_id"]])
+                .tax_unique_name(tax[["taxon"]]))
     }
 }
 

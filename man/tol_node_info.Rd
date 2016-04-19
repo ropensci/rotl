@@ -113,8 +113,12 @@ lineage of the node from the synthetic tree.}
     ott_id of the taxon in that taxonomy version. "Taxonomy" will only ever
     appear in \code{supported_by}.
 
-    \code{tol_lineage} and \code{tax_lineage} return data frames
-}
+   }
+
+    \code{tol_lineage} and \code{tax_lineage} return data
+        frames. \code{tol_lineage} indicate for each ancestor its
+        node identifier, the number of tips descending from that
+        node, and whether it corresponds to a taxonomic level.
 }
 \description{
 Get summary information about a node in the synthetic tree

@@ -116,31 +116,35 @@ test_that("tol_mrca returns a list", {
 test_that("methods for tol_mrca where the node is a taxon", {
     skip_on_cran()
     hol <- tol_mrca(c(431586, 957434))
+    expect_true(inherits(tax_sources(hol), "list"))
     expect_true(length(tax_sources(hol)[[1]]) > 1)
     expect_true(any(grepl("worms", tax_sources(hol)[[1]])))
     expect_equal(unique_name(hol)[[1]], "Holothuria")
     expect_equal(tax_name(hol)[[1]], "Holothuria")
     expect_equal(tax_rank(hol)[[1]], "genus")
     expect_equal(ott_id(hol)[[1]], 5004030)
-    expect_equal(names(tax_sources(hol)), "ott5004030")
+    expect_equal(names(tax_sources(hol)), "Holothuria")
     expect_true(all(names(source_list(hol)) %in% c("tree_id",
                                                    "study_id",
                                                    "git_sha")))
+    expect_equal(attr(tax_sources(hol), "taxon_type"), "mrca")
 })
 
 test_that("methods for tol_mrca where the node is not a taxon", {
     skip_on_cran()
     birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+    expect_true(inherits(birds_mrca, "list"))
     expect_true(length(tax_sources(birds_mrca)[[1]]) >=  1)
     expect_true(any(grepl("ncbi", tax_sources(birds_mrca)[[1]])))
     expect_equal(unique_name(birds_mrca)[[1]], "Neognathae")
     expect_equal(tax_name(birds_mrca)[[1]], "Neognathae")
     expect_equal(tax_rank(birds_mrca)[[1]], "superorder")
     expect_equal(ott_id(birds_mrca)[[1]], 241846)
-    expect_equal(names(ott_id(birds_mrca)), "mrcaott246ott5481")
+    expect_equal(names(ott_id(birds_mrca)), "Neognathae")
     expect_true(all(names(source_list(birds_mrca)) %in% c("tree_id",
                                                           "study_id",
                                                           "git_sha")))
+    expect_equal(attr(tax_sources(birds_mrca), "taxon_type"), "nearest_taxon")
 })
 
 
@@ -176,31 +180,36 @@ test_that("tol node info.", {
 # note that tax info is now contained in a taxon 'blob'
 test_that("tol_node tax_rank method", {
     skip_on_cran()
+    expect_true(inherits(tax_rank(tol_info), "list"))
     expect_equal(tax_rank(tol_info)[[1]], "class")
 })
 
 test_that("tol_node ott_id method", {
     skip_on_cran()
+    expect_true(inherits(ott_id(tol_info), "list"))
     expect_equal(ott_id(tol_info)[[1]], 81461)
-    expect_equal(names(ott_id(tol_info)), "ott81461")
+    expect_equal(names(ott_id(tol_info)), "Aves")
 })
 
 test_that("tol_node tax_sources", {
     skip_on_cran()
+    expect_true(inherits(tax_sources(tol_info), "list"))
     expect_true(any(grepl("worms", tax_sources(tol_info)[[1]])))
-    expect_equal(names(tax_sources(tol_info)), "ott81461")
+    expect_equal(names(tax_sources(tol_info)), "Aves")
 })
 
 test_that("tol_node unique_name", {
     skip_on_cran()
+    expect_true(inherits(unique_name(tol_info), "list"))
     expect_equal(unique_name(tol_info)[[1]], "Aves")
-    expect_equal(names(unique_name(tol_info)), "ott81461")
+    expect_equal(names(unique_name(tol_info)), "Aves")
 })
 
 test_that("tol_node tax_name", {
     skip_on_cran()
+    expect_true(inherits(tax_name(tol_info), "list"))
     expect_equal(tax_name(tol_info)[[1]], "Aves")
-    expect_equal(names(tax_name(tol_info)), "ott81461")
+    expect_equal(names(tax_name(tol_info)), "Aves")
 })
 
 

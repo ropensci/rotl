@@ -169,7 +169,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tax_rsp <- c("Holothuria", "Diadema", "Fromia")
     rsp <- tnrs_match_names(names = tax_rsp)
     tax_rsp_na <- c("Holothuria", "Diadema", "fluffy", "Fromia")
-    rsp_na <- tnrs_match_names(names = tax_rsp_na)
+    expect_warning(rsp_na <- tnrs_match_names(names = tax_rsp_na))
 }
 
 

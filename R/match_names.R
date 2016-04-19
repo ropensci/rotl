@@ -246,14 +246,14 @@ match_names_method_factory <- function(list_name) {
 
 }
 
-match_names_taxon_factory <- function(tax_fxn) {
+match_names_method_factory <- function(.f) {
     function(tax, row_number, taxon_name, ott_id, ...) {
         extract_tax_list <- match_names_method_factory("taxon")
         tax_info <- extract_tax_list(tax, row_number = row_number,
                                      taxon_name = taxon_name,
                                      ott_id = ott_id)
-        res <- lapply(tax_info, function(x) tax_fxn(x))
-        names(res) <- vapply(tax_info, function(x) .tax_name(x), character(1))
+        res <- lapply(tax_info, function(x) .f(x))
+        names(res) <- vapply(tax_info, function(x) .tax_unique_name(x), character(1))
         res
     }
 }
@@ -295,15 +295,12 @@ match_names_taxon_factory <- function(tax_fxn) {
 ##' }
 ##' @export
 ##' @rdname match_names-methods
-ott_id.match_names <- match_names_taxon_factory(.tax_ott_id)
+ott_id.match_names <- match_names_method_factory(.tax_ott_id)
+
 
 ##' @export
 ##' @rdname match_names-methods
-flags <- function(tax, ...) UseMethod("flags")
-
-##' @export
-##' @rdname match_names-methods
-flags.match_names <- match_names_taxon_factory(.tax_flags)
+flags.match_names <- match_names_method_factory(.tax_flags)
 
 ##' When querying the Taxonomic Name Resolution Services for a
 ##' particular taxonomic name, the API returns as possible matches all
@@ -342,23 +339,22 @@ flags.match_names <- match_names_taxon_factory(.tax_flags)
 ##'    synonyms(echino, ott_id=337928)
 ##' }
 ##' @export
-
-synonyms.match_names <- match_names_taxon_factory(.tax_synonyms)
-
-##' @export
-tax_sources.match_names <- match_names_taxon_factory(.tax_sources)
+synonyms.match_names <- match_names_method_factory(.tax_synonyms)
 
 ##' @export
-tax_rank.match_names <- match_names_taxon_factory(.tax_rank)
-
+tax_sources.match_names <- match_names_method_factory(.tax_sources)
 
 ##' @export
-is_suppressed.match_names <- match_names_taxon_factory(.tax_is_suppressed)
+tax_rank.match_names <- match_names_method_factory(.tax_rank)
 
 
 ##' @export
-unique_name.match_names <- match_names_taxon_factory(.tax_unique_name)
+is_suppressed.match_names <- match_names_method_factory(.tax_is_suppressed)
 
 
 ##' @export
-tax_name.match_names <- match_names_taxon_factory(.tax_name)
+unique_name.match_names <- match_names_method_factory(.tax_unique_name)
+
+
+##' @export
+tax_name.match_names <- match_names_method_factory(.tax_name)

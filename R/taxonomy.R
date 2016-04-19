@@ -206,7 +206,7 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##' @export
 taxonomy_mrca <- function (ott_ids=NULL, ...) {
     res <- .taxonomy_mrca(ott_ids = ott_ids, ...)
-    class(res) <- "taxon_mrca"
+    class(res) <- c("taxon_mrca", class(res))
     return(res)
 }
 
@@ -214,75 +214,84 @@ taxonomy_mrca <- function (ott_ids=NULL, ...) {
 
 ### methods for taxonomy_taxon_info ---------------------------------------------
 
-##' @export
-##' @rdname taxonomy_taxon_info
-tax_rank.taxon_info <- function(tax, ...) {
-    vapply(tax, function(x) .tax_rank(x), character(1))
+taxon_info_method_factory <- function(.f) {
+    function(tax, ...) {
+        res <- lapply(tax, .f)
+        names(res) <- vapply(tax, .tax_unique_name, character(1))
+        res
+    }
 }
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-tax_name.taxon_info <- function(tax, ...) {
-    vapply(tax, function(x) .tax_name(x), character(1))
-}
+tax_rank.taxon_info <- taxon_info_method_factory(.tax_rank)
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-unique_name.taxon_info <- function(tax, ...) {
-    vapply(tax, function(x) .tax_unique_name(x), character(1))
-}
+tax_name.taxon_info <- taxon_info_method_factory(.tax_name)
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-synonyms.taxon_info <- function(tax, ...) {
-    sapply(tax, function(x) {
-        .tax_synonyms(x)
-    }, simplify = FALSE)
-}
+unique_name.taxon_info <- taxon_info_method_factory(.tax_unique_name)
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-ott_id.taxon_info <- function(tax, ...) {
-    vapply(tax, function(x) .tax_ott_id(x), integer(1))
-}
+synonyms.taxon_info <- taxon_info_method_factory(.tax_synonyms)
 
 ##' @export
 ##' @rdname taxonomy_taxon_info
-tax_sources.taxon_info <- function(tax, ...) {
-    sapply(tax, function(x) .tax_sources(x), simplify = FALSE)
-}
+ott_id.taxon_info <- taxon_info_method_factory(.tax_ott_id)
+
+##' @export
+##' @rdname taxonomy_taxon_info
+tax_sources.taxon_info <- taxon_info_method_factory(.tax_sources)
+
+##' @export
+##' @rdname taxonomy_taxon_info
+is_suppressed.taxon_info <- taxon_info_method_factory(.tax_is_suppressed)
+
+##' @export
+##' @rdname taxonomy_taxon_info
+flags.taxon_info <- taxon_info_method_factory(.tax_flags)
+
 
 ### methods for taxonomy_mrca ---------------------------------------------------
 
-##' @export
-##' @rdname taxonomy_mrca
-tax_rank.taxon_mrca <- function(tax, ...) {
-    .tax_rank(tax[["mrca"]])
+taxon_mrca_method_factory <- function(.f) {
+    function(tax, ...)  {
+        res <- list(.f(tax[["mrca"]]))
+        names(res) <- .tax_unique_name(tax[["mrca"]])
+        res
+    }
 }
 
 ##' @export
 ##' @rdname taxonomy_mrca
-tax_name.taxon_mrca <- function(tax, ...) {
-    .tax_name(tax[["mrca"]])
-}
+tax_rank.taxon_mrca <- taxon_mrca_method_factory(.tax_rank)
 
 ##' @export
 ##' @rdname taxonomy_mrca
-ott_id.taxon_mrca <- function(tax, ...) {
-    .tax_ott_id(tax[["mrca"]])
-}
+tax_name.taxon_mrca <- taxon_mrca_method_factory(.tax_name)
 
 ##' @export
 ##' @rdname taxonomy_mrca
-unique_name.taxon_mrca <- function(tax, ...) {
-    .tax_unique_name(tax[["mrca"]])
-}
+ott_id.taxon_mrca <- taxon_mrca_method_factory(.tax_ott_id)
 
 ##' @export
 ##' @rdname taxonomy_mrca
-tax_sources.taxon_mrca <- function(tax, ...) {
-    .tax_sources(tax[["mrca"]])
-}
+unique_name.taxon_mrca <- taxon_mrca_method_factory(.tax_unique_name)
+
+##' @export
+##' @rdname taxonomy_mrca
+tax_sources.taxon_mrca <- taxon_mrca_method_factory(.tax_sources)
+
+##' @export
+##' @rdname taxonomy_mrca
+flags.taxon_mrca <- taxon_mrca_method_factory(.tax_flags)
+
+##' @export
+##' @rdname taxonomy_mrca
+is_suppressed.taxon_mrca <- taxon_mrca_method_factory(.tax_is_suppressed)
 
 ### method for extracting higher taxonomy from taxonomy_taxon_info calls  -------
 
