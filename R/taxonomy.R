@@ -252,7 +252,7 @@ tax_sources.taxon_info <- function(tax, ...) {
     sapply(tax, function(x) .tax_sources(x), simplify = FALSE)
 }
 
-### methods for taxonomy_mrca ----------------------------------------------
+### methods for taxonomy_mrca ---------------------------------------------------
 
 ##' @export
 ##' @rdname taxonomy_mrca
@@ -282,4 +282,26 @@ unique_name.taxon_mrca <- function(tax, ...) {
 ##' @rdname taxonomy_mrca
 tax_sources.taxon_mrca <- function(tax, ...) {
     .tax_sources(tax[["mrca"]])
+}
+
+### method for extracting higher taxonomy from taxonomy_taxon_info calls  -------
+
+get_lineage <- function(tax) {
+    if (!exists("lineage", tax)) {
+        stop("The object needs to be created using ",
+             sQuote("include_lineage=TRUE"))
+    }
+    lg <- lapply(tax[["lineage"]], function(x) {
+        c("rank" = .tax_rank(x),
+          "name" = .tax_name(x),
+          "unique_name" = .tax_unique_name(x))
+    })
+    lg <- do.call("rbind", lg)
+    as.data.frame(lg, stringsAsFactors = FALSE)
+}
+
+##' @export
+##' @rdname tax_lineage
+tax_lineage.taxon_info <- function(tax, ...) {
+    lapply(tax, get_lineage)
 }

@@ -61,3 +61,21 @@ tax_name <- function(tax, ...) UseMethod("tax_name")
 ##' @return a data frame
 ##' @export
 source_list <- function(tax, ...) UseMethod("source_list")
+
+
+##' Extract the lineage information (higher taxonomy) from an object
+##' returned by \code{\link{taxonomy_taxon_info}}.
+##'
+##' The object passed to this function must have been created using
+##' the argument \code{include_lineage=TRUE}.
+##'
+##' @title Lineage of a taxon
+##' @param tax an object created by \code{\link{taxonomy_taxon_info}}.
+##' @param ... additional arguments (currently unused).
+##' @return A list with one slot per taxon that contains a data frame
+##'     with 3 columns: the taxonomy rank, the name, and unique name
+##'     for all taxa included in the lineage of the taxon up to the
+##'     root of the tree.
+##' @rdname tax_lineage
+##' @export
+tax_lineage <- function(tax, ...) UseMethod("tax_lineage")

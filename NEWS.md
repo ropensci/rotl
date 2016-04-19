@@ -15,6 +15,9 @@
 
 * Rename method `synth_sources` and `study_list` to `source_list`.
 
+* New method `tax_lineage` to extract the higher taxonomy from an object
+  returned by `taxonomy_taxon_info` (initally suggested by Matt Pennell, #57).
+
 ## rotl 0.5.0
 
 * New vignette: `meta-analysis`

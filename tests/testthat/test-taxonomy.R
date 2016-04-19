@@ -78,6 +78,17 @@ test_that("taxonomy_taxon synonyms method", {
     expect_true(all(c("Diamema", "Centrechinus") %in% synonyms(tax_info)[[3]]))
 })
 
+test_that("higher taxonomy method", {
+    skip_on_cran()
+    expect_error(tax_lineage(tax_info), "needs to be created")
+    lg <- tax_lineage(taxonomy_taxon_info(tid, include_lineage = TRUE))
+    expect_true(inherits(lg, "list"))
+    expect_true(inherits(lg[[1]], "data.frame"))
+    expect_true(all(names(lg[[1]]) %in% c("rank", "name", "unique_name")))
+    expect_true(any(grepl("no rank", lg[[1]][["rank"]])))
+    expect_true(any(grep("life", lg[[1]][["name"]])))
+})
+
 ############################################################################
 ## taxon subtree                                                          ##
 ############################################################################
