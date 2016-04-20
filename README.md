@@ -1,6 +1,6 @@
 
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/5y84rd87waaca84m/branch/master?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-1oug1/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/v8occu2l14ucr5fl?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-3g068)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
