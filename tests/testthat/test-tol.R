@@ -18,6 +18,8 @@ test_that("Names in object returned are correct/match the docs", {
     expect_true(all(names(source_list(req)) %in% c("study_id",
                                                    "tree_id",
                                                    "git_sha")))
+    expect_error(source_list(tol_about(include_source_list = FALSE)),
+                 "has been created using")
     expect_true(nrow(source_list(req)) > 1)
     expect_true(all(grepl("^(ot|pg)", source_list(req)[["study_id"]])))
     expect_true(all(grepl("^tr", source_list(req)[["tree_id"]], ignore.case = TRUE)))
@@ -176,6 +178,7 @@ test_that("tol node info.", {
                         "num_tips", "terminal", "node_id")))
     expect_true(inherits(tol_info, "tol_node"))
 })
+
 
 # note that tax info is now contained in a taxon 'blob'
 test_that("tol_node tax_rank method", {
