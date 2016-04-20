@@ -28,42 +28,45 @@ install.packages("rotl")
 ```
 
 If you want to test the development version, you first need to install
-[devtools](https://github.com/hadley/devtools).
+[ghit](https://github.com/cloudyr/ghit) (`ghit` is a more lightweight version of
+[devtools](https://github.com/hadley/devtools) if your sole purpose is to
+install packages that are hosted on GitHub).
 
 
 ```r
-install.packages("devtools")
+install.packages("ghit")
 ```
 
 Then you can install `rotl` using:
 
 
 ```r
-library(devtools)
-install_github("ropensci/rotl", dependencies = TRUE, build_vignette=TRUE)
+library(ghit) # or library(devtools)
+install_github("ropensci/rotl")
 ```
-
-To build the vignettes with the development version, you will need to have
-pandoc 1.12.3 or higher installed. If you use
-[RStudio](https://www.rstudio.com/products/rstudio/download/), make sure you
-have v0.99 (as it comes with pandoc 1.13.1); if you don't use RStudio, you can
-find pandoc for your operating system [here](http://pandoc.org/installing.html)
 
 ## Vignettes
 
-There are two vignettes:
+There are three vignettes:
 
-- start by checking out the "How to use `rotl`?" by typing:
+- Start by checking out the "How to use `rotl`?" by typing:
   `vignette("how-to-use-rotl", package="rotl")` after installing the
   package.
 
-- then explore how you can use `rotl` with other packages to combine your data
+- Then explore how you can use `rotl` with other packages to combine your data
   with trees from the Open Tree of Life project by typing:
   `vignette("data_mashups", package="rotl")`.
 
+- The vignette "Using the Open Tree Synthesis in a comparative analsysis"
+  demonstrates how you can reproduce an analysis of a published paper by
+  downloading the tree they used, and data from the supplementary material:
+  `vignette("meta-analysis", package="rotl")`.
+
 The vignettes are also available from CRAN:
-[How to use `rotl`?](https://cran.r-project.org/web/packages/rotl/vignettes/how-to-use-rotl.html)
-and [Data mashups](https://cran.r-project.org/web/packages/rotl/vignettes/data_mashups.html)
+[How to use `rotl`?](https://cran.r-project.org/web/packages/rotl/vignettes/how-to-use-rotl.html),
+[Data mashups](https://cran.r-project.org/web/packages/rotl/vignettes/data_mashups.html),
+and
+[Using the Open Tree synthesis in a comparative analysis](https://cran.r-project.org/web/packages/rotl/vignettes/meta-analysis.html).
 
 ## Quick start
 
@@ -98,7 +101,7 @@ apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 ## 6              1
 ```
 
-Now get the tree with just those tips:
+Now we can get the tree with just those tips:
 
 
 ```r
@@ -106,7 +109,7 @@ tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/tPvZzaM.png)
+![plot of chunk get_tr](http://i.imgur.com/BZNyJTM.png)
 
 ### Code of Conduct
 
