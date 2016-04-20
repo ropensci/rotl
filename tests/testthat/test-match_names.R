@@ -177,7 +177,8 @@ test_that("synonyms", {
     skip_on_cran()
     tt <- synonyms(rsp)
     expect_true(inherits(tt, "list"))
-    expect_equal(names(tt), tax_rsp)
+    expect_equal(names(tt),
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
 })
 
 
@@ -216,7 +217,8 @@ test_that("synonyms", {
     skip_on_cran()
     tt <- synonyms(rsp_na)
     expect_true(inherits(tt, "list"))
-    expect_equal(names(tt), tax_rsp)
+    expect_equal(names(tt),
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
 })
 
 
