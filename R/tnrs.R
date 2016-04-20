@@ -215,11 +215,12 @@ print.tnrs_contexts <- function(x, ...) {
     lapply(x, function(t) {
         res <- unlist(t)
         cat("  ", res[1], "\n")
-        if (length(res) > 1)
-            lapply(seq(2, length(t), by = 5), function(l) {
-                m <- ifelse(l + 5 <= length(t), l+5, length(t))
-                cat("     ", paste(t[l:m], collapse = ", "), "\n")
+        if (length(res) > 1) {
+            lapply(seq(2, length(res), by = 5), function(l) {
+                m <- ifelse(l + 5 <= length(res), l+4, length(res))
+                cat("     ", paste(res[l:m], collapse = ", "), "\n")
             })
+        }
     })
 }
 
