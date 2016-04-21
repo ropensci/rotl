@@ -225,7 +225,6 @@ print.tol_mrca <- function(x, ...) {
     }
 }
 
-
 tol_mrca_method_factory <- function(.f) {
     function(tax, ...) {
         if (is_taxon(tax[["mrca"]][["taxon"]])) {
@@ -408,8 +407,8 @@ strip_ott_ids <- function(tip_labels) {
 ##' @param ... additional arguments to customize the API call (see
 ##'     ?rotl for more information)
 ##'
-##' @return \code{tol_node_info} returns a list of summary information
-##'     about the queried node.
+##' @return \code{tol_node_info} returns an invisible list of summary 
+##'     information about the queried node:
 ##'
 ##' \itemize{
 ##'
@@ -502,6 +501,21 @@ tol_node_method_factory <- function(.f) {
     function(tax, ...) {
         setNames(list(.f(tax[["taxon"]])),
                 .tax_unique_name(tax[["taxon"]]))
+    }
+}
+
+##' @export
+print.tol_node <- function(x, ...) {
+    cat("\nOpenTree node.\n\n")
+    cat("Node id: ", x$node_id, "\n", sep="")
+    cat("Number of terminal descendants: ", x$num_tips, "\n", sep="")
+    if (is_taxon(x[["taxon"]])) {
+        cat("Is taxon: TRUE\n")
+        cat("Name: ", x$taxon$name, "\n", sep="")
+        cat("Rank: ", x$taxon$rank, "\n", sep="")
+        cat("ott id: ", x$taxon$ott_id, "\n", sep="")
+    } else {
+        cat("Is taxon: FALSE\n")
     }
 }
 
