@@ -119,16 +119,16 @@ tol_about <- function(include_source_list=FALSE, ...) {
 ##' @export
 print.tol_summary <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
-    cat("\tTree version: ", x$synth_id, "\n", sep="")
-    cat("\tTaxonomy version: ", x$taxonomy, "\n", sep="")
-    cat("\tConstructed on: ", x$date_created, "\n", sep="")
-    cat("\tNumber of terminal taxa: ", x$root$num_tips, "\n", sep="")
-    cat("\tNumber of source trees: ", x$num_source_trees, "\n", sep="")
-    cat("\tNumber of source studies: ", x$num_source_studies, "\n", sep = "")
-    cat("\tSource list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
-    cat("\tRoot taxon: ", x$root$taxon$name, "\n", sep="")
-    cat("\tRoot ott_id: ", x$root$taxon$ott_id, "\n", sep="")
-    cat("\tRoot node_id: ", x$root$node_id, "\n", sep="")
+    cat("Tree version: ", x$synth_id, "\n", sep="")
+    cat("Taxonomy version: ", x$taxonomy, "\n", sep="")
+    cat("Constructed on: ", x$date_created, "\n", sep="")
+    cat("Number of terminal taxa: ", x$root$num_tips, "\n", sep="")
+    cat("Number of source trees: ", x$num_source_trees, "\n", sep="")
+    cat("Number of source studies: ", x$num_source_studies, "\n", sep = "")
+    cat("Source list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
+    cat("Root taxon: ", x$root$taxon$name, "\n", sep="")
+    cat("Root ott_id: ", x$root$taxon$ott_id, "\n", sep="")
+    cat("Root node_id: ", x$root$node_id, "\n", sep="")
 }
 
 tol_about_method_factory <- function(.f) {
