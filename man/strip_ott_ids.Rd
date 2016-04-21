@@ -11,7 +11,7 @@ strip_ott_ids(tip_labels, remove_underscores = FALSE)
 the \code{tip.label} element from a tree returned by
 \code{\link{tol_induced_subtree}}}
 
-\item{remove_underscores}{logical (defaults to FALSE). If set to TRUE
+\item{remove_underscores}{logical (defaults to FALSE). If set to TRUE 
 underscores in tip labels are converted to spaces}
 }
 \value{

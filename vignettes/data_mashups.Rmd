@@ -179,7 +179,19 @@ extra_data
 Here the returned object contains an `external_data_url` (in this case a link to
 the study in Treebase), a pubmed ID for the paper and a vector IDs for the
 NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
-functions to make use of these IDs within R. 
+functions to make use of these IDs within R.
+
+As an example, let's use `rentrez` to download the first two DNA seqences and
+print them. 
+
+```{r}
+library(rentrez)
+seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta")
+cat(seqs)
+```
+
+You could further process these sequences in R with the function `read.dna` from 
+`ape` or save them to disk by specifying a file name with `cat`.
 
 ### Find a OTT taxon in another taxonomic database
 

@@ -61,7 +61,7 @@ study_external_IDs <- function(study_id){
 ##' @export
 
 taxon_external_IDs <- function(taxon_id){
-    taxon_info <- taxonomy_taxon(taxon_id)
+    taxon_info <- taxonomy_taxon_info(taxon_id)
     srcs <- taxon_info[[1]][["tax_sources"]]
     res <- do.call(rbind.data.frame, strsplit(unlist(srcs), ":"))
     names(res) <- c("source", "id")
@@ -89,18 +89,18 @@ print.study_external_data <- function(x, ...){
 
 ##Maybe include these functions to get summary information about a 
 ## set of linked sequences?
-summarize_nucleotide_data <- function(id_vector){
-    summs <- entrez_summary(db="nuccore", id=id_vector)
-    interesting <- extract_from_esummary(summs, c("uid", "title", "slen", "organism", "completeness"), simplify=FALSE)
-    do.call(rbind.data.frame, interesting) 
-}
-
-summarize_popset_data <- function(id_vector){
-    summs <- entrez_summary(db="popset", id=id_vector)
-    interesting <- extract_from_esummary(summs, c("uid", "title"), simplify=FALSE)
-    do.call(rbind.data.frame, interesting) 
-}
-
+#summarize_nucleotide_data <- function(id_vector){
+#    summs <- entrez_summary(db="nuccore", id=id_vector)
+#    interesting <- extract_from_esummary(summs, c("uid", "title", "slen", "organism", "completeness"), simplify=FALSE)
+#    do.call(rbind.data.frame, interesting) 
+#}
+#
+#summarize_popset_data <- function(id_vector){
+#    summs <- entrez_summary(db="popset", id=id_vector)
+#    interesting <- extract_from_esummary(summs, c("uid", "title"), simplify=FALSE)
+#    do.call(rbind.data.frame, interesting) 
+#}
+#
 
 #Un-exported function to convert doi->pmid. Also takes study_id as an argument in
 #order to provide a helpful error message when 0 or >1 pmids are returned.
