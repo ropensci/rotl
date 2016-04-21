@@ -47,7 +47,7 @@ tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 lineage of the node from the synthetic tree.}
 }
 \value{
-\code{tol_node_info} returns an invisible list of summary 
+\code{tol_node_info} returns an invisible list of summary
     information about the queried node:
 
 \itemize{

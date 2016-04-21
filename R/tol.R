@@ -88,7 +88,7 @@
 ##'         \itemize{
 ##'             \item {git_sha} {String. The git SHA identifying a particular source
 ##'             version.}
-##'
+#'
 ##'             \item {tree_id} {String. The tree id associated with the study id used.}
 ##'
 ##'             \item {study_id} {String. The study identifier. Will typically include
@@ -196,7 +196,7 @@ source_list.tol_summary <- .source_list
 ##' \itemize{
 ##'
 ##'     \item {mrca} {List of node properties.}
-##'     
+##'
 ##'     \itemize{
 ##'         \item {node_id} {String. The canonical identifier of the node.}
 ##'
@@ -264,7 +264,7 @@ source_list.tol_summary <- .source_list
 ##'         }
 ##'
 ##'     \item {source_id_map} {Named list of lists. Names correspond to the
-##'     sourceid keys used in the support/conflict properties of the \code{mrca} 
+##'     sourceid keys used in the support/conflict properties of the \code{mrca}
 ##'     list above. Source trees will have the following properties:}
 ##'
 ##'         \itemize{
@@ -450,12 +450,13 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 
 
 ##' Strip OTT ids from tip labels
-##' @param tip_labels a character vector containing tip labels (most likely
-##'     the \code{tip.label} element from a tree returned by
-##'     \code{\link{tol_induced_subtree}}).
-##'
-##' @return A character vector containing the contents of \code{tip_labels}
-##'     with any OTT ids removed.
+##' @param tip_labels a character vector containing tip labels (most
+##'     likely the \code{tip.label} element from a tree returned by
+##'     \code{\link{tol_induced_subtree}}
+##' @param remove_underscores logical (defaults to FALSE). If set to
+##'     TRUE underscores in tip labels are converted to spaces
+##' @return A character vector containing the contents of
+##'     \code{tip_labels} with any OTT ids removed.
 ##'
 ##' @examples
 ##' \dontrun{
@@ -465,8 +466,12 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
 ##' tr$tip.label %in% genera}
 ##'@export
-strip_ott_ids <- function(tip_labels) {
-    sub("_ott\\d+$", "", tip_labels)
+strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
+    stripped <- sub("_ott\\d+$", "", tip_labels)
+    if(remove_underscores){
+        return(gsub("_", " ", stripped))
+    }
+    stripped
 }
 
 
@@ -492,7 +497,7 @@ strip_ott_ids <- function(tip_labels) {
 ##' @param ... additional arguments to customize the API call (see
 ##'     ?rotl for more information)
 ##'
-##' @return \code{tol_node_info} returns an invisible list of summary 
+##' @return \code{tol_node_info} returns an invisible list of summary
 ##'     information about the queried node:
 ##'
 ##' \itemize{

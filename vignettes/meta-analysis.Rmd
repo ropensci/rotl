@@ -44,7 +44,7 @@ publisher's website. We can collect the data from using `fulltext` (with the
 papers DOI as input) and read it into memory with `gdata`:
 
 ```{r egg_data, cache=TRUE}
-library(gdata, quiet=TRUE)
+suppressMessages(library(gdata))
 library(rotl)
 library(fulltext)
 
@@ -146,13 +146,13 @@ and error).
 
 We can deal with all these details easily. `rotl` provides  the convenience
 function `strip_ott_ids` to remove the extra information from the tip labels.
-With the IDs removed, we can use our taxon map to replace the tip labels in th tree
+With the IDs removed, we can use our taxon map to replace the tip labels in the tree
 with the species names from dataset.
 
 
 
 ```{r clean_tips}
-otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
+otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
 tr$tip.label <- taxon_map[ otl_tips ]
 ```
 

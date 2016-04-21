@@ -40,7 +40,7 @@ An invisible list of the MRCA node properties:
 \itemize{
 
     \item {mrca} {List of node properties.}
-    
+
     \itemize{
         \item {node_id} {String. The canonical identifier of the node.}
 
@@ -108,7 +108,7 @@ An invisible list of the MRCA node properties:
         }
 
     \item {source_id_map} {Named list of lists. Names correspond to the
-    sourceid keys used in the support/conflict properties of the \code{mrca} 
+    sourceid keys used in the support/conflict properties of the \code{mrca}
     list above. Source trees will have the following properties:}
 
         \itemize{
