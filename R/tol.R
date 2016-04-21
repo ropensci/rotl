@@ -295,7 +295,7 @@ source_list.tol_mrca <- .source_list
 ##'
 ##' @examples
 ##'    \dontrun{
-##'       res <- tol_subtree(ott_id=81461)
+##'       res <- tol_subtree(ott_id=241841)
 ##'     }
 ##' @export
 tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,

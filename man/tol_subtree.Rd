@@ -41,7 +41,7 @@ Given a node, return the subtree of the synthetic tree descended
 }
 \examples{
    \dontrun{
-      res <- tol_subtree(ott_id=81461)
+      res <- tol_subtree(ott_id=241841)
     }
 }
 
