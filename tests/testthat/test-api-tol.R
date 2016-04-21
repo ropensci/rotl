@@ -26,7 +26,7 @@ test_that("neither ott_ids nor node_ids are NULL for .tol_mrca", {
 
 test_that("ott_id is not NULL", {
     skip_on_cran()
-    expect_error(.tol_subtree(ott_id = NULL, tree_id = NULL),
+    expect_error(.tol_subtree(ott_id = NULL, node_id = NULL),
                  "Must provide")
 })
 
