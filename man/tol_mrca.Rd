@@ -35,7 +35,7 @@ tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
 \item{tax}{an object returned by \code{tol_mrca()}.}
 }
 \value{
-A list
+An invisible list of of the MRCA node properties
 }
 \description{
 Most Recent Common Ancestor for a set of nodes

@@ -192,7 +192,7 @@ source_list.tol_summary <- .source_list
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
-##' @return A list
+##' @return An invisible list of of the MRCA node properties
 ##'
 ##' @examples
 ##' \dontrun{
@@ -207,6 +207,24 @@ tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
     class(res) <- c("tol_mrca", class(res))
     return(res)
 }
+
+##' @export
+print.tol_mrca <- function(x, ...) {
+    cat("\nOpenTree MRCA node.\n\n")
+    cat("Node id: ", x$mrca$node_id, "\n", sep="")
+    cat("Number of terminal descendants: ", x$mrca$num_tips, "\n", sep="")
+    if (is_taxon(x[["mrca"]][["taxon"]])) {
+        cat("Is taxon: TRUE\n")
+        cat("Name: ", x$mrca$taxon$name, "\n", sep="")
+        cat("ott id: ", x$mrca$taxon$ott_id, "\n", sep="")
+    } else {
+        cat("Is taxon: FALSE\n")
+        cat("Nearest taxon:\n")
+        cat("  Name: ", x$nearest_taxon$name, "\n", sep="")
+        cat("  ott id: ", x$nearest_taxon$ott_id, "\n", sep="")
+    }
+}
+
 
 tol_mrca_method_factory <- function(.f) {
     function(tax, ...) {
