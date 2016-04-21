@@ -108,8 +108,8 @@ An invisible list of the MRCA node properties:
         }
 
     \item {source_id_map} {Named list of lists. Names correspond to the
-    sourceid keys used in the 4 properties above. Source trees will have the
-    following properties:}
+    sourceid keys used in the support/conflict properties of the \code{mrca} 
+    list above. Source trees will have the following properties:}
 
         \itemize{
             \item {git_sha} {The git SHA identifying a particular source
@@ -152,7 +152,6 @@ Get the MRCA of a set of nodes on the current synthetic
 \dontrun{
 birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ott_id(birds_mrca)
-tax_sources(birds_mrca)
-}
+tax_sources(birds_mrca)}
 }
 

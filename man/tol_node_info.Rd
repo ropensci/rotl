@@ -141,7 +141,6 @@ source_list(birds)
 tax_rank(birds)
 ott_id(birds)
 tax_lineage(birds)
-tol_lineage(birds)
-}
+tol_lineage(birds)}
 }
 

@@ -17,7 +17,7 @@ serve as the root of the tree returned.}
 \dQuote{\code{name}}, \dQuote{\code{id}}, or
  \dQuote{\code{name_and_id}} (the default).}
 
-\item{file}{if specified, the function will write the subtree to a
+\item{file}{If specified, the function will write the subtree to a
 file in newick format.}
 
 \item{...}{additional arguments to customize the API call (see
@@ -30,18 +30,17 @@ If no value is specified to the \code{file} argument
     whether the file was successfully created.
 }
 \description{
-Extract a subtree from the synthetic tree from an ott id.
+Extract a subtree from the synthetic tree from an Open Tree node id.
 }
 \details{
 Given a node, return the subtree of the synthetic tree descended
-    from that node, either in newick or ArguSON format. The start node may
-    be specified using either a node id or an ott id, but not both. If the
-    specified node is not in the synthetic tree an error will be returned.
-    There is a size limit of 25000 tips for this method.
+    from that node. The start node may be specified using either a node id
+    or an ott id, but not both. If the specified node is not in the
+    synthetic tree an error will be returned. There is a size limit of
+    25000 tips for this method.
 }
 \examples{
-   \dontrun{
-      res <- tol_subtree(ott_id=241841)
-    }
+\dontrun{
+res <- tol_subtree(ott_id=241841)}
 }
 

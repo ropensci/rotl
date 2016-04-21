@@ -105,8 +105,7 @@
 ##' res <- tol_about()
 ##' tax_sources(res)
 ##' ott_id(res)
-##' studies <- source_list(tol_about(include_source_list=TRUE))
-##' }
+##' studies <- source_list(tol_about(include_source_list=TRUE))}
 ##' @rdname tol_about
 ##' @export
 tol_about <- function(include_source_list=FALSE, ...) {
@@ -265,8 +264,8 @@ source_list.tol_summary <- .source_list
 ##'         }
 ##'
 ##'     \item {source_id_map} {Named list of lists. Names correspond to the
-##'     sourceid keys used in the 4 properties above. Source trees will have the
-##'     following properties:}
+##'     sourceid keys used in the support/conflict properties of the \code{mrca} 
+##'     list above. Source trees will have the following properties:}
 ##'
 ##'         \itemize{
 ##'             \item {git_sha} {The git SHA identifying a particular source
@@ -288,8 +287,7 @@ source_list.tol_summary <- .source_list
 ##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ##' ott_id(birds_mrca)
-##' tax_sources(birds_mrca)
-##' }
+##' tax_sources(birds_mrca)}
 ##' @rdname tol_mrca
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
@@ -355,15 +353,15 @@ ott_id.tol_mrca <- tol_mrca_method_factory(.tax_ott_id)
 source_list.tol_mrca <- .source_list
 
 
-##' Extract a subtree from the synthetic tree from an ott id.
+##' Extract a subtree from the synthetic tree from an Open Tree node id.
 ##'
 ##' @title Extract a subtree from the synthetic tree
 ##'
 ##' @details Given a node, return the subtree of the synthetic tree descended
-##'     from that node, either in newick or ArguSON format. The start node may
-##'     be specified using either a node id or an ott id, but not both. If the
-##'     specified node is not in the synthetic tree an error will be returned.
-##'     There is a size limit of 25000 tips for this method.
+##'     from that node. The start node may be specified using either a node id
+##'     or an ott id, but not both. If the specified node is not in the
+##'     synthetic tree an error will be returned. There is a size limit of
+##'     25000 tips for this method.
 ##'
 ##' @param ott_id Numeric. The ott id of the node in the tree that should
 ##'     serve as the root of the tree returned.
@@ -372,7 +370,7 @@ source_list.tol_mrca <- .source_list
 ##' @param label_format Character. Defines the label type; one of
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
 ##'      \dQuote{\code{name_and_id}} (the default).
-##' @param file if specified, the function will write the subtree to a
+##' @param file If specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
@@ -383,9 +381,8 @@ source_list.tol_mrca <- .source_list
 ##'     whether the file was successfully created.
 ##'
 ##' @examples
-##'    \dontrun{
-##'       res <- tol_subtree(ott_id=241841)
-##'     }
+##' \dontrun{
+##' res <- tol_subtree(ott_id=241841)}
 ##' @export
 tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
                         file, ...) {
@@ -435,8 +432,7 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
 ##' tree_file <- tempfile(fileext=".tre")
 ##' tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-##'                     file=tree_file)
-##' }
+##'                     file=tree_file)}
 ##' @export
 tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
                                 file, ...) {
@@ -456,7 +452,7 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##' Strip OTT ids from tip labels
 ##' @param tip_labels a character vector containing tip labels (most likely
 ##'     the \code{tip.label} element from a tree returned by
-##'     \code{\link{tol_induced_subtree}}
+##'     \code{\link{tol_induced_subtree}}).
 ##'
 ##' @return A character vector containing the contents of \code{tip_labels}
 ##'     with any OTT ids removed.
@@ -467,8 +463,7 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##' tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 102710))
 ##' tr$tip.label %in% genera
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
-##' tr$tip.label %in% genera
-##'}
+##' tr$tip.label %in% genera}
 ##'@export
 strip_ott_ids <- function(tip_labels) {
     sub("_ott\\d+$", "", tip_labels)
@@ -577,8 +572,7 @@ strip_ott_ids <- function(tip_labels) {
 ##' tax_rank(birds)
 ##' ott_id(birds)
 ##' tax_lineage(birds)
-##' tol_lineage(birds)
-##' }
+##' tol_lineage(birds)}
 ##' @export
 tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...) {
     res <- .tol_node_info(ott_id=ott_id, node_id=node_id,

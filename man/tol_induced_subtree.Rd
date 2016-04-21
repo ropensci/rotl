@@ -45,7 +45,6 @@ induced on the draft tree by the set of identified nodes.
 res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
 tree_file <- tempfile(fileext=".tre")
 tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-                    file=tree_file)
-}
+                    file=tree_file)}
 }
 
