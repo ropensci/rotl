@@ -7,16 +7,16 @@
 strip_ott_ids(tip_labels, remove_underscores = FALSE)
 }
 \arguments{
-\item{tip_labels}{a character vector containing tip labels (most likely
-the \code{tip.label} element from a tree returned by
+\item{tip_labels}{a character vector containing tip labels (most
+likely the \code{tip.label} element from a tree returned by
 \code{\link{tol_induced_subtree}}}
 
-\item{remove_underscores}{logical (defaults to FALSE). If set to TRUE 
-underscores in tip labels are converted to spaces}
+\item{remove_underscores}{logical (defaults to FALSE). If set to
+TRUE underscores in tip labels are converted to spaces}
 }
 \value{
-A character vector containing the contents of \code{tip_labels}
-    with any OTT ids removed.
+A character vector containing the contents of
+    \code{tip_labels} with any OTT ids removed.
 }
 \description{
 Strip OTT ids from tip labels
@@ -27,7 +27,6 @@ genera <- c("Perdix", "Dendroica", "Cinclus", "Selasphorus", "Struthio")
 tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 102710))
 tr$tip.label \%in\% genera
 tr$tip.label <- strip_ott_ids(tr$tip.label)
-tr$tip.label \%in\% genera
-}
+tr$tip.label \%in\% genera}
 }
 

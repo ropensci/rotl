@@ -114,8 +114,7 @@ Summary information about the current draft tree of life,
 res <- tol_about()
 tax_sources(res)
 ott_id(res)
-studies <- source_list(tol_about(include_source_list=TRUE))
-}
+studies <- source_list(tol_about(include_source_list=TRUE))}
 }
 \seealso{
 \code{\link{source_list}} to explore the list of studies

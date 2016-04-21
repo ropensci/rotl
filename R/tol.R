@@ -105,8 +105,7 @@
 ##' res <- tol_about()
 ##' tax_sources(res)
 ##' ott_id(res)
-##' studies <- source_list(tol_about(include_source_list=TRUE))
-##' }
+##' studies <- source_list(tol_about(include_source_list=TRUE))}
 ##' @rdname tol_about
 ##' @export
 tol_about <- function(include_source_list=FALSE, ...) {
@@ -119,16 +118,16 @@ tol_about <- function(include_source_list=FALSE, ...) {
 ##' @export
 print.tol_summary <- function(x, ...) {
     cat("\nOpenTree Synthetic Tree of Life.\n\n")
-    cat("\tTree version: ", x$synth_id, "\n", sep="")
-    cat("\tTaxonomy version: ", x$taxonomy, "\n", sep="")
-    cat("\tConstructed on: ", x$date_created, "\n", sep="")
-    cat("\tNumber of terminal taxa: ", x$root$num_tips, "\n", sep="")
-    cat("\tNumber of source trees: ", x$num_source_trees, "\n", sep="")
-    cat("\tNumber of source studies: ", x$num_source_studies, "\n", sep = "")
-    cat("\tSource list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
-    cat("\tRoot taxon: ", x$root$taxon$name, "\n", sep="")
-    cat("\tRoot ott_id: ", x$root$taxon$ott_id, "\n", sep="")
-    cat("\tRoot node_id: ", x$root$node_id, "\n", sep="")
+    cat("Tree version: ", x$synth_id, "\n", sep="")
+    cat("Taxonomy version: ", x$taxonomy, "\n", sep="")
+    cat("Constructed on: ", x$date_created, "\n", sep="")
+    cat("Number of terminal taxa: ", x$root$num_tips, "\n", sep="")
+    cat("Number of source trees: ", x$num_source_trees, "\n", sep="")
+    cat("Number of source studies: ", x$num_source_studies, "\n", sep = "")
+    cat("Source list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
+    cat("Root taxon: ", x$root$taxon$name, "\n", sep="")
+    cat("Root ott_id: ", x$root$taxon$ott_id, "\n", sep="")
+    cat("Root node_id: ", x$root$node_id, "\n", sep="")
 }
 
 tol_about_method_factory <- function(.f) {
@@ -192,20 +191,126 @@ source_list.tol_summary <- .source_list
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
-##' @return A list
+##' @return An invisible list of the MRCA node properties:
+##'
+##' \itemize{
+##'
+##'     \item {mrca} {List of node properties.}
+##'
+##'     \itemize{
+##'         \item {node_id} {String. The canonical identifier of the node.}
+##'
+##'         \item {num_tips} {Numeric. The number of descendent tips.}
+##'
+##'         \item {taxon} {A list of taxonomic properties. Only returned if
+##'         the queried node is a taxon. (If the node is not a taxon, a
+##'         \code{nearest_taxon} list is returned (see below)).}
+##'
+##'             \itemize{
+##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'
+##'                 \item {name} {String. The taxonomic name of the queried node.}
+##'
+##'                 \item {unique_name} {String. The string that uniquely
+##'                 identifies the taxon in OTT.}
+##'
+##'                 \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'
+##'                \item {tax_sources} {List. A list of identifiers for taxonomic
+##'                 sources, such as other taxonomies, that define taxa judged
+##'                 equivalent to this taxon.}
+##'             }
+##'
+##'         The following properties list support/conflict for the node across
+##'         synthesis source trees. All properties involve sourceid keys and
+##'         nodeid values (see \code{source_id_map} below) Not all properties are
+##'         are present for every node.
+##'
+##'         \item {partial_path_of} {List. The edge below this synthetic tree node
+##'         is compatible with the edge below each of these input tree nodes (one
+##'         per tree). Each returned element is reported as sourceid:nodeid.}
+##'
+##'         \item {supported_by} {List. Input tree nodes (one per tree) that support
+##'         this synthetic tree node. Each returned element is reported as
+##'         sourceid:nodeid.}
+##'
+##'         \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
+##'         to this synthetic tree node (via an exact mapping, or the input tree
+##'         terminal may be the only terminal descended from this synthetic tree node.
+##'         Each returned element is reported as sourceid:nodeid.}
+##'
+##'         \item {conflicts_with} {Named list of lists. Names correspond to
+##'         sourceid keys. Each list contains input tree node ids (one or more per tree)
+##'         that conflict with this synthetic node.}
+##'     }
+##'
+##'     \item {nearest_taxon} {A list of taxonomic properties of the nearest rootward
+##'     taxon node to the MRCA node. Only returned if the MRCA node is a not taxon
+##'     (otherwise the \code{taxon} list above is returned).}
+##'
+##'         \itemize{
+##'             \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'
+##'             \item {name} {String. The taxonomic name of the queried node.}
+##'
+##'             \item {unique_name} {String. The string that uniquely
+##'             identifies the taxon in OTT.}
+##'
+##'             \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'
+##'            \item {tax_sources} {List. A list of identifiers for taxonomic
+##'             sources, such as other taxonomies, that define taxa judged
+##'             equivalent to this taxon.}
+##'         }
+##'
+##'     \item {source_id_map} {Named list of lists. Names correspond to the
+##'     sourceid keys used in the support/conflict properties of the \code{mrca}
+##'     list above. Source trees will have the following properties:}
+##'
+##'         \itemize{
+##'             \item {git_sha} {The git SHA identifying a particular source
+##'             version.}
+##'
+##'             \item {tree_id} {The tree id associated with the study id used.}
+##'
+##'             \item {study_id} {The study identifier. Will typically include
+##'             a prefix ("pg_" or "ot_").}
+##'         }
+##'     The only sourceid that does not correspond to a source tree is the taxonomy,
+##'     which will have the name "ott"+`taxonomy_version`, and the value is the
+##'     ott_id of the taxon in that taxonomy version. "Taxonomy" will only ever
+##'     appear in \code{supported_by}.
+##'
+##'    }
 ##'
 ##' @examples
 ##' \dontrun{
 ##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
 ##' ott_id(birds_mrca)
-##' tax_sources(birds_mrca)
-##' }
+##' tax_sources(birds_mrca)}
 ##' @rdname tol_mrca
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
     res <- .tol_mrca(ott_ids=ott_ids, node_ids=node_ids, ...)
     class(res) <- c("tol_mrca", class(res))
     return(res)
+}
+
+##' @export
+print.tol_mrca <- function(x, ...) {
+    cat("\nOpenTree MRCA node.\n\n")
+    cat("Node id: ", x$mrca$node_id, "\n", sep="")
+    cat("Number of terminal descendants: ", x$mrca$num_tips, "\n", sep="")
+    if (is_taxon(x[["mrca"]][["taxon"]])) {
+        cat("Is taxon: TRUE\n")
+        cat("Name: ", x$mrca$taxon$name, "\n", sep="")
+        cat("ott id: ", x$mrca$taxon$ott_id, "\n", sep="")
+    } else {
+        cat("Is taxon: FALSE\n")
+        cat("Nearest taxon:\n")
+        cat("  Name: ", x$nearest_taxon$name, "\n", sep="")
+        cat("  ott id: ", x$nearest_taxon$ott_id, "\n", sep="")
+    }
 }
 
 tol_mrca_method_factory <- function(.f) {
@@ -248,15 +353,15 @@ ott_id.tol_mrca <- tol_mrca_method_factory(.tax_ott_id)
 source_list.tol_mrca <- .source_list
 
 
-##' Extract a subtree from the synthetic tree from an ott id.
+##' Extract a subtree from the synthetic tree from an Open Tree node id.
 ##'
 ##' @title Extract a subtree from the synthetic tree
 ##'
 ##' @details Given a node, return the subtree of the synthetic tree descended
-##'     from that node, either in newick or ArguSON format. The start node may
-##'     be specified using either a node id or an ott id, but not both. If the
-##'     specified node is not in the synthetic tree an error will be returned.
-##'     There is a size limit of 25000 tips for this method.
+##'     from that node. The start node may be specified using either a node id
+##'     or an ott id, but not both. If the specified node is not in the
+##'     synthetic tree an error will be returned. There is a size limit of
+##'     25000 tips for this method.
 ##'
 ##' @param ott_id Numeric. The ott id of the node in the tree that should
 ##'     serve as the root of the tree returned.
@@ -265,7 +370,7 @@ source_list.tol_mrca <- .source_list
 ##' @param label_format Character. Defines the label type; one of
 ##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
 ##'      \dQuote{\code{name_and_id}} (the default).
-##' @param file if specified, the function will write the subtree to a
+##' @param file If specified, the function will write the subtree to a
 ##'     file in newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
@@ -276,9 +381,8 @@ source_list.tol_mrca <- .source_list
 ##'     whether the file was successfully created.
 ##'
 ##' @examples
-##'    \dontrun{
-##'       res <- tol_subtree(ott_id=81461)
-##'     }
+##' \dontrun{
+##' res <- tol_subtree(ott_id=241841)}
 ##' @export
 tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
                         file, ...) {
@@ -328,8 +432,7 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
 ##' tree_file <- tempfile(fileext=".tre")
 ##' tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-##'                     file=tree_file)
-##' }
+##'                     file=tree_file)}
 ##' @export
 tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
                                 file, ...) {
@@ -347,13 +450,13 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 
 
 ##' Strip OTT ids from tip labels
-##' @param tip_labels a character vector containing tip labels (most likely
-##'     the \code{tip.label} element from a tree returned by
+##' @param tip_labels a character vector containing tip labels (most
+##'     likely the \code{tip.label} element from a tree returned by
 ##'     \code{\link{tol_induced_subtree}}
-##' @param remove_underscores logical (defaults to FALSE). If set to TRUE 
-##' underscores in tip labels are converted to spaces
-##' @return A character vector containing the contents of \code{tip_labels}
-##'     with any OTT ids removed.
+##' @param remove_underscores logical (defaults to FALSE). If set to
+##'     TRUE underscores in tip labels are converted to spaces
+##' @return A character vector containing the contents of
+##'     \code{tip_labels} with any OTT ids removed.
 ##'
 ##' @examples
 ##' \dontrun{
@@ -361,8 +464,7 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##' tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 102710))
 ##' tr$tip.label %in% genera
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
-##' tr$tip.label %in% genera
-##'}
+##' tr$tip.label %in% genera}
 ##'@export
 strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
     stripped <- sub("_ott\\d+$", "", tip_labels)
@@ -395,8 +497,8 @@ strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
 ##' @param ... additional arguments to customize the API call (see
 ##'     ?rotl for more information)
 ##'
-##' @return \code{tol_node_info} returns a list of summary information
-##'     about the queried node.
+##' @return \code{tol_node_info} returns an invisible list of summary
+##'     information about the queried node:
 ##'
 ##' \itemize{
 ##'
@@ -475,8 +577,7 @@ strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
 ##' tax_rank(birds)
 ##' ott_id(birds)
 ##' tax_lineage(birds)
-##' tol_lineage(birds)
-##' }
+##' tol_lineage(birds)}
 ##' @export
 tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...) {
     res <- .tol_node_info(ott_id=ott_id, node_id=node_id,
@@ -489,6 +590,21 @@ tol_node_method_factory <- function(.f) {
     function(tax, ...) {
         setNames(list(.f(tax[["taxon"]])),
                 .tax_unique_name(tax[["taxon"]]))
+    }
+}
+
+##' @export
+print.tol_node <- function(x, ...) {
+    cat("\nOpenTree node.\n\n")
+    cat("Node id: ", x$node_id, "\n", sep="")
+    cat("Number of terminal descendants: ", x$num_tips, "\n", sep="")
+    if (is_taxon(x[["taxon"]])) {
+        cat("Is taxon: TRUE\n")
+        cat("Name: ", x$taxon$name, "\n", sep="")
+        cat("Rank: ", x$taxon$rank, "\n", sep="")
+        cat("ott id: ", x$taxon$ott_id, "\n", sep="")
+    } else {
+        cat("Is taxon: FALSE\n")
     }
 }
 
