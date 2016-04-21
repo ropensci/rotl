@@ -86,7 +86,7 @@ test_that("error generated if invalid ott id", {
 
 test_that("error generated if more than 1 value for row_number is provided", {
     skip_on_cran()
-    expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3, 4)),
+    expect_error(rotl:::check_args_match_names(rsp, row_number = c(1, 2, 3)),
                  "You must supply a single element")
 })
 
@@ -111,6 +111,8 @@ context("inspect.match_names")
 
  if (identical(Sys.getenv("NOT_CRAN"), "true")) {
      rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
+     expect_warning(rsp_na <- tnrs_match_names(names = c("diadema", "fluffy",
+                                                         "hemichordata", "escherichia")))
  }
 
 
@@ -132,6 +134,31 @@ test_that("correct data is being returned when asked to lookup by row number", {
     expect_true(all(tt %in% c(4930522, 631176)))
 })
 
+## with missing data
+
+test_that("correct data is being returned when asked to lookup by taxon name (with missing data)", {
+    skip_on_cran()
+    tt <- inspect(rsp_na, taxon_name = "diadema")[["ott_id"]]
+    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(is.na(inspect(rsp_na, taxon_name = "fluffy")[["ott_id"]]))
+})
+
+test_that("correct data is being returned when asked to lookup by ott_id (with missing data)", {
+    skip_on_cran()
+    tt <- inspect(rsp_na, ott_id = 631176)[["ott_id"]]
+    expect_true(all(tt %in% c(4930522, 631176)))
+})
+
+test_that("correct data is being returned when asked to lookup by row number (with missing data)", {
+    skip_on_cran()
+    tt <- inspect(rsp_na, row_number = 1)[["ott_id"]]
+    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(is.na(inspect(rsp_na, row_number = 2)[["ott_id"]]))
+})
+
+
+
+
 ############################################################################
 ## synonyms.match_names                                                   ##
 ############################################################################
@@ -141,21 +168,17 @@ context("list_synonym_match_names")
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tax_rsp <- c("Holothuria", "Diadema", "Fromia")
     rsp <- tnrs_match_names(names = tax_rsp)
+    tax_rsp_na <- c("Holothuria", "Diadema", "fluffy", "Fromia")
+    expect_warning(rsp_na <- tnrs_match_names(names = tax_rsp_na))
 }
 
 
-test_that("synonyms with only_current = FALSE", {
+test_that("synonyms", {
     skip_on_cran()
-    tt <- synonyms(rsp, only_current = FALSE)
+    tt <- synonyms(rsp)
     expect_true(inherits(tt, "list"))
-    expect_equal(names(tt), tax_rsp)
-})
-
-test_that("synonyms with only_current = TRUE", {
-    skip_on_cran()
-    tt <- synonyms(rsp, only_current = TRUE)
-    expect_true(inherits(tt, "list"))
-    expect_equal(names(tt), rsp$unique_name)
+    expect_equal(names(tt),
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
 })
 
 
@@ -187,6 +210,42 @@ test_that("correct synonyms are being returned when asked to look up by ott id",
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("Halodeima", tt[["Holothuria"]])))
 })
+
+## with missing data
+
+test_that("synonyms", {
+    skip_on_cran()
+    tt <- synonyms(rsp_na)
+    expect_true(inherits(tt, "list"))
+    expect_equal(names(tt),
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
+})
+
+
+test_that("correct synonyms are being returned when asked to look up by taxon name", {
+    skip_on_cran()
+    tt <- synonyms(rsp_na, taxon_name = "holothuria")
+    expect_true(any(grepl("^Holothuria", names(tt))))
+    expect_true(is.na(synonyms(rsp_na, taxon_name = "fluffy")[[1]]))
+})
+
+
+test_that("correct synonyms are being returned when asked to look up by row number", {
+    skip_on_cran()
+    tt <- synonyms(rsp_na, row_number = 1)
+    expect_true(any(grepl("^Holothuria", names(tt))))
+    expect_true(any(grepl("Halodeima", tt[["Holothuria"]])))
+    expect_true(is.na(synonyms(rsp_na, row_number = 3)[[1]]))
+})
+
+
+test_that("correct synonyms are being returned when asked to look up by ott id", {
+    skip_on_cran()
+    tt <- synonyms(rsp_na, ott_id = 5004030)
+    expect_true(any(grepl("^Holothuria", names(tt))))
+    expect_true(any(grepl("Halodeima", tt[["Holothuria"]])))
+})
+
 
 ############################################################################
 ## update.match_names                                                     ##
@@ -241,9 +300,16 @@ test_that("it works correctly when providing a new row number", {
 test_that("it works correctly when providing a new ott id", {
     skip_on_cran()
     new_rsp <- update(rsp, row_number = 2,
-                      new_ott_id = 631176)
+                      new_ott_id = 4930522)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "631176")
+                 "4930522")
+})
+
+test_that("it produces warning when trying to update with unmatched name", {
+    skip_on_cran()
+    expect_warning(new_rsp <- update(rsp_na, row_number = 3, new_row_number = 1))
+    expect_identical(new_rsp, rsp_na)
+
 })
 
 
@@ -259,19 +325,12 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("flags with no arguments and only_current = FALSE", {
+test_that("flags with no arguments", {
     skip_on_cran()
-    flags_rsp <- flags(rsp, only_current = FALSE)
+    flags_rsp <- flags(rsp)
     expect_equal(length(flags_rsp), 5)
-    expect_equivalent(sapply(flags_rsp, function(x) sapply(x, length)),
+    expect_equivalent(sapply(flags_rsp, length),
                       c(2, 3, 3, 0, 0))
-})
-
-test_that("flags with no arguments and only_current = TRUE", {
-    skip_on_cran()
-    flags_rsp <- flags(rsp, only_current = TRUE)
-    expect_equal(length(flags_rsp), 5)
-    expect_equivalent(sapply(flags_rsp, length),  c(2, 3, 3, 0, 0))
 })
 
 test_that("flags with row number", {
@@ -317,19 +376,13 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     rsp <- tnrs_match_names(tax_rsp)
 }
 
-test_that("ott_id with no arguments and only_current=FALSE", {
+test_that("ott_id with no arguments", {
     skip_on_cran()
-    expect_true(inherits(ott_id(rsp, only_current = FALSE), "list"))
-    expect_equal(names(ott_id(rsp, only_current = FALSE)), tax_rsp)
-    expect_equal(ott_id(rsp, only_current = FALSE)[["Holothuria"]][[1]], 5004030)
+    expect_true(inherits(ott_id(rsp), "list"))
+    expect_equal(names(ott_id(rsp)), tax_rsp)
+    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 5004030)
 })
 
-test_that("ott_id with no arguments and only_current=TRUE", {
-    skip_on_cran()
-    expect_true(inherits(ott_id(rsp, only_current = TRUE), "integer"))
-    expect_equal(names(ott_id(rsp, only_current = TRUE)), rsp$unique_name)
-    expect_equal(unname(ott_id(rsp, only_current = TRUE)[4]), 5004030)
-})
 
 test_that("ott_id with row number", {
     skip_on_cran()

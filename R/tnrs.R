@@ -27,7 +27,9 @@
 ##'
 ##'
 ##' @title Match names to the Open Tree Taxonomy
-##' @param names taxon names to be queried (character vector)
+##' @param names taxon names to be queried. Currently limited to
+##'     10,000 names for exact matches and 2,500 names for approximate
+##'     matches (character vector)
 ##' @param context_name name of the taxonomic context to be searched
 ##'     (length-one character vector). Must match (case sensitive) one
 ##'     of the values returned by \code{\link{tnrs_contexts}}.
@@ -35,13 +37,13 @@
 ##'     to perform approximate string (a.k.a. \dQuote{fuzzy})
 ##'     matching. Using \code{FALSE} will greatly improve
 ##'     speed. Default, however, is \code{TRUE}.
-##' @param ids An array of ids to use for identifying names. These
+##' @param ids A vector of ids to use for identifying names. These
 ##'     will be assigned to each name in the names array. If ids is
 ##'     provided, then ids and names must be identical in length.
-##' @param include_deprecated A boolean indicating whether or not to
-##'     include deprecated taxa in the search.
-##' @param include_dubious Whether to include so-called 'dubious'
-##'     taxa--those which are not accepted by OTT.
+##' @param include_suppressed Ordinarily, some quasi-taxa, such as
+##'     incertae sedis buckets and other non-OTUs, are suppressed from
+##'     TNRS results. If this parameter is true, these quasi-taxa are
+##'     allowed as possible TNRS results.
 ##' @param ...  additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @return A data frame summarizing the results of the query. The
@@ -58,35 +60,41 @@
 ##' @importFrom stats setNames
 ##' @export
 tnrs_match_names <- function(names = NULL, context_name = NULL,
-                             do_approximate_matching = TRUE,
-                             ids = NULL, include_deprecated = FALSE,
-                             include_dubious = FALSE, ...) {
+                             do_approximate_matching = TRUE, ids = NULL,
+                             include_suppressed = FALSE, ...) {
 
     if (!is.null(context_name) &&
         !context_name %in% unlist(tnrs_contexts(...))) {
-        stop("The \'context_name\' is not valid. Check possible values using tnrs_contexts()")
+        stop("The ", sQuote("context_name"),
+             " is not valid. Check possible values using tnrs_contexts()")
     }
 
     res <- .tnrs_match_names(names = names, context_name = context_name,
                              do_approximate_matching = do_approximate_matching,
-                             ids = ids, include_deprecated = include_deprecated,
-                             include_dubious = include_dubious, ...)
+                             ids = ids, include_suppressed = include_suppressed,
+                             ...)
 
     check_tnrs(res)
-    summary_match <- build_summary_match(res, res_id = seq_along(res[["results"]]),
-                                         match_id = 1)
+    summary_match <- build_summary_match(res,
+                                         res_id = seq_along(res[["results"]]),
+                                         match_id = 1, initial_creation = TRUE)
 
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
-    summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
+    summary_match <- summary_match[match(tolower(names),
+                                         summary_match$search_string), ]
 
-    summary_match[["approximate_match"]] <- convert_to_logical(summary_match[["approximate_match"]])
-    summary_match[["is_synonym"]] <- convert_to_logical(summary_match[["is_synonym"]])
-    summary_match[["is_deprecated"]] <- convert_to_logical(summary_match[["is_deprecated"]])
+    summary_match[["approximate_match"]] <-
+        convert_to_logical(summary_match[["approximate_match"]])
+    summary_match[["is_synonym"]] <-
+        convert_to_logical(summary_match[["is_synonym"]])
+    summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
 
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
+    attr(summary_match, "has_original_match") <-
+        !is.na(summary_match[["number_matches"]])
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
 }
@@ -104,33 +112,44 @@ check_tnrs <- function(req) {
     if (length(req$results) < 1) {
         stop("No matches for any of the provided taxa")
     }
-    if (length(req$unmatched_name_ids)) {
-        warning(paste(req$unmatched_name_ids, collapse=", "), " are not matched")
+    if (length(req[["unmatched_names"]]) > 0) {
+        warning(paste(req$unmatched_names, collapse=", "), " are not matched")
     }
 }
 
-tnrs_columns <- c("search_string" = "search_string",
-                  "unique_name" = "unique_name",
-                  "approximate_match" = "is_approximate_match",
-                  "ott_id" = "ot:ottId",
-                  "is_synonym" = "is_synonym",
-                  "is_deprecated" = "is_deprecated")
+
+tnrs_columns <- list(
+    "search_string" = function(x) x[["search_string"]],
+    "unique_name" = function(x) .tax_unique_name(x[["taxon"]]),
+    "approximate_match" = function(x) x[["is_approximate_match"]],
+    "ott_id" = function(x) .tax_ott_id(x[["taxon"]]),
+    "is_synonym" = function(x) x[["is_synonym"]],
+    "flags" = function(x) paste(.tax_flags(x[["taxon"]]), collapse = ", ")
+)
 
 summary_row_factory <- function(res, res_id, match_id, columns = tnrs_columns) {
     res_address <- res[["results"]][[res_id]][["matches"]][[match_id]]
-    ret <- sapply(columns, function(cols) res_address[[cols]])
-    nMatch <- length(res[["results"]][[res_id]][["matches"]])
-    c(ret, number_matches = nMatch)
+    ret <- sapply(columns, function(f) f(res_address))
+    n_match <- length(res[["results"]][[res_id]][["matches"]])
+    c(ret, number_matches = n_match)
 }
 
-build_summary_match <- function(res, res_id, match_id = NULL) {
+build_summary_match <- function(res, res_id, match_id = NULL, initial_creation) {
+
+    build_empty_row <- function(x) {
+        no_match_row <- stats::setNames(
+            rep(NA, length(tnrs_columns) + 1),
+            c(names(tnrs_columns), "number_matches"))
+        no_match_row[1] <- x
+        no_match_row
+    }
 
     if (length(res_id) > 1 &&
        (!is.null(match_id) && length(match_id) > 1)) {
         stop("Something is wrong. Please contact us.")
     }
 
-    build_summary_row <- lapply(res_id, function(rid) {
+    build_summary_row <- function(rid) {
         if (is.null(match_id)) {
             match_id <- seq_len(length(res[["results"]][[rid]][["matches"]]))
         }
@@ -140,30 +159,26 @@ build_summary_match <- function(res, res_id, match_id = NULL) {
         if (identical(length(match_id), 1L)) {
             unlist(res)
         } else res
-    })
+    }
+
+    summary_row <- lapply(res_id, build_summary_row)
 
     if (identical(length(res_id), 1L)) {
-        build_summary_row <- unlist(build_summary_row,
-                                    recursive = FALSE)
+        summary_row <- unlist(summary_row, recursive = FALSE)
     }
 
     ## Needed if only 1 row returned
-    if (!inherits(build_summary_row, "list")) {
-        build_summary_row <- list(build_summary_row)
+    if (!inherits(summary_row, "list")) {
+        summary_row <- list(summary_row)
     }
 
     ## Add potential unmatched names
-    if (length(res[["unmatched_name_ids"]])) {
-        no_match <- lapply(res[["unmatched_name_ids"]], function(x) {
-            no_match_row <- stats::setNames(rep(NA, length(tnrs_columns) + 1),
-                                     c(tnrs_columns, "number_matches"))
-            no_match_row[1] <- x
-            no_match_row
-        })
-        build_summary_row <- c(build_summary_row, no_match)
+    if (initial_creation && length(res[["unmatched_names"]])) {
+        no_match <- lapply(res[["unmatched_names"]], build_empty_row)
+        summary_row <- c(summary_row, no_match)
     }
 
-    summary_match <- do.call("rbind", build_summary_row)
+    summary_match <- do.call("rbind", summary_row)
     summary_match <- data.frame(summary_match, stringsAsFactors=FALSE)
     names(summary_match) <- c(names(tnrs_columns), "number_matches")
     summary_match
@@ -200,11 +215,12 @@ print.tnrs_contexts <- function(x, ...) {
     lapply(x, function(t) {
         res <- unlist(t)
         cat("  ", res[1], "\n")
-        if (length(res) > 1)
-            lapply(seq(2, length(t), by = 5), function(l) {
-                m <- ifelse(l + 5 <= length(t), l+5, length(t))
-                cat("     ", paste(t[l:m], collapse = ", "), "\n")
+        if (length(res) > 1) {
+            lapply(seq(2, length(res), by = 5), function(l) {
+                m <- ifelse(l + 5 <= length(res), l+4, length(res))
+                cat("     ", paste(res[l:m], collapse = ", "), "\n")
             })
+        }
     })
 }
 

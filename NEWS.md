@@ -1,4 +1,26 @@
+## rotl 3.0.0
+
+* Fix bug in `studies_find_studies`, the arguments `verbose` and `exact` were
+  ignored
+
+* Refactor how result of query is checked and parsed.
+
+* The argument `only_current` has been dropped for the methods associated with
+  objects returned by `tnrs_match_names`
+
+* New methods: `tax_sources`, `is_suppressed`, `tax_rank` (for class
+  `match_names`), `unique_name`, `name`.
+
+* Rename method `ott_taxon_name` to `tax_name` for consistency.
+
+* Rename method `synth_sources` and `study_list` to `source_list`.
+
+* New method `tax_lineage` to extract the higher taxonomy from an object
+  returned by `taxonomy_taxon_info` (initally suggested by Matt Pennell, #57).
+
 ## rotl 0.5.0
+
+* New vignette: `meta-analysis`
 
 * Added arguments `include_lineage` and `list_terminal_descendants` to
   `taxonomy_taxon()`
@@ -12,7 +34,8 @@
 
 * New utility function `strip_ott_ids` removes OTT id information from
   a character vector, making it easier to match tip labels in trees returned by
-  `tol_induced_subtree` to taxonomic names in other data sources.
+  `tol_induced_subtree` to taxonomic names in other data sources. This function
+  can also remove underscores from the taxon names.
 
 * New method `list_trees` returns a list of tree ids associated with
   studies. The function takes the output of `studies_find_studies` or

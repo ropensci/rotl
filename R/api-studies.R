@@ -21,14 +21,14 @@
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
-    	    stop("Must supply a \'value\' argument")
+        stop("Must supply a \'value\' argument")
     }
+    req_body$verbose <- jsonlite::unbox(verbose)
+    req_body$exact <- jsonlite::unbox(exact)
     res <- otl_POST(path="studies/find_studies/",
-                    body=c(req_body,
-                           jsonlite::unbox(verbose),
-                           jsonlite::unbox(exact)), ...)
-    cont <- httr::content(res)
-    return(cont)
+                    body=req_body,
+                    ...)
+    res
 }
 
 ##' @importFrom jsonlite unbox
@@ -44,28 +44,27 @@
     }
     req_body <- list()
     if (!is.null(property)) {
-    	    if (!is.character(property)) {
+        if (!is.character(property)) {
             stop("Argument \'property\' must be of class \"character\"")
         }
         req_body$property <- jsonlite::unbox(property)
     } else {
-    	    stop("Must supply a \'property\' argument")
+        stop("Must supply a \'property\' argument")
     }
     if (!is.null(value)) {
-    	    if (!is.character(value)) {
+        if (!is.character(value)) {
             stop("Argument \'value\' must be of class \"character\"")
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
-    	    stop("Must supply a \'value\' argument")
+        stop("Must supply a \'value\' argument")
     }
 
     res <- otl_POST(path="studies/find_trees/",
                     body=c(req_body,
                            jsonlite::unbox(verbose),
                            jsonlite::unbox(exact)), ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -73,8 +72,7 @@
 ## Return a list of properties that can be used to search studies and trees
 .studies_properties <- function() {
     res <- otl_POST(path="studies/properties/", body=list())
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -83,7 +81,7 @@
 .get_study <- function(study_id = NULL, format = c("", "nexus", "newick", "nexml", "json"),
                        ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
@@ -91,8 +89,7 @@
     res <- otl_GET(path=paste("study",
                               paste0(study_id, otl_formats(format)), sep="/"),
                    ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 
@@ -102,7 +99,7 @@
                             tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
                             ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
@@ -116,13 +113,12 @@
     tip_label <- paste0("/?tip_label=", tip_label)
     tree_file <- paste0(tree_id, otl_formats(format), tip_label)
     res <- otl_GET(path=paste("study", study_id, "tree", tree_file, sep="/"), ...)
-    cont <- httr::content(res)
-    return(cont)
+    res
 }
 
 ##' @importFrom httr content
 .get_study_meta <- function(study_id, ...) {
-    httr::content(otl_GET(path= paste("study", study_id, "meta", sep="/"), ...))
+    otl_GET(path= paste("study", study_id, "meta", sep="/"), ...)
 }
 
 
@@ -130,7 +126,7 @@
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
                                format=c("newick", "nexus", "nexml", "json"), ...) {
     if (is.null(study_id)) {
-    	    stop("Must supply a \'study_id\' argument")
+        stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
         stop("Argument \'study_id\' must be of class \"character\"")
     }
@@ -148,7 +144,7 @@
     format <- otl_formats(format)
     url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
     res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""), ...)
-    httr::content(res)
+    res
 }
 
 ### Let's not worry about those for now, as their results could be

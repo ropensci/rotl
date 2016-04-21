@@ -82,7 +82,18 @@ test_that("both property & value need to be provided for .studies_find_trees", {
                  "Must supply")
 })
 
+test_that("exact works as intended", {
+    skip_on_cran()
+    expect_equal(length(.studies_find_studies("ot:focalCladeOTTTaxonName",
+                                              "felidae", exact = TRUE)$matched_studies), 0)
+})
 
+
+test_that("exact works as intended", {
+    skip_on_cran()
+    expect_true(length(.studies_find_studies("ot:focalCladeOTTTaxonName",
+                                             "Felidae", exact = TRUE)$matched_studies) >= 1)
+})
 
 ############################################################################
 ## .get_study                                                             ##

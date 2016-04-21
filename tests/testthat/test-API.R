@@ -178,16 +178,18 @@ run_shared_test <- function(json_obj){
 }
 
 
-base_url <- "https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/"
-apis <- c("graph_of_life",
-          "studies",
-          "taxonomy",
-          "tree_of_life",
-          "tnrs"
-          )
-for(i in 1:length(apis)){
-    context( paste(apis[i], "API") )
-    test_text <- httr::GET(paste0(base_url, apis[i], ".json"))
-    test_description <- jsonlite::fromJSON(httr::content(test_text))
-    run_shared_test(test_description)
-}
+## if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+##     base_url <- "https://raw.githubusercontent.com/OpenTreeOfLife/shared-api-tests/master/"
+##     apis <- c("graph_of_life",
+##               "studies",
+##               "taxonomy",
+##               "tree_of_life",
+##               "tnrs"
+##               )
+##     for(i in 1:length(apis)){
+##         context( paste(apis[i], "API") )
+##         test_text <- httr::GET(paste0(base_url, apis[i], ".json"))
+##         test_description <- jsonlite::fromJSON(httr::content(test_text))
+##         run_shared_test(test_description)
+##     }
+## }

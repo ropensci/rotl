@@ -87,6 +87,7 @@ use `studies_find_trees` to do this search.
 ```{r taxon_count}
 studies_find_trees(property="ot:ottId", value="180195")
 ```
+
 Well... that's not very promising. We can repeat that process for all of the IDs
 to see if the other species are better represented.
 
@@ -95,6 +96,7 @@ to see if the other species are better represented.
 hits <- lapply(mu$ott_id, studies_find_trees, property="ot:ottId", detailed = FALSE)
 sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 ```
+
 OK, most of our species are not in any of the published trees available. You can
 help fix this sort of problem by [making sure you submit your published trees to
 Open Tree](https://tree.opentreeoflife.org/curator).
@@ -137,11 +139,9 @@ tr$tip.label %in% mu$ott_name
 ```
 
 Ok, now the tips are together we can make a new dataset. The `phylo4d()`
-functions matches tip lables to the row names of a `data.frame`, so let's make
+functions matches tip labels to the row names of a `data.frame`, so let's make
 a new dataset that contains just the relevant data and has row names to match
 the tree
-
-
 
 ```{r phylobase}
 library(phylobase)
@@ -199,7 +199,7 @@ A user could then use `rgbif` to find locality records using the gbif ID or
 
 ## What next
 
-The demonstration get's you to the point of visualizing your data in a
+The demonstration gets you to the point of visualizing your data in a
 phylogenetic context. But there's a lot more you do with this sort of data in R.
 For instance, you could use packages like `ape`, `caper`, `phytools` and
 `mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could

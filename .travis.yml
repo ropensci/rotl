@@ -85,7 +85,7 @@ r_github_packages:
    - fmichonneau/rncl
 
 after_success:
-   - Rscript -e 'library(covr); coveralls()'
+   - Rscript -e 'library(covr); package_coverage(function_exclusions="print\\."); package_coverage(function_exclusions="factory$"); codecov(); '
 
 notifications:
   slack:

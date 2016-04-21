@@ -18,10 +18,7 @@ with other R packages.
 The OTL API provides services to access:
 
 * the **Tree of Life** a.k.a. TOL (the synthetic tree): a single draft tree that is
-a combination of **the OTL taxonomy** and the **source trees** (studies)
-* the **Graph of Life** a.k.a. GOL: the neo4j graph database used to store and
-build the synthetic tree. It includes additional information (more nodes and
-edges) that is not in the TOL.
+  a combination of **the OTL taxonomy** and the **source trees** (studies)
 * the **Taxonomic name resolution services** a.k.a. TNRS: the methods for
   resolving taxonomic names to the internal identifiers used by the TOL and the
   GOL (the `ott ids`).
@@ -29,7 +26,7 @@ edges) that is not in the TOL.
   synthesis of the different taxonomies used as a backbone of the TOL when no
   studies are available.
 * the **Studies** containing the source trees used to build the TOL, and
-extracted from the scientific literature.
+  extracted from the scientific literature.
 
 In `rotl`, each of these services correspond to functions with different
 prefixes:
@@ -37,12 +34,12 @@ prefixes:
 | Service       | `rotl` prefix |
 |---------------|---------------|
 | Tree of Life  | `tol_`        |
-| Graph of Life | `gol_`        |
 | TNRS          | `tnrs_`       |
+| Taxonomy      | `taxonomy_`   |
 | Studies       | `studies_`    |
 
-`rotl` also provides a few other functions that can be used to extract relevant
-information from the objects returned by these functions.
+`rotl` also provides a few other functions and methods that can be used to
+extract relevant information from the objects returned by these functions.
 
 
 ## Demonstration of a basic workflow
@@ -52,9 +49,9 @@ get the relevant parts of the tree for these species. This is a two step
 process:
 
 1. the species names need to be matched to their `ott_id` (the Open Tree
-Taxonomy identifiers) using the Taxonomic name resolution services (TNRS)
+	Taxonomy identifiers) using the Taxonomic name resolution services (TNRS)
 1. these `ott_id` will then be used to retrieve the relevant parts of the Tree
-of Life.
+   of Life.
 
 ### Step 1: Matching taxonomy to the `ott_id`
 
@@ -144,16 +141,16 @@ And now our `resolved_names` data frame includes the taxon we want:
 
 ### How do I know that the taxa I'm asking for is the correct one?
 
-The function `taxonomy_taxon()` takes `ott_ids` as arguments and returns
+The function `taxonomy_taxon_info()` takes `ott_ids` as arguments and returns
 taxonomic information about the taxa. This output can be passed to some helpers
 functions to extract the relevant information. Let's illustrate this with our
 _Diadema_ example
 
 ```{r}
-diadema_info <- taxonomy_taxon(631176)
+diadema_info <- taxonomy_taxon_info(631176)
 tax_rank(diadema_info)
 synonyms(diadema_info)
-ott_taxon_name(diadema_info)
+tax_name(diadema_info)
 ```
 
 In some cases, it might also be useful to investigate the taxonomic tree
@@ -189,7 +186,7 @@ list of properties that can be used in the search.
 
 ```{r}
 furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
-furry_ids <- unlist(furry_studies$matched_studies)
+furry_ids <- furry_studies$study_ids
 ```
 
 Now that we know the `study_id`, we can ask for the meta data information
@@ -242,30 +239,32 @@ usually traditional higher-level taxa that have been found to be paraphyletic.
 
 For instance, if you wanted to fetch a tree relating the three birds that go
 into a [Turkducken](https://en.wikipedia.org/wiki/Turducken) you might search
-for the turkey, "duck" and chicken genera:
+for the turkey, duck, and chicken genera:
 
 ```{r}
 turducken <- c("Meleagris", "Anas", "Gallus")
 taxa <- tnrs_match_names(turducken, context="Animals")
 taxa
 ```
+So, we have IDs for each genus but those messages in the `flag` column look
+concerning. `BARREN` means these taxa have no descendants and
+`MAJOR_RANK_CONFLICT` refers to inconsitancies between the rank of these taxa
+and some of their relatives. For thtese reasons, _Meleagris_ and _Anas_ are not
+included in the synthetic tree.
 
-Looks good, we have IDS for each genus. But if we try to get a subtree from the
-Open Tree we get an error:
+If we tried to press on ahead with the IDs that we have, we'd get an
+error (because there are too few good IDs) or a tree with fewer tips that we had
+anticipated.
 
 ```{r, eval=FALSE}
 tr <- tol_induced_subtree(taxa$ott_id)
 ```
 
-What's going on? It turns out that _Meleagris_ and _Anas_ are not included in
-the synthetic tree (the first because of uncertainty about the rank for that
-name and the second because _Anas_ as normally defined is not monophyletic).
-
 The best way to avoid these problems is to specify complete species names
 (species being the lowest level of classification in the Open Tree taxonomy they
 are guaranteed to be monophyletic):
 
-```{r}
+```{r, fig.width=7, fig.height=4}
 turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
 taxa <- tnrs_match_names(turducken_spp, context="Animals")
 tr <- tol_induced_subtree(taxa$ott_id)
