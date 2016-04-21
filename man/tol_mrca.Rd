@@ -35,7 +35,97 @@ tol_mrca(ott_ids = NULL, node_ids = NULL, ...)
 \item{tax}{an object returned by \code{tol_mrca()}.}
 }
 \value{
-An invisible list of of the MRCA node properties
+An invisible list of the MRCA node properties:
+
+\itemize{
+
+    \item {mrca} {List of node properties.}
+    
+    \itemize{
+        \item {node_id} {String. The canonical identifier of the node.}
+
+        \item {num_tips} {Numeric. The number of descendent tips.}
+
+        \item {taxon} {A list of taxonomic properties. Only returned if
+        the queried node is a taxon. (If the node is not a taxon, a
+        \code{nearest_taxon} list is returned (see below)).}
+
+            \itemize{
+                \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+
+                \item {name} {String. The taxonomic name of the queried node.}
+
+                \item {unique_name} {String. The string that uniquely
+                identifies the taxon in OTT.}
+
+                \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+
+               \item {tax_sources} {List. A list of identifiers for taxonomic
+                sources, such as other taxonomies, that define taxa judged
+                equivalent to this taxon.}
+            }
+
+        The following properties list support/conflict for the node across
+        synthesis source trees. All properties involve sourceid keys and
+        nodeid values (see \code{source_id_map} below) Not all properties are
+        are present for every node.
+
+        \item {partial_path_of} {List. The edge below this synthetic tree node
+        is compatible with the edge below each of these input tree nodes (one
+        per tree). Each returned element is reported as sourceid:nodeid.}
+
+        \item {supported_by} {List. Input tree nodes (one per tree) that support
+        this synthetic tree node. Each returned element is reported as
+        sourceid:nodeid.}
+
+        \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
+        to this synthetic tree node (via an exact mapping, or the input tree
+        terminal may be the only terminal descended from this synthetic tree node.
+        Each returned element is reported as sourceid:nodeid.}
+
+        \item {conflicts_with} {Named list of lists. Names correspond to
+        sourceid keys. Each list contains input tree node ids (one or more per tree)
+        that conflict with this synthetic node.}
+    }
+
+    \item {nearest_taxon} {A list of taxonomic properties of the nearest rootward
+    taxon node to the MRCA node. Only returned if the MRCA node is a not taxon
+    (otherwise the \code{taxon} list above is returned).}
+
+        \itemize{
+            \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+
+            \item {name} {String. The taxonomic name of the queried node.}
+
+            \item {unique_name} {String. The string that uniquely
+            identifies the taxon in OTT.}
+
+            \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+
+           \item {tax_sources} {List. A list of identifiers for taxonomic
+            sources, such as other taxonomies, that define taxa judged
+            equivalent to this taxon.}
+        }
+
+    \item {source_id_map} {Named list of lists. Names correspond to the
+    sourceid keys used in the 4 properties above. Source trees will have the
+    following properties:}
+
+        \itemize{
+            \item {git_sha} {The git SHA identifying a particular source
+            version.}
+
+            \item {tree_id} {The tree id associated with the study id used.}
+
+            \item {study_id} {The study identifier. Will typically include
+            a prefix ("pg_" or "ot_").}
+        }
+    The only sourceid that does not correspond to a source tree is the taxonomy,
+    which will have the name "ott"+`taxonomy_version`, and the value is the
+    ott_id of the taxon in that taxonomy version. "Taxonomy" will only ever
+    appear in \code{supported_by}.
+
+   }
 }
 \description{
 Most Recent Common Ancestor for a set of nodes
