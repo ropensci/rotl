@@ -44,13 +44,16 @@ publisher's website. We can collect the data from using `fulltext` (with the
 papers DOI as input) and read it into memory with `gdata`:
 
 ```{r egg_data, cache=TRUE}
-suppressMessages(library(gdata))
 library(rotl)
 library(fulltext)
 
-doi <- "10.1111/jeb.12282"
-xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
-egg_data <- read.xls(xls = xl_file)
+if (require(library(readxl))) {
+    doi <- "10.1111/jeb.12282"
+    xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
+    egg_data <- read_excel(xl_file)
+} else {
+    egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"))
+}
 head(egg_data)
 ```
 
