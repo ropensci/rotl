@@ -105,11 +105,28 @@ Now we can get the tree with just those tips:
 
 
 ```r
-tr <- tol_induced_subtree(ott_ids=resolved_names$ott_id)
+tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/BZNyJTM.png)
+![plot of chunk get_tr](http://i.imgur.com/P55UOSa.png)
+
+The code above can be summarized in a single pipe:
+
+
+```r
+library(magrittr)
+## or expressed as a pipe:
+c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
+    tnrs_match_names %>%
+    ott_id %>%
+    tol_induced_subtree %>%
+    plot
+```
+
+![plot of chunk pipe](http://i.imgur.com/voU3EQA.png)
+
+
 
 ### Code of Conduct
 
