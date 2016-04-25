@@ -311,7 +311,8 @@ test_that("tol_node tax_lineage", {
     expect_true(nrow(tax_lineage(tol_lin)) > 1)
     expect_true(all(names(tax_lineage(tol_lin)) %in% c("rank",
                                                        "name",
-                                                       "unique_name")))
+                                                       "unique_name",
+                                                       "ott_id")))
     expect_true(any(grepl("no rank", tax_lineage(tol_lin)[["rank"]])))
     expect_true(any(grepl("cellular organisms", tax_lineage(tol_lin)[["name"]])))
 })

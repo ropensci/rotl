@@ -121,7 +121,7 @@ test_that("higher taxonomy method", {
     lg <- tax_lineage(taxonomy_taxon_info(tid, include_lineage = TRUE))
     expect_true(inherits(lg, "list"))
     expect_true(inherits(lg[[1]], "data.frame"))
-    expect_true(all(names(lg[[1]]) %in% c("rank", "name", "unique_name")))
+    expect_true(all(names(lg[[1]]) %in% c("rank", "name", "unique_name", "ott_id")))
     expect_true(any(grepl("no rank", lg[[1]][["rank"]])))
     expect_true(any(grep("life", lg[[1]][["name"]])))
 })

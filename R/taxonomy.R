@@ -307,7 +307,8 @@ get_lineage <- function(tax) {
 build_lineage <- function(x) {
         c("rank" = .tax_rank(x),
           "name" = .tax_name(x),
-          "unique_name" = .tax_unique_name(x))
+          "unique_name" = .tax_unique_name(x),
+          "ott_id" = .tax_ott_id(x))
 }
 
 check_lineage <- function(tax) {
