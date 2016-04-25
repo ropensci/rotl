@@ -6,3 +6,4 @@ tmp/
 ^CONDUCT\.md$
 ^cran-comments\.md$
 ^.projectile$
+revdep/
