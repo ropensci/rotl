@@ -72,6 +72,7 @@ test_that("tol_node tax_name", {
 ### ott_id() --------------------------------------------------------------------
 
 test_that("taxonomy_taxon_info with ott_id for tol_about", {
+    skip_on_cran()
     expect_equal(ott_id(req),
                  ott_id(taxonomy_taxon_info(ott_id(req))))
 })
@@ -82,6 +83,7 @@ test_that("taxonomy_taxon_info with ott_id for tol_about", {
 ## })
 
 test_that("tol_node_info with ott_id for tol_about", {
+    skip_on_cran()
     expect_equal(ott_id(req),
                  ott_id(tol_node_info(ott_id(req))))
 })
@@ -92,16 +94,19 @@ test_that("tol_node_info with ott_id for tol_about", {
 ## })
 
 test_that("tol_mrca with ott_id for tol_about", {
+    skip_on_cran()
     expect_equal(ott_id(req)[1],
                  ott_id(tol_mrca(ott_id(req)))[1])
 })
 
 test_that("tol_induced_subtree with ott_id for tol_about", {
+    skip_on_cran()
     expect_error(tol_induced_subtree(ott_id(req)),
                  "least two valid")
 })
 
 test_that("taxonomy_mrca with ott_id for tol_about", {
+    skip_on_cran()
     expect_equal(ott_id(req),
                  ott_id(taxonomy_mrca(ott_id(req))))
 })
@@ -254,22 +259,26 @@ test_that("methods for tol_mrca where the node is not a taxon", {
 ### ott_id() --------------------------------------------------------------------
 
 test_that("taxonomy_taxon_info with ott_id for tol_mrca", {
+    skip_on_cran()
     expect_equal(ott_id(mono)[1],
                  ott_id(taxonomy_taxon_info(ott_id(mono)))[1])
 })
 
 test_that("taxonomy_subtree with ott_id for tol_mrca", {
+    skip_on_cran()
     tt <- taxonomy_subtree(ott_id = ott_id(mono))
     expect_true(length(tt[["tip_label"]]) > 10)
     expect_true(length(tt[["edge_label"]]) > 10)
 })
 
 test_that("tol_node_info with ott_id for tol_mrca", {
+    skip_on_cran()
     expect_equal(ott_id(mono)[1],
                  ott_id(tol_node_info(ott_id(mono)))[1])
 })
 
 test_that("tol_subtree with ott_id for tol_mrca", {
+    skip_on_cran()
     tt <- tol_subtree(ott_id = ott_id(mono))
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
@@ -277,16 +286,19 @@ test_that("tol_subtree with ott_id for tol_mrca", {
 })
 
 test_that("tol_mrca with ott_id for tol_mrca", {
+    skip_on_cran()
     expect_equal(ott_id(mono)[1],
                  ott_id(tol_mrca(ott_id(mono)))[1])
 })
 
 test_that("tol_induced_subtree with ott_id for tol_mrca", {
+    skip_on_cran()
     expect_error(tol_induced_subtree(ott_id(mono)),
                  "least two valid")
 })
 
 test_that("taxonomy_mrca with ott_id for tol_mrca", {
+    skip_on_cran()
     expect_equivalent(ott_id(mono),
                       ott_id(taxonomy_mrca(ott_id(mono))))
 })
@@ -399,22 +411,26 @@ test_that("tol_node tax_lineage", {
 ### ott_id() --------------------------------------------------------------------
 
 test_that("taxonomy_taxon_info with ott_id for tol_info", {
+    skip_on_cran()
     expect_equivalent(ott_id(tol_mono),
                  ott_id(taxonomy_taxon_info(ott_id(tol_mono))))
 })
 
 test_that("taxonomy_subtree with ott_id for tol_info", {
+    skip_on_cran()
     tt <- taxonomy_subtree(ott_id = ott_id(tol_mono))
     expect_true(length(tt[["tip_label"]]) > 10)
     expect_true(length(tt[["edge_label"]]) > 10)
 })
 
 test_that("tol_node_info with ott_id for tol_info", {
+    skip_on_cran()
     expect_equivalent(ott_id(tol_mono),
                  ott_id(tol_node_info(ott_id(tol_mono))))
 })
 
 test_that("tol_subtree with ott_id for tol_info", {
+    skip_on_cran()
     tt <- tol_subtree(ott_id = ott_id(tol_mono))
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
@@ -422,16 +438,19 @@ test_that("tol_subtree with ott_id for tol_info", {
 })
 
 test_that("tol_mrca with ott_id for tol_info", {
+    skip_on_cran()
     expect_equivalent(ott_id(tol_mono),
                  ott_id(tol_mrca(ott_id(tol_mono))))
 })
 
 test_that("tol_induced_subtree with ott_id for tol_info", {
+    skip_on_cran()
     expect_error(tol_induced_subtree(ott_id(tol_mono)),
                  "least two valid")
 })
 
 test_that("taxonomy_mrca with ott_id for tol_info", {
+    skip_on_cran()
     expect_equivalent(ott_id(tol_mono),
                       ott_id(taxonomy_mrca(ott_id(tol_mono))))
 })

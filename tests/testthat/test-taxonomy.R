@@ -129,36 +129,43 @@ test_that("higher taxonomy method", {
 ### ott_id() --------------------------------------------------------------------
 
 test_that("taxonomy_taxon_info with ott_id for tax_info", {
+    skip_on_cran()
     expect_equivalent(ott_id(tax_info),
                  ott_id(taxonomy_taxon_info(ott_id(tax_info))))
 })
 
 test_that("taxonomy_subtree with ott_id for tax_info", {
+    skip_on_cran()
     expect_error(taxonomy_subtree(ott_id = ott_id(tax_info)),
                  "supply one")
 })
 
 test_that("tol_node_info with ott_id for tax_info", {
+    skip_on_cran()
     expect_error(tol_node_info(ott_id(tax_info)),
                  "provide a single")
 })
 
 test_that("tol_subtree with ott_id for tax_info", {
+    skip_on_cran()
     expect_error(tol_subtree(ott_id = ott_id(tax_info)),
                  "provide a single")
 })
 
 test_that("tol_mrca with ott_id for tax_info", {
+    skip_on_cran()
     expect_equivalent(list("Euleutheroza" = 317277),
                       ott_id(tol_mrca(ott_id(tax_info))))
 })
 
 test_that("tol_induced_subtree with ott_id for tax_info", {
+    skip_on_cran()
     expect_true(inherits(tol_induced_subtree(ott_id(tax_info)),
                          "phylo"))
 })
 
 test_that("taxonomy_mrca with ott_id for tax_info", {
+    skip_on_cran()
     expect_equivalent(list("Euleutheroza" = 317277),
                       ott_id(taxonomy_mrca(ott_id(tax_info))))
 })
@@ -289,22 +296,26 @@ test_that("mrca flags method", {
 ### ott_id() --------------------------------------------------------------------
 
 test_that("taxonomy_taxon_info with ott_id for tax_mrca", {
+    skip_on_cran()
     expect_equivalent(ott_id(tax_mrca_mono),
                  ott_id(taxonomy_taxon_info(ott_id(tax_mrca_mono))))
 })
 
 test_that("taxonomy_subtree with ott_id for tax_mrca", {
+    skip_on_cran()
     tt <- taxonomy_subtree(ott_id = ott_id(tax_mrca_mono))
     expect_true(length(tt[["tip_label"]]) > 10)
     expect_true(length(tt[["edge_label"]]) > 1)
 })
 
 test_that("tol_node_info with ott_id for tax_mrca", {
+    skip_on_cran()
     expect_equivalent(ott_id(tax_mrca_mono),
                  ott_id(tol_node_info(ott_id(tax_mrca_mono))))
 })
 
 test_that("tol_subtree with ott_id for tax_mrca", {
+    skip_on_cran()
     tt <- tol_subtree(ott_id = ott_id(tax_mrca_mono))
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
@@ -312,16 +323,19 @@ test_that("tol_subtree with ott_id for tax_mrca", {
 })
 
 test_that("tol_mrca with ott_id for tax_mrca", {
+    skip_on_cran()
     expect_equivalent(ott_id(tax_mrca_mono),
                  ott_id(tol_mrca(ott_id(tax_mrca_mono))))
 })
 
 test_that("tol_induced_subtree with ott_id for tax_mrca", {
+    skip_on_cran()
     expect_error(tol_induced_subtree(ott_id(tax_mrca_mono)),
                  "least two valid")
 })
 
 test_that("taxonomy_mrca with ott_id for tax_mrca", {
+    skip_on_cran()
     expect_equivalent(ott_id(tax_mrca_mono),
                       ott_id(taxonomy_mrca(ott_id(tax_mrca_mono))))
 })
