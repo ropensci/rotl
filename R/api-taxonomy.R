@@ -16,13 +16,12 @@
                                  include_lineage = FALSE,
                                  include_terminal_descendants = FALSE,
                                   ...) {
-    if (is.null(ott_id)) {
-        stop("Must supply an \'ott_id\' argument")
-    } else if (length(ott_id) > 1) {
-        stop("Must only supply one \'ott_id\' argument")
-    } else if (!check_numeric(ott_id)) {
-        stop("Argument \'ott_id\' must look like a number.")
+    ott_id <- check_ott_ids(ott_id)
+
+    if (length(ott_id) > 1) {
+        stop("Must only supply one ", sQuote("ott_id"), " argument")
     }
+
     assertthat::assert_that(assertthat::is.flag(include_children))
     assertthat::assert_that(assertthat::is.flag(include_lineage))
     assertthat::assert_that(assertthat::is.flag(include_terminal_descendants))
@@ -39,13 +38,12 @@
 ##' @importFrom httr content
 ## Get a subtree from the OpenTree Taxonomy (OTT) taxonomic tree
 .taxonomy_subtree <- function(ott_id=NULL, label_format=NULL, ...) {
-    if (is.null(ott_id)) {
-        stop("Must supply an \'ott_id\' argument")
-    } else if (length(ott_id) > 1) {
-        stop("Must only supply one \'ott_id\' argument")
-    } else if (!check_numeric(ott_id)) {
-        stop("Argument \'ott_id\' must look like a number.")
+    ott_id <- check_ott_ids(ott_id)
+
+    if (length(ott_id) > 1) {
+        stop("Must only supply one ", sQuote("ott_id"), " argument")
     }
+
     q <- list(ott_id=jsonlite::unbox(ott_id))
     if (!is.null(label_format)) {
         if (!check_label_format(label_format)) {
@@ -62,11 +60,8 @@
 ##' @importFrom httr content
 ## Get the most recent common ancestor (MRCA) from nodes in the OpenTree Taxonomy (OTT)
 .taxonomy_mrca <- function (ott_ids = NULL, ...) {
-    if (is.null(ott_ids)) {
-        stop("Must supply an \'ott_ids\' argument")
-    } else if (!all(sapply(ott_ids, check_numeric))) {
-        stop("Argument \'ott_ids\' must look like a number.")
-    }
+
+    ott_ids <- check_ott_ids(ott_ids)
     q <- list(ott_ids=ott_ids)
     res <- otl_POST(path="/taxonomy/mrca", body=q, ...)
     res

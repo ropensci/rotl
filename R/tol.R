@@ -132,7 +132,7 @@ print.tol_summary <- function(x, ...) {
 
 tol_about_method_factory <- function(.f) {
     function(tax, ...) {
-        res <- .f(tax[["root"]][["taxon"]])
+        res <- list(.f(tax[["root"]][["taxon"]]))
         names(res) <- .tax_unique_name(tax[["root"]][["taxon"]])
         res <- add_otl_class(res, .f)
         res

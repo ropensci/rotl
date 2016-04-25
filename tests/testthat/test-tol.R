@@ -69,7 +69,42 @@ test_that("tol_node tax_name", {
     expect_equal(names(tax_name(req)), "cellular organisms")
 })
 
+### ott_id() --------------------------------------------------------------------
 
+test_that("taxonomy_taxon_info with ott_id for tol_about", {
+    expect_equal(ott_id(req),
+                 ott_id(taxonomy_taxon_info(ott_id(req))))
+})
+
+## can't do that, it's pulling the whole tree
+## test_that("taxonomy_subtree with ott_id for tol_about", {
+##     taxonomy_subtree(ott_id = ott_id(req))
+## })
+
+test_that("tol_node_info with ott_id for tol_about", {
+    expect_equal(ott_id(req),
+                 ott_id(tol_node_info(ott_id(req))))
+})
+
+## can't do that, it's pulling the whole tree
+## test_that("tol_subtree with ott_id for tol_about", {
+##     tol_subtree(ott_id = ott_id(req))
+## })
+
+test_that("tol_mrca with ott_id for tol_about", {
+    expect_equal(ott_id(req)[1],
+                 ott_id(tol_mrca(ott_id(req)))[1])
+})
+
+test_that("tol_induced_subtree with ott_id for tol_about", {
+    expect_error(tol_induced_subtree(ott_id(req)),
+                 "least two valid")
+})
+
+test_that("taxonomy_mrca with ott_id for tol_about", {
+    expect_equal(ott_id(req),
+                 ott_id(taxonomy_mrca(ott_id(req))))
+})
 
 ############################################################################
 ## tol_subtree                                                            ##
@@ -85,13 +120,13 @@ test_that("tol_subtree fails if ott_id is invalid", {
 test_that("tol_subtree fails if more than one ott_id is provided", {
     skip_on_cran()
     expect_error(tol_subtree(ott_id = c(666666, 6666667)),
-                 "only 1 element should be provided")
+                 "Please provide a single")
 })
 
 test_that("tol_subtree fails if ott_id doesn't look like a number", {
     skip_on_cran()
     expect_error(tol_subtree(ott_id = "111A1111"),
-                 "must look like a number")
+                 "must look like numbers")
 })
 
 test_that("tol_subtree returns a phylo object by default", {
@@ -143,6 +178,12 @@ test_that("tol_induced_subtree generates a newick file when providing a file arg
 ## tol_mrca                                                               ##
 ############################################################################
 
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    birds <- tol_mrca(ott_ids = c(412129, 536234))
+    hol <- tol_mrca(c(431586, 957434))
+    mono <- tol_mrca(ott_ids = c(962377, 79623))
+}
+
 test_that("tol_mrca fails if ott_ids are not numbers", {
     skip_on_cran()
     expect_error(tol_mrca(ott_ids = c(13243, "a13415")),
@@ -151,7 +192,6 @@ test_that("tol_mrca fails if ott_ids are not numbers", {
 
 test_that("tol_mrca returns a list", {
     skip_on_cran()
-    birds <- tol_mrca(ott_ids = c(412129, 536234))
     expect_true(inherits(birds, "list"))
     expect_true(inherits(birds, "tol_mrca"))
     expect_true(all(names(birds) %in%
@@ -162,7 +202,6 @@ test_that("tol_mrca returns a list", {
 
 test_that("methods for tol_mrca where the node is a taxon", {
     skip_on_cran()
-    hol <- tol_mrca(c(431586, 957434))
     expect_true(inherits(tax_sources(hol),
                          c("otl_tax_sources", "list")))
     expect_true(inherits(unique_name(hol),
@@ -188,29 +227,68 @@ test_that("methods for tol_mrca where the node is a taxon", {
 
 test_that("methods for tol_mrca where the node is not a taxon", {
     skip_on_cran()
-    birds_mrca <- tol_mrca(ott_ids = c(412129, 536234))
-    expect_true(inherits(birds_mrca, "list"))
-    expect_true(inherits(tax_sources(birds_mrca),
+    expect_true(inherits(birds, "list"))
+    expect_true(inherits(tax_sources(birds),
                          c("otl_tax_sources", "list")))
-    expect_true(inherits(unique_name(birds_mrca),
+    expect_true(inherits(unique_name(birds),
                          c("otl_unique_name", "list")))
-    expect_true(inherits(tax_name(birds_mrca),
+    expect_true(inherits(tax_name(birds),
                          c("otl_name", "list")))
-    expect_true(inherits(tax_rank(birds_mrca),
+    expect_true(inherits(tax_rank(birds),
                          c("otl_rank", "list")))
-    expect_true(inherits(ott_id(birds_mrca),
+    expect_true(inherits(ott_id(birds),
                          c("otl_ott_id", "list")))
-    expect_true(length(tax_sources(birds_mrca)[[1]]) >=  1)
-    expect_true(any(grepl("ncbi", tax_sources(birds_mrca)[[1]])))
-    expect_equal(unique_name(birds_mrca)[[1]], "Neognathae")
-    expect_equal(tax_name(birds_mrca)[[1]], "Neognathae")
-    expect_equal(tax_rank(birds_mrca)[[1]], "superorder")
-    expect_equal(ott_id(birds_mrca)[[1]], 241846)
-    expect_equal(names(ott_id(birds_mrca)), "Neognathae")
-    expect_true(all(names(source_list(birds_mrca)) %in% c("tree_id",
+    expect_true(length(tax_sources(birds)[[1]]) >=  1)
+    expect_true(any(grepl("ncbi", tax_sources(birds)[[1]])))
+    expect_equal(unique_name(birds)[[1]], "Neognathae")
+    expect_equal(tax_name(birds)[[1]], "Neognathae")
+    expect_equal(tax_rank(birds)[[1]], "superorder")
+    expect_equal(ott_id(birds)[[1]], 241846)
+    expect_equal(names(ott_id(birds)), "Neognathae")
+    expect_true(all(names(source_list(birds)) %in% c("tree_id",
                                                           "study_id",
                                                           "git_sha")))
-    expect_equal(attr(tax_sources(birds_mrca), "taxon_type"), "nearest_taxon")
+    expect_equal(attr(tax_sources(birds), "taxon_type"), "nearest_taxon")
+})
+
+### ott_id() --------------------------------------------------------------------
+
+test_that("taxonomy_taxon_info with ott_id for tol_mrca", {
+    expect_equal(ott_id(mono)[1],
+                 ott_id(taxonomy_taxon_info(ott_id(mono)))[1])
+})
+
+test_that("taxonomy_subtree with ott_id for tol_mrca", {
+    tt <- taxonomy_subtree(ott_id = ott_id(mono))
+    expect_true(length(tt[["tip_label"]]) > 10)
+    expect_true(length(tt[["edge_label"]]) > 10)
+})
+
+test_that("tol_node_info with ott_id for tol_mrca", {
+    expect_equal(ott_id(mono)[1],
+                 ott_id(tol_node_info(ott_id(mono)))[1])
+})
+
+test_that("tol_subtree with ott_id for tol_mrca", {
+    tt <- tol_subtree(ott_id = ott_id(mono))
+    expect_true(inherits(tt, "phylo"))
+    expect_true(length(tt$tip.label) > 1)
+    expect_true(length(tt$node.label) > 1)
+})
+
+test_that("tol_mrca with ott_id for tol_mrca", {
+    expect_equal(ott_id(mono)[1],
+                 ott_id(tol_mrca(ott_id(mono)))[1])
+})
+
+test_that("tol_induced_subtree with ott_id for tol_mrca", {
+    expect_error(tol_induced_subtree(ott_id(mono)),
+                 "least two valid")
+})
+
+test_that("taxonomy_mrca with ott_id for tol_mrca", {
+    expect_equivalent(ott_id(mono),
+                      ott_id(taxonomy_mrca(ott_id(mono))))
 })
 
 
@@ -233,6 +311,7 @@ test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     tol_info <- tol_node_info(ott_id = 81461)
     tol_lin <- tol_node_info(ott_id = 81461, include_lineage = TRUE)
+    tol_mono <- tol_node_info(ott_id = 962396)
 }
 
 test_that("tol node info.", {
@@ -315,4 +394,44 @@ test_that("tol_node tax_lineage", {
                                                        "ott_id")))
     expect_true(any(grepl("no rank", tax_lineage(tol_lin)[["rank"]])))
     expect_true(any(grepl("cellular organisms", tax_lineage(tol_lin)[["name"]])))
+})
+
+### ott_id() --------------------------------------------------------------------
+
+test_that("taxonomy_taxon_info with ott_id for tol_info", {
+    expect_equivalent(ott_id(tol_mono),
+                 ott_id(taxonomy_taxon_info(ott_id(tol_mono))))
+})
+
+test_that("taxonomy_subtree with ott_id for tol_info", {
+    tt <- taxonomy_subtree(ott_id = ott_id(tol_mono))
+    expect_true(length(tt[["tip_label"]]) > 10)
+    expect_true(length(tt[["edge_label"]]) > 10)
+})
+
+test_that("tol_node_info with ott_id for tol_info", {
+    expect_equivalent(ott_id(tol_mono),
+                 ott_id(tol_node_info(ott_id(tol_mono))))
+})
+
+test_that("tol_subtree with ott_id for tol_info", {
+    tt <- tol_subtree(ott_id = ott_id(tol_mono))
+    expect_true(inherits(tt, "phylo"))
+    expect_true(length(tt$tip.label) > 1)
+    expect_true(length(tt$node.label) > 1)
+})
+
+test_that("tol_mrca with ott_id for tol_info", {
+    expect_equivalent(ott_id(tol_mono),
+                 ott_id(tol_mrca(ott_id(tol_mono))))
+})
+
+test_that("tol_induced_subtree with ott_id for tol_info", {
+    expect_error(tol_induced_subtree(ott_id(tol_mono)),
+                 "least two valid")
+})
+
+test_that("taxonomy_mrca with ott_id for tol_info", {
+    expect_equivalent(ott_id(tol_mono),
+                      ott_id(taxonomy_mrca(ott_id(tol_mono))))
 })

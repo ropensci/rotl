@@ -148,6 +148,10 @@ check_numeric <- function(x) {
 ## Check that ott_ids are not NULL, not NAs and look like numbers
 check_ott_ids <- function(ott_ids) {
     if (!is.null(ott_ids)) {
+        if (inherits(ott_ids, "otl_ott_id")) {
+            ## convert objects returned by ott_id method to a vector
+            ott_ids <- unlist(ott_ids)
+        }
         if (any(is.na(ott_ids))) {
             stop("NAs are not allowed")
         }
@@ -157,6 +161,7 @@ check_ott_ids <- function(ott_ids) {
     } else {
         stop("You must supply some OTT ids.")
     }
+    ott_ids
 }
 
 ## all nodes have a node_id (character, e.g. "ott12345" or "mrcaott123ott456")
@@ -197,4 +202,3 @@ check_label_format <- function (x) {
         return(FALSE)
     }
 }
-

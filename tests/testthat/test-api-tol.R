@@ -59,7 +59,7 @@ test_that("include_lineage must be logical with .tol_node_info", {
 test_that("ott_id must be a numeric with .tol_node_info", {
     skip_on_cran()
     expect_error(.tol_node_info(ott_id = "test"),
-                 "look like a number")
+                 "look like numbers")
 })
 
 test_that("node_id must be a character with .tol_node_info", {

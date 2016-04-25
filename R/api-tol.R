@@ -26,9 +26,9 @@
         stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), ", not both.")
     }
     if (!is.null(ott_id)) {
-        if (!check_numeric(ott_id)) {
-            stop("Argument ", sQuote("ott_id"), " must look like a number.")
-        }
+        ott_id <- check_ott_ids(ott_id)
+        if (length(ott_id) != 1)
+            stop("Please provide a single ", sQuote("ott_id"), call. = FALSE)
         q <- list(ott_id=jsonlite::unbox(ott_id), include_lineage=jsonlite::unbox(include_lineage))
     } else {
         if (!check_valid_node_id(node_id)) {
@@ -49,7 +49,7 @@
     }
     q <- list()
     if (!is.null(ott_ids)) {
-        check_ott_ids(ott_ids)
+        ott_ids <- check_ott_ids(ott_ids)
         q$ott_ids <- ott_ids
     }
     if (!is.null(node_ids)) {
@@ -74,9 +74,9 @@
         stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"), ", not both.")
     }
     if (!is.null(ott_id)) {
-        if (!check_numeric(ott_id)) {
-            stop("Argument ", sQuote("ott_id"), " must look like a number.")
-        }
+        ott_id <- check_ott_ids(ott_id)
+        if (length(ott_id) !=  1)
+            stop("Please provide a single ", sQuote("ott_id"))
         q <- list(ott_id=jsonlite::unbox(ott_id))
     } else {
         if (!check_valid_node_id(node_id)) {
@@ -111,7 +111,7 @@
         q$label_format <- jsonlite::unbox(label_format)
     }
     if (!is.null(ott_ids)) {
-        check_ott_ids(ott_ids)
+        ott_ids <- check_ott_ids(ott_ids)
         q$ott_ids <- ott_ids
     }
     if (!is.null(node_ids)) {
@@ -124,4 +124,3 @@
     res <- otl_POST("tree_of_life/induced_subtree", body=q, ...)
     res
 }
-
