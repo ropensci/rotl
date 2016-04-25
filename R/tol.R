@@ -134,6 +134,7 @@ tol_about_method_factory <- function(.f) {
     function(tax, ...) {
         res <- .f(tax[["root"]][["taxon"]])
         names(res) <- .tax_unique_name(tax[["root"]][["taxon"]])
+        res <- add_otl_class(res, .f)
         res
     }
 }
@@ -324,6 +325,7 @@ tol_mrca_method_factory <- function(.f) {
             names(res) <- .tax_unique_name(tax[["nearest_taxon"]])
             attr(res, "taxon_type") <- "nearest_taxon"
         }
+        res <- add_otl_class(res, .f)
         res
     }
 }
@@ -588,8 +590,10 @@ tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...)
 
 tol_node_method_factory <- function(.f) {
     function(tax, ...) {
-        setNames(list(.f(tax[["taxon"]])),
-                .tax_unique_name(tax[["taxon"]]))
+        res <- setNames(list(.f(tax[["taxon"]])),
+                        .tax_unique_name(tax[["taxon"]]))
+        res <- add_otl_class(res, .f)
+        res
     }
 }
 

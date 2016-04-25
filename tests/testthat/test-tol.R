@@ -4,9 +4,12 @@
 
 context("test tol_about (and in turn print.tol_summary)")
 
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+    req <- tol_about(include_source_list = TRUE)
+}
+
 test_that("Names in object returned are correct/match the docs", {
     skip_on_cran()
-    req <- tol_about(include_source_list = TRUE)
     expect_true(all(names(req) %in%
                     c("source_list", "date_created", "root", "num_source_trees",
                       "taxonomy_version", "num_source_studies",
@@ -24,6 +27,48 @@ test_that("Names in object returned are correct/match the docs", {
     expect_true(all(grepl("^(ot|pg)", source_list(req)[["study_id"]])))
     expect_true(all(grepl("^tr", source_list(req)[["tree_id"]], ignore.case = TRUE)))
 })
+
+
+
+test_that("tol_node tax_rank method", {
+    skip_on_cran()
+    expect_true(inherits(tax_rank(req),
+                         c("otl_rank", "list")))
+    expect_equal(tax_rank(req)[[1]], "no rank")
+})
+
+test_that("tol_node ott_id method", {
+    skip_on_cran()
+    expect_true(inherits(ott_id(req),
+                         c("otl_ott_id", "list")))
+    expect_equal(ott_id(req)[[1]], 93302)
+    expect_equal(names(ott_id(req)), "cellular organisms")
+})
+
+test_that("tol_node tax_sources", {
+    skip_on_cran()
+    expect_true(inherits(tax_sources(req),
+                         c("otl_tax_sources", "list")))
+    expect_true(any(grepl("ncbi", tax_sources(req)[[1]])))
+    expect_equal(names(tax_sources(req)), "cellular organisms")
+})
+
+test_that("tol_node unique_name", {
+    skip_on_cran()
+    expect_true(inherits(unique_name(req),
+                         c("otl_unique_name", "list")))
+    expect_equal(unique_name(req)[[1]], "cellular organisms")
+    expect_equal(names(unique_name(req)), "cellular organisms")
+})
+
+test_that("tol_node tax_name", {
+    skip_on_cran()
+    expect_true(inherits(tax_name(req),
+                         c("otl_name", "list")))
+    expect_equal(tax_name(req)[[1]], "cellular organisms")
+    expect_equal(names(tax_name(req)), "cellular organisms")
+})
+
 
 
 ############################################################################
@@ -118,7 +163,16 @@ test_that("tol_mrca returns a list", {
 test_that("methods for tol_mrca where the node is a taxon", {
     skip_on_cran()
     hol <- tol_mrca(c(431586, 957434))
-    expect_true(inherits(tax_sources(hol), "list"))
+    expect_true(inherits(tax_sources(hol),
+                         c("otl_tax_sources", "list")))
+    expect_true(inherits(unique_name(hol),
+                         c("otl_unique_name", "list")))
+    expect_true(inherits(tax_name(hol),
+                         c("otl_name", "list")))
+    expect_true(inherits(tax_rank(hol),
+                         c("otl_rank", "list")))
+    expect_true(inherits(ott_id(hol),
+                         c("otl_ott_id", "list")))
     expect_true(length(tax_sources(hol)[[1]]) > 1)
     expect_true(any(grepl("worms", tax_sources(hol)[[1]])))
     expect_equal(unique_name(hol)[[1]], "Holothuria")
@@ -134,8 +188,18 @@ test_that("methods for tol_mrca where the node is a taxon", {
 
 test_that("methods for tol_mrca where the node is not a taxon", {
     skip_on_cran()
-    birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+    birds_mrca <- tol_mrca(ott_ids = c(412129, 536234))
     expect_true(inherits(birds_mrca, "list"))
+    expect_true(inherits(tax_sources(birds_mrca),
+                         c("otl_tax_sources", "list")))
+    expect_true(inherits(unique_name(birds_mrca),
+                         c("otl_unique_name", "list")))
+    expect_true(inherits(tax_name(birds_mrca),
+                         c("otl_name", "list")))
+    expect_true(inherits(tax_rank(birds_mrca),
+                         c("otl_rank", "list")))
+    expect_true(inherits(ott_id(birds_mrca),
+                         c("otl_ott_id", "list")))
     expect_true(length(tax_sources(birds_mrca)[[1]]) >=  1)
     expect_true(any(grepl("ncbi", tax_sources(birds_mrca)[[1]])))
     expect_equal(unique_name(birds_mrca)[[1]], "Neognathae")
@@ -180,37 +244,43 @@ test_that("tol node info.", {
 })
 
 
-# note that tax info is now contained in a taxon 'blob'
+### methods ---------------------------------------------------------------------
+
 test_that("tol_node tax_rank method", {
     skip_on_cran()
-    expect_true(inherits(tax_rank(tol_info), "list"))
+    expect_true(inherits(tax_rank(tol_info),
+                         c("otl_tax_rank", "list")))
     expect_equal(tax_rank(tol_info)[[1]], "class")
 })
 
 test_that("tol_node ott_id method", {
     skip_on_cran()
-    expect_true(inherits(ott_id(tol_info), "list"))
+    expect_true(inherits(ott_id(tol_info),
+                         c("otl_ott_id", "list")))
     expect_equal(ott_id(tol_info)[[1]], 81461)
     expect_equal(names(ott_id(tol_info)), "Aves")
 })
 
 test_that("tol_node tax_sources", {
     skip_on_cran()
-    expect_true(inherits(tax_sources(tol_info), "list"))
+    expect_true(inherits(tax_sources(tol_info),
+                         c("otl_tax_sources", "list")))
     expect_true(any(grepl("worms", tax_sources(tol_info)[[1]])))
     expect_equal(names(tax_sources(tol_info)), "Aves")
 })
 
 test_that("tol_node unique_name", {
     skip_on_cran()
-    expect_true(inherits(unique_name(tol_info), "list"))
+    expect_true(inherits(unique_name(tol_info),
+                         c("otl_unique_name", "list")))
     expect_equal(unique_name(tol_info)[[1]], "Aves")
     expect_equal(names(unique_name(tol_info)), "Aves")
 })
 
 test_that("tol_node tax_name", {
     skip_on_cran()
-    expect_true(inherits(tax_name(tol_info), "list"))
+    expect_true(inherits(tax_name(tol_info),
+                         c("otl_name", "list")))
     expect_equal(tax_name(tol_info)[[1]], "Aves")
     expect_equal(names(tax_name(tol_info)), "Aves")
 })

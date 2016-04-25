@@ -218,6 +218,7 @@ taxon_info_method_factory <- function(.f) {
     function(tax, ...) {
         res <- lapply(tax, .f)
         names(res) <- vapply(tax, .tax_unique_name, character(1))
+        res <- add_otl_class(res, .f)
         res
     }
 }
@@ -261,6 +262,7 @@ taxon_mrca_method_factory <- function(.f) {
     function(tax, ...)  {
         res <- list(.f(tax[["mrca"]]))
         names(res) <- .tax_unique_name(tax[["mrca"]])
+        res <- add_otl_class(res, .f)
         res
     }
 }

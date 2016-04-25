@@ -9,45 +9,45 @@
 ### New features
 
 * New methods: `tax_sources`, `is_suppressed`, `tax_rank`, `unique_name`,
-  `name`, `ott_id`, for objects returned by `tnrs_match_names`,
-  `taxonomy_taxon_info`, `taxonomy_taxon_mrca`, `tol_node_info`, `tol_about`,
-  and `tol_mrca()`.
+  `name`, `ott_id`, for objects returned by `tnrs_match_names()`,
+  `taxonomy_taxon_info()`, `taxonomy_taxon_mrca()`, `tol_node_info()`,
+  `tol_about()`, and `tol_mrca()`. Each of these methods have their own class.
 
-* New method `tax_lineage` to extract the higher taxonomy from an object
-  returned by `taxonomy_taxon_info` (initally suggested by Matt Pennell, #57).
+* New method `tax_lineage()` to extract the higher taxonomy from an object
+  returned by `taxonomy_taxon_info()` (initally suggested by Matt Pennell, #57).
 
-* New method `tol_lineage` to extract the nodes towards the root of the tree.
+* New method `tol_lineage()` to extract the nodes towards the root of the tree.
 
-* New print methods for `tol_node_info` and `tol_mrca`.
+* New print methods for `tol_node_info()` and `tol_mrca()`.
 
-* New functions `study_external_IDs` and `taxon_external_IDs` that return the
-  external identifiers for a study and associated trees (e.g., DOI, TreeBase
+* New functions `study_external_IDs()` and `taxon_external_IDs()` that return
+  the external identifiers for a study and associated trees (e.g., DOI, TreeBase
   ID); and the identifiers of taxon names in taxonomic databases. The vignette
   "Data mashup" includes an example on how to use it.
 
-* The function `strip_ott_id` gains the argument `remove_underscores` to remove
+* The function `strip_ott_id()` gains the argument `remove_underscores` to remove
   underscores from tips in trees returned by OTL.
 
 ### Changes
 
-* Rename method `ott_taxon_name` to `tax_name` for consistency.
+* Rename method `ott_taxon_name()` to `tax_name()` for consistency.
 
-* Rename method `synth_sources` and `study_list` to `source_list`.
+* Rename method `synth_sources()` and `study_list()` to `source_list()`.
 
 * Refactor how result of query is checked and parsed (invisible to the user).
 
 ### Bug fixes
 
-* Fix bug in `studies_find_studies`, the arguments `verbose` and `exact` were
+* Fix bug in `studies_find_studies()`, the arguments `verbose` and `exact` were
   ignored.
 
 * The argument `only_current` has been dropped for the methods associated with
-  objects returned by `tnrs_match_names`
+  objects returned by `tnrs_match_names()`
 
-* The print method for `tnrs_context` duplicated some names.
+* The print method for `tnrs_context()` duplicated some names.
 
-* `inspect`, `update` and `synonyms` methods for `tnrs_match_names` did not work
-  if the query included unmatched taxa.
+* `inspect()`, `update()` and `synonyms()` methods for `tnrs_match_names()` did
+  not work if the query included unmatched taxa.
 
 
 ## rotl 0.5.0

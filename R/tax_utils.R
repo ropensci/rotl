@@ -62,3 +62,12 @@ is_taxon <- function(slot) {
         FALSE
     }
 }
+
+### adds a class to the objects returned by the methods
+add_otl_class <- function(res, .f) {
+    ## we need a prefix to avoid class name conflict
+    ## apparently the class "name" already exists
+    class(res) <- c(paste0("otl_", as.list(environment(.f))[["slot"]]),
+                    class(res))
+    res
+}

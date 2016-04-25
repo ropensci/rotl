@@ -254,6 +254,7 @@ match_names_taxon_method_factory <- function(.f) {
                                      ott_id = ott_id)
         res <- lapply(tax_info, function(x) .f(x))
         names(res) <- vapply(tax_info, function(x) .tax_unique_name(x), character(1))
+        res <- add_otl_class(res, .f)
         res
     }
 }

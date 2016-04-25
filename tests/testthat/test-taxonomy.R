@@ -62,7 +62,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 test_that("taxonomy_taxon tax_rank method", {
     skip_on_cran()
-    expect_true(inherits(tax_rank(tax_info), "list"))
+    expect_true(inherits(tax_rank(tax_info),
+                         c("otl_tax_rank", "list")))
     expect_equal(names(tax_rank(tax_info)),
                  c("Holothuria", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
@@ -72,7 +73,8 @@ test_that("taxonomy_taxon tax_rank method", {
 
 test_that("taxonomy_taxon ott_taxon_name method", {
     skip_on_cran()
-    expect_true(inherits(tax_name(tax_info), "list"))
+    expect_true(inherits(tax_name(tax_info),
+                         c("otl_tax_info", "list")))
     expect_equal(names(tax_name(tax_info)),
                  c("Holothuria", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
@@ -82,7 +84,8 @@ test_that("taxonomy_taxon ott_taxon_name method", {
 
 test_that("taxonomy_taxon synonyms method", {
     skip_on_cran()
-    expect_true(inherits(synonyms(tax_info), "list"))
+    expect_true(inherits(synonyms(tax_info),
+                         c("otl_synonyms", "list")))
     expect_equal(names(synonyms(tax_info)),
                  c("Holothuria", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
@@ -92,7 +95,8 @@ test_that("taxonomy_taxon synonyms method", {
 
 test_that("taxonomy_taxon is_suppressed method", {
     skip_on_cran()
-    expect_true(inherits(is_suppressed(tax_info), "list"))
+    expect_true(inherits(is_suppressed(tax_info),
+                         c("otl_is_suppressed", "list")))
     expect_equal(names(is_suppressed(tax_info)),
                  c("Holothuria", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
@@ -102,7 +106,8 @@ test_that("taxonomy_taxon is_suppressed method", {
 
 test_that("taxonomy_taxon flags method", {
     skip_on_cran()
-    expect_true(inherits(flags(tax_info), "list"))
+    expect_true(inherits(flags(tax_info),
+                         c("otl_flags", "list")))
     expect_equal(names(flags(tax_info)),
                  c("Holothuria", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
@@ -180,7 +185,7 @@ test_that("taxonomy subtree works if taxa has only 1 descendant", {
 ############################################################################
 
  if (identical(Sys.getenv("NOT_CRAN"), "true"))  {
-     tax_mrca <- taxonomy_mrca(ott_id = c(515698,590452,643717))
+     tax_mrca <- taxonomy_mrca(ott_id = c(515698, 590452, 643717))
  }
 
 test_that("taxonomic most recent common ancestor", {
@@ -191,46 +196,53 @@ test_that("taxonomic most recent common ancestor", {
 
 test_that("mrca tax_rank method", {
     skip_on_cran()
-    expect_equal(tax_rank(tax_mrca),
+    expect_equal(tax_rank(tax_mrca)[1],
                  list("Asterales" = "order"))
 })
 
 test_that("mrca tax_name method", {
     skip_on_cran()
-    expect_equal(tax_name(tax_mrca),
+    expect_equal(tax_name(tax_mrca)[1],
                  list("Asterales" = "Asterales"))
 })
 
 test_that("mrca ott_id method", {
     skip_on_cran()
-    expect_equal(ott_id(tax_mrca),
+    expect_equal(ott_id(tax_mrca)[1],
                  list("Asterales" = 1042120))
+    expect_true(inherits(ott_id(tax_mrca), "otl_ott_id"))
 })
 
 test_that("mrca unique_name method", {
     skip_on_cran()
-    expect_equal(unique_name(tax_mrca),
+    expect_equal(unique_name(tax_mrca)[1],
                  list("Asterales" = "Asterales"))
+    expect_true(inherits(unique_name(tax_mrca),
+                         "otl_unique_name"))
 })
 
 test_that("mrca tax_sources method", {
     skip_on_cran()
-    expect_equal(tax_sources(tax_mrca),
+    expect_equal(tax_sources(tax_mrca)[1],
                  list("Asterales" =
                  c("ncbi:4209", "worms:234044",
-                   "gbif:414","irmng:10011")))
+                   "gbif:414", "irmng:10011")))
+    expect_true(inherits(tax_sources(tax_mrca),
+                         "otl_tax_sources"))
 })
 
 test_that("mrca is_suppressed method", {
     skip_on_cran()
-    expect_true(inherits(is_suppressed(tax_mrca), "list"))
-    expect_equal(is_suppressed(tax_mrca),
+    expect_true(inherits(is_suppressed(tax_mrca),
+                         c("otl_is_suppressed", "list")))
+    expect_equal(is_suppressed(tax_mrca)[1],
                  list("Asterales" = FALSE))
 })
 
 test_that("mrca flags method", {
     skip_on_cran()
-    expect_true(inherits(flags(tax_mrca), "list"))
-    expect_equal(flags(tax_mrca),
+    expect_true(inherits(flags(tax_mrca),
+                         c("otl_flags", "list")))
+    expect_equal(flags(tax_mrca)[1],
                  list("Asterales" = NULL))
 })

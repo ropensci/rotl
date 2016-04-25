@@ -379,6 +379,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 test_that("ott_id with no arguments", {
     skip_on_cran()
     expect_true(inherits(ott_id(rsp), "list"))
+    expect_true(inherits(ott_id(rsp), "otl_ott_id"))
     expect_equal(names(ott_id(rsp)), tax_rsp)
     expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 5004030)
 })
