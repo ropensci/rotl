@@ -1,6 +1,7 @@
 
+
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/v8occu2l14ucr5fl?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-3g068)
+[![Build status](https://ci.appveyor.com/api/projects/status/5y8rxmehag512d9j/branch/master?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-i7l3q/branch/master)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
@@ -109,7 +110,7 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/i3kQFQG.png)
+![plot of chunk get_tr](http://i.imgur.com/t9GhUs5.png)
 
 The code above can be summarized in a single pipe:
 
@@ -124,7 +125,7 @@ c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     plot
 ```
 
-![plot of chunk pipe](http://i.imgur.com/drkUJIK.png)
+![plot of chunk pipe](http://i.imgur.com/wDgMNtP.png)
 
 ## Versioning
 

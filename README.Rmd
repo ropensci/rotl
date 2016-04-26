@@ -3,10 +3,10 @@ library(knitr)
 #opts_knit$set(upload.fun = image_uri)
 opts_knit$set(upload.fun = imgur_upload)
 
-
 ```
+
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/v8occu2l14ucr5fl?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-3g068)
+[![Build status](https://ci.appveyor.com/api/projects/status/5y8rxmehag512d9j/branch/master?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-i7l3q/branch/master)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
