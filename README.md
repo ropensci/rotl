@@ -109,7 +109,7 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/P55UOSa.png)
+![plot of chunk get_tr](http://i.imgur.com/i3kQFQG.png)
 
 The code above can be summarized in a single pipe:
 
@@ -124,8 +124,25 @@ c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     plot
 ```
 
-![plot of chunk pipe](http://i.imgur.com/voU3EQA.png)
+![plot of chunk pipe](http://i.imgur.com/drkUJIK.png)
 
+## Versioning
+
+Starting with v3.0.0 of the package, the major and minor version numbers (the
+first 2 digits of the version number) will be matched to those of the API. The
+patch number (the 3rd digit of the version number) will be used to reflect
+bug fixes and other changes that are independent from changes to the API.
+
+`rotl` can be used to access other versions of the API (if they are available)
+but most likely the high level functions will not work. Instead, you will need
+to parse the output yourself using the "raw" returns from the unexported
+low-level functions (all prefixed with a `.`). For instance to use the
+`tnrs/match_names` endpoint for `v2` of the API:
+
+
+```r
+rotl:::.tnrs_match_names(c("pan", "pango", "gorilla", "hoolock", "homo"), otl_v="v2")
+```
 
 
 ### Code of Conduct
