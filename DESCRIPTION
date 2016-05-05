@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.0.900
+Version: 3.0.0.901
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com"),
@@ -30,7 +30,8 @@ Suggests:
     RNeXML,
     phylobase,
     MCMCglmm,
-    fulltext (>= 0.1.6)
+    fulltext (>= 0.1.6),
+    readxl
 VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 5.0.1
