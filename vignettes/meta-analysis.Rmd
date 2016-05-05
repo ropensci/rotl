@@ -47,7 +47,7 @@ papers DOI as input) and read it into memory with `gdata`:
 library(rotl)
 library(fulltext)
 
-if (require(library(readxl))) {
+if (require(readxl)) {
     doi <- "10.1111/jeb.12282"
     xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
     egg_data <- read_excel(xl_file)
