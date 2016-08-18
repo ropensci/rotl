@@ -71,7 +71,7 @@ extract_title <- function(pub_orig, split_char = "\\.") {
 ## Unexported function that limit the display of tree_ids to the first
 ## 5 values.
 limit_trees <- function(x) {
-    if (length(x) > 4)
+    if (length(x) > 5)
         x <- c(x[1:5], "...")
     paste(x, collapse = ", ")
 }
