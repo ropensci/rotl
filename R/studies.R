@@ -181,11 +181,14 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
         sapply(x[["matched_trees"]],
                function(y) y[["nexson_id"]])
     })
-    tree_str <- vapply(match_tree_ids, limit_trees, character(1))
+    # this one doesn't return all of the treeids. confusing, bc trees are what is wanted
+    #tree_str <- vapply(match_tree_ids, limit_trees, character(1))
+    tree_str <- sapply(match_tree_ids, function(x) paste(x, collapse = ", "))
     res <- data.frame(study_ids, n_matched_trees, match_tree_ids = tree_str,
                       stringsAsFactors = FALSE)
     if (detailed) {
         meta <- summarize_meta(study_ids)
+        # the next bit seems really slow (JWB)
         res <- merge(meta, res)
         attr(res, "metadata") <- attr(meta, "metadata")
     } else {
