@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.0.901
+Version: 3.0.1
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com"),
@@ -13,9 +13,9 @@ Description: An interface to the 'Open Tree of Life' API to retrieve
     named species.
 URL: https://github.com/ropensci/rotl
 BugReports: https://github.com/ropensci/rotl/issues
-Depends:
+Depends: 
     R (>= 3.1.1)
-Imports:
+Imports: 
     httr,
     jsonlite,
     assertthat (>= 0.1),
@@ -23,7 +23,7 @@ Imports:
     ape,
     rentrez
 License: BSD_2_clause + file LICENSE
-Suggests:
+Suggests: 
     knitr (>= 1.12),
     rmarkdown (>= 0.7),
     testthat,
@@ -34,4 +34,4 @@ Suggests:
     readxl
 VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
