@@ -231,7 +231,18 @@ get_study_tree(study_id="pg_710", tree_id="tree1277",
 tr <- ape::read.tree(file = "/tmp/tree.tre")
 ```
 
-### Why are OTT IDs discovered with ROTL missing from an induced subtree?
+### How do I get the higher taxonomy for a given taxa?
+
+If you encounter a taxon name you are not familiar with, it might be useful to
+obtain its higher taxonomy to see where it fits in the tree of life. We can
+combine several taxonomy methods to extract this information easily.
+
+```{r}
+giant_squid <- tnrs_match_names("Architeuthis")
+tax_lineage(taxonomy_taxon_info(ott_id(giant_squid), include_lineage = TRUE))
+```
+
+### Why are OTT IDs discovered with `rotl` missing from an induced subtree?
 
 Some taxonomic names that can be retrieved through the taxonomic name
 resolution service are not part of the Open Tree's synthesis tree. These are
