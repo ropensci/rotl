@@ -92,7 +92,7 @@ in the FAQ below.
 Now that we have the correct `ott_id` for our taxa, we can ask for the tree
 using the `tol_induced_subtree()` function. By default, the object returned by
 `tol_induced_subtree` is a phylo object (from the
-[ape](http://cran.r-project.org/package=ape) package), so we can plot it
+[ape](https://cran.r-project.org/package=ape) package), so we can plot it
 directly.
 
 ```{r, fig.width=7, fig.height=4}
