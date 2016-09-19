@@ -77,7 +77,8 @@ source_list <- function(tax, ...) UseMethod("source_list")
 ##' the argument \code{include_lineage=TRUE}.
 ##'
 ##' @title Lineage of a taxon
-##' @param tax an object created by \code{\link{taxonomy_taxon_info}}.
+##' @param tax an object created by \code{\link{taxonomy_taxon_info}}
+##'     using the argument \code{include_lineage=TRUE}.
 ##' @param ... additional arguments (currently unused).
 ##' @return A list with one slot per taxon that contains a data frame
 ##'     with 3 columns: the taxonomy rank, the name, and unique name

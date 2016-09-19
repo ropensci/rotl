@@ -10,7 +10,8 @@ tax_lineage(tax, ...)
 \method{tax_lineage}{taxon_info}(tax, ...)
 }
 \arguments{
-\item{tax}{an object created by \code{\link{taxonomy_taxon_info}}.}
+\item{tax}{an object created by \code{\link{taxonomy_taxon_info}}
+using the argument \code{include_lineage=TRUE}.}
 
 \item{...}{additional arguments (currently unused).}
 }
