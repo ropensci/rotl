@@ -113,25 +113,26 @@ context("inspect.match_names")
      rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
      expect_warning(rsp_na <- tnrs_match_names(names = c("diadema", "fluffy",
                                                          "hemichordata", "escherichia")))
+     diadema_ids <- c(4930522, 631176, 643831)
  }
 
 
 test_that("correct data is being returned when asked to lookup by taxon name", {
     skip_on_cran()
     tt <- inspect(rsp, taxon_name = "diadema")[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
 })
 
 test_that("correct data is being returned when asked to lookup by ott_id", {
     skip_on_cran()
     tt <- inspect(rsp, ott_id = 631176)[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
 })
 
 test_that("correct data is being returned when asked to lookup by row number", {
     skip_on_cran()
     tt <- inspect(rsp, row_number = 2)[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
 })
 
 ## with missing data
@@ -139,20 +140,20 @@ test_that("correct data is being returned when asked to lookup by row number", {
 test_that("correct data is being returned when asked to lookup by taxon name (with missing data)", {
     skip_on_cran()
     tt <- inspect(rsp_na, taxon_name = "diadema")[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
     expect_true(is.na(inspect(rsp_na, taxon_name = "fluffy")[["ott_id"]]))
 })
 
 test_that("correct data is being returned when asked to lookup by ott_id (with missing data)", {
     skip_on_cran()
     tt <- inspect(rsp_na, ott_id = 631176)[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
 })
 
 test_that("correct data is being returned when asked to lookup by row number (with missing data)", {
     skip_on_cran()
     tt <- inspect(rsp_na, row_number = 1)[["ott_id"]]
-    expect_true(all(tt %in% c(4930522, 631176)))
+    expect_true(all(tt %in% diadema_ids))
     expect_true(is.na(inspect(rsp_na, row_number = 2)[["ott_id"]]))
 })
 
@@ -330,7 +331,7 @@ test_that("flags with no arguments", {
     flags_rsp <- flags(rsp)
     expect_equal(length(flags_rsp), 5)
     expect_equivalent(sapply(flags_rsp, length),
-                      c(2, 3, 3, 0, 0))
+                      c(1, 3, 2, 0, 0))
 })
 
 test_that("flags with row number", {
@@ -338,7 +339,7 @@ test_that("flags with row number", {
     flags_rsp <- flags(rsp, 1)
     expect_true(inherits(flags_rsp, "list"))
     expect_equal(length(flags_rsp), 1)
-    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_equal(length(flags_rsp[[1]]), 1)
     expect_true(inherits(flags_rsp[[1]], "character"))
     expect_equal(names(flags_rsp), tax_rsp[1])
 })
@@ -348,7 +349,7 @@ test_that("flags with taxon name", {
     flags_rsp <- flags(rsp, taxon_name = "Tyrannosaurus")
     expect_true(inherits(flags_rsp, "list"))
     expect_equal(length(flags_rsp), 1)
-    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_equal(length(flags_rsp[[1]]), 1)
     expect_true(inherits(flags_rsp[[1]], "character"))
     expect_equal(names(flags_rsp), tax_rsp[1])
 })
@@ -358,7 +359,7 @@ test_that("flags with ott id", {
     flags_rsp <- flags(rsp, ott_id = 664348)
     expect_true(inherits(flags_rsp, "list"))
     expect_equal(length(flags_rsp), 1)
-    expect_equal(length(flags_rsp[[1]]), 2)
+    expect_equal(length(flags_rsp[[1]]), 1)
     expect_true(inherits(flags_rsp[[1]], "character"))
     expect_equal(names(flags_rsp), tax_rsp[1])
 })

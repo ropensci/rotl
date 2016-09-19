@@ -268,7 +268,7 @@ test_that("taxonomy_subtree with ott_id for tol_mrca", {
     skip_on_cran()
     tt <- taxonomy_subtree(ott_id = ott_id(mono))
     expect_true(length(tt[["tip_label"]]) > 10)
-    expect_true(length(tt[["edge_label"]]) > 10)
+    expect_true(length(tt[["edge_label"]]) > 7)
 })
 
 test_that("tol_node_info with ott_id for tol_mrca", {
@@ -420,7 +420,7 @@ test_that("taxonomy_subtree with ott_id for tol_info", {
     skip_on_cran()
     tt <- taxonomy_subtree(ott_id = ott_id(tol_mono))
     expect_true(length(tt[["tip_label"]]) > 10)
-    expect_true(length(tt[["edge_label"]]) > 10)
+    expect_true(length(tt[["edge_label"]]) > 7)
 })
 
 test_that("tol_node_info with ott_id for tol_info", {
