@@ -1,3 +1,13 @@
+## rotl 3.0.1
+
+* Fix tests and vignette to reflect changes accompanying release 6.1 of the
+  synthetic tree
+
+* Add section in vignette "How to use rotl?" about how to get the higher
+  taxonomy from a given taxon.
+
+* Add `CITATION` file with MEE manuscript information (#82)
+
 ## rotl 3.0.0
 
 * `rotl` now interacts with v3.0 of the Open Tree of Life APIs. The
