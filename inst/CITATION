@@ -1,0 +1,20 @@
+citHeader("To cite rotl in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{rotl}: an R package to interact with the Open Tree of Life data",
+  author       = personList(as.person("Francois Michonneau"),
+                            as.person("Joseph W. Brown"),
+                            as.person("David J. Winter")),
+  journal      = "Methods in Ecology and Evolution",
+  year         = "2016",
+  volume       = "",
+  number       = "",
+  pages        = "",
+  url          = "https://doi.org/10.1111/2041-210X.12593",
+  doi          =  "10.1111/2041-210X.12593",
+
+  textVersion  =
+      paste("Michonneau, F., Brown, J. W. and Winter, D. J. (2016),
+             rotl: an R package to interact with the Open Tree of Life data.
+             Methods Ecol Evol. doi:10.1111/2041-210X.12593")
+  )
