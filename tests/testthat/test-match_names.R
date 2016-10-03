@@ -125,7 +125,7 @@ test_that("correct data is being returned when asked to lookup by taxon name", {
 
 test_that("correct data is being returned when asked to lookup by ott_id", {
     skip_on_cran()
-    tt <- inspect(rsp, ott_id = 631176)[["ott_id"]]
+    tt <- inspect(rsp, ott_id = ott_id(rsp)[2])[["ott_id"]]
     expect_true(all(tt %in% diadema_ids))
 })
 
@@ -146,7 +146,7 @@ test_that("correct data is being returned when asked to lookup by taxon name (wi
 
 test_that("correct data is being returned when asked to lookup by ott_id (with missing data)", {
     skip_on_cran()
-    tt <- inspect(rsp_na, ott_id = 631176)[["ott_id"]]
+    tt <- inspect(rsp_na, ott_id = ott_id(rsp)[2])[["ott_id"]]
     expect_true(all(tt %in% diadema_ids))
 })
 
@@ -179,7 +179,7 @@ test_that("synonyms", {
     tt <- synonyms(rsp)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt),
-                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
+                 c("Holothuria", "Diadema (genus in Nucletmycea)", "Fromia"))
 })
 
 
@@ -219,7 +219,7 @@ test_that("synonyms", {
     tt <- synonyms(rsp_na)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt),
-                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
+                 c("Holothuria", "Diadema (genus in Nucletmycea)", "Fromia"))
 })
 
 
@@ -294,16 +294,16 @@ test_that("it works correctly when providing a new row number", {
     new_rsp <- update(rsp, row_number = 2,
                       new_row_number = 2)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "4930522")
+                 "631176")
 })
 
 
 test_that("it works correctly when providing a new ott id", {
     skip_on_cran()
     new_rsp <- update(rsp, row_number = 2,
-                      new_ott_id = 4930522)
+                      new_ott_id = 631176)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "4930522")
+                 "631176")
 })
 
 test_that("it produces warning when trying to update with unmatched name", {
