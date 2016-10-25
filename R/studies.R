@@ -433,10 +433,9 @@ print.study_meta <- function(x, ...) {
 ##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
-##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
-##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+##' ingroup  <- get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup")
 ##' nexus_file <- tempfile(fileext=".nex")
-##' get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup", file=nexus_file,
+##' get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup", file=nexus_file,
 ##'                   file_format="nexus")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
