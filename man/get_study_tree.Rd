@@ -50,12 +50,12 @@ Returns a specific tree from within a study
 }
 \examples{
 \dontrun{
- tree <- get_study_tree(study_id="pg_1144", tree_id="tree2324")
+ tree <- get_study_tree(study_id="pg_1144", tree_id="tree5800")
 
  ## comparison of the first few tip labels depending on the options used
- head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="original_label")$tip.label)
- head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="ott_id")$tip.label)
- head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="ott_taxon_name")$tip.label)
+ head(get_study_tree(study_id="pg_1144", tree_id="tree5800", tip_label="original_label")$tip.label)
+ head(get_study_tree(study_id="pg_1144", tree_id="tree5800", tip_label="ott_id")$tip.label)
+ head(get_study_tree(study_id="pg_1144", tree_id="tree5800", tip_label="ott_taxon_name")$tip.label)
 }
 }
 
