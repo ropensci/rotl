@@ -435,7 +435,7 @@ print.study_meta <- function(x, ...) {
 ##' small_tr <- get_study_subtree(study_id="pg_1144", tree_id="tree5800", subtree_id="node991044")
 ##' ingroup  <- get_study_subtree(study_id="pg_1144", tree_id="tree5800", subtree_id="ingroup")
 ##' nexus_file <- tempfile(fileext=".nex")
-##' get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="ingroup", file=nexus_file,
+##' get_study_subtree(study_id="pg_1144", tree_id="tree5800", subtree_id="ingroup", file=nexus_file,
 ##'                   file_format="nexus")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
