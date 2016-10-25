@@ -233,15 +233,6 @@ test_that("get_study_subtree returns a newick file", {
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
-test_that("get_study_subtree returns a json file", {
-    skip_on_cran()
-    ff <- tempfile(fileext = ".json")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                            file_format = "json", file = ff)
-    expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
-})
-
 
 ############################################################################
 ## get_study_meta                                                         ##

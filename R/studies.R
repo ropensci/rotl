@@ -414,8 +414,8 @@ print.study_meta <- function(x, ...) {
 ##'     \dQuote{\code{ott_taxon_name}} labels are replaced by their
 ##'     Open Tree Taxonomy taxon name.
 ##' @param file_format character, the file format to use to save the
-##'     results of the query (possible values, \sQuote{newick},
-##'     \sQuote{nexus}, \sQuote{json}).
+##'     results of the query (possible values, \sQuote{newick} or
+##'     \sQuote{nexus}).
 ##' @param file character, the path and file name where the output
 ##'     should be written.
 ##' @param deduplicate logical (default \code{TRUE}). If the tree
@@ -451,16 +451,12 @@ get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("ph
     if (!missing(file)) {
         if (!missing(file_format)) {
             if (missing(file)) stop("You must specify a file to write your output")
-            file_format <- match.arg(file_format, c("newick", "nexus", "json"))
+            file_format <- match.arg(file_format, c("newick", "nexus"))
             res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
                                       subtree_id = subtree_id, format=file_format,
                                       tip_label = tip_label,  ...)
             unlink(file)
-            if (identical(file_format, "json")) {
-                cat(jsonlite::toJSON(res), file=file)
-            } else {
-                cat(res, file=file)
-            }
+            cat(res, file=file)
             return(invisible(file.exists(file)))
         } else {
             stop(sQuote("file_format"), " must be specified.")
