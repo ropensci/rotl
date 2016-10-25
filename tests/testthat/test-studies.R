@@ -197,16 +197,22 @@ test_that("get_study_subtree returns an error when tree_id doesn't exist", {
     expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"))
 })
 
-## API still returns object
-test_that("get_study_subtree returns an error when the subtree_id is invalid",
-           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar")))
+test_that("get_study_subtree returns an error when the subtree_id is invalid", {
+    skip_on_cran()
+    expect_error(get_study_subtree("pg_1144", "tree2324", "foobar"))
+})
 
 test_that("get_study_subtree returns a phylo object", {
     skip_on_cran()
     tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             object_format = "phylo")
+    sub_tt <- get_study_subtree("pg_420", "tree522", subtree_id = "node208580",
+                                object_format = "phylo")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
+    expect_true(inherits(sub_tt, "phylo"))
+    expect_true(length(sub_tt$tip.label) > 1)
+    expect_true(length(tt$tip.label) > length(sub_tt$tip.label))
 })
 
 test_that("get_study_subtree fails if file name is given but no file format", {
@@ -232,6 +238,24 @@ test_that("get_study_subtree returns a newick file", {
     expect_true(tt)
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
+
+test_that("get_study_subtree can deduplicate labels", {
+    skip_on_cran()
+    expect_warning(get_study_subtree(study_id="pg_710", tree_id="tree1277",
+                                     tip_label='ott_taxon_name',
+                                     subtree_id = "ingroup", deduplicate = TRUE),
+                   "and have been modified")
+})
+
+test_that("get_study_subtree fails with duplicate labels", {
+    skip_on_cran()
+    expect_error(get_study_subtree(study_id="pg_710", tree_id="tree1277",
+                                     tip_label='ott_taxon_name',
+                                   subtree_id = "ingroup", deduplicate = FALSE),
+                 "has already been encountered")
+})
+
+
 
 
 ############################################################################
