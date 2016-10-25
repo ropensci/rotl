@@ -34,10 +34,10 @@ Retrieve subtree from a specific tree in the Open Tree of Life data store
 }
 \examples{
 \dontrun{
-small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
-ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+small_tr <- get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="node552052")
+ingroup  <- get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="ingroup")
 nexus_file <- tempfile(fileext=".nex")
-get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup", file=nexus_file,
+get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="ingroup", file=nexus_file,
                   file_format="nexus")
 }
 }
