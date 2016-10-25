@@ -155,7 +155,7 @@ test_that("get_study_tree returns a phylo object and original labels for tip lab
 
 test_that("get_study_tree returns an error if file is given but file format is not", {
     skip_on_cran()
-    expect_error(get_study_tree(study_id="pg_1144", tree="tree2324", file = "test"),
+    expect_error(get_study_tree(study_id="pg_1144", tree_id="tree2324", file = "test"),
                  "must be specified")
 })
 
@@ -198,12 +198,12 @@ test_that("get_study_subtree returns an error when tree_id doesn't exist", {
 })
 
 ## API still returns object
-## test_that("get_study_subtree returns an error when the subtree_id is invalid",
-##           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar")))
+test_that("get_study_subtree returns an error when the subtree_id is invalid",
+           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar")))
 
 test_that("get_study_subtree returns a phylo object", {
     skip_on_cran()
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             object_format = "phylo")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
@@ -211,14 +211,14 @@ test_that("get_study_subtree returns a phylo object", {
 
 test_that("get_study_subtree fails if file name is given but no file format", {
     skip_on_cran()
-    expect_error(get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    expect_error(get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                                    file = "test"), "must be specified")
 })
 
 test_that("get_study_subtree returns a nexus file", {
     skip_on_cran()
     ff <- tempfile(fileext = ".nex")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             file_format = "nexus", file = ff)
     expect_true(tt)
     expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
@@ -227,19 +227,10 @@ test_that("get_study_subtree returns a nexus file", {
 test_that("get_study_subtree returns a newick file", {
     skip_on_cran()
     ff <- tempfile(fileext = ".tre")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             file_format = "newick", file = ff)
     expect_true(tt)
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
-})
-
-test_that("get_study_subtree returns a json file", {
-    skip_on_cran()
-    ff <- tempfile(fileext = ".json")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                            file_format = "json", file = ff)
-    expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 

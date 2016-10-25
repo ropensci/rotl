@@ -5,7 +5,8 @@
 \title{Study Subtree}
 \usage{
 get_study_subtree(study_id, tree_id, subtree_id, object_format = c("phylo"),
-  file_format, file, ...)
+  tip_label = c("original_label", "ott_id", "ott_taxon_name"), file_format,
+  file, deduplicate = TRUE, ...)
 }
 \arguments{
 \item{study_id}{the study identifier (character)}
@@ -19,12 +20,27 @@ get_study_subtree(study_id, tree_id, subtree_id, object_format = c("phylo"),
 function (default, and currently only possibility \code{phylo}
 from the \code{\link[ape]{ape}} package)}
 
+\item{tip_label}{the format of the tip
+labels. \dQuote{\code{original_label}} (default) returns the
+original labels as provided in the study,
+\dQuote{\code{ott_id}} labels are replaced by their ott IDs,
+\dQuote{\code{ott_taxon_name}} labels are replaced by their
+Open Tree Taxonomy taxon name.}
+
 \item{file_format}{character, the file format to use to save the
-results of the query (possible values, \sQuote{newick},
-\sQuote{nexus}, \sQuote{json}).}
+results of the query (possible values, \sQuote{newick} or
+\sQuote{nexus}).}
 
 \item{file}{character, the path and file name where the output
 should be written.}
+
+\item{deduplicate}{logical (default \code{TRUE}). If the tree
+returned by the study contains duplicated taxon names, should
+they be made unique? It is normally illegal for NEXUS/Newick
+tree strings to contain duplicated tip names. This is a
+workaround to circumvent this requirement. If \code{TRUE},
+duplicated tip labels will be appended \code{_1}, \code{_2},
+etc.}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
@@ -34,10 +50,9 @@ Retrieve subtree from a specific tree in the Open Tree of Life data store
 }
 \examples{
 \dontrun{
-small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
-ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+ingroup  <- get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup")
 nexus_file <- tempfile(fileext=".nex")
-get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup", file=nexus_file,
+get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup", file=nexus_file,
                   file_format="nexus")
 }
 }
