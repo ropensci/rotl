@@ -50,9 +50,9 @@ Retrieve subtree from a specific tree in the Open Tree of Life data store
 }
 \examples{
 \dontrun{
-ingroup  <- get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup")
+ingroup  <- get_study_subtree(study_id="pg_420", tree_id="tree522", subtree_id="ingroup")
 nexus_file <- tempfile(fileext=".nex")
-get_study_subtree(study_id="pg_420", tree="tree522", subtree_id="ingroup", file=nexus_file,
+get_study_subtree(study_id="pg_420", tree_id="tree522", subtree_id="ingroup", file=nexus_file,
                   file_format="nexus")
 }
 }
