@@ -142,7 +142,7 @@
     }
     format <- match.arg(format)
     format <- otl_formats(format)
-    url_stem <- paste("study", study_id, "tree", paste0(tree_id, format), sep="/")
+    url_stem <- paste("study", study_id, "subtree", paste0(tree_id, format), sep="/")
     res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""), ...)
     res
 }
