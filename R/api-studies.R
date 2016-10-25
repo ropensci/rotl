@@ -124,7 +124,9 @@
 
 ##' @importFrom httr content
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
-                               format=c("newick", "nexus", "nexml", "json"), ...) {
+                               format=c("newick", "nexus", "nexml", "json"),
+                               tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
+                               ...) {
     if (is.null(study_id)) {
         stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
@@ -142,8 +144,9 @@
     }
     format <- match.arg(format)
     format <- otl_formats(format)
+    tip_label <- match.arg(tip_label)
     url_stem <- paste("study", study_id, "subtree", paste0(tree_id, format), sep="/")
-    res <- otl_GET(path=paste(url_stem, "?subtree_id=", subtree_id, sep=""), ...)
+    res <- otl_GET(path=paste0(url_stem, "?subtree_id=", subtree_id, "&tip_label=", tip_label), ...)
     res
 }
 
