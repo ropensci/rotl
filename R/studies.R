@@ -303,12 +303,12 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
-##'  tree <- get_study_tree(study_id="pg_1144", tree="tree2324")
+##'  tree <- get_study_tree(study_id="pg_1144", tree_id="tree2324")
 ##'
 ##'  ## comparison of the first few tip labels depending on the options used
-##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="original_label")$tip.label)
-##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="ott_id")$tip.label)
-##'  head(get_study_tree(study_id="pg_1144", tree="tree2324", tip_label="ott_taxon_name")$tip.label)
+##'  head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="original_label")$tip.label)
+##'  head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="ott_id")$tip.label)
+##'  head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="ott_taxon_name")$tip.label)
 ##' }
 
 get_study_tree <- function(study_id = NULL, tree_id = NULL, object_format = c("phylo"),
@@ -420,10 +420,10 @@ print.study_meta <- function(x, ...) {
 ##' @importFrom jsonlite toJSON
 ##' @examples
 ##' \dontrun{
-##' small_tr <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="node552052")
-##' ingroup  <- get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup")
+##' small_tr <- get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="node552052")
+##' ingroup  <- get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="ingroup")
 ##' nexus_file <- tempfile(fileext=".nex")
-##' get_study_subtree(study_id="pg_1144", tree="tree2324", subtree_id="ingroup", file=nexus_file,
+##' get_study_subtree(study_id="pg_1144", tree_id="tree2324", subtree_id="ingroup", file=nexus_file,
 ##'                   file_format="nexus")
 ##' }
 get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
