@@ -124,7 +124,7 @@
 
 ##' @importFrom httr content
 .get_study_subtree <- function(study_id, tree_id, subtree_id,
-                               format=c("newick", "nexus", "nexml", "json"),
+                               format=c("newick", "nexus", "nexml"),
                                tip_label = c("ot:originallabel", "ot:ottid", "ot:otttaxonname"),
                                ...) {
     if (is.null(study_id)) {
