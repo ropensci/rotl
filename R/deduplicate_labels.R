@@ -23,7 +23,8 @@ dedup_lbl <- function(tr_str) {
                           paste0("\\1", tr_lbl_unq[i], "\\2"),  tr_str)
         }
         warning("Some tip labels were duplicated and have been modified: ",
-                paste(tr_lbl[duplicated(tr_lbl)], collapse = ", "))
+                paste(tr_lbl[duplicated(tr_lbl)], collapse = ", "),
+                call. = FALSE)
     }
     paste0(tr_str, ";")
 }
