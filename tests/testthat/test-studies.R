@@ -351,7 +351,7 @@ test_that("single study detailed=FALSE", {
 test_that("multiple studies detailed=TRUE", {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = TRUE)
+                                          value = "mammalia", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
               expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
@@ -365,7 +365,7 @@ test_that("multiple studies detailed=TRUE", {
 test_that("multiple studies detailed=FALSE", {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = FALSE)
+                                          value = "mammalia", detailed = FALSE)
               expect_true(inherits(res, "study_ids"))
               expect_true(inherits(res, "matched_studies"))
               expect_true(inherits(res, "data.frame"))
@@ -469,13 +469,13 @@ test_that("list_trees with studies_find_studies and detailed = FALSE", {
 test_that("list_trees with studies_find_studies and detailed = TRUE",  {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = TRUE)
+                                          value = "mammalia", detailed = TRUE)
               expect_true(inherits(list_trees(res), "list"))
               expect_true(length(list_trees(res)) >= 8)
-              expect_true(sum(names(list_trees(res)) %in% c("pg_435", "ot_428",
-                                                            "pg_420", "ot_429",
-                                                            "ot_214", "ot_117",
-                                                            "ot_116", "pg_2799")) >= 8)
+              expect_true(sum(names(list_trees(res)) %in% c("pg_2647", "ot_308",
+                                                            "pg_2812", "ot_109",
+                                                            "pg_2582", "pg_1428",
+                                                            "ot_755", "pg_2550")) >= 8)
           })
 
 test_that("list_trees with studies_find_trees and detailed=FALSE", {
