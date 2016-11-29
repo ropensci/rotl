@@ -1,6 +1,7 @@
 language: R
 warnings_are_errors: true
 r_check_args: --as-cran --run-dontrun
+cache: packages
 r_packages:
    - covr
 r_github_packages:
