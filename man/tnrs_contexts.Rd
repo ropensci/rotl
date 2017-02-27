@@ -29,4 +29,3 @@ used as input (via the \code{context_name} argument in other
 functions) to limit the search scope of other services including
 \code{\link{tnrs_match_names}}.
 }
-

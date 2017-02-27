@@ -77,4 +77,3 @@ list_trees(res, study_id = "pg_2769")
   the studies can be searched on. \code{\link{list_trees}} for
   listing the trees that match the query.
 }
-

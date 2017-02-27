@@ -40,4 +40,3 @@ study_external_IDs(flies[2,]$study_ids)
 \seealso{
 studies_find_studies (used to discover study IDs)
 }
-

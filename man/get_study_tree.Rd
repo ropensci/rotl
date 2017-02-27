@@ -58,4 +58,3 @@ Returns a specific tree from within a study
  head(get_study_tree(study_id="pg_1144", tree_id="tree2324", tip_label="ott_taxon_name")$tip.label)
 }
 }
-

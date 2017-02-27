@@ -36,4 +36,3 @@ from
 \seealso{
 \code{\link{studies_find_trees}}
 }
-

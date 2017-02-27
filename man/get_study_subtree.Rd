@@ -57,4 +57,3 @@ get_study_subtree(study_id="pg_1144", tree_id="tree5800", subtree_id="ingroup", 
                   file_format="nexus")
 }
 }
-

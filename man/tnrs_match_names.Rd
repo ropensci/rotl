@@ -79,4 +79,3 @@ function.
     \code{\link{update.match_names}},
     \code{\link{synonyms.match_names}}.
 }
-

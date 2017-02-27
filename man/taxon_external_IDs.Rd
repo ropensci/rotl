@@ -29,4 +29,3 @@ tnrs_matchnames, which can be used to search for taxa by name.
 
 taxonomy_taxon, for more information about a given taxon.
 }
-

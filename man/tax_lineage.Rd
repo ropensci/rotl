@@ -29,4 +29,3 @@ returned by \code{\link{taxonomy_taxon_info}}.
 The object passed to this function must have been created using
 the argument \code{include_lineage=TRUE}.
 }
-

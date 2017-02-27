@@ -68,4 +68,3 @@ mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
     searched. \code{\link{list_trees}} that returns a list for all
     tree ids associated with a study.
 }
-

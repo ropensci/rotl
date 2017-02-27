@@ -29,4 +29,3 @@ tr$tip.label \%in\% genera
 tr$tip.label <- strip_ott_ids(tr$tip.label)
 tr$tip.label \%in\% genera}
 }
-

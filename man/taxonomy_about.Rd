@@ -41,4 +41,3 @@ complete taxonomy source files can be downloaded.
 taxonomy_about()
 }
 }
-

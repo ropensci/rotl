@@ -38,4 +38,3 @@ the search criteria when used on objects returned by
     \code{\link{studies_find_trees}}. The help for these functions
     have examples demonstrating the use of \code{list_trees}.
 }
-

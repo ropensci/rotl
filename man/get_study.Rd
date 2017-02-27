@@ -57,4 +57,3 @@ if (require(RNeXML)) { ## if RNeXML is installed get the object directly
 \seealso{
 \code{\link{get_study_meta}}
 }
-

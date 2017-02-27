@@ -32,4 +32,3 @@ results.
 res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
 }
 }
-

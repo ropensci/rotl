@@ -43,4 +43,3 @@ Given a node, return the subtree of the synthetic tree descended
 \dontrun{
 res <- tol_subtree(ott_id=241841)}
 }
-
