@@ -1,4 +1,4 @@
-
+c(
     bibentry(
         header = "To cite rotl in publications use:",
         bibtype = "Article",
@@ -16,4 +16,42 @@
             paste("Michonneau, F., Brown, J. W. and Winter, D. J. (2016),
              rotl: an R package to interact with the Open Tree of Life data.
              Methods Ecol Evol. 7(12):1476-1481. doi:10.1111/2041-210X.12593")
+    ),
+    bibentry(
+        header = "You may also want to cite the paper for the Open Tree of Life",
+        bibtype = "Article",
+        title = "Synthesis of phylogeny and taxonomy into a comprehensive tree of life", ,
+        author = personList(
+            as.person("Cody E. Hinchliff"),
+            as.person("Stephen A. Smith"),
+            as.person("James F. Allman"),
+            as.person("J. Gordon Burleigh"),
+            as.person("Ruchi Chaudhary"),
+            as.person("Lyndon M. Coghill"),
+            as.person("Keith A. Crandall"),
+            as.person("Jiabin Deng"),
+            as.person("Bryan T. Drew"),
+            as.person("Romina Gazis"),
+            as.person("Karl Gude"),
+            as.person("David S. Hibbett"),
+            as.person("Laura A. Katz"),
+            as.person("H. Dail Laughinghouse IV"),
+            as.person("Emily Jane McTavish"),
+            as.person("Peter E. Midford"),
+            as.person("Christopher L. Owen"),
+            as.person("Richard H. Ree"),
+            as.person("Jonathan A. Rees"),
+            as.person("Douglas E. Soltis"),
+            as.person("Tiffani Williams"),
+            as.person("Karen A. Cranston")),
+        journal = "Proceedings of the National Academy of Sciences",
+        year = "2015",
+        volume = "112",
+        number = "41",
+        pages = "12764-12769",
+        doi =  "10.1073/pnas.1423041112",
+        textVersion = c("Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and
+                         taxonomy into a comprehensive tree of life. Proceedings of
+                         the National Academy of Sciences 112.41 (2015): 12764-12769")
     )
+)
