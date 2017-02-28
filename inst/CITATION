@@ -8,12 +8,12 @@
                                   as.person("David J. Winter")),
         journal      = "Methods in Ecology and Evolution",
         year         = "2016",
-        volume       = "",
-        number       = "",
-        pages        = "",
+        volume       = "7",
+        number       = "12",
+        pages        = "1476-1481",
         doi          =  "10.1111/2041-210X.12593",
         textVersion  =
             paste("Michonneau, F., Brown, J. W. and Winter, D. J. (2016),
              rotl: an R package to interact with the Open Tree of Life data.
-             Methods Ecol Evol. doi:10.1111/2041-210X.12593")
+             Methods Ecol Evol. 7(12):1476-1481. doi:10.1111/2041-210X.12593")
     )
