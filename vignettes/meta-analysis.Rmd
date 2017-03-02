@@ -225,6 +225,6 @@ There are an ever-growing number of packages that allow an ever-growing number
 of analysis to performed in R. Some "classics" like ancestral state
 reconstruction,  phylogenetic independent contrasts and lineage through time plots
 are implemented in `ape`. Packages like `phytools`, `caper` and `diversitree`
-provide extensions to these methods.  The [CRAN Phylogenetics Taskview](https://cran.r-project.org/web/views/Phylogenetics.html)
+provide extensions to these methods.  The [CRAN Phylogenetics Taskview](https://CRAN.R-project.org/view=Phylogenetics)
 gives a good idea of the diversity of packages and analyses that can be
 completed in R.
