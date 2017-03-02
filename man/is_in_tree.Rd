@@ -26,14 +26,16 @@ monophyletic in the tree.
 }
 \examples{
 \dontrun{
-  plant_families <- c("Asteraceae", "Solanaceae", "Poaceae", "Amaranthaceae", "Zamiaceae", "Araceae", "Juncaceae")
+  plant_families <- c("Asteraceae", "Solanaceae", "Poaceae", "Amaranthaceae",
+                      "Zamiaceae", "Araceae", "Juncaceae")
   matched_names <- tnrs_match_names(plant_families)
   ## This fails because some ott ids are not in the tree
   ## plant_tree <- tol_induced_subtree(ott_id(matched_names))
   ## So let's check which ones are actually in the tree first:
   in_tree <- is_in_tree(ott_id(matched_names))
+  sub_in_tree <- ott_id(matched_names)[in_tree]
   ## This now works:
-  plant_tree <- tol_induced_subtree(ott_id(matched_names)[in_tree])
+  plant_tree <- tol_induced_subtree(sub_in_tree)
 }
 
 }
