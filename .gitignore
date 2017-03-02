@@ -15,3 +15,5 @@ tmp/
 inst/doc
 /.projectile
 revdep/
+README.html
+README_files/

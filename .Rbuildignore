@@ -1,6 +1,8 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^README\.rmd$
+^README\.html$
+README_files/
 figure/
 tmp/
 ^CONDUCT\.md$

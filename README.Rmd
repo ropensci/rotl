@@ -1,3 +1,7 @@
+---
+output: github_document
+---
+
 ```{r setup, eval=TRUE, echo=FALSE}
 library(knitr)
 #opts_knit$set(upload.fun = image_uri)
@@ -66,10 +70,10 @@ There are three vignettes:
   `vignette("meta-analysis", package="rotl")`.
 
 The vignettes are also available from CRAN:
-[How to use `rotl`?](https://cran.r-project.org/web/packages/rotl/vignettes/how-to-use-rotl.html),
-[Data mashups](https://cran.r-project.org/web/packages/rotl/vignettes/data_mashups.html),
+[How to use `rotl`?](https://cran.r-project.org/package=rotl/vignettes/how-to-use-rotl.html),
+[Data mashups](https://cran.r-project.org/package=rotl/vignettes/data_mashups.html),
 and
-[Using the Open Tree synthesis in a comparative analysis](https://cran.r-project.org/web/packages/rotl/vignettes/meta-analysis.html).
+[Using the Open Tree synthesis in a comparative analysis](https://cran.r-project.org/package=rotl/vignettes/meta-analysis.html).
 
 ## Quick start
 
