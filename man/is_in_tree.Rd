@@ -33,9 +33,8 @@ monophyletic in the tree.
   ## plant_tree <- tol_induced_subtree(ott_id(matched_names))
   ## So let's check which ones are actually in the tree first:
   in_tree <- is_in_tree(ott_id(matched_names))
-  sub_in_tree <- ott_id(matched_names)[in_tree]
   ## This now works:
-  plant_tree <- tol_induced_subtree(sub_in_tree)
+  plant_tree <- tol_induced_subtree(ott_id(matched_names)[in_tree])
 }
 
 }
