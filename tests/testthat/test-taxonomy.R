@@ -172,6 +172,7 @@ test_that("taxonomy_mrca with ott_id for tax_info", {
 
 
 test_that("ott_id subset works", {
+    skip_on_cran()
     expect_true(inherits(ott_id(tax_info), "otl_ott_id"))
     expect_true(inherits(ott_id(tax_info)[1], "otl_ott_id"))
     expect_true(!is.null(names(ott_id(tax_info))))
@@ -352,6 +353,7 @@ test_that("taxonomy_mrca with ott_id for tax_mrca", {
 })
 
 test_that("ott_id subset works", {
+    skip_on_cran()
     expect_true(inherits(ott_id(tax_mrca_mono), "otl_ott_id"))
     expect_true(inherits(ott_id(tax_mrca_mono)[1], "otl_ott_id"))
     expect_true(!is.null(names(ott_id(tax_mrca_mono))))
