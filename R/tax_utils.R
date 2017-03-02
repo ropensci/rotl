@@ -74,7 +74,7 @@ add_otl_class <- function(res, .f) {
 
 ##' @export
 `[.otl_ott_id` <- function(x, i, ...) {
-    r <- NextMethod("[")
+    r <- NextMethod()
     class(r) <- class(x)
     r
 }
