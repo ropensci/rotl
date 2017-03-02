@@ -171,6 +171,15 @@ test_that("taxonomy_mrca with ott_id for tax_info", {
 })
 
 
+test_that("ott_id subset works", {
+    expect_true(inherits(ott_id(tax_info), "otl_ott_id"))
+    expect_true(inherits(ott_id(tax_info)[1], "otl_ott_id"))
+    expect_true(!is.null(names(ott_id(tax_info))))
+})
+
+
+
+
 ############################################################################
 ## taxon subtree                                                          ##
 ############################################################################
@@ -225,6 +234,8 @@ test_that("taxonomy subtree works if taxa has only 1 descendant", {
     expect_true(inherits(tt$tip_label, "character"))
 })
 
+
+
 ############################################################################
 ## taxonomic MRCA                                                         ##
 ############################################################################
@@ -254,7 +265,7 @@ test_that("mrca tax_name method", {
 
 test_that("mrca ott_id method", {
     skip_on_cran()
-    expect_equal(ott_id(tax_mrca)[1],
+    expect_equivalent(ott_id(tax_mrca)[1],
                  list("Asterales" = 1042120))
     expect_true(inherits(ott_id(tax_mrca), "otl_ott_id"))
 })
@@ -338,4 +349,26 @@ test_that("taxonomy_mrca with ott_id for tax_mrca", {
     skip_on_cran()
     expect_equivalent(ott_id(tax_mrca_mono),
                       ott_id(taxonomy_mrca(ott_id(tax_mrca_mono))))
+})
+
+test_that("ott_id subset works", {
+    expect_true(inherits(ott_id(tax_mrca_mono), "otl_ott_id"))
+    expect_true(inherits(ott_id(tax_mrca_mono)[1], "otl_ott_id"))
+    expect_true(!is.null(names(ott_id(tax_mrca_mono))))
+})
+
+
+
+### is_in_tree() ---------------------------------------------------------------
+
+if (identical(Sys.getenv("NOT_CRAN"), "true"))  {
+    spp <- c("Tyrannosaurus rex", "Velociraptor", "Fabaceae", "Solanaceae")
+    ot_names <- tnrs_match_names(spp)
+    ot_ids <- ott_id(ot_names)
+}
+
+test_that("test is_in_tree", {
+    in_tree <- is_in_tree(ot_ids)
+    expect_equal(sum(in_tree), 1)
+    expect_true(all(names(in_tree) %in% spp))
 })

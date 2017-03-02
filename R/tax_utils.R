@@ -71,3 +71,9 @@ add_otl_class <- function(res, .f) {
                     class(res))
     res
 }
+
+`[.otl_ott_id` <- function(x, i, ...) {
+    r <- NextMethod("[")
+    class(r) <- class(x)
+    r
+}
