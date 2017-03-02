@@ -249,35 +249,51 @@ resolution service are not part of the Open Tree's synthesis tree. These are
 usually traditional higher-level taxa that have been found to be paraphyletic.
 
 For instance, if you wanted to fetch a tree relating the three birds that go
-into a [Turkducken](https://en.wikipedia.org/wiki/Turducken) you might search
-for the turkey, duck, and chicken genera:
+into a [Turkducken](https://en.wikipedia.org/wiki/Turducken) as well as the pork
+used for stuffing, you might search for the turkey, duck, chicken, and pork
+genera:
 
 ```{r}
-turducken <- c("Meleagris", "Anas", "Gallus")
+turducken <- c("Meleagris", "Anas", "Gallus", "Sus")
 taxa <- tnrs_match_names(turducken, context="Animals")
 taxa
 ```
-So, we have IDs for each genus but those messages in the `flag` column look
-concerning. `BARREN` means these taxa have no descendants and
-`MAJOR_RANK_CONFLICT` refers to inconsitancies between the rank of these taxa
-and some of their relatives. For thtese reasons, _Meleagris_ and _Anas_ are not
-included in the synthetic tree.
 
-If we tried to press on ahead with the IDs that we have, we'd get an
-error (because there are too few good IDs) or a tree with fewer tips that we had
-anticipated.
+We have the OTT ids for each genus, however, if we tried to get the induced
+subtree from these results, we would get an error:
 
-```{r, eval=FALSE}
-tr <- tol_induced_subtree(taxa$ott_id)
+```{r, error=TRUE}
+tr <- tol_induced_subtree(ott_id(taxa))
 ```
+
+As the error message suggests, some of the taxa are not found in the synthetic
+tree. This occurs for 2 main reasons: either the taxa is invalid, or it is part
+of a group that is not monophyletic in the synthetic tree. There are two ways to
+get around this issue: (1) removing the taxa that are not part of the Open Tree;
+(2) using the complete species name.
+
+#### Removing the taxa missing from the synthetic tree
+
+To help with this situation, `rotl` provides a way to identify the OTT ids that
+are not part of the synthetic tree. The function `is_in_tree()` takes the output
+of the `ott_id()` function and returns a vector of logical indicating whether
+the taxa are part of the synthetic tree. We can then use to only keep the taxa that appear in the synthetic tree:
+
+```{r}
+in_tree <- is_in_tree(ott_id(taxa))
+in_tree
+tr <- tol_induced_subtree(ott_id(taxa)[in_tree])
+```
+
+#### Using the full taxonomic names
 
 The best way to avoid these problems is to specify complete species names
 (species being the lowest level of classification in the Open Tree taxonomy they
 are guaranteed to be monophyletic):
 
 ```{r, fig.width=7, fig.height=4}
-turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
+turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus", "Sus scrofa")
 taxa <- tnrs_match_names(turducken_spp, context="Animals")
-tr <- tol_induced_subtree(taxa$ott_id)
+tr <- tol_induced_subtree(ott_id(taxa))
 plot(tr)
 ```
