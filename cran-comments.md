@@ -1,3 +1,8 @@
+## Resubmission
+
+- This addresses the non-canoncial URL in the vignette, and the warning
+  regarding the vignettes being more recent than the files found in inst/doc.
+
 ## Comments
 
 - This submission addresses the comment by Prof Ripley from 2017-02-27. The use
@@ -8,7 +13,7 @@
 
 - local Ubuntu 16.10, R 3.3.2
 - Ubuntu 12.04 (travis-ci), R 3.3.2
-- Windows with win-builder (R 3.3.2 and R Under development (2017-02-28 r72286)
+- Windows with R-hub (R 3.3.2 and R Under development (2017-02-28 r72286)
 - local Debian, using R Under development (unstable) (2017-03-01 r72295)
 
 ## R CMD check results
@@ -31,10 +36,6 @@ Possibly mis-spelled words in DESCRIPTION:
   API (2:45, 9:54)
   phylogenetic (10:5, 12:60)
 ```
-
-## CRAN Package Check Results
-
-* This release addresses the WARNINGs associated with the vignettes listed.
 
 ## Downstream dependencies
 
