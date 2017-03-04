@@ -1,4 +1,4 @@
-## rotl 3.0.2
+## rotl 3.0.3
 
 ### New features
 
