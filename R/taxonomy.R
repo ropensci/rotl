@@ -1,4 +1,4 @@
-##' Summary information about the Open Tree Taxaonomy (OTT)
+##' Summary information about the Open Tree Taxonomy (OTT)
 ##'
 ##' Return metadata and information about the taxonomy
 ##' itself. Currently, the available metadata is fairly sparse, but
@@ -115,7 +115,7 @@ taxonomy_taxon_info <- function (ott_ids, include_children = FALSE,
 ##' @return If the \code{file} argument is missing: \itemize{
 ##'
 ##'     \item{\dQuote{\code{taxa}}} { a list of the taxa names
-##'     (species) in slot \code{tip_label}, and higher-level taxanomy
+##'     (species) in slot \code{tip_label}, and higher-level taxonomy
 ##'     (e.g., families, genera) in slot \code{edge_label}, descending
 ##'     from the taxa corresponding to the \code{ott_id} provided. }
 ##'

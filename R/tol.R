@@ -181,7 +181,7 @@ source_list.tol_summary <- .source_list
 ##'     nodes is not in the synthetic tree an error will be returned.
 ##'
 ##'     Taxonomic methods (\code{tax_sources()}, \code{ott_id()},
-##'     \code{unique_name()}, ...) are availble on the objects
+##'     \code{unique_name()}, ...) are available on the objects
 ##'     returned by \code{tol_mrca()}. If the MRCA node is MRTA, the
 ##'     name of the object returned by these methods will start with
 ##'     \sQuote{ott}, otherwise it will start with \sQuote{mrca}.
@@ -378,7 +378,7 @@ source_list.tol_mrca <- .source_list
 ##'     \code{\link{rotl}} for more information).
 ##'
 ##' @return If no value is specified to the \code{file} argument
-##'     (default), a phyogenetic tree of class \code{phylo}.
+##'     (default), a phylogenetic tree of class \code{phylo}.
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##'
@@ -424,7 +424,7 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##'     \code{\link{rotl}} for more information).
 ##'
 ##' @return If no value is specified to the \code{file} argument
-##'     (default), a phyogenetic tree of class \code{phylo}.
+##'     (default), a phylogenetic tree of class \code{phylo}.
 ##'
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.

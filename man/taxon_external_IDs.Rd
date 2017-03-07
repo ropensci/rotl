@@ -11,7 +11,7 @@ taxon_external_IDs(taxon_id)
 }
 \value{
 a data.frame in which each row represents a unique record in an
-external databse. The column "source" provides and abbreviated name for the 
+external database. The column "source" provides and abbreviated name for the
 database, and "id" the unique ID for the record.
 }
 \description{
@@ -21,7 +21,7 @@ contributed the rank, position and definition of a given Open Tree taxon.
 }
 \examples{
 \dontrun{
-   gibbon_IDs <- taxon_external_IDs(712902) 
+   gibbon_IDs <- taxon_external_IDs(712902)
 }
 }
 \seealso{

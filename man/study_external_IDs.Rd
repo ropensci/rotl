@@ -15,7 +15,7 @@ contains some of the following.
 
 doi, character, the DOI for the paper describing this study
 
-external_data_url, character, a URL to an external data repository 
+external_data_url, character, a URL to an external data repository
 (e.g. a treebase entry) if one exists.
 
 pubmed_id character, the unique ID for this study in the NCBI's pubmed database
@@ -26,7 +26,7 @@ nucleotide_ids character, vector of IDs for the NCBI's nucleotide database
 }
 \description{
 Data associated with studies contributing to the Open Tree synthesis may
-be available from other databases. In particular, trees and alignments 
+be available from other databases. In particular, trees and alignments
 may be available from treebase and DNA sequences and bibliographic
 information associated with a given study may be available from the NCBI.
 This function retrieves that information for a given study.
