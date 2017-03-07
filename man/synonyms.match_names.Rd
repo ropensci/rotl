@@ -22,7 +22,7 @@ list the synonyms}
 \item{...}{currently ignored}
 }
 \value{
-a list whose elements are all synomym names (as vectors of
+a list whose elements are all synonym names (as vectors of
     character) for the taxonomic names that match the query (the
     names of the elements of the list).
 }

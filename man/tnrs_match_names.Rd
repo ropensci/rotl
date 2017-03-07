@@ -46,7 +46,7 @@ Match taxonomic names to the Open Tree Taxonomy.
 \details{
 Accepts one or more taxonomic names and returns information about
 potential matches for these names to known taxa in the Open Tree
-Taxononmy.
+Taxonomy.
 
 This service uses taxonomic contexts to disambiguate homonyms and
 misspelled names; a context may be specified using the

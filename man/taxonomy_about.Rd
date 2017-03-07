@@ -28,7 +28,7 @@ A list with the following properties:
 }
 }
 \description{
-Summary information about the Open Tree Taxaonomy (OTT)
+Summary information about the Open Tree Taxonomy (OTT)
 }
 \details{
 Return metadata and information about the taxonomy

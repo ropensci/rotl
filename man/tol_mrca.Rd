@@ -143,7 +143,7 @@ Get the MRCA of a set of nodes on the current synthetic
     nodes is not in the synthetic tree an error will be returned.
 
     Taxonomic methods (\code{tax_sources()}, \code{ott_id()},
-    \code{unique_name()}, ...) are availble on the objects
+    \code{unique_name()}, ...) are available on the objects
     returned by \code{tol_mrca()}. If the MRCA node is MRTA, the
     name of the object returned by these methods will start with
     \sQuote{ott}, otherwise it will start with \sQuote{mrca}.

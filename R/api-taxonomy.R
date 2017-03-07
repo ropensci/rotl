@@ -1,5 +1,5 @@
 ##' @importFrom httr content
-## Summary information about the OpenTree Taxaonomy (OTT)
+## Summary information about the OpenTree Taxonomy (OTT)
 .taxonomy_about <- function(...) {
     res <- otl_POST(path="/taxonomy/about", body=list(), ...)
     res

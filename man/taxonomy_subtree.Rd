@@ -28,7 +28,7 @@ function. Ignored unless \code{output_format} is set to
 If the \code{file} argument is missing: \itemize{
 
     \item{\dQuote{\code{taxa}}} { a list of the taxa names
-    (species) in slot \code{tip_label}, and higher-level taxanomy
+    (species) in slot \code{tip_label}, and higher-level taxonomy
     (e.g., families, genera) in slot \code{edge_label}, descending
     from the taxa corresponding to the \code{ott_id} provided. }
 

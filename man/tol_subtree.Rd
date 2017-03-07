@@ -25,7 +25,7 @@ file in newick format.}
 }
 \value{
 If no value is specified to the \code{file} argument
-    (default), a phyogenetic tree of class \code{phylo}.
+    (default), a phylogenetic tree of class \code{phylo}.
     Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.
 }

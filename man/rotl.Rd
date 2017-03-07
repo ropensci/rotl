@@ -9,7 +9,7 @@
 The Open Tree of Life is an NSF funded project that is generating
 an online, comprehensive phylogenetic tree for 1.8 million
 species. \code{rotl} provides an interface that allows you to
-query and retrive the parts of the tree of life that is of
+query and retrieve the parts of the tree of life that is of
 interest to you.
 }
 \details{
