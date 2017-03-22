@@ -1,3 +1,12 @@
+## rotl 3.0.xxxx
+
+### New features
+
+* To improve stability of results across releases of the Open Tree Taxonomy, the
+  TNRS match with the lowest OTT id is returned instead of the first one in case
+  a name is shared across multiple domains (related to #88)
+
+
 ## rotl 3.0.3
 
 ### New features
