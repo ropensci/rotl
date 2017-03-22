@@ -48,3 +48,12 @@ is_in_tree.otl_ott_id <- function(ott_ids, ...) {
 
     in_tree
 }
+
+##' @export
+is_in_tree.default <- function(ott_ids, ...) {
+    chk_ids <- vapply(ott_ids, check_numeric, logical(1))
+    if (all(chk_ids))
+        is_in_tree.otl_ott_id(ott_ids)
+    else
+        stop("Invalid format for ott_ids (they should look like numbers)")
+}
