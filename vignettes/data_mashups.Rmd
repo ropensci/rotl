@@ -61,7 +61,7 @@ we do that, let's ensure we can match up our original data to the Open Tree
 names and IDs by adding them to our `data.frame`:
 
 ```{r, munge}
-mu$ott_name <- taxon_search$unique_name
+mu$ott_name <- unique_name(taxon_search)
 mu$ott_id <- taxon_search$ott_id
 ```
 
@@ -85,7 +85,7 @@ contain them.  Starting with our first species _Tetrahymena thermophila_ we can
 use `studies_find_trees` to do this search.
 
 ```{r taxon_count}
-studies_find_trees(property="ot:ottId", value="180195")
+studies_find_trees(property="ot:ottId", value=ott_id(taxon_search)[1])
 ```
 
 Well... that's not very promising. We can repeat that process for all of the IDs
@@ -111,7 +111,8 @@ Using the default arguments you can get a tree object into your R session:
 
 
 ```{r subtree,  fig.width=7, fig.height=4}
-tr <- tol_induced_subtree(ott_ids=mu$ott_id)
+ott_in_tree <- ott_id(taxon_search)[is_in_tree(ott_id(taxon_search))]
+tr <- tol_induced_subtree(ott_ids = ott_in_tree)
 plot(tr)
 ```
 
@@ -131,7 +132,7 @@ mu$ott_name[1]
 tr$tip.label[4]
 ```
 
-`rotl` provides a convienence function `strip_ott_ids` to deal with these. 
+`rotl` provides a convienence function `strip_ott_ids` to deal with these.
 
 ```{r, sub}
 tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
@@ -156,9 +157,9 @@ And now we can plot the data and the tree together
 plot(tree_data)
 ```
 
-##Find external data associated with studies, trees and taxa from Open Tree
+## Find external data associated with studies, trees and taxa from Open Tree
 
-In the above example we looked for a tree that related species in another dataset. 
+In the above example we looked for a tree that related species in another dataset.
 Now we will go the other way, and try to find data associated with Open Tree records
 in other databases.
 
@@ -166,9 +167,9 @@ in other databases.
 
 Let's imagine you were interested in extending or reproducing the results of a
 published study. If that study is included in Open Tree you can find it via
-`studies_find_studies` or `studies_find_trees` and retrieve the published trees 
-with `get_study`. `rotl` will also help you find external. The function 
-`study_external_IDs` retrieves the DOI for a given study, and uses that to 
+`studies_find_studies` or `studies_find_trees` and retrieve the published trees
+with `get_study`. `rotl` will also help you find external. The function
+`study_external_IDs` retrieves the DOI for a given study, and uses that to
 gather some more data:
 
 ```{r}
@@ -182,7 +183,7 @@ NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
 functions to make use of these IDs within R.
 
 As an example, let's use `rentrez` to download the first two DNA seqences and
-print them. 
+print them.
 
 ```{r}
 library(rentrez)
@@ -190,7 +191,7 @@ seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype
 cat(seqs)
 ```
 
-You could further process these sequences in R with the function `read.dna` from 
+You could further process these sequences in R with the function `read.dna` from
 `ape` or save them to disk by specifying a file name with `cat`.
 
 ### Find a OTT taxon in another taxonomic database

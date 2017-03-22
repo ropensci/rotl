@@ -58,7 +58,7 @@ head(egg_data)
 
 The most important variable in this dataset is `Zr`, which is a [normalized
 effect size](https://en.wikipedia.org/wiki/Fisher_transformation) for difference
-in size between eggs that contain males and females. Values close to zero come
+,in size between eggs that contain males and females. Values close to zero come
 from studies that found the sex of an egg's inhabitant had little effect in its size,
 while large positive or negative values correspond to studies with substantial
 sex biases (towards males and females respectively). Since this is a
@@ -116,7 +116,7 @@ Now we can get the tree. There are really too many tips here to show nicely, so
 we will leave them out of this plot
 
 ```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
-tr <- tol_induced_subtree(taxa$ott_id)
+tr <- tol_induced_subtree(taxa$ott_id[is_in_tree(taxa$ott_id)])
 plot(tr, show.tip.label=FALSE)
 ```
 
@@ -164,6 +164,11 @@ the tree to `NULL`.
 ```{r remove_nodes}
 tr$node.label <- NULL
 ```
+
+```{r match_species_tree}
+egg_data <- egg_data[egg_data$animal %in% tr$tip.label, ]
+```
+
 
 ### Perform the meta-analysis
 
