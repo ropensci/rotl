@@ -208,7 +208,7 @@ lowest_ott_id <- function(rsp) {
     vapply(seq_along(rsp[["results"]]), function(x) {
         .r <- build_summary_match(res = rsp, res_id = x, match_id = NULL,
                                   initial_creation = TRUE)
-        .r <- .r[(!as.logical(.r[["is_synonym"]])) &&
+        .r <- .r[(!as.logical(.r[["is_synonym"]])) &
                  .r[["flags"]] == "", ]
         if (nrow(.r) > 0)
             which.min(.r[["ott_id"]])
