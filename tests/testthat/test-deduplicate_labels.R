@@ -30,7 +30,7 @@ test_that("deduplicate labels works on made up example", {
    expect_warning(dedup_tr <- deduplicate_labels(file_dup),
                   "Some tip labels were duplicated")
    expect_true(file.exists(dedup_tr))
-   phylo_tr <- rncl::read_newick_phylo(file = dedup_tr)
+   expect_warning(phylo_tr <- rncl::read_newick_phylo(file = dedup_tr), "Dropping singleton")
    expect_true(inherits(phylo_tr, "multiPhylo"))
    expect_equal(phylo_tr[[6]]$tip.label, c("A_1_1", "B__2", "A_1_2", "A_1"))
 })

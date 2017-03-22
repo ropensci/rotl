@@ -136,7 +136,8 @@ test_that("tol_subtree fails if ott_id doesn't look like a number", {
 
 test_that("tol_subtree returns a phylo object by default", {
     skip_on_cran()
-    expect_true(inherits(tol_subtree(ott_id = 81461), "phylo"))
+    expect_warning(expect_true(inherits(tol_subtree(ott_id = 81461), "phylo")),
+                   "Dropping")
 })
 
 test_that("tol_subtree returns a newick file when providing a file argument", {
@@ -279,7 +280,8 @@ test_that("tol_node_info with ott_id for tol_mrca", {
 
 test_that("tol_subtree with ott_id for tol_mrca", {
     skip_on_cran()
-    tt <- tol_subtree(ott_id = ott_id(mono))
+    expect_warning(tt <- tol_subtree(ott_id = ott_id(mono)),
+                   "Dropping")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
     expect_true(length(tt$node.label) > 1)
@@ -431,7 +433,8 @@ test_that("tol_node_info with ott_id for tol_info", {
 
 test_that("tol_subtree with ott_id for tol_info", {
     skip_on_cran()
-    tt <- tol_subtree(ott_id = ott_id(tol_mono))
+    expect_warning(tt <- tol_subtree(ott_id = ott_id(tol_mono)),
+                   "Dropping")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
     expect_true(length(tt$node.label) > 1)

@@ -1,4 +1,6 @@
 context("match names")
+hol_ott_id <- 924443
+
 
 ############################################################################
 ## check_args_match_names                                                 ##
@@ -31,14 +33,14 @@ test_that("error generated if row_number and taxon_name are provided", {
 test_that("error generated if row_number and ott_id are provided", {
     skip_on_cran()
     expect_error(rotl:::check_args_match_names(rsp, row_number = 1,
-                                               ott_id = 5004030),
+                                               ott_id = hol_ott_id),
                  "must use only one of")
 })
 
 test_that("error generated if ott_id and taxon_name are provided", {
     skip_on_cran()
     expect_error(rotl:::check_args_match_names(rsp, taxon_name = "holothuria",
-                                               ott_id = 5004030),
+                                               ott_id = hol_ott_id),
                  "must use only one of")
 })
 
@@ -113,7 +115,7 @@ context("inspect.match_names")
      rsp <- tnrs_match_names(names = c("holothuria", "diadema", "fromia"))
      expect_warning(rsp_na <- tnrs_match_names(names = c("diadema", "fluffy",
                                                          "hemichordata", "escherichia")))
-     diadema_ids <- c(4930522, 631176, 643831)
+     diadema_ids <- c(4930522, 631176, 643831, 6356093, 4024672)
  }
 
 
@@ -179,7 +181,7 @@ test_that("synonyms", {
     tt <- synonyms(rsp)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt),
-                 c("Holothuria", "Diadema (genus in Nucletmycea)", "Fromia"))
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
 })
 
 
@@ -207,7 +209,7 @@ test_that("correct synonyms are being returned when asked to look up by row numb
 
 test_that("correct synonyms are being returned when asked to look up by ott id", {
     skip_on_cran()
-    tt <- synonyms(rsp, ott_id = 5004030)
+    tt <- synonyms(rsp, ott_id = 924443)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("Halodeima", tt[["Holothuria"]])))
 })
@@ -219,7 +221,7 @@ test_that("synonyms", {
     tt <- synonyms(rsp_na)
     expect_true(inherits(tt, "list"))
     expect_equal(names(tt),
-                 c("Holothuria", "Diadema (genus in Nucletmycea)", "Fromia"))
+                 c("Holothuria", "Diadema (genus in Holozoa)", "Fromia"))
 })
 
 
@@ -242,7 +244,7 @@ test_that("correct synonyms are being returned when asked to look up by row numb
 
 test_that("correct synonyms are being returned when asked to look up by ott id", {
     skip_on_cran()
-    tt <- synonyms(rsp_na, ott_id = 5004030)
+    tt <- synonyms(rsp_na, ott_id = 924443)
     expect_true(any(grepl("^Holothuria", names(tt))))
     expect_true(any(grepl("Halodeima", tt[["Holothuria"]])))
 })
@@ -331,7 +333,7 @@ test_that("flags with no arguments", {
     flags_rsp <- flags(rsp)
     expect_equal(length(flags_rsp), 5)
     expect_equivalent(sapply(flags_rsp, length),
-                      c(1, 3, 2, 0, 0))
+                      c(1, 2, 2, 0, 0))
 })
 
 test_that("flags with row number", {
@@ -382,7 +384,7 @@ test_that("ott_id with no arguments", {
     expect_true(inherits(ott_id(rsp), "list"))
     expect_true(inherits(ott_id(rsp), "otl_ott_id"))
     expect_equal(names(ott_id(rsp)), tax_rsp)
-    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], 5004030)
+    expect_equal(ott_id(rsp)[["Holothuria"]][[1]], hol_ott_id)
 })
 
 
@@ -390,19 +392,19 @@ test_that("ott_id with row number", {
     skip_on_cran()
     expect_equal(length(ott_id(rsp, 4)), 1)
     expect_true(inherits(ott_id(rsp, 4), "list"))
-    expect_equivalent(ott_id(rsp, 4)[[1]], 5004030)
+    expect_equivalent(ott_id(rsp, 4)[[1]], hol_ott_id)
 })
 
 test_that("ott_id with taxon name", {
     skip_on_cran()
     expect_equal(length(ott_id(rsp, taxon_name = "Holothuria")), 1)
     expect_true(inherits(ott_id(rsp, taxon_name = "Holothuria"), "list"))
-    expect_equivalent(ott_id(rsp, taxon_name = "Holothuria")[[1]], 5004030)
+    expect_equivalent(ott_id(rsp, taxon_name = "Holothuria")[[1]], hol_ott_id)
 })
 
 test_that("ott_id with ott id", {
     skip_on_cran()
-    expect_equal(length(ott_id(rsp, ott_id=5004030)), 1)
-    expect_true(inherits(ott_id(rsp, ott_id=5004030), "list"))
-    expect_equivalent(ott_id(rsp, ott_id=5004030)[[1]], 5004030)
+    expect_equal(length(ott_id(rsp, ott_id=hol_ott_id)), 1)
+    expect_true(inherits(ott_id(rsp, ott_id=hol_ott_id), "list"))
+    expect_equivalent(ott_id(rsp, ott_id=hol_ott_id)[[1]], hol_ott_id)
 })

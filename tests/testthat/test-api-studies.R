@@ -25,8 +25,11 @@ test_that("argument property needs to be character for .studies_find_studies", {
 
 test_that("argument value needs to be character for .studies_find_studies", {
     skip_on_cran()
-    expect_error(.studies_find_studies("test", 123, TRUE, TRUE),
-                 "character")
+    ## there is an error but not because of the argument "value" is
+    ## character, it looks like a number so it's OK. Failure is
+    ## because of the value doesn't exist.
+    expect_error(.studies_find_studies("test", "123", TRUE, TRUE),
+                 "unrecognized property")
 })
 
 test_that("both property & value need to be provided for .studies_find_studies", {
@@ -66,8 +69,11 @@ test_that("argument property needs to be character for .studies_find_trees", {
 
 test_that("argument value needs to be character for .studies_find_trees", {
     skip_on_cran()
-    expect_error(.studies_find_trees("test", 123, TRUE, TRUE),
-                 "character")
+    ##  there is an error but not because of the argument "value" is
+    ## character, it looks like a number so it's OK. Failure is
+    ## because of the value doesn't exist.
+    expect_error(.studies_find_trees("test", "123", TRUE, TRUE),
+                 "unrecognized property")
 })
 
 test_that("both property & value need to be provided for .studies_find_trees", {

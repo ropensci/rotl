@@ -56,7 +56,7 @@ test_that("taxonomy with include_terminal_descendants=FALSE", {
 })
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    tid <- c(5004030, 337928, 631176)
+    tid <- c(957430, 337928, 631176)
     tax_info <- taxonomy_taxon_info(tid)
 }
 
@@ -65,7 +65,7 @@ test_that("taxonomy_taxon tax_rank method", {
     expect_true(inherits(tax_rank(tax_info),
                          c("otl_tax_rank", "list")))
     expect_equal(names(tax_rank(tax_info)),
-                 c("Holothuria", "Acanthaster",
+                 c("Actinopyga", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
     expect_equal(unlist(unname(tax_rank(tax_info))),
                  rep("genus", 3))
@@ -76,10 +76,10 @@ test_that("taxonomy_taxon ott_taxon_name method", {
     expect_true(inherits(tax_name(tax_info),
                          c("otl_tax_info", "list")))
     expect_equal(names(tax_name(tax_info)),
-                 c("Holothuria", "Acanthaster",
+                 c("Actinopyga", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
     expect_equal(unlist(unname(tax_name(tax_info))),
-                 c("Holothuria", "Acanthaster", "Diadema"))
+                 c("Actinopyga", "Acanthaster", "Diadema"))
 })
 
 test_that("taxonomy_taxon synonyms method", {
@@ -87,7 +87,7 @@ test_that("taxonomy_taxon synonyms method", {
     expect_true(inherits(synonyms(tax_info),
                          c("otl_synonyms", "list")))
     expect_equal(names(synonyms(tax_info)),
-                 c("Holothuria", "Acanthaster",
+                 c("Actinopyga", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
     expect_true(all(c("Diamema", "Centrechinus") %in%
                     synonyms(tax_info)[[3]]))
@@ -98,7 +98,7 @@ test_that("taxonomy_taxon is_suppressed method", {
     expect_true(inherits(is_suppressed(tax_info),
                          c("otl_is_suppressed", "list")))
     expect_equal(names(is_suppressed(tax_info)),
-                 c("Holothuria", "Acanthaster",
+                 c("Actinopyga", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
     expect_equal(unlist(unname(is_suppressed(tax_info))),
                  c(FALSE, FALSE, FALSE))
@@ -109,7 +109,7 @@ test_that("taxonomy_taxon flags method", {
     expect_true(inherits(flags(tax_info),
                          c("otl_flags", "list")))
     expect_equal(names(flags(tax_info)),
-                 c("Holothuria", "Acanthaster",
+                 c("Actinopyga", "Acanthaster",
                    "Diadema (genus in Holozoa)"))
     expect_equal(unlist(unname(flags(tax_info))),
                  NULL)
@@ -281,6 +281,8 @@ test_that("mrca unique_name method", {
 
 test_that("mrca tax_sources method", {
     skip_on_cran()
+    ## issue with their taxonomy
+    skip("need to fixed upstream")
     expect_equal(tax_sources(tax_mrca)[1],
                  list("Asterales" =
                  c("ncbi:4209", "worms:234044",
@@ -328,7 +330,8 @@ test_that("tol_node_info with ott_id for tax_mrca", {
 
 test_that("tol_subtree with ott_id for tax_mrca", {
     skip_on_cran()
-    tt <- tol_subtree(ott_id = ott_id(tax_mrca_mono))
+    expect_warning(tt <- tol_subtree(ott_id = ott_id(tax_mrca_mono)),
+                   "Dropping")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
     expect_true(length(tt$node.label) > 1)
