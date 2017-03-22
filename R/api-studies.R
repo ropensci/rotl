@@ -17,7 +17,10 @@
     }
     if (!is.null(value)) {
         if (!is.character(value)) {
-            stop("Argument \'value\' must be of class \"character\"")
+            if (check_numeric(value)) {
+                value <- as.character(value)
+            } else
+                stop("Argument \'value\' must be of class \"character\"")
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
@@ -53,7 +56,10 @@
     }
     if (!is.null(value)) {
         if (!is.character(value)) {
-            stop("Argument \'value\' must be of class \"character\"")
+            if (check_numeric(value)) {
+                value <- as.character(value)
+            } else
+                stop("Argument \'value\' must be of class \"character\"")
         }
         req_body$value <- jsonlite::unbox(value)
     } else {
@@ -83,7 +89,10 @@
     if (is.null(study_id)) {
         stop("Must supply a \'study_id\' argument")
     } else if (!is.character(study_id)) {
-        stop("Argument \'study_id\' must be of class \"character\"")
+        if (check_numeric(study_id)) {
+            study_id <- as.character(study_id)
+        } else
+            stop("Argument \'study_id\' must be of class \"character\"")
     }
     format <- match.arg(format)
     res <- otl_GET(path=paste("study",
