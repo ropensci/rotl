@@ -223,7 +223,7 @@ test_that("methods for tol_mrca where the node is a taxon", {
     expect_equal(unique_name(hol)[[1]], "Holothuria")
     expect_equal(tax_name(hol)[[1]], "Holothuria")
     expect_equal(tax_rank(hol)[[1]], "genus")
-    expect_equal(ott_id(hol)[[1]], 5004030)
+    expect_equal(ott_id(hol)[[1]], 924443)
     expect_equal(names(tax_sources(hol)), "Holothuria")
     expect_true(all(names(source_list(hol)) %in% c("tree_id",
                                                    "study_id",
@@ -246,15 +246,15 @@ test_that("methods for tol_mrca where the node is not a taxon", {
                          c("otl_ott_id", "list")))
     expect_true(length(tax_sources(birds)[[1]]) >=  1)
     expect_true(any(grepl("ncbi", tax_sources(birds)[[1]])))
-    expect_equal(unique_name(birds)[[1]], "Neognathae")
-    expect_equal(tax_name(birds)[[1]], "Neognathae")
-    expect_equal(tax_rank(birds)[[1]], "superorder")
-    expect_equal(ott_id(birds)[[1]], 241846)
-    expect_equal(names(ott_id(birds)), "Neognathae")
+    expect_equal(unique_name(birds)[[1]], "Aves")
+    expect_equal(tax_name(birds)[[1]], "Aves")
+    expect_equal(tax_rank(birds)[[1]], "class")
+    expect_equal(ott_id(birds)[[1]], 81461)
+    expect_equal(names(ott_id(birds)), "Aves")
     expect_true(all(names(source_list(birds)) %in% c("tree_id",
                                                           "study_id",
                                                           "git_sha")))
-    expect_equal(attr(tax_sources(birds), "taxon_type"), "nearest_taxon")
+    expect_equal(attr(tax_sources(birds), "taxon_type"), "mrca")
 })
 
 ### ott_id() --------------------------------------------------------------------
@@ -312,8 +312,8 @@ test_that("taxonomy_mrca with ott_id for tol_mrca", {
 
 test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
     skip_on_cran()
-    genera <- c("Setophaga", "Cinclus", "Struthio")
-    tr <- tol_induced_subtree(ott_ids=c(666104, 267845, 292466))
+    genera <- c("Perdix", "Cinclus", "Struthio")
+    tr <- tol_induced_subtree(ott_ids=c(102710, 267845, 292466))
     expect_true(all(strip_ott_ids(tr$tip.label) %in% genera))
 })
 
