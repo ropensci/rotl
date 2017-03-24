@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/jwvl84e6m36bqwga?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
+[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/rn97g9q2rt4q3kf3?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-y5eex) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
 
 An R interface to Open Tree API
 ===============================
@@ -52,29 +52,22 @@ Taxonomic names are represented in the Open Tree by numeric identifiers, the `ot
 
 ``` r
 library(rotl)
-```
-
-    ## Warning: package 'rotl' was built under R version 3.4.0
-
-``` r
-apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
+apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
     ##   search_string unique_name approximate_match ott_id is_synonym flags
-    ## 1           pan         Pan             FALSE 417957      FALSE      
-    ## 2         pongo       Pongo             FALSE 417949      FALSE      
-    ## 3           pan         Pan             FALSE 417957      FALSE      
-    ## 4       gorilla     Gorilla             FALSE 417969      FALSE      
-    ## 5       hoolock     Hoolock             FALSE 712902      FALSE      
-    ## 6          homo        Homo             FALSE 770309      FALSE      
+    ## 1         pongo       Pongo             FALSE 417949      FALSE      
+    ## 2           pan         Pan             FALSE 417957      FALSE      
+    ## 3       gorilla     Gorilla             FALSE 417969      FALSE      
+    ## 4       hoolock     Hoolock             FALSE 712902      FALSE      
+    ## 5          homo        Homo             FALSE 770309      FALSE      
     ##   number_matches
     ## 1              2
     ## 2              2
-    ## 3              2
+    ## 3              1
     ## 4              1
     ## 5              1
-    ## 6              1
 
 Now we can get the tree with just those tips:
 
@@ -83,7 +76,7 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![](http://i.imgur.com/u0JYjjN.png)
+![](http://i.imgur.com/7A59BpB.png)
 
 The code above can be summarized in a single pipe:
 
@@ -97,7 +90,9 @@ c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     plot
 ```
 
-![](http://i.imgur.com/1wjfPsN.png)
+    ## Warning: Some names were duplicated: 'pan'.
+
+![](http://i.imgur.com/j15bD3q.png)
 
 Versioning
 ----------

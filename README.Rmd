@@ -10,7 +10,7 @@ opts_knit$set(upload.fun = imgur_upload)
 ```
 
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/jwvl84e6m36bqwga?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl)
+[![Build status](https://ci.appveyor.com/api/projects/status/rn97g9q2rt4q3kf3?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-y5eex)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
@@ -86,7 +86,7 @@ the Open Tree, you first need to find `ott_ids` for a set of names using the
 
 ```{r resolve}
 library(rotl)
-apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
+apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
