@@ -69,6 +69,15 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
              " is not valid. Check possible values using tnrs_contexts()")
     }
 
+    ## take care of duplicated names
+    if (any(duplicated(tolower(names)))) {
+        names <- tolower(names)
+        warning("Some names were duplicated: ",
+                paste(sQuote(names[duplicated(names)]), collapse = ", "), ".",
+                call. = FALSE)
+        names <- unique(names)
+    }
+
     res <- .tnrs_match_names(names = names, context_name = context_name,
                              do_approximate_matching = do_approximate_matching,
                              ids = ids, include_suppressed = include_suppressed,

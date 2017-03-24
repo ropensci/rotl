@@ -22,6 +22,12 @@ test_that("tnrs_match_names warns if a name is not matched", {
                    "are not matched")
 })
 
+test_that("tnrs_match_names warns if some names are duplicated", {
+    skip_on_cran()
+    expect_warning(tnrs_match_names(c("pan", "pongo", "Pan", "pongo", "felis", "feLis")))
+})
+
+
 test_that("object returned by tnrs_match_names have the correct data type", {
     skip_on_cran()
     birds <- c("stercorarius parasiticus", "ficedula albicollis", "sterna dougallii")

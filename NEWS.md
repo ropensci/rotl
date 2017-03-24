@@ -5,7 +5,7 @@
 * To improve stability of results across releases of the Open Tree Taxonomy, the
   TNRS match with the lowest OTT id is returned instead of the first one in case
   a name is shared across multiple domains (related to #88)
-
+* A warning is issued when users attempt to use TNRS on duplicated names.
 
 ## rotl 3.0.3
 
