@@ -42,8 +42,9 @@ induced on the draft tree by the set of identified nodes.
 }
 \examples{
 \dontrun{
-res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
+res <- tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710))
 tree_file <- tempfile(fileext=".tre")
-tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-                    file=tree_file)}
+tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710),
+                    file=tree_file)
+}
 }

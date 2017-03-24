@@ -286,9 +286,10 @@ source_list.tol_summary <- .source_list
 ##'
 ##' @examples
 ##' \dontrun{
-##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+##' birds_mrca <- tol_mrca(ott_ids=c(412129, 119214))
 ##' ott_id(birds_mrca)
-##' tax_sources(birds_mrca)}
+##' tax_sources(birds_mrca)
+##' }
 ##' @rdname tol_mrca
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
