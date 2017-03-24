@@ -375,6 +375,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true"))  {
 test_that("test is_in_tree", {
     skip_on_cran()
     in_tree <- is_in_tree(ot_ids)
-    expect_equal(sum(in_tree), 1)
+    expect_equal(sum(in_tree), 2)
     expect_true(all(names(in_tree) %in% spp))
 })

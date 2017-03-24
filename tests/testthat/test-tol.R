@@ -174,7 +174,7 @@ test_that("error if ott_ids provided don't look like numbers", {
 test_that("tol_induced_subtree generates a newick file when providing a file argument", {
     skip_on_cran()
     ff <- tempfile(fileext = ".tre")
-    tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104), file = ff)
+    tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 292466), file = ff)
     expect_true(tr)
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
@@ -185,7 +185,7 @@ test_that("tol_induced_subtree generates a newick file when providing a file arg
 ############################################################################
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-    birds <- tol_mrca(ott_ids = c(412129, 536234))
+    birds <- tol_mrca(ott_ids = c(412129, 292466))
     hol <- tol_mrca(c(431586, 957434))
     mono <- tol_mrca(ott_ids = c(962377, 79623))
 }
