@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/rn97g9q2rt4q3kf3?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-y5eex) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
+[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/qr4k9a8wlrjl65rp?svg=true)](https://ci.appveyor.com/project/ropensci/rotl) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
 
 An R interface to Open Tree API
 ===============================
@@ -57,11 +57,11 @@ apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 ```
 
     ##   search_string unique_name approximate_match ott_id is_synonym flags
-    ## 1         pongo       Pongo             FALSE 417949      FALSE      
-    ## 2           pan         Pan             FALSE 417957      FALSE      
-    ## 3       gorilla     Gorilla             FALSE 417969      FALSE      
-    ## 4       hoolock     Hoolock             FALSE 712902      FALSE      
-    ## 5          homo        Homo             FALSE 770309      FALSE      
+    ## 1         pongo       Pongo             FALSE 417949      FALSE
+    ## 2           pan         Pan             FALSE 417957      FALSE
+    ## 3       gorilla     Gorilla             FALSE 417969      FALSE
+    ## 4       hoolock     Hoolock             FALSE 712902      FALSE
+    ## 5          homo        Homo             FALSE 770309      FALSE
     ##   number_matches
     ## 1              2
     ## 2              2
