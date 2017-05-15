@@ -15,7 +15,7 @@ c(
         textVersion  =
             paste("Michonneau, F., Brown, J. W. and Winter, D. J. (2016),
              rotl: an R package to interact with the Open Tree of Life data.
-             Methods Ecol Evol. 7(12):1476-1481. doi:10.1111/2041-210X.12593")
+             Methods in Ecology and Evolution. 7(12):1476-1481. doi:10.1111/2041-210X.12593")
     ),
     bibentry(
         header = "You may also want to cite the paper for the Open Tree of Life",
@@ -52,6 +52,7 @@ c(
         doi =  "10.1073/pnas.1423041112",
         textVersion = c("Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and
                          taxonomy into a comprehensive tree of life. Proceedings of
-                         the National Academy of Sciences 112.41 (2015): 12764-12769")
+                         the National Academy of Sciences 112.41 (2015): 12764-12769.
+                         doi:10.1073/pnas.1423041112")
     )
 )
