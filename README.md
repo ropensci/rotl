@@ -57,11 +57,11 @@ apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 ```
 
     ##   search_string unique_name approximate_match ott_id is_synonym flags
-    ## 1         pongo       Pongo             FALSE 417949      FALSE
-    ## 2           pan         Pan             FALSE 417957      FALSE
-    ## 3       gorilla     Gorilla             FALSE 417969      FALSE
-    ## 4       hoolock     Hoolock             FALSE 712902      FALSE
-    ## 5          homo        Homo             FALSE 770309      FALSE
+    ## 1         pongo       Pongo             FALSE 417949      FALSE      
+    ## 2           pan         Pan             FALSE 417957      FALSE      
+    ## 3       gorilla     Gorilla             FALSE 417969      FALSE      
+    ## 4       hoolock     Hoolock             FALSE 712902      FALSE      
+    ## 5          homo        Homo             FALSE 770309      FALSE      
     ##   number_matches
     ## 1              2
     ## 2              2
@@ -76,23 +76,34 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![](http://i.imgur.com/7A59BpB.png)
+![](http://i.imgur.com/hfR1DRi.png)
 
 The code above can be summarized in a single pipe:
 
 ``` r
 library(magrittr)
 ## or expressed as a pipe:
-c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
+c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     tnrs_match_names %>%
     ott_id %>%
     tol_induced_subtree %>%
     plot
 ```
 
-    ## Warning: Some names were duplicated: 'pan'.
+![](http://i.imgur.com/TM9nzPI.png)
 
-![](http://i.imgur.com/j15bD3q.png)
+Citation and Manuscript
+-----------------------
+
+To cite `rotl` in publications pleases use:
+
+> Michonneau, F., Brown, J. W. and Winter, D. J. (2016), rotl: an R package to interact with the Open Tree of Life data. Methods in Ecology and Evolution. 7(12):1476-1481. doi: [10.1111/2041-210X.12593](https://doi.org/10.1111/2041-210X.12593)
+
+You may also want to cite the paper for the Open Tree of Life
+
+> Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and taxonomy into a comprehensive tree of life. Proceedings of the National Academy of Sciences 112.41 (2015): 12764-12769 doi: [10.1073/pnas.1423041112](https://doi.org/10.1073/pnas.1423041112)
+
+The manuscript in *Methods in Ecology and Evolution* includes additional examples on how to use the package. The manuscript and the code it contains are also hosted on GitHub at: <https://github.com/fmichonneau/rotl-ms>
 
 Versioning
 ----------

@@ -102,12 +102,33 @@ The code above can be summarized in a single pipe:
 ```{r pipe, plot=FALSE}
 library(magrittr)
 ## or expressed as a pipe:
-c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
+c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     tnrs_match_names %>%
     ott_id %>%
     tol_induced_subtree %>%
     plot
 ```
+
+## Citation and Manuscript
+
+To cite `rotl` in publications pleases use:
+
+>  Michonneau, F., Brown, J. W. and Winter, D. J. (2016), rotl: an R package to
+>  interact with the Open Tree of Life data.  Methods in Ecology and
+>  Evolution. 7(12):1476-1481. doi:
+>  [10.1111/2041-210X.12593](https://doi.org/10.1111/2041-210X.12593)
+
+You may also want to cite the paper for the Open Tree of Life
+
+>  Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and taxonomy into a
+>  comprehensive tree of life. Proceedings of the National Academy of Sciences
+>  112.41 (2015): 12764-12769
+>  doi: [10.1073/pnas.1423041112](https://doi.org/10.1073/pnas.1423041112)
+
+The manuscript in *Methods in Ecology and Evolution* includes additional
+examples on how to use the package. The manuscript and the code it contains are
+also hosted on GitHub at: https://github.com/fmichonneau/rotl-ms
+
 
 ## Versioning
 
