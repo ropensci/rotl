@@ -3,9 +3,12 @@ Title: Interface to the 'Open Tree of Life' API
 Version: 3.0.3.907
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
-         email="francois.michonneau@gmail.com"),
-  person("Joseph", "Brown", role="aut"),
-  person("David", "Winter", role="aut"))
+         email="francois.michonneau@gmail.com",
+	 comment = c("ORCID" = "0000-0002-9092-966X")),
+  person("Joseph", "Brown", role="aut",
+         comment = c("ORCID" = "0000-0002-3835-8062")),
+  person("David", "Winter", role="aut",
+         comment = c("ORCID" = "0000-0002-6165-0029")))
 Description: An interface to the 'Open Tree of Life' API to retrieve
     phylogenetic trees, information about studies used to assemble the synthetic
     tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The
