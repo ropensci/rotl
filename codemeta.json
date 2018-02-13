@@ -1,0 +1,394 @@
+{
+  "@context": ["http://purl.org/codemeta/2.0", "http://schema.org"],
+  "@type": "SoftwareSourceCode",
+  "identifier": "rotl",
+  "description": "An interface to the 'Open Tree of Life' API to retrieve\n    phylogenetic trees, information about studies used to assemble the synthetic\n    tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The\n    'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all\n    named species.",
+  "name": "rotl: Interface to the 'Open Tree of Life' API",
+  "codeRepository": "https://github.com/ropensci/rotl",
+  "issueTracker": "https://github.com/ropensci/rotl/issues",
+  "license": "https://spdx.org/licenses/BSD-2-Clause",
+  "version": "3.0.3.907",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.4.3",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.4.3 (2017-11-30)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Central R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Francois",
+      "familyName": "Michonneau",
+      "email": "francois.michonneau@gmail.com",
+      "@id": "https://orcid.org/0000-0002-9092-966X"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Joseph",
+      "familyName": "Brown",
+      "@id": "https://orcid.org/0000-0002-3835-8062"
+    },
+    {
+      "@type": "Person",
+      "givenName": "David",
+      "familyName": "Winter",
+      "@id": "https://orcid.org/0000-0002-6165-0029"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Francois",
+    "familyName": "Michonneau",
+    "email": "francois.michonneau@gmail.com",
+    "@id": "https://orcid.org/0000-0002-9092-966X"
+  },
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "version": "1.12",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "version": "0.7",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "RNeXML",
+      "name": "RNeXML",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phylobase",
+      "name": "phylobase",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "MCMCglmm",
+      "name": "MCMCglmm",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "fulltext",
+      "name": "fulltext",
+      "version": "0.1.6",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "readxl",
+      "name": "readxl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "httr",
+      "name": "httr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "jsonlite",
+      "name": "jsonlite",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "assertthat",
+      "name": "assertthat",
+      "version": "0.1",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rncl",
+      "name": "rncl",
+      "version": "0.6.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ape",
+      "name": "ape",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rentrez",
+      "name": "rentrez",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Central R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": "3.1.1"
+    }
+  ],
+  "contIntegration": "https://travis-ci.org/ropensci/rotl",
+  "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
+  "fileSize": "82.391KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2016",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Francois",
+          "familyName": "Michonneau"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Joseph", "W."],
+          "familyName": "Brown"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["David", "J."],
+          "familyName": "Winter"
+        }
+      ],
+      "name": "{rotl}: an R package to interact with the Open Tree of Life data",
+      "identifier": "10.1111/2041-210X.12593",
+      "paginiation": "1476-1481",
+      "@id": "https://doi.org/10.1111/2041-210X.12593",
+      "sameAs": "https://doi.org/10.1111/2041-210X.12593",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "12",
+        "datePublished": "2016",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "7",
+          "name": "Methods in Ecology and Evolution"
+        }
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2015",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": ["Cody", "E."],
+          "familyName": "Hinchliff"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Stephen", "A."],
+          "familyName": "Smith"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["James", "F."],
+          "familyName": "Allman"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["J.", "Gordon"],
+          "familyName": "Burleigh"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Ruchi",
+          "familyName": "Chaudhary"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Lyndon", "M."],
+          "familyName": "Coghill"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Keith", "A."],
+          "familyName": "Crandall"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Jiabin",
+          "familyName": "Deng"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Bryan", "T."],
+          "familyName": "Drew"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Romina",
+          "familyName": "Gazis"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Karl",
+          "familyName": "Gude"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["David", "S."],
+          "familyName": "Hibbett"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Laura", "A."],
+          "familyName": "Katz"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["H.", "Dail", "Laughinghouse"],
+          "familyName": "IV"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Emily", "Jane"],
+          "familyName": "McTavish"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Peter", "E."],
+          "familyName": "Midford"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Christopher", "L."],
+          "familyName": "Owen"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Richard", "H."],
+          "familyName": "Ree"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Jonathan", "A."],
+          "familyName": "Rees"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Douglas", "E."],
+          "familyName": "Soltis"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Tiffani",
+          "familyName": "Williams"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Karen", "A."],
+          "familyName": "Cranston"
+        }
+      ],
+      "name": "Synthesis of phylogeny and taxonomy into a comprehensive tree of life",
+      "identifier": "10.1073/pnas.1423041112",
+      "paginiation": "12764-12769",
+      "@id": "https://doi.org/10.1073/pnas.1423041112",
+      "sameAs": "https://doi.org/10.1073/pnas.1423041112",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "41",
+        "datePublished": "2015",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "112",
+          "name": "Proceedings of the National Academy of Sciences"
+        }
+      }
+    }
+  ]
+}

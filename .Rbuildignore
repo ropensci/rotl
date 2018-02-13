@@ -9,3 +9,5 @@ tmp/
 ^cran-comments\.md$
 ^.projectile$
 revdep/
+^docs$
+^codemeta\.json$
