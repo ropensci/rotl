@@ -38,3 +38,6 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 6.0.1
+X-schema.org-keywords: metadata, ropensci, phylogenetics, independant-contrasts, biodiversity
+X-schema.org-isPartOf: https://ropensci.org
+X-schema.org-relatedLink: https://codemeta.github.io/codemetar

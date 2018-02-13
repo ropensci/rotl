@@ -1,5 +1,8 @@
 {
-  "@context": ["http://purl.org/codemeta/2.0", "http://schema.org"],
+  "@context": [
+    "http://purl.org/codemeta/2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "rotl",
   "description": "An interface to the 'Open Tree of Life' API to retrieve\n    phylogenetic trees, information about studies used to assemble the synthetic\n    tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The\n    'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all\n    named species.",
@@ -221,7 +224,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/rotl",
   "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "82.391KB",
+  "fileSize": "82.483KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -390,5 +393,8 @@
         }
       }
     }
-  ]
+  ],
+  "isPartOf": "https://ropensci.org",
+  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity"],
+  "relatedLink": "https://codemeta.github.io/codemetar"
 }
