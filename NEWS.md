@@ -1,4 +1,4 @@
-## rotl 3.0.xxxx
+## rotl 3.0.4
 
 ### New features
 
@@ -6,6 +6,11 @@
   TNRS match with the lowest OTT id is returned instead of the first one in case
   a name is shared across multiple domains (related to #88)
 * A warning is issued when users attempt to use TNRS on duplicated names.
+
+### Other changes
+
+* Fix typos and workaround broken API to retrieve supplementary materials in
+  vignette.
 
 ## rotl 3.0.3
 
