@@ -41,18 +41,21 @@ history among some of the studied-species.
 If we are going to reproduce this analysis, we will first need to gather the
 data. Thankfully, the data is available as supplementary material from the
 publisher's website. We can collect the data from using `fulltext` (with the
-papers DOI as input) and read it into memory with `gdata`:
+papers DOI as input) and read it into memory with `readxl::read_excel`:
 
 ```{r egg_data, cache=TRUE}
 library(rotl)
 
-if (require(readxl) && require(fulltext)) {
-    doi <- "10.1111/jeb.12282"
-    xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
-    egg_data <- read_excel(xl_file)
-} else {
-    egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"))
-}
+## This should work, but Wiley has currently broken the URLs to access the
+## SI. 
+## if (require(readxl) && require(fulltext)) {
+## doi <- "10.1111/jeb.12282"
+## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)    
+## egg_data <- read_excel(xl_file)
+## } else {
+egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
+                     stringsAsFactors = FALSE)
+## }
 head(egg_data)
 ```
 
@@ -116,7 +119,7 @@ Now we can get the tree. There are really too many tips here to show nicely, so
 we will leave them out of this plot
 
 ```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
-tr <- tol_induced_subtree(taxa$ott_id[is_in_tree(taxa$ott_id)])
+tr <- tol_induced_subtree(ott_id(taxa)[is_in_tree(ott_id(taxa))])
 plot(tr, show.tip.label=FALSE)
 ```
 
@@ -189,19 +192,22 @@ studies. Here's how we specify and fit that model with `MCMCglmm`:
 
 
 ```{r model}
-library(MCMCglmm, quiet=TRUE)
 set.seed(123)
+if (require(MCMCglmm, quietly = TRUE)) {
 
-pr<-list(R=list(V=1,nu=0.002),
-             G=list(G1=list(V=1,nu=0.002))
-)
+    pr <- list(R=list(V=1,nu=0.002),
+               G=list(G1=list(V=1,nu=0.002))
+               )
 
-model <- MCMCglmm(Zr~1,random=~animal,
-                       pedigree=tr,
-                       mev=egg_data$VZr,
-                       prior=pr,
-                       data=egg_data,
-                       verbose=FALSE)
+    model <- MCMCglmm(Zr~1,random=~animal,
+                      pedigree=tr,
+                      mev=egg_data$VZr,
+                      prior=pr,
+                      data=egg_data,
+                      verbose=FALSE)
+} else {
+    model <- readRDS(file = system.file("extdata", "mcmcglmm_model.rds", package = "rotl"))
+}
 ```
 
 

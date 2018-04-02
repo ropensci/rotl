@@ -85,7 +85,7 @@ contain them.  Starting with our first species _Tetrahymena thermophila_ we can
 use `studies_find_trees` to do this search.
 
 ```{r taxon_count}
-studies_find_trees(property="ot:ottId", value=ott_id(taxon_search)[1])
+studies_find_trees(property="ot:ottId", value=as.character(ott_id(taxon_search)[1]))
 ```
 
 Well... that's not very promising. We can repeat that process for all of the IDs
