@@ -6,6 +6,12 @@ addons:
       - libpoppler-cpp-dev
 r_check_args: --as-cran --run-dontrun
 cache: packages
+
+r:
+  - oldrel
+  - release
+  - devel
+
 r_packages:
    - covr
 r_github_packages:
