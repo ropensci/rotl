@@ -1,41 +1,34 @@
-## Resubmission
-
-- This addresses the non-canoncial URL in the vignette, and the warning
-  regarding the vignettes being more recent than the files found in inst/doc.
-
 ## Comments
 
-- This submission addresses the comment by Prof Ripley from 2017-02-27. The use
-  of the suggested package 'fulltext' is now conditional.
-
+- This submission addresses the Warnings seen on the CRAN checks
 
 ## Test environments
 
-- local Ubuntu 16.10, R 3.3.2
-- Ubuntu 12.04 (travis-ci), R 3.3.2
-- Windows with R-hub (R 3.3.2 and R Under development (2017-02-28 r72286)
-- local Debian, using R Under development (unstable) (2017-03-01 r72295)
+- local Ubuntu 17.10, R 3.4.4
+- Ubuntu 14.04 (travis-ci), R 3.3.3, R 3.4.4, and R devel (2018-04-02 r74501)
+- Windows with R-hub (R Under development (2018-03-30 r74499)
 
 ## R CMD check results
 
 - There were no ERRORs or WARNINGs
 
-- There was 1 NOTE
+- There was 3 NOTEs
 
 ```
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Francois Michonneau <francois.michonneau@gmail.com>'
+* Maintainer: ‘Francois Michonneau <francois.michonneau@gmail.com>’
 
-License components with restrictions and base license permitting such:
-  BSD_2_clause + file LICENSE
-File 'LICENSE':
-  YEAR: 2016
-  COPYRIGHT HOLDER: Francois Michonneau, Joseph W. Brown, David Winter
-
-Possibly mis-spelled words in DESCRIPTION:
-  API (2:45, 9:54)
-  phylogenetic (10:5, 12:60)
+* Unknown, possibly mis-spelled, fields in DESCRIPTION:
+  ‘X-schema.org-keywords’ ‘X-schema.org-isPartOf’ ‘X-schema.org-relatedLink’
+  
+* checking DESCRIPTION meta-information ... NOTE
+Authors@R field gives persons with non-standard roles:
+  Scott Chamberlain [rev] (0000-0003-1444-9135): rev
 ```
+
+The "unknown" fields in DESCRIPTION corresponds to the codemeta metadata standard for the package as indicated here: https://github.com/ropensci/codemetar#using-the-description-file
+
+The role "rev" stands for reviewer and it is my understanding that it will fully supported starting with R 3.5.0
+
 
 ## Downstream dependencies
 
