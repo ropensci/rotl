@@ -123,7 +123,7 @@ tr <- tol_induced_subtree(ott_id(taxa)[is_in_tree(ott_id(taxa))])
 plot(tr, show.tip.label=FALSE)
 ```
 
-There are a few things to note here. First, the tree has not branch lengths.
+There are a few things to note here. First, the tree has no branch lengths.
 At present this is true for the whole of the Open Tree synthetic tree. Some
 comparative methods require either branch lengths or an ultrametric tree. Before
 you can use one of those methods you will need to get a tree with branch
