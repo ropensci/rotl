@@ -203,7 +203,7 @@ test_that("tol_mrca returns a list", {
     expect_true(all(names(birds) %in%
                     c("mrca",
                       "source_id_map",
-                      "nearest_taxon")))
+                      "synth_id")))
 })
 
 test_that("methods for tol_mrca where the node is a taxon", {
@@ -313,7 +313,7 @@ test_that("taxonomy_mrca with ott_id for tol_mrca", {
 test_that("OTT ids can be striped from tip labels to allow taxon-matching", {
     skip_on_cran()
     genera <- c("Perdix", "Cinclus", "Struthio")
-    tr <- tol_induced_subtree(ott_ids=c(102710, 267845, 292466))
+    expect_warning(tr <- tol_induced_subtree(ott_ids=c(102710, 267845, 292466)))
     expect_true(all(strip_ott_ids(tr$tip.label) %in% genera))
 })
 
@@ -331,8 +331,9 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 test_that("tol node info.", {
     skip_on_cran()
     expect_true(all(names(tol_info) %in%
-                      c("partial_path_of", "supported_by", "source_id_map", "taxon",
-                        "num_tips", "terminal", "node_id")))
+                      c("node_id", "num_tips", "partial_path_of",
+                        "source_id_map", "supported_by", "synth_id",
+                        "taxon", "terminal")))
     expect_true(inherits(tol_info, "tol_node"))
 })
 

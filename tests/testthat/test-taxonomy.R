@@ -160,8 +160,10 @@ test_that("tol_mrca with ott_id for tax_info", {
 
 test_that("tol_induced_subtree with ott_id for tax_info", {
     skip_on_cran()
-    expect_true(inherits(tol_induced_subtree(ott_id(tax_info)),
-                         "phylo"))
+    expect_warning(
+      expect_true(inherits(tol_induced_subtree(ott_id(tax_info)),
+                           "phylo"))
+    )
 })
 
 test_that("taxonomy_mrca with ott_id for tax_info", {

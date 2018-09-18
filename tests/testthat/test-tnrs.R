@@ -43,7 +43,7 @@ test_that("tnrs_match_names deals correctly with non-exact matches", {
                    "are not matched")
     expect_equal(nrow(taxa), 3L)
     expect_equivalent(taxa[match("sternadougallii", taxa[["search_string"]]), ],
-                 list("sternadougallii", NA_character_, NA, NA_character_, NA, NA_character_, NA_character_))
+                      list("sternadougallii", NA_character_, NA, NA_integer_, NA, NA_character_, NA_integer_))
 
 })
 

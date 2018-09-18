@@ -296,7 +296,7 @@ test_that("it works correctly when providing a new row number", {
     new_rsp <- update(rsp, row_number = 2,
                       new_row_number = 2)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "631176")
+                 631176L)
 })
 
 
@@ -305,7 +305,7 @@ test_that("it works correctly when providing a new ott id", {
     new_rsp <- update(rsp, row_number = 2,
                       new_ott_id = 631176)
     expect_equal(new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-                 "631176")
+                 631176L)
 })
 
 test_that("it produces warning when trying to update with unmatched name", {
