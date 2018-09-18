@@ -116,7 +116,7 @@ inspect.match_names <- function(response, row_number, taxon_name, ott_id, ...) {
     } else {
         summary_match <- response[j, ]
     }
-    summary_match
+    clean_tnrs_summary(summary_match)
 }
 
 ##' @export
@@ -183,7 +183,7 @@ update.match_names <- function(object, row_number, taxon_name, ott_id,
 
     response[rnb, ] <- summ_match
     attr(response, "match_id")[rnb] <- j
-    response
+    clean_tnrs_summary(response)
 }
 
 

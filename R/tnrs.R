@@ -92,35 +92,41 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
     summary_match <- mapply(
         function(rid, mid) {
         build_summary_match(res, res_id = rid, match_id = mid, initial_creation = TRUE)
-    }, seq_along(res[["results"]]), match_ids, SIMPLIFY = FALSE)
-    ## add taxon names with no maches
-    summary_match <- add_unmatched_names(summary_match, res)
-    summary_match <- do.call("rbind", summary_match)
+        }, seq_along(res[["results"]]), match_ids, SIMPLIFY = FALSE)
+  ## add taxon names with no maches
+  summary_match <- add_unmatched_names(summary_match, res)
+  summary_match <- do.call("rbind", summary_match)
 
-    summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
+  summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
 
-    ## reorder to match original query
-    match_ids <- c(match_ids, rep(NA_integer_, sum(is.na(summary_match$ott_id))))
-    ordr <- match(tolower(names), summary_match$search_string)
-    stopifnot(identical(length(match_ids), length(ordr)))
+  ## reorder to match original query
+  match_ids <- c(match_ids, rep(NA_integer_, sum(is.na(summary_match$ott_id))))
+  ordr <- match(tolower(names), summary_match$search_string)
+  stopifnot(identical(length(match_ids), length(ordr)))
 
-    summary_match <- summary_match[ordr, ]
-    match_ids <- match_ids[ordr]
+  summary_match <- summary_match[ordr, ]
+  match_ids <- match_ids[ordr]
 
-    summary_match[["approximate_match"]] <-
-        convert_to_logical(summary_match[["approximate_match"]])
-    summary_match[["is_synonym"]] <-
-        convert_to_logical(summary_match[["is_synonym"]])
-    summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
 
-    attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
-    rownames(summary_match) <- NULL
-    attr(summary_match, "original_response") <- res
-    attr(summary_match, "match_id") <- match_ids
-    attr(summary_match, "has_original_match") <-
-        !is.na(summary_match[["number_matches"]])
-    class(summary_match) <- c("match_names", "data.frame")
-    summary_match
+  attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
+  rownames(summary_match) <- NULL
+  attr(summary_match, "original_response") <- res
+  attr(summary_match, "match_id") <- match_ids
+  attr(summary_match, "has_original_match") <-
+    !is.na(summary_match[["number_matches"]])
+  class(summary_match) <- c("match_names", "data.frame")
+  clean_tnrs_summary(summary_match)
+}
+
+clean_tnrs_summary <- function(summary_match) {
+  summary_match[["approximate_match"]] <-
+    convert_to_logical(summary_match[["approximate_match"]])
+  summary_match[["is_synonym"]] <-
+    convert_to_logical(summary_match[["is_synonym"]])
+  summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
+  summary_match[["ott_id"]] <- as.integer(summary_match[["ott_id"]])
+  summary_match[["number_matches"]] <- as.integer(summary_match[["number_matches"]])
+  summary_match
 }
 
 ##' @importFrom stats na.omit
