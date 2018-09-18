@@ -13,7 +13,7 @@ vignette: >
 
 One of the major goals of `rotl` is to help users combine data from other
 sources with the phylogenetic trees in the Open Tree database. This examples
-document describes some of the ways in whih a user might connect data to trees
+document describes some of the ways in which a user might connect data to trees
 from Open Tree.
 
 ## Get Open Tree IDs to match your data.
