@@ -32,17 +32,17 @@ is_in_tree <- function(ott_ids, ...) UseMethod("is_in_tree")
 is_in_tree.otl_ott_id <- function(ott_ids, ...) {
 
     in_tree <- vapply(ott_ids, function(ottid) {
-        test <- try(tol_node_info(ottid, ...), silent = TRUE)
-        if (inherits(test, "try-error")) {
-            if (grepl("not find any synthetic tree nodes corresponding to the OTT id provided", test) &&
-                grepl(paste0("(", ottid, ")"), test)) {
-            } else {
-                warning("something seems off, check your internet connection?")
-            }
-            return(FALSE)
+      test <- try(tol_node_info(ottid, ...), silent = TRUE)
+      if (inherits(test, "try-error")) {
+        if (grepl("was not found", test) &&
+              grepl(paste0("'ott", ottid, "'"), test)) {
         } else {
-            ott_id(test)[[1]] == ottid
+          warning("something seems off, check your internet connection?")
         }
+        return(FALSE)
+      } else {
+        ott_id(test)[[1]] == ottid
+      }
 
     }, logical(1), USE.NAMES = TRUE)
 
