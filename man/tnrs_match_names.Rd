@@ -5,8 +5,8 @@
 \title{Match names to the Open Tree Taxonomy}
 \usage{
 tnrs_match_names(names = NULL, context_name = NULL,
-  do_approximate_matching = TRUE, ids = NULL, include_suppressed = FALSE,
-  ...)
+  do_approximate_matching = TRUE, ids = NULL,
+  include_suppressed = FALSE, ...)
 }
 \arguments{
 \item{names}{taxon names to be queried. Currently limited to

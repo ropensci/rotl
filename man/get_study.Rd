@@ -4,8 +4,8 @@
 \alias{get_study}
 \title{Get all the trees associated with a particular study}
 \usage{
-get_study(study_id = NULL, object_format = c("phylo", "nexml"), file_format,
-  file, ...)
+get_study(study_id = NULL, object_format = c("phylo", "nexml"),
+  file_format, file, ...)
 }
 \arguments{
 \item{study_id}{the study ID for the study of interest (character)}

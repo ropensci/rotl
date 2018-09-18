@@ -4,8 +4,8 @@
 \alias{tol_induced_subtree}
 \title{Subtree from the Open Tree of Life}
 \usage{
-tol_induced_subtree(ott_ids = NULL, node_ids = NULL, label_format = NULL,
-  file, ...)
+tol_induced_subtree(ott_ids = NULL, node_ids = NULL,
+  label_format = NULL, file, ...)
 }
 \arguments{
 \item{ott_ids}{Numeric vector. OTT ids indicating nodes to be used

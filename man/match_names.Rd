@@ -7,7 +7,8 @@
 \title{Inspect and Update alternative matches for a name returned
     by tnrs_match_names}
 \usage{
-\method{inspect}{match_names}(response, row_number, taxon_name, ott_id, ...)
+\method{inspect}{match_names}(response, row_number, taxon_name, ott_id,
+  ...)
 
 inspect(response, ...)
 

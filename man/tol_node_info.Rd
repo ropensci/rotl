@@ -15,7 +15,8 @@
 \usage{
 tol_lineage(tax, ...)
 
-tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
+tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE,
+  ...)
 
 \method{tax_rank}{tol_node}(tax, ...)
 
