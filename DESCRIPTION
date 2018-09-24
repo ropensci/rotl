@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.4.900
+Version: 3.0.5
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com",
@@ -39,6 +39,7 @@ Suggests:
     readxl
 VignetteBuilder: knitr
 LazyData: true
+Encoding: UTF-8
 RoxygenNote: 6.1.0
 X-schema.org-keywords: metadata, ropensci, phylogenetics, independant-contrasts, biodiversity
 X-schema.org-isPartOf: https://ropensci.org
