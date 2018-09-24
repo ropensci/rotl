@@ -608,17 +608,17 @@ tol_node_method_factory <- function(.f) {
 
 ##' @export
 print.tol_node <- function(x, ...) {
-    cat("\nOpenTree node.\n\n")
-    cat("Node id: ", x$node_id, "\n", sep="")
-    cat("Number of terminal descendants: ", x$num_tips, "\n", sep="")
-    if (is_taxon(x[["taxon"]])) {
-        cat("Is taxon: TRUE\n")
-        cat("Name: ", x$taxon$name, "\n", sep="")
-        cat("Rank: ", x$taxon$rank, "\n", sep="")
-        cat("ott id: ", x$taxon$ott_id, "\n", sep="")
-    } else {
-        cat("Is taxon: FALSE\n")
-    }
+  cat("\nOpenTree node.\n\n")
+  cat("Node id: ", x$node_id, "\n", sep="")
+  cat("Number of terminal descendants: ", x$num_tips, "\n", sep="")
+  if (is_taxon(x[["taxon"]])) {
+    cat("Is taxon: TRUE\n")
+    cat("Name: ", x$taxon$name, "\n", sep="")
+    cat("Rank: ", x$taxon$rank, "\n", sep="")
+    cat("ott id: ", x$taxon$ott_id, "\n", sep="")
+  } else {
+    cat("Is taxon: FALSE\n")
+  }
 }
 
 ##' @export
@@ -649,29 +649,29 @@ source_list.tol_node <- .source_list
 ##' @export
 ##' @rdname tol_node_info
 tax_lineage.tol_node <- function(tax, ...) {
-    check_lineage(tax)
-    lg <- lapply(tax[["lineage"]], function(x) {
-        if (exists("taxon", x)) {
-            build_lineage(x[["taxon"]])
-        } else {
-            NULL
-        }
+  check_lineage(tax)
+  lg <- lapply(tax[["lineage"]], function(x) {
+    if (exists("taxon", x)) {
+      build_lineage(x[["taxon"]])
+    } else {
+      NULL
+    }
 
-    })
-    lg <- do.call("rbind", lg)
-    as.data.frame(lg, stringsAsFactors = FALSE)
+  })
+  lg <- do.call("rbind", lg)
+  as.data.frame(lg, stringsAsFactors = FALSE)
 }
 
 
 ##' @export
 ##' @rdname tol_node_info
 tol_lineage.tol_node <- function(tax, ...) {
-    check_lineage(tax)
-    lg <- lapply(tax[["lineage"]], function(x) {
-        c("node_id" = x[["node_id"]],
-          "num_tips" = x[["num_tips"]],
-          "is_taxon" = exists("taxon", x))
-    })
-    lg <- do.call("rbind", lg)
-    as.data.frame(lg, stringsAsFactors = FALSE)
+  check_lineage(tax)
+  lg <- lapply(tax[["lineage"]], function(x) {
+    c("node_id" = x[["node_id"]],
+      "num_tips" = x[["num_tips"]],
+      "is_taxon" = exists("taxon", x))
+  })
+  lg <- do.call("rbind", lg)
+  as.data.frame(lg, stringsAsFactors = FALSE)
 }

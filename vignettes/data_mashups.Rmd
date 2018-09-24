@@ -146,7 +146,7 @@ the tree
 
 ```{r phylobase}
 library(phylobase)
-mu_numeric <- mu[,c("mu", "pop.size", "genome.size")]
+mu_numeric <- mu[, c("mu", "pop.size", "genome.size")]
 rownames(mu_numeric) <- mu$ott_name
 tree_data <- phylo4d(tr, mu_numeric)
 ```
@@ -173,8 +173,9 @@ with `get_study`. `rotl` will also help you find external. The function
 gather some more data:
 
 ```{r}
-extra_data <- study_external_IDs("pg_1980")
-extra_data
+extra_data <- try(study_external_IDs("pg_1980"), silent=TRUE)
+if (!inherits(extra_data, "try-error"))
+  extra_data
 ```
 
 Here the returned object contains an `external_data_url` (in this case a link to
@@ -187,8 +188,11 @@ print them.
 
 ```{r}
 library(rentrez)
-seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta")
-cat(seqs)
+seqs <- try(entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta"), silent = TRUE)
+
+if (inherits(seqs, "try-error")) {
+  cat("NCBI temporarily down.")
+} else cat(seqs)
 ```
 
 You could further process these sequences in R with the function `read.dna` from
