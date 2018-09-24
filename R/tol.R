@@ -592,12 +592,18 @@ tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...)
 }
 
 tol_node_method_factory <- function(.f) {
-    function(tax, ...) {
-        res <- setNames(list(.f(tax[["taxon"]])),
-                        .tax_unique_name(tax[["taxon"]]))
-        res <- add_otl_class(res, .f)
-        res
-    }
+  function(tax, ...) {
+    if (exists("taxon", tax)) {
+      res <- setNames(list(.f(tax[["taxon"]])),
+                      .tax_unique_name(tax[["taxon"]]))
+    } else if (exists("node_id", tax)) {
+      res <- setNames(tax[["node_id"]], tax[["node_id"]])
+    } else {
+      res <- NA
+  }
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' @export
