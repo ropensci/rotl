@@ -1,4 +1,6 @@
-context("test of studies")
+if (FALSE) {
+
+  context("test of studies")
 
 ############################################################################
 ## studies_properties                                                     ##
@@ -486,14 +488,16 @@ test_that("list_trees with studies_find_trees and detailed=FALSE", {
               expect_true(inherits(lt, "list"))
               expect_true(length(names(lt)) >=  5L)
               expect_true(all(sapply(lt, length) >=  1L))
-          })
+})
 
 test_that("list_trees with studies_find_trees and detailed=TRUE", {
-              skip_on_cran()
-              res <- studies_find_trees(property = "ot:ottTaxonName",
-                                        value = "Echinodermata", detailed = TRUE)
-              lt <- list_trees(res)
-              expect_true(inherits(lt, "list"))
-              expect_true(length(names(lt)) >=  5L)
-              expect_true(all(sapply(lt, length) >=  1L))
-          })
+  skip_on_cran()
+  res <- studies_find_trees(property = "ot:ottTaxonName",
+                            value = "Echinodermata", detailed = TRUE)
+  lt <- list_trees(res)
+  expect_true(inherits(lt, "list"))
+  expect_true(length(names(lt)) >=  5L)
+  expect_true(all(sapply(lt, length) >=  1L))
+})
+
+}
