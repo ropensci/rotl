@@ -1,3 +1,15 @@
+## rotl 3.0.5
+
+### New features
+
+* The data types in the data frame returned by `tnrs_match_names` are
+  consistent, and remain the same even after using `update()`.
+  
+### Other changes
+
+* Small internal changes that reflect changes in the data structures returned by
+  the API.
+
 ## rotl 3.0.4
 
 ### New features
