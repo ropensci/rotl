@@ -43,9 +43,12 @@ data. Thankfully, the data is available as supplementary material from the
 publisher's website. We can collect the data from using `fulltext` (with the
 papers DOI as input) and read it into memory with `readxl::read_excel`:
 
-```{r egg_data, cache=TRUE}
+```{r load-package}
 library(rotl)
+```
 
+
+```{r egg_data}
 ## This should work, but Wiley has currently broken the URLs to access the
 ## SI. 
 ## if (require(readxl) && require(fulltext)) {
@@ -91,7 +94,7 @@ We can use the OTL synthesis tree to relate these species. To do so we first nee
 find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
 Taxonomic Name Resolution Service function `tnrs_match_names`:
 
-```{r, birds, cache=TRUE}
+```{r birds}
 taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
 head(taxa)
 ```
