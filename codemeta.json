@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.3.907",
+  "version": "3.0.6",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.3",
+    "version": "3.5.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.3 (2017-11-30)",
+  "runtimePlatform": "R version 3.5.2 (2018-12-20)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -45,37 +45,41 @@
       "@id": "https://orcid.org/0000-0002-6165-0029"
     }
   ],
-  "maintainer": {
-    "@type": "Person",
-    "givenName": "Francois",
-    "familyName": "Michonneau",
-    "email": "francois.michonneau@gmail.com",
-    "@id": "https://orcid.org/0000-0002-9092-966X"
-  },
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Francois",
+      "familyName": "Michonneau",
+      "email": "francois.michonneau@gmail.com",
+      "@id": "https://orcid.org/0000-0002-9092-966X"
+    }
+  ],
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
-      "version": "1.12",
+      "version": ">= 1.12",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
-      "version": "0.7",
+      "version": ">= 0.7",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     },
     {
       "@type": "SoftwareApplication",
@@ -84,9 +88,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     },
     {
       "@type": "SoftwareApplication",
@@ -95,9 +100,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=RNeXML"
     },
     {
       "@type": "SoftwareApplication",
@@ -106,9 +112,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phylobase"
     },
     {
       "@type": "SoftwareApplication",
@@ -117,21 +124,23 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=MCMCglmm"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "fulltext",
       "name": "fulltext",
-      "version": "0.1.6",
+      "version": ">= 0.1.6",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=fulltext"
     },
     {
       "@type": "SoftwareApplication",
@@ -140,12 +149,19 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=readxl"
     }
   ],
   "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.1.1"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "httr",
@@ -153,9 +169,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr"
     },
     {
       "@type": "SoftwareApplication",
@@ -164,33 +181,36 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "assertthat",
       "name": "assertthat",
-      "version": "0.1",
+      "version": ">= 0.1",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=assertthat"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "rncl",
       "name": "rncl",
-      "version": "0.6.0",
+      "version": ">= 0.6.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rncl"
     },
     {
       "@type": "SoftwareApplication",
@@ -199,9 +219,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ape"
     },
     {
       "@type": "SoftwareApplication",
@@ -210,21 +231,16 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": "3.1.1"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rentrez"
     }
   ],
   "contIntegration": "https://travis-ci.org/ropensci/rotl",
   "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "82.483KB",
+  "fileSize": "256.252KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -395,6 +411,11 @@
     }
   ],
   "isPartOf": "https://ropensci.org",
-  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity"],
-  "relatedLink": "https://codemeta.github.io/codemetar"
+  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity", "r", "rstats", "r-package", "taxonomy", "phylogeny", "peer-reviewed"],
+  "relatedLink": ["https://codemeta.github.io/codemetar", "https://CRAN.R-project.org/package=rotl"],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/onboarding/issues/17",
+    "provider": "http://ropensci.org"
+  }
 }
