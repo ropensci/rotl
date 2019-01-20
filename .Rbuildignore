@@ -1,3 +1,6 @@
+^pkgdown$
+^_pkgdown\.yml$
+^docs$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^README\.rmd$
@@ -9,5 +12,4 @@ tmp/
 ^cran-comments\.md$
 ^.projectile$
 revdep/
-^docs$
 ^codemeta\.json$

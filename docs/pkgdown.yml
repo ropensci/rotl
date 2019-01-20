@@ -1,0 +1,8 @@
+pandoc: 2.2.1
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  data_mashups: data_mashups.html
+  how-to-use-rotl: how-to-use-rotl.html
+  meta-analysis: meta-analysis.html
+
