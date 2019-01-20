@@ -1,3 +1,7 @@
+## rotl 3.0.6
+
+* Minor update to address warnings seen on CRAN.
+
 ## rotl 3.0.5
 
 ### New features
