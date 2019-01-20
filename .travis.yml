@@ -8,12 +8,9 @@ r_check_args: --as-cran --run-dontrun
 cache: packages
 
 r:
-  #- oldrel
-  #- release
+  - oldrel
+  - release
   - devel
-
-env:
-  - _R_CHECK_DEPENDS_ONLY_=true
 
 r_packages:
    - covr
