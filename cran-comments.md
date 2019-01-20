@@ -4,9 +4,9 @@
 
 ## Test environments
 
-- local Ubuntu 18.04, R 3.5.1
-- Ubuntu 14.04 (travis-ci), R 3.4.4, R 3.5.1, and R-devel (2019-09-28 r75378)
-- Windows with win-builder R 3.5.1 and R-devel (2019-09-28 r75378)
+- local Ubuntu 18.04, R 3.5.2
+- Ubuntu 14.04 (travis-ci), R 3.4.4, R 3.5.2, and R-devel (2019-01-18 r75994)
+- Windows with win-builder R-devel (2019-01-18 r75994)
 
 ## R CMD check results
 
