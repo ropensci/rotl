@@ -40,19 +40,16 @@ install.packages("rotl")
 ```
 
 If you want to test the development version, you first need to install
-[ghit](https://github.com/cloudyr/ghit) (`ghit` is a more lightweight version of
-[devtools](https://github.com/hadley/devtools) if your sole purpose is to
-install packages that are hosted on GitHub).
+the `remotes` package.
 
 ```{r, eval=FALSE}
-install.packages("ghit")
+install.packages("remotes")
 ```
 
 Then you can install `rotl` using:
 
 ```{r, eval=FALSE}
-library(ghit) # or library(devtools)
-install_github("ropensci/rotl")
+remotes::install_github("ropensci/rotl")
 ```
 
 ## Vignettes
