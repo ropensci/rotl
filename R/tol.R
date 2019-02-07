@@ -412,15 +412,15 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##' synthetic tree. This tree is equivalent to the minimal subtree
 ##' induced on the draft tree by the set of identified nodes.
 ##'
-##' @param ott_ids Numeric vector. OTT ids indicating nodes to be used
-##'     as tips in the induced tree.
-##' @param node_ids Character vector. Node ids indicating nodes to be used
-##'     as tips in the induced tree.
+##' @param ott_ids Numeric vector. OTT ids indicating nodes to be used as tips
+##'     in the induced tree.
+##' @param node_ids Character vector. Node ids indicating nodes to be used as
+##'     tips in the induced tree.
 ##' @param label_format Character. Defines the label type; one of
-##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or
-##'      \dQuote{\code{name_and_id}} (the default).
-##' @param file If specified, the function will write the subtree to a
-##'     file in newick format.
+##'     \dQuote{\code{name}}, \dQuote{\code{id}}, or \dQuote{\code{name_and_id}}
+##'     (the default).
+##' @param file If specified, the function will write the subtree to a file in
+##'     newick format.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -430,12 +430,22 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##'
+##'     Note that the tree returned when specifying a file name with the
+##'     \code{file} argument is the \dQuote{raw} Newick string returned by Open
+##'     Tree of Life. This string contains singleton nodes, and therefore will
+##'     be different from the tree returned as a \code{phylo} object which will
+##'     not contain these singleton nodes.
+##'
 ##' @examples
 ##' \dontrun{
-##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710))
-##' tree_file <- tempfile(fileext=".tre")
-##' tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710),
+##' ## Result as a `phylo` object
+##' res <- tol_induced_subtree(ott_ids = c(292466, 267845, 316878, 102710))
+##'
+##' ## Raw Newick string from Open Tree of Life
+##' tree_file <- tempfile(fileext = ".tre")
+##' tol_induced_subtree(ott_ids = c(292466, 267845, 316878, 102710),
 ##'                     file=tree_file)
+##'
 ##' }
 ##' @export
 tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
