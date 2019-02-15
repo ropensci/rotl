@@ -82,11 +82,15 @@ plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
 
 In order to use this data later on we need to first convert it to a standard
 `data.frame`. We can also convert the `animal` column (the species names) to
-lower case which will make it easier to match names later on:
+lower case, and remove the underscores in their names, which will make it easier to match names later on:
 
 ```{r, clean_eggs}
 egg_data <- as.data.frame(egg_data)
+## Convert taxon names to lower case
 egg_data$animal <- tolower(egg_data$animal)
+## Let's remove the underscores (_) from the taxon names
+egg_data$animal <- gsub("_", " ", egg_data$animal)
+
 ```
 ### Find the species in OTT
 
@@ -95,9 +99,7 @@ find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
 Taxonomic Name Resolution Service function `tnrs_match_names`:
 
 ```{r birds}
-## remove the _ from the species names
-clean_names <- gsub("_", " ", unique(egg_data$animal))
-taxa <- tnrs_match_names(clean_names, context="Animals")
+taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
 head(taxa)
 ```
 
