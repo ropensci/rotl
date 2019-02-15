@@ -14,3 +14,4 @@ tmp/
 ^.projectile$
 revdep/
 ^codemeta\.json$
+^tic.R$
