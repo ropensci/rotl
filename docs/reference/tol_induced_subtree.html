@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rotl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.7</span>
       </span>
     </div>
 
@@ -139,24 +139,24 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ott_ids</th>
-      <td><p>Numeric vector. OTT ids indicating nodes to be used
-as tips in the induced tree.</p></td>
+      <td><p>Numeric vector. OTT ids indicating nodes to be used as tips
+in the induced tree.</p></td>
     </tr>
     <tr>
       <th>node_ids</th>
-      <td><p>Character vector. Node ids indicating nodes to be used
-as tips in the induced tree.</p></td>
+      <td><p>Character vector. Node ids indicating nodes to be used as
+tips in the induced tree.</p></td>
     </tr>
     <tr>
       <th>label_format</th>
       <td><p>Character. Defines the label type; one of
-&#8220;<code>name</code>&#8221;, &#8220;<code>id</code>&#8221;, or
- &#8220;<code>name_and_id</code>&#8221; (the default).</p></td>
+&#8220;<code>name</code>&#8221;, &#8220;<code>id</code>&#8221;, or &#8220;<code>name_and_id</code>&#8221;
+(the default).</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>If specified, the function will write the subtree to a
-file in newick format.</p></td>
+      <td><p>If specified, the function will write the subtree to a file in
+newick format.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -171,6 +171,11 @@ file in newick format.</p></td>
     (default), a phylogenetic tree of class <code>phylo</code>.</p>
 <p>Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.</p>
+<p>Note that the tree returned when specifying a file name with the
+    <code>file</code> argument is the &#8220;raw&#8221; Newick string returned by Open
+    Tree of Life. This string contains singleton nodes, and therefore will
+    be different from the tree returned as a <code>phylo</code> object which will
+    not contain these singleton nodes.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -182,10 +187,14 @@ induced on the draft tree by the set of identified nodes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>tol_induced_subtree</span>(<span class='kw'>ott_ids</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>292466</span>, <span class='fl'>267845</span>, <span class='fl'>316878</span>, <span class='fl'>102710</span>))
-<span class='no'>tree_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span><span class='kw'>=</span><span class='st'>".tre"</span>)
-<span class='fu'>tol_induced_subtree</span>(<span class='kw'>ott_ids</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>292466</span>, <span class='fl'>267845</span>, <span class='fl'>316878</span>, <span class='fl'>102710</span>),
+<span class='co'>## Result as a `phylo` object</span>
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>tol_induced_subtree</span>(<span class='kw'>ott_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>292466</span>, <span class='fl'>267845</span>, <span class='fl'>316878</span>, <span class='fl'>102710</span>))
+
+<span class='co'>## Raw Newick string from Open Tree of Life</span>
+<span class='no'>tree_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".tre"</span>)
+<span class='fu'>tol_induced_subtree</span>(<span class='kw'>ott_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>292466</span>, <span class='fl'>267845</span>, <span class='fl'>316878</span>, <span class='fl'>102710</span>),
                     <span class='kw'>file</span><span class='kw'>=</span><span class='no'>tree_file</span>)
+
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
