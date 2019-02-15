@@ -1,3 +1,8 @@
+## rotl 3.0.7
+
+* Minor update to vignette to address change to TNRS endpoint (underscores can't
+  be included in the taxon names anymore).
+
 ## rotl 3.0.6
 
 * Minor update to address warnings seen on CRAN.
