@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -240,7 +240,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/rotl",
   "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "256.252KB",
+  "fileSize": "256.721KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -417,5 +417,6 @@
     "@type": "Review",
     "url": "https://github.com/ropensci/onboarding/issues/17",
     "provider": "http://ropensci.org"
-  }
+  },
+  "developmentStatus": "https://www.repostatus.org/#active"
 }
