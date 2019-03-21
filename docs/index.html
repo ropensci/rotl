@@ -7,19 +7,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interface to the 'Open Tree of Life' API • rotl</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<link href="ropensci.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Interface to the 'Open Tree of Life' API">
+<script src="pkgdown.js"></script><link href="tidyverse-2.css" rel="stylesheet">
+<meta property="og:title" content="Interface to the 'Open Tree of Life' API">
 <meta property="og:description" content="An interface to the 'Open Tree of Life' API to retrieve
     phylogenetic trees, information about studies used to assemble the synthetic
     tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The
     'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all
     named species.">
 <meta name="twitter:card" content="summary">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <div class="container template-article">
@@ -32,19 +31,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">rotl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.7</span>
-      </span>
-    </div>
 
+      <div class="navbar-brand-container">
+        <a class="navbar-brand" href="index.html">rotl</a>
+        <div class="info">
+          <span class="partof">part of  <a href="https://ropensci.org"><img src="https://d33wubrfki0l68.cloudfront.net/88338b7637e084df5c43e7a9e6293719dbaf10e2/30903/img/icon_lettering_white.svg" height="24" alt="rOpenSci"></a></span>
+          <span class="version label label-default version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.7</span>
+        </div>
+      </div>
+    </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="articles/rotl.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -60,9 +65,6 @@
       <a href="articles/data_mashups.html">Connecting data to Open Tree trees</a>
     </li>
     <li>
-      <a href="articles/how-to-use-rotl.html">How to use rotl?</a>
-    </li>
-    <li>
       <a href="articles/meta-analysis.html">Using the Open Tree synthesis in a comparative analysis</a>
     </li>
   </ul>
@@ -70,9 +72,7 @@
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
+        <li>
   <a href="https://github.com/ropensci/rotl">
     <span class="fa fa-github fa-lg"></span>
      
@@ -114,7 +114,7 @@
 <a href="#vignettes" class="anchor"></a>Vignettes</h2>
 <p>There are three vignettes:</p>
 <ul>
-<li><p>Start by checking out the “How to use <code>rotl</code>?” by typing: <code><a href="articles/how-to-use-rotl.html">vignette("how-to-use-rotl", package="rotl")</a></code> after installing the package.</p></li>
+<li><p>Start by checking out the “How to use <code>rotl</code>?” by typing: <code>vignette("how-to-use-rotl", package="rotl")</code> after installing the package.</p></li>
 <li><p>Then explore how you can use <code>rotl</code> with other packages to combine your data with trees from the Open Tree of Life project by typing: <code><a href="articles/data_mashups.html">vignette("data_mashups", package="rotl")</a></code>.</p></li>
 <li><p>The vignette “Using the Open Tree Synthesis in a comparative analsysis” demonstrates how you can reproduce an analysis of a published paper by downloading the tree they used, and data from the supplementary material: <code><a href="articles/meta-analysis.html">vignette("meta-analysis", package="rotl")</a></code>.</p></li>
 </ul>
@@ -147,7 +147,7 @@
 <pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
 ## with labels: Ponginae ott1082538, Hylobatidae ott166544</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(tr)</a></code></pre></div>
-<p><img src="https://i.imgur.com/nCAmZz7.png" width="700"></p>
+<p><img src="https://i.imgur.com/3nSYtsN.png" width="700"></p>
 <p>The code above can be summarized in a single pipe:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">## or expressed as a pipe:</a>
@@ -158,7 +158,7 @@
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">    </span>plot</a></code></pre></div>
 <pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
 ## with labels: Ponginae ott1082538, Hylobatidae ott166544</code></pre>
-<p><img src="https://i.imgur.com/Ur0duHu.png" width="700"></p>
+<p><img src="https://i.imgur.com/LvYYNqy.png" width="700"></p>
 </div>
 </div>
 <div id="citation-and-manuscript" class="section level2">
@@ -244,12 +244,15 @@
 </div>
 
 
-      <footer><div class="copyright">
-  <p>Developed by Francois Michonneau, Joseph Brown, David Winter.</p>
+      <footer><div>
+  <p>rotl is a part of <img src="https://github.com/ropensci/logos/raw/master/icon_lettering_color.png" height="40" alt="rOpenSci">. Learn more at <a href="https://ropensci.org">ropensci.org</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+<div class="author">
+  <p>
+    Developed by Francois Michonneau, Joseph Brown, David Winter.
+    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+  </p>
 </div>
       </footer>
 </div>
