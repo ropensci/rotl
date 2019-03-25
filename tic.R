@@ -8,7 +8,7 @@ if (Sys.getenv("id_rsa") != "" &&
     ## - `Sys.getenv("BUILD_PKGDOWN") != ""`: If the env var "BUILD_PKGDOWN" is set
     ## - `Sys.getenv("TRAVIS_EVENT_TYPE") == "cron"`: Only for Travis cron jobs
   get_stage("install") %>%
-    add_step(step_install_github("ropenscilabs/rotemplate"))
+    add_step(step_install_github("ropensci/rotemplate"))
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
