@@ -26,7 +26,7 @@ how the synthetic tree provided by Open Tree of Life (and made available in R vi
 ## A phylogenetic meta-analysis
 
 To demonstrate the use of `rotl` in a comparative analysis, we will partially
-reproduce the results of [Rutkowska _et al_ 2014](dx.doi.org/10.1111/jeb.12282).
+reproduce the results of [Rutkowska _et al_ 2014](https://doi.org/10.1111/jeb.12282).
 Very briefly, this study is a meta-analysis summarising the results of multiple
 studies testing for systematic differences in the size of eggs which contain
 male and female offspring. Such a difference might mean that birds invest more
