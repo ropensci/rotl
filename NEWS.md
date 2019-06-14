@@ -1,3 +1,7 @@
+## rotl 3.0.8
+
+* Small fixes following updates to the Open Tree of Life API.
+
 ## rotl 3.0.7
 
 * Minor update to vignette to address change to TNRS endpoint (underscores can't
