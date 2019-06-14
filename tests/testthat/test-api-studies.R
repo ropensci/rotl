@@ -29,7 +29,7 @@ test_that("argument value needs to be character for .studies_find_studies", {
     ## character, it looks like a number so it's OK. Failure is
     ## because of the value doesn't exist.
     expect_error(.studies_find_studies("test", "123", TRUE, TRUE),
-                 "unrecognized property")
+                 "Study property test is unknown")
 })
 
 test_that("both property & value need to be provided for .studies_find_studies", {
@@ -73,7 +73,7 @@ test_that("argument value needs to be character for .studies_find_trees", {
     ## character, it looks like a number so it's OK. Failure is
     ## because of the value doesn't exist.
     expect_error(.studies_find_trees("test", "123", TRUE, TRUE),
-                 "unrecognized property")
+                 "Tree property test is unknown")
 })
 
 test_that("both property & value need to be provided for .studies_find_trees", {
