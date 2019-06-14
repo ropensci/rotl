@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.2",
+    "version": "3.6.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.2 (2018-12-20)",
+  "runtimePlatform": "R version 3.6.0 (2019-04-26)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -240,7 +240,7 @@
   "contIntegration": "https://travis-ci.org/ropensci/rotl",
   "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "256.721KB",
+  "fileSize": "204.177KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -418,5 +418,8 @@
     "url": "https://github.com/ropensci/onboarding/issues/17",
     "provider": "http://ropensci.org"
   },
-  "developmentStatus": "https://www.repostatus.org/#active"
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {}
 }
