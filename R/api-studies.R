@@ -66,10 +66,13 @@
         stop("Must supply a \'value\' argument")
     }
 
-    res <- otl_POST(path="studies/find_trees/",
-                    body=c(req_body,
-                           jsonlite::unbox(verbose),
-                           jsonlite::unbox(exact)), ...)
+    res <- otl_POST(
+      path = "studies/find_trees/",
+      body = c(
+        req_body,
+        verbose = jsonlite::unbox(verbose),
+        exact = jsonlite::unbox(exact)
+      ), ...)
     res
 }
 
