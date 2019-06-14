@@ -1,4 +1,4 @@
-add_package_checks()
+do_package_checks()
 
 if (Sys.getenv("id_rsa") != "" &&
     Sys.getenv("TRAVIS_R_VERSION_STRING") == "release") {
