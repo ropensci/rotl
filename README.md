@@ -109,30 +109,24 @@ Now we can get the tree with just those tips:
 
 ```r
 tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
+```
+
+```
+## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
+## with labels: Ponginae ott1082538, Hylobatidae ott166544
+```
+
+```r
 plot(tr)
 ```
 
-![plot of chunk get_tr](https://i.imgur.com/OXdDivA.png)
+![plot of chunk get_tr](https://i.imgur.com/EQcQBhF.png)
 
 The code above can be summarized in a single pipe:
 
 
 ```r
 library(magrittr)
-```
-
-```
-## 
-## Attaching package: 'magrittr'
-```
-
-```
-## The following objects are masked from 'package:testthat':
-## 
-##     equals, is_less_than, not
-```
-
-```r
 ## or expressed as a pipe:
 c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     tnrs_match_names %>%
@@ -141,7 +135,12 @@ c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     plot
 ```
 
-![plot of chunk pipe](https://i.imgur.com/d8yQgGw.png)
+```
+## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
+## with labels: Ponginae ott1082538, Hylobatidae ott166544
+```
+
+![plot of chunk pipe](https://i.imgur.com/eU6zgas.png)
 
 ## Citation and Manuscript
 
@@ -186,7 +185,7 @@ rotl:::.tnrs_match_names(c("pan", "pango", "gorilla", "hoolock", "homo"), otl_v=
 ### Code of Conduct
 
 Please note that this project is released with a
-[Contributor Code of Conduct](CONDUCT.md). By participating in this project you
+[Contributor Code of Conduct](https://github.com/ropensci/rotl/blob/master/CONDUCT.md). By participating in this project you
 agree to abide by its terms.
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
