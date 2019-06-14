@@ -1,4 +1,4 @@
-## rotl 3.0.8
+## rotl 3.0.9
 
 * Small fixes following updates to the Open Tree of Life API.
 
