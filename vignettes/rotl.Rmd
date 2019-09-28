@@ -8,6 +8,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{How to use rotl?}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
   \usepackage[utf8]{inputenc}
 ---
 
@@ -97,7 +98,7 @@ directly.
 
 ```{r, fig.width=7, fig.height=4}
 my_tree <- tol_induced_subtree(ott_ids = resolved_names$ott_id)
-plot(my_tree, no.margin=TRUE)
+plot(my_tree, no.margin = TRUE)
 ```
 
 
@@ -127,8 +128,10 @@ information that initially matched for _Diadema_. We can now use the `update()`
 function, to change to the correct taxa (the fungus not the sea urchin):
 
 ```{r}
-resolved_names <- update(resolved_names, taxon_name = "diadema",
-                         new_row_number = 2)
+resolved_names <- update(resolved_names,
+  taxon_name = "diadema",
+  new_row_number = 2
+)
 
 ## we could also have used the ott_id to replace this taxon:
 ## resolved_names <- update(resolved_names, taxon_name = "diadema",
@@ -185,7 +188,7 @@ matching a specific criteria. The function `studies_properties()` returns the
 list of properties that can be used in the search.
 
 ```{r}
-furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
+furry_studies <- studies_find_studies(property = "ot:focalCladeOTTTaxonName", value = "Mammalia")
 furry_ids <- furry_studies$study_ids
 ```
 
@@ -194,8 +197,8 @@ associated with this study:
 
 ```{r}
 furry_meta <- get_study_meta("pg_2550")
-get_publication(furry_meta)     ## The citation for the source of the study
-get_tree_ids(furry_meta)        ## This study has 10 trees associated with it
+get_publication(furry_meta) ## The citation for the source of the study
+get_tree_ids(furry_meta) ## This study has 10 trees associated with it
 candidate_for_synth(furry_meta) ## None of these trees are yet included in the OTL
 ```
 
@@ -225,9 +228,11 @@ The easiest way to work around this is to save the tree in a file, and use APE
 to read it in memory:
 
 ```{r, eval=FALSE}
-get_study_tree(study_id="pg_710", tree_id="tree1277",
-               tip_label='ott_taxon_name', file = "/tmp/tree.tre",
-               file_format = "newick")
+get_study_tree(
+  study_id = "pg_710", tree_id = "tree1277",
+  tip_label = "ott_taxon_name", file = "/tmp/tree.tre",
+  file_format = "newick"
+)
 tr <- ape::read.tree(file = "/tmp/tree.tre")
 ```
 
@@ -255,7 +260,7 @@ genera:
 
 ```{r}
 turducken <- c("Meleagris", "Anas", "Gallus", "Sus")
-taxa <- tnrs_match_names(turducken, context="Animals")
+taxa <- tnrs_match_names(turducken, context = "Animals")
 taxa
 ```
 
@@ -293,7 +298,7 @@ are guaranteed to be monophyletic):
 
 ```{r, fig.width=7, fig.height=4}
 turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus", "Sus scrofa")
-taxa <- tnrs_match_names(turducken_spp, context="Animals")
+taxa <- tnrs_match_names(turducken_spp, context = "Animals")
 tr <- tol_induced_subtree(ott_id(taxa))
 plot(tr)
 ```

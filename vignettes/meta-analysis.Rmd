@@ -2,10 +2,13 @@
 title: "Using the Open Tree synthesis in a comparative analysis"
 author: "David Winter"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
 vignette: >
   %\VignetteIndexEntry{Using the Open Tree synthesis in a comparative analysis}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -50,14 +53,15 @@ library(rotl)
 
 ```{r egg_data}
 ## This should work, but Wiley has currently broken the URLs to access the
-## SI. 
+## SI.
 ## if (require(readxl) && require(fulltext)) {
 ## doi <- "10.1111/jeb.12282"
-## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)    
+## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)
 ## egg_data <- read_excel(xl_file)
 ## } else {
 egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
-                     stringsAsFactors = FALSE)
+  stringsAsFactors = FALSE
+)
 ## }
 head(egg_data)
 ```
@@ -74,10 +78,12 @@ standard error) on the x-axis. Here we calculate precision from the sample
 variance (`Vzr`):
 
 ```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
-plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
-     ylab="Effect size (Zr)",
-     xlab="Precision (1/SE)",
-     main="Effect sizes for sex bias in egg size among 51 brid species" )
+plot(1 / sqrt(egg_data$VZr), egg_data$Zr,
+  pch = 16,
+  ylab = "Effect size (Zr)",
+  xlab = "Precision (1/SE)",
+  main = "Effect sizes for sex bias in egg size among 51 brid species"
+)
 ```
 
 In order to use this data later on we need to first convert it to a standard
@@ -90,7 +96,6 @@ egg_data <- as.data.frame(egg_data)
 egg_data$animal <- tolower(egg_data$animal)
 ## Let's remove the underscores (_) from the taxon names
 egg_data$animal <- gsub("_", " ", egg_data$animal)
-
 ```
 ### Find the species in OTT
 
@@ -99,7 +104,7 @@ find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
 Taxonomic Name Resolution Service function `tnrs_match_names`:
 
 ```{r birds}
-taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
+taxa <- tnrs_match_names(unique(egg_data$animal), context = "Animals")
 head(taxa)
 ```
 
@@ -110,7 +115,7 @@ we have for each species to the names Open Tree uses for them:
 
 
 ```{r bird_map}
-taxon_map <- structure(taxa$search_string, names=taxa$unique_name)
+taxon_map <- structure(taxa$search_string, names = taxa$unique_name)
 ```
 
 Now we can use this map to retrieve "data set names" from "OTT names":
@@ -127,7 +132,7 @@ we will leave them out of this plot
 
 ```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
 tr <- tol_induced_subtree(ott_id(taxa)[is_in_tree(ott_id(taxa))])
-plot(tr, show.tip.label=FALSE)
+plot(tr, show.tip.label = FALSE)
 ```
 
 There are a few things to note here. First, the tree has no branch lengths.
@@ -164,7 +169,7 @@ with the species names from dataset.
 
 
 ```{r clean_tips}
-otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
+otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
 tr$tip.label <- taxon_map[ otl_tips ]
 ```
 
@@ -201,19 +206,21 @@ studies. Here's how we specify and fit that model with `MCMCglmm`:
 ```{r model}
 set.seed(123)
 if (require(MCMCglmm, quietly = TRUE)) {
+  pr <- list(
+    R = list(V = 1, nu = 0.002),
+    G = list(G1 = list(V = 1, nu = 0.002))
+  )
 
-    pr <- list(R=list(V=1,nu=0.002),
-               G=list(G1=list(V=1,nu=0.002))
-               )
-
-    model <- MCMCglmm(Zr~1,random=~animal,
-                      pedigree=tr,
-                      mev=egg_data$VZr,
-                      prior=pr,
-                      data=egg_data,
-                      verbose=FALSE)
+  model <- MCMCglmm(Zr ~ 1,
+    random = ~animal,
+    pedigree = tr,
+    mev = egg_data$VZr,
+    prior = pr,
+    data = egg_data,
+    verbose = FALSE
+  )
 } else {
-    model <- readRDS(file = system.file("extdata", "mcmcglmm_model.rds", package = "rotl"))
+  model <- readRDS(file = system.file("extdata", "mcmcglmm_model.rds", package = "rotl"))
 }
 ```
 
@@ -226,7 +233,7 @@ calculate the _H_ for this model:
 
 
 ```{r PhyH}
-var_comps <- colMeans(model$VCV )
+var_comps <- colMeans(model$VCV)
 var_comps["animal"] / sum(var_comps)
 ```
 

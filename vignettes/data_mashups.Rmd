@@ -2,11 +2,14 @@
 title: "Connecting data to Open Tree trees"
 author: "David Winter"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
 vignette: >
   %\VignetteIndexEntry{Connecting data to Open Tree trees}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ## Combining data from OToL and other sources.
@@ -26,7 +29,7 @@ which might explain the mutation rate:
 
 ```{r, data}
 csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
-mu <- read.csv(csv_path, stringsAsFactors=FALSE)
+mu <- read.csv(csv_path, stringsAsFactors = FALSE)
 mu
 ```
 
@@ -45,7 +48,7 @@ Hmm, none of those groups contain all of our species. In this case we can
 search using the `All life` context and the function `tnrs_match_names`:
 
 ```{r, match}
-taxon_search <- tnrs_match_names(names=mu$species, context_name="All life")
+taxon_search <- tnrs_match_names(names = mu$species, context_name = "All life")
 knitr::kable(taxon_search)
 ```
 
@@ -85,7 +88,7 @@ contain them.  Starting with our first species _Tetrahymena thermophila_ we can
 use `studies_find_trees` to do this search.
 
 ```{r taxon_count}
-studies_find_trees(property="ot:ottId", value=as.character(ott_id(taxon_search)[1]))
+studies_find_trees(property = "ot:ottId", value = as.character(ott_id(taxon_search)[1]))
 ```
 
 Well... that's not very promising. We can repeat that process for all of the IDs
@@ -93,7 +96,7 @@ to see if the other species are better represented.
 
 
 ```{r, all_taxa_count}
-hits <- lapply(mu$ott_id, studies_find_trees, property="ot:ottId", detailed = FALSE)
+hits <- lapply(mu$ott_id, studies_find_trees, property = "ot:ottId", detailed = FALSE)
 sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 ```
 
@@ -135,7 +138,7 @@ tr$tip.label[4]
 `rotl` provides a convienence function `strip_ott_ids` to deal with these.
 
 ```{r, sub}
-tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
+tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
 tr$tip.label %in% mu$ott_name
 ```
 
@@ -173,9 +176,10 @@ with `get_study`. `rotl` will also help you find external. The function
 gather some more data:
 
 ```{r}
-extra_data <- try(study_external_IDs("pg_1980"), silent=TRUE)
-if (!inherits(extra_data, "try-error"))
+extra_data <- try(study_external_IDs("pg_1980"), silent = TRUE)
+if (!inherits(extra_data, "try-error")) {
   extra_data
+}
 ```
 
 Here the returned object contains an `external_data_url` (in this case a link to
@@ -188,11 +192,13 @@ print them.
 
 ```{r}
 library(rentrez)
-seqs <- try(entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta"), silent = TRUE)
+seqs <- try(entrez_fetch(db = "nucleotide", id = extra_data$nucleotide_ids[1:2], rettype = "fasta"), silent = TRUE)
 
 if (inherits(seqs, "try-error")) {
   cat("NCBI temporarily down.")
-} else cat(seqs)
+} else {
+  cat(seqs)
+}
 ```
 
 You could further process these sequences in R with the function `read.dna` from
