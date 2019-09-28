@@ -178,7 +178,7 @@ check_valid_node_id <- function(x) {
   if (!is.character(x)) {
     return(FALSE)
   }
-  if (grepl("^mrcaott\d+ott\d+", x) || grepl("^ott\d+", x)) {
+  if (grepl("^mrcaott\\d+ott\\d+", x) || grepl("^ott\\d+", x)) {
     return(TRUE)
   } else {
     return(FALSE)
