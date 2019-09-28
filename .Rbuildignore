@@ -15,3 +15,4 @@ tmp/
 revdep/
 ^codemeta\.json$
 ^tic.R$
+^.pre-commit-config.yaml$
