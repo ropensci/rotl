@@ -1,17 +1,21 @@
 
 .source_list <- function(tax, ...) {
-    if (! exists("source_id_map", tax)) {
-        ## it should only be missing with tol_about when using
-        ## include_source_list=FALSE
-        stop("Make sure that your object has been created using ",
-             sQuote("tol_about(include_source_list = TRUE)"))
-    }
-    tt <- lapply(tax[["source_id_map"]], function(x) {
-        c(x[["study_id"]], x[["tree_id"]], x[["git_sha"]])
-    })
-    tt <- do.call("rbind", tt)
-    setNames(as.data.frame(tt, stringsAsFactors=FALSE),
-             c("study_id", "tree_id", "git_sha"))
+  if (!exists("source_id_map", tax)) {
+    ## it should only be missing with tol_about when using
+    ## include_source_list=FALSE
+    stop(
+      "Make sure that your object has been created using ",
+      sQuote("tol_about(include_source_list = TRUE)")
+    )
+  }
+  tt <- lapply(tax[["source_id_map"]], function(x) {
+    c(x[["study_id"]], x[["tree_id"]], x[["git_sha"]])
+  })
+  tt <- do.call("rbind", tt)
+  setNames(
+    as.data.frame(tt, stringsAsFactors = FALSE),
+    c("study_id", "tree_id", "git_sha")
+  )
 }
 
 ##' Basic information about the Open Tree of Life (the synthetic tree)
@@ -108,35 +112,35 @@
 ##' studies <- source_list(tol_about(include_source_list=TRUE))}
 ##' @rdname tol_about
 ##' @export
-tol_about <- function(include_source_list=FALSE, ...) {
-    res <- .tol_about(include_source_list=include_source_list, ...)
-    class(res) <- c("tol_summary", class(res))
-    res
+tol_about <- function(include_source_list = FALSE, ...) {
+  res <- .tol_about(include_source_list = include_source_list, ...)
+  class(res) <- c("tol_summary", class(res))
+  res
 }
 
 
 ##' @export
 print.tol_summary <- function(x, ...) {
-    cat("\nOpenTree Synthetic Tree of Life.\n\n")
-    cat("Tree version: ", x$synth_id, "\n", sep="")
-    cat("Taxonomy version: ", x$taxonomy, "\n", sep="")
-    cat("Constructed on: ", x$date_created, "\n", sep="")
-    cat("Number of terminal taxa: ", x$root$num_tips, "\n", sep="")
-    cat("Number of source trees: ", x$num_source_trees, "\n", sep="")
-    cat("Number of source studies: ", x$num_source_studies, "\n", sep = "")
-    cat("Source list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep="")
-    cat("Root taxon: ", x$root$taxon$name, "\n", sep="")
-    cat("Root ott_id: ", x$root$taxon$ott_id, "\n", sep="")
-    cat("Root node_id: ", x$root$node_id, "\n", sep="")
+  cat("\nOpenTree Synthetic Tree of Life.\n\n")
+  cat("Tree version: ", x$synth_id, "\n", sep = "")
+  cat("Taxonomy version: ", x$taxonomy, "\n", sep = "")
+  cat("Constructed on: ", x$date_created, "\n", sep = "")
+  cat("Number of terminal taxa: ", x$root$num_tips, "\n", sep = "")
+  cat("Number of source trees: ", x$num_source_trees, "\n", sep = "")
+  cat("Number of source studies: ", x$num_source_studies, "\n", sep = "")
+  cat("Source list present: ", ifelse(exists("source_list", x), "true", "false"), "\n", sep = "")
+  cat("Root taxon: ", x$root$taxon$name, "\n", sep = "")
+  cat("Root ott_id: ", x$root$taxon$ott_id, "\n", sep = "")
+  cat("Root node_id: ", x$root$node_id, "\n", sep = "")
 }
 
 tol_about_method_factory <- function(.f) {
-    function(tax, ...) {
-        res <- list(.f(tax[["root"]][["taxon"]]))
-        names(res) <- .tax_unique_name(tax[["root"]][["taxon"]])
-        res <- add_otl_class(res, .f)
-        res
-    }
+  function(tax, ...) {
+    res <- list(.f(tax[["root"]][["taxon"]]))
+    names(res) <- .tax_unique_name(tax[["root"]][["taxon"]])
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' @export
@@ -292,43 +296,43 @@ source_list.tol_summary <- .source_list
 ##' }
 ##' @rdname tol_mrca
 ##' @export
-tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
-    res <- .tol_mrca(ott_ids=ott_ids, node_ids=node_ids, ...)
-    class(res) <- c("tol_mrca", class(res))
-    return(res)
+tol_mrca <- function(ott_ids = NULL, node_ids = NULL, ...) {
+  res <- .tol_mrca(ott_ids = ott_ids, node_ids = node_ids, ...)
+  class(res) <- c("tol_mrca", class(res))
+  return(res)
 }
 
 ##' @export
 print.tol_mrca <- function(x, ...) {
-    cat("\nOpenTree MRCA node.\n\n")
-    cat("Node id: ", x$mrca$node_id, "\n", sep="")
-    cat("Number of terminal descendants: ", x$mrca$num_tips, "\n", sep="")
-    if (is_taxon(x[["mrca"]][["taxon"]])) {
-        cat("Is taxon: TRUE\n")
-        cat("Name: ", x$mrca$taxon$name, "\n", sep="")
-        cat("ott id: ", x$mrca$taxon$ott_id, "\n", sep="")
-    } else {
-        cat("Is taxon: FALSE\n")
-        cat("Nearest taxon:\n")
-        cat("  Name: ", x$nearest_taxon$name, "\n", sep="")
-        cat("  ott id: ", x$nearest_taxon$ott_id, "\n", sep="")
-    }
+  cat("\nOpenTree MRCA node.\n\n")
+  cat("Node id: ", x$mrca$node_id, "\n", sep = "")
+  cat("Number of terminal descendants: ", x$mrca$num_tips, "\n", sep = "")
+  if (is_taxon(x[["mrca"]][["taxon"]])) {
+    cat("Is taxon: TRUE\n")
+    cat("Name: ", x$mrca$taxon$name, "\n", sep = "")
+    cat("ott id: ", x$mrca$taxon$ott_id, "\n", sep = "")
+  } else {
+    cat("Is taxon: FALSE\n")
+    cat("Nearest taxon:\n")
+    cat("  Name: ", x$nearest_taxon$name, "\n", sep = "")
+    cat("  ott id: ", x$nearest_taxon$ott_id, "\n", sep = "")
+  }
 }
 
 tol_mrca_method_factory <- function(.f) {
-    function(tax, ...) {
-        if (is_taxon(tax[["mrca"]][["taxon"]])) {
-            res <- list(.f(tax[["mrca"]][["taxon"]]))
-            names(res) <- .tax_unique_name(tax[["mrca"]][["taxon"]])
-            attr(res, "taxon_type") <- "mrca"
-        } else {
-            res <- list(.f(tax[["nearest_taxon"]]))
-            names(res) <- .tax_unique_name(tax[["nearest_taxon"]])
-            attr(res, "taxon_type") <- "nearest_taxon"
-        }
-        res <- add_otl_class(res, .f)
-        res
+  function(tax, ...) {
+    if (is_taxon(tax[["mrca"]][["taxon"]])) {
+      res <- list(.f(tax[["mrca"]][["taxon"]]))
+      names(res) <- .tax_unique_name(tax[["mrca"]][["taxon"]])
+      attr(res, "taxon_type") <- "mrca"
+    } else {
+      res <- list(.f(tax[["nearest_taxon"]]))
+      names(res) <- .tax_unique_name(tax[["nearest_taxon"]])
+      attr(res, "taxon_type") <- "nearest_taxon"
     }
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' @export
@@ -387,19 +391,21 @@ source_list.tol_mrca <- .source_list
 ##' \dontrun{
 ##' res <- tol_subtree(ott_id=241841)}
 ##' @export
-tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
+tol_subtree <- function(ott_id = NULL, node_id = NULL, label_format = NULL,
                         file, ...) {
-    res <- .tol_subtree(ott_id=ott_id, node_id=node_id,
-                        label_format=label_format, ...)
+  res <- .tol_subtree(
+    ott_id = ott_id, node_id = node_id,
+    label_format = label_format, ...
+  )
 
-    if (!missing(file)) {
-        unlink(file)
-        cat(res$newick, file=file)
-        return(invisible(file.exists(file)))
-    } else {
-        phy <- phylo_from_otl(res)
-        return(phy)
-    }
+  if (!missing(file)) {
+    unlink(file)
+    cat(res$newick, file = file)
+    return(invisible(file.exists(file)))
+  } else {
+    phy <- phylo_from_otl(res)
+    return(phy)
+  }
 }
 
 
@@ -448,18 +454,20 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##'
 ##' }
 ##' @export
-tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
+tol_induced_subtree <- function(ott_ids = NULL, node_ids = NULL, label_format = NULL,
                                 file, ...) {
-    res <- .tol_induced_subtree(ott_ids=ott_ids, node_ids=node_ids,
-                                label_format=label_format, ...)
-    if (!missing(file)) {
-        unlink(file)
-        cat(res$newick, file=file)
-        return(file.exists(file))
-    } else {
-        phy <- phylo_from_otl(res)
-        return(phy)
-    }
+  res <- .tol_induced_subtree(
+    ott_ids = ott_ids, node_ids = node_ids,
+    label_format = label_format, ...
+  )
+  if (!missing(file)) {
+    unlink(file)
+    cat(res$newick, file = file)
+    return(file.exists(file))
+  } else {
+    phy <- phylo_from_otl(res)
+    return(phy)
+  }
 }
 
 
@@ -480,13 +488,13 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
 ##' tr$tip.label %in% genera
 ##' }
-##'@export
-strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
-    stripped <- sub("_ott\\d+$", "", tip_labels)
-    if(remove_underscores){
-        return(gsub("_", " ", stripped))
-    }
-    stripped
+##' @export
+strip_ott_ids <- function(tip_labels, remove_underscores = FALSE) {
+  stripped <- sub("_ott\\d+$", "", tip_labels)
+  if (remove_underscores) {
+    return(gsub("_", " ", stripped))
+  }
+  stripped
 }
 
 
@@ -563,6 +571,7 @@ strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
 ##'     \item {conflicts_with} {Named list of lists. Names correspond to
 ##'     sourceid keys. Each list contains input tree node ids (one or more per
 ##'     tree) that conflict with this synthetic node.}
+##'   }
 ##'
 ##'     \code{tol_lineage} and \code{tax_lineage} return data
 ##'         frames. \code{tol_lineage} indicate for each ancestor its
@@ -578,9 +587,11 @@ strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
 ##' tax_lineage(birds)
 ##' tol_lineage(birds)}
 ##' @export
-tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...) {
-  res <- .tol_node_info(ott_id=ott_id, node_id=node_id,
-    include_lineage=include_lineage, ...)
+tol_node_info <- function(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...) {
+  res <- .tol_node_info(
+    ott_id = ott_id, node_id = node_id,
+    include_lineage = include_lineage, ...
+  )
   class(res) <- c("tol_node", class(res))
   return(res)
 }
@@ -588,13 +599,15 @@ tol_node_info <- function(ott_id=NULL, node_id=NULL, include_lineage=FALSE, ...)
 tol_node_method_factory <- function(.f) {
   function(tax, ...) {
     if (exists("taxon", tax)) {
-      res <- setNames(list(.f(tax[["taxon"]])),
-                      .tax_unique_name(tax[["taxon"]]))
+      res <- setNames(
+        list(.f(tax[["taxon"]])),
+        .tax_unique_name(tax[["taxon"]])
+      )
     } else if (exists("node_id", tax)) {
       res <- setNames(tax[["node_id"]], tax[["node_id"]])
     } else {
       res <- NA
-  }
+    }
     res <- add_otl_class(res, .f)
     res
   }
@@ -603,13 +616,13 @@ tol_node_method_factory <- function(.f) {
 ##' @export
 print.tol_node <- function(x, ...) {
   cat("\nOpenTree node.\n\n")
-  cat("Node id: ", x$node_id, "\n", sep="")
-  cat("Number of terminal descendants: ", x$num_tips, "\n", sep="")
+  cat("Node id: ", x$node_id, "\n", sep = "")
+  cat("Number of terminal descendants: ", x$num_tips, "\n", sep = "")
   if (is_taxon(x[["taxon"]])) {
     cat("Is taxon: TRUE\n")
-    cat("Name: ", x$taxon$name, "\n", sep="")
-    cat("Rank: ", x$taxon$rank, "\n", sep="")
-    cat("ott id: ", x$taxon$ott_id, "\n", sep="")
+    cat("Name: ", x$taxon$name, "\n", sep = "")
+    cat("Rank: ", x$taxon$rank, "\n", sep = "")
+    cat("ott id: ", x$taxon$ott_id, "\n", sep = "")
   } else {
     cat("Is taxon: FALSE\n")
   }
@@ -650,7 +663,6 @@ tax_lineage.tol_node <- function(tax, ...) {
     } else {
       NULL
     }
-
   })
   lg <- do.call("rbind", lg)
   as.data.frame(lg, stringsAsFactors = FALSE)
@@ -662,9 +674,11 @@ tax_lineage.tol_node <- function(tax, ...) {
 tol_lineage.tol_node <- function(tax, ...) {
   check_lineage(tax)
   lg <- lapply(tax[["lineage"]], function(x) {
-    c("node_id" = x[["node_id"]],
+    c(
+      "node_id" = x[["node_id"]],
       "num_tips" = x[["num_tips"]],
-      "is_taxon" = exists("taxon", x))
+      "is_taxon" = exists("taxon", x)
+    )
   })
   lg <- do.call("rbind", lg)
   as.data.frame(lg, stringsAsFactors = FALSE)
