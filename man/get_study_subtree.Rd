@@ -4,9 +4,17 @@
 \alias{get_study_subtree}
 \title{Study Subtree}
 \usage{
-get_study_subtree(study_id, tree_id, subtree_id,
-  object_format = c("phylo"), tip_label = c("original_label", "ott_id",
-  "ott_taxon_name"), file_format, file, deduplicate = TRUE, ...)
+get_study_subtree(
+  study_id,
+  tree_id,
+  subtree_id,
+  object_format = c("phylo"),
+  tip_label = c("original_label", "ott_id", "ott_taxon_name"),
+  file_format,
+  file,
+  deduplicate = TRUE,
+  ...
+)
 }
 \arguments{
 \item{study_id}{the study identifier (character)}

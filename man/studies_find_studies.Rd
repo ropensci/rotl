@@ -4,8 +4,14 @@
 \alias{studies_find_studies}
 \title{Find a Study}
 \usage{
-studies_find_studies(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE, detailed = TRUE, ...)
+studies_find_studies(
+  property = NULL,
+  value = NULL,
+  verbose = FALSE,
+  exact = FALSE,
+  detailed = TRUE,
+  ...
+)
 }
 \arguments{
 \item{property}{The property to be searched on (character)}

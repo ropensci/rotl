@@ -4,9 +4,16 @@
 \alias{get_study_tree}
 \title{Study Tree}
 \usage{
-get_study_tree(study_id = NULL, tree_id = NULL,
-  object_format = c("phylo"), tip_label = c("original_label", "ott_id",
-  "ott_taxon_name"), file_format, file, deduplicate = TRUE, ...)
+get_study_tree(
+  study_id = NULL,
+  tree_id = NULL,
+  object_format = c("phylo"),
+  tip_label = c("original_label", "ott_id", "ott_taxon_name"),
+  file_format,
+  file,
+  deduplicate = TRUE,
+  ...
+)
 }
 \arguments{
 \item{study_id}{the identifier of a study (character)}

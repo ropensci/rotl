@@ -12,8 +12,13 @@
 \alias{flags.taxon_info}
 \title{Taxon information}
 \usage{
-taxonomy_taxon_info(ott_ids, include_children = FALSE,
-  include_lineage = FALSE, include_terminal_descendants = FALSE, ...)
+taxonomy_taxon_info(
+  ott_ids,
+  include_children = FALSE,
+  include_lineage = FALSE,
+  include_terminal_descendants = FALSE,
+  ...
+)
 
 \method{tax_rank}{taxon_info}(tax, ...)
 

@@ -4,8 +4,13 @@
 \alias{taxonomy_subtree}
 \title{Taxonomy subtree}
 \usage{
-taxonomy_subtree(ott_id = NULL, output_format = c("taxa", "newick",
-  "phylo", "raw"), label_format = NULL, file, ...)
+taxonomy_subtree(
+  ott_id = NULL,
+  output_format = c("taxa", "newick", "phylo", "raw"),
+  label_format = NULL,
+  file,
+  ...
+)
 }
 \arguments{
 \item{ott_id}{The ott id of the taxon of interest.}

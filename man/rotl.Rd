@@ -3,7 +3,6 @@
 \docType{package}
 \name{rotl}
 \alias{rotl}
-\alias{rotl-package}
 \title{An Interface to the Open Tree of Life API}
 \description{
 The Open Tree of Life is an NSF funded project that is generating

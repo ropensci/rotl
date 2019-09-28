@@ -4,8 +4,14 @@
 \alias{studies_find_trees}
 \title{Find Trees}
 \usage{
-studies_find_trees(property = NULL, value = NULL, verbose = FALSE,
-  exact = FALSE, detailed = TRUE, ...)
+studies_find_trees(
+  property = NULL,
+  value = NULL,
+  verbose = FALSE,
+  exact = FALSE,
+  detailed = TRUE,
+  ...
+)
 }
 \arguments{
 \item{property}{The property to be searched on (character)}

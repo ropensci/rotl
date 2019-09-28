@@ -15,8 +15,7 @@
 \usage{
 tol_lineage(tax, ...)
 
-tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE,
-  ...)
+tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 
 \method{tax_rank}{tol_node}(tax, ...)
 
@@ -35,17 +34,17 @@ tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE,
 \method{tol_lineage}{tol_node}(tax, ...)
 }
 \arguments{
-\item{tax}{an object returned by \code{tol_node_info}.}
-
-\item{...}{additional arguments to customize the API call (see
-?rotl for more information)}
-
 \item{ott_id}{Numeric. The OpenTree taxonomic identifier.}
 
 \item{node_id}{Character. The OpenTree node identifier.}
 
 \item{include_lineage}{Logical (default = FALSE). Whether to return the
 lineage of the node from the synthetic tree.}
+
+\item{...}{additional arguments to customize the API call (see
+?rotl for more information)}
+
+\item{tax}{an object returned by \code{tol_node_info}.}
 }
 \value{
 \code{tol_node_info} returns an invisible list of summary
@@ -56,6 +55,13 @@ lineage of the node from the synthetic tree.}
     \item {node_id} {String. The canonical identifier of the node.}
 
     \item {num_tips} {Numeric. The number of descendent tips.}
+
+    \item {partial_path_of} {List. The edge below this synthetic tree node
+    is compatible with the edge below each of these input tree nodes (one
+    per tree). Each returned element is reported as sourceid:nodeid.}
+
+   \item {query} { The node id that resolved to this node. This can differ
+   from the node_id field if the query id is not canonical. }
 
     \item {taxon} {A list of taxonomic properties. Only returned if
     the queried node is a taxon. Each source has:}
@@ -79,42 +85,20 @@ lineage of the node from the synthetic tree.}
     synthesis source trees. All properties involve sourceid keys and
     nodeid values (see \code{source_id_map} below).
 
-    \item {partial_path_of} {List. The edge below this synthetic tree node
-    is compatible with the edge below each of these input tree nodes (one
-    per tree). Each returned element is reported as sourceid:nodeid.}
-
     \item {supported_by} {List. Input tree nodes (one per tree) that support
     this synthetic tree node. Each returned element is reported as
     sourceid:nodeid.}
 
-    \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
-    to this synthetic tree node (via an exact mapping, or the input tree
-    terminal may be the only terminal descended from this synthetic tree node.
-    Each returned element is reported as sourceid:nodeid.}
+    \item {terminal} {List. Input tree nodes (one per tree) that are
+    equivalent to this synthetic tree node (via an exact mapping, or the
+    input tree terminal may be the only terminal descended from this
+    synthetic tree node. Each returned element is reported as
+    sourceid:nodeid.}
 
     \item {conflicts_with} {Named list of lists. Names correspond to
-    sourceid keys. Each list contains input tree node ids (one or more per tree)
-    that conflict with this synthetic node.}
-
-    \item {source_id_map} {Named list of lists. Names correspond to the
-    sourceid keys used in the 4 properties above. Source trees will have the
-    following properties:}
-
-        \itemize{
-            \item {git_sha} {The git SHA identifying a particular source
-            version.}
-
-            \item {tree_id} {The tree id associated with the study id used.}
-
-            \item {study_id} {The study identifier. Will typically include
-            a prefix ("pg_" or "ot_").}
-        }
-    The only sourceid that does not correspond to a source tree is the taxonomy,
-    which will have the name "ott"+`taxonomy_version`, and the value is the
-    ott_id of the taxon in that taxonomy version. "Taxonomy" will only ever
-    appear in \code{supported_by}.
-
-   }
+    sourceid keys. Each list contains input tree node ids (one or more per
+    tree) that conflict with this synthetic node.}
+  }
 
     \code{tol_lineage} and \code{tax_lineage} return data
         frames. \code{tol_lineage} indicate for each ancestor its
