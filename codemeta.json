@@ -5,19 +5,19 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "rotl",
-  "description": "An interface to the 'Open Tree of Life' API to retrieve\n    phylogenetic trees, information about studies used to assemble the synthetic\n    tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The\n    'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all\n    named species.",
+  "description": "An interface to the 'Open Tree of Life' API to retrieve\n    phylogenetic trees, information about studies used to assemble the\n    synthetic tree, and utilities to match taxonomic names to 'Open Tree\n    identifiers'. The 'Open Tree of Life' aims at assembling a\n    comprehensive phylogenetic tree for all named species.",
   "name": "rotl: Interface to the 'Open Tree of Life' API",
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.8",
+  "version": "3.0.10",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.0",
+    "version": "3.6.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.0 (2019-04-26)",
+  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -57,6 +57,19 @@
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "fulltext",
+      "name": "fulltext",
+      "version": ">= 0.1.6",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=fulltext"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "version": ">= 1.12",
@@ -67,6 +80,42 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "MCMCglmm",
+      "name": "MCMCglmm",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=MCMCglmm"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phylobase",
+      "name": "phylobase",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phylobase"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "readxl",
+      "name": "readxl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=readxl"
     },
     {
       "@type": "SoftwareApplication",
@@ -83,18 +132,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "testthat",
-      "name": "testthat",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=testthat"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "RNeXML",
       "name": "RNeXML",
       "provider": {
@@ -107,52 +144,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "phylobase",
-      "name": "phylobase",
+      "identifier": "testthat",
+      "name": "testthat",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=phylobase"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "MCMCglmm",
-      "name": "MCMCglmm",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=MCMCglmm"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "fulltext",
-      "name": "fulltext",
-      "version": ">= 0.1.6",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=fulltext"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "readxl",
-      "name": "readxl",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=readxl"
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
   "softwareRequirements": [
@@ -161,6 +161,31 @@
       "identifier": "R",
       "name": "R",
       "version": ">= 3.1.1"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ape",
+      "name": "ape",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ape"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "assertthat",
+      "name": "assertthat",
+      "version": ">= 0.1",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=assertthat"
     },
     {
       "@type": "SoftwareApplication",
@@ -188,16 +213,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "assertthat",
-      "name": "assertthat",
-      "version": ">= 0.1",
+      "identifier": "rentrez",
+      "name": "rentrez",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=assertthat"
+      "sameAs": "https://CRAN.R-project.org/package=rentrez"
     },
     {
       "@type": "SoftwareApplication",
@@ -211,36 +235,12 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rncl"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "ape",
-      "name": "ape",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ape"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rentrez",
-      "name": "rentrez",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=rentrez"
     }
   ],
   "contIntegration": "https://travis-ci.org/ropensci/rotl",
   "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "204.177KB",
+  "fileSize": "203.722KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",

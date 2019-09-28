@@ -1,46 +1,56 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.9
-Authors@R: c(
-  person("Francois", "Michonneau", role=c("aut", "cre"),
-         email="francois.michonneau@gmail.com",
-	 comment = c("ORCID" = "0000-0002-9092-966X")),
-  person("Joseph", "Brown", role="aut",
-         comment = c("ORCID" = "0000-0002-3835-8062")),
-  person("David", "Winter", role="aut",
-         comment = c("ORCID" = "0000-0002-6165-0029")),
-  person("Scott", "Chamberlain", role="rev",
-         comment = c("ORCID" = "0000-0003-1444-9135")))
+Version: 3.0.10
+Authors@R: 
+    c(person(given = "Francois",
+             family = "Michonneau",
+             role = c("aut", "cre"),
+             email = "francois.michonneau@gmail.com",
+             comment = c(ORCID = "0000-0002-9092-966X")),
+      person(given = "Joseph",
+             family = "Brown",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-3835-8062")),
+      person(given = "David",
+             family = "Winter",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-6165-0029")),
+      person(given = "Scott",
+             family = "Chamberlain",
+             role = "rev",
+             comment = c(ORCID = "0000-0003-1444-9135")))
 Description: An interface to the 'Open Tree of Life' API to retrieve
-    phylogenetic trees, information about studies used to assemble the synthetic
-    tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The
-    'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all
-    named species.
+    phylogenetic trees, information about studies used to assemble the
+    synthetic tree, and utilities to match taxonomic names to 'Open Tree
+    identifiers'. The 'Open Tree of Life' aims at assembling a
+    comprehensive phylogenetic tree for all named species.
+License: BSD_2_clause + file LICENSE
 URL: https://github.com/ropensci/rotl
 BugReports: https://github.com/ropensci/rotl/issues
 Depends:
     R (>= 3.1.1)
 Imports:
+    ape,
+    assertthat (>= 0.1),
     httr,
     jsonlite,
-    assertthat (>= 0.1),
-    rncl (>= 0.6.0),
-    ape,
-    rentrez
-License: BSD_2_clause + file LICENSE
+    rentrez,
+    rncl (>= 0.6.0)
 Suggests:
-    knitr (>= 1.12),
-    rmarkdown (>= 0.7),
-    testthat,
-    RNeXML,
-    phylobase,
-    MCMCglmm,
     fulltext (>= 0.1.6),
-    readxl
-VignetteBuilder: knitr
-LazyData: true
+    knitr (>= 1.12),
+    MCMCglmm,
+    phylobase,
+    readxl,
+    rmarkdown (>= 0.7),
+    RNeXML,
+    testthat
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
-RoxygenNote: 6.1.1
-X-schema.org-keywords: metadata, ropensci, phylogenetics, independant-contrasts, biodiversity
+LazyData: true
+RoxygenNote: 6.1.99.9001
 X-schema.org-isPartOf: https://ropensci.org
+X-schema.org-keywords: metadata, ropensci, phylogenetics,
+    independant-contrasts, biodiversity
 X-schema.org-relatedLink: https://codemeta.github.io/codemetar
