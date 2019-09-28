@@ -331,7 +331,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 test_that("tol node info.", {
     skip_on_cran()
     expect_true(all(names(tol_info) %in%
-                      c("node_id", "num_tips", "partial_path_of",
+                      c("node_id", "num_tips", "partial_path_of", "query",
                         "source_id_map", "supported_by", "synth_id",
                         "taxon", "terminal")))
     expect_true(inherits(tol_info, "tol_node"))

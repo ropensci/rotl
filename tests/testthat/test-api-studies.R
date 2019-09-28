@@ -72,8 +72,7 @@ test_that("argument value needs to be character for .studies_find_trees", {
     ##  there is an error but not because of the argument "value" is
     ## character, it looks like a number so it's OK. Failure is
     ## because of the value doesn't exist.
-    expect_error(.studies_find_trees("test", "123", TRUE, TRUE),
-                 "Tree property test is unknown")
+    expect_error(.studies_find_trees("test", "123", TRUE, TRUE))
 })
 
 test_that("both property & value need to be provided for .studies_find_trees", {
