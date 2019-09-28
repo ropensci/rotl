@@ -23,8 +23,8 @@
 ##' }
 
 studies_properties <- function(...) {
-    res <- .studies_properties(...)
-    lapply(res, unlist)
+  res <- .studies_properties(...)
+  lapply(res, unlist)
 }
 
 
@@ -78,32 +78,38 @@ studies_properties <- function(...) {
 ##' mammals <- studies_find_studies(property="ot:focalCladeOTTTaxonName",
 ##'                                 value="mammalia", detailed=FALSE)
 ##' }
-studies_find_studies <- function(property=NULL, value=NULL, verbose=FALSE,
-                                 exact=FALSE, detailed = TRUE, ...) {
-    .res <- .studies_find_studies(property = property, value = value,
-                                  verbose = verbose, exact = exact, ...)
+studies_find_studies <- function(property = NULL, value = NULL, verbose = FALSE,
+                                 exact = FALSE, detailed = TRUE, ...) {
+  .res <- .studies_find_studies(
+    property = property, value = value,
+    verbose = verbose, exact = exact, ...
+  )
 
-    res <- vapply(.res[["matched_studies"]],
-                  function(x) x[["ot:studyId"]],
-                  character(1))
-    if (detailed) {
-        dat <- summarize_meta(res)
-    } else {
-        meta_raw <- .res
-        dat <- data.frame(study_ids = res, stringsAsFactors = FALSE)
-        attr(dat, "found_trees") <- paste("If you want to get a list of the",
-                                          "trees associated with the studies,",
-                                          "use", sQuote("detailed = TRUE"))
-        class(dat) <- c("study_ids", class(dat))
-        attr(dat, "metadata") <- meta_raw
-    }
-    class(dat) <- c("matched_studies", class(dat))
-    dat
+  res <- vapply(
+    .res[["matched_studies"]],
+    function(x) x[["ot:studyId"]],
+    character(1)
+  )
+  if (detailed) {
+    dat <- summarize_meta(res)
+  } else {
+    meta_raw <- .res
+    dat <- data.frame(study_ids = res, stringsAsFactors = FALSE)
+    attr(dat, "found_trees") <- paste(
+      "If you want to get a list of the",
+      "trees associated with the studies,",
+      "use", sQuote("detailed = TRUE")
+    )
+    class(dat) <- c("study_ids", class(dat))
+    attr(dat, "metadata") <- meta_raw
+  }
+  class(dat) <- c("matched_studies", class(dat))
+  dat
 }
 
 ##' @export
 print.study_ids <- function(x, ...) {
-    print(format(x), ...)
+  print(format(x), ...)
 }
 
 ##' Return a list of studies for which trees match a given set of
@@ -166,37 +172,49 @@ print.study_ids <- function(x, ...) {
 ##' ## the trees for a given study
 ##' list_trees(res, study_id = "pg_2769")
 ##' }
-studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
-                               exact=FALSE, detailed = TRUE, ...) {
-    .res <- .studies_find_trees(property = property, value = value,
-                               verbose = verbose, exact = exact, ...)
-    study_ids <- vapply(.res[["matched_studies"]],
-                        function(x) x[["ot:studyId"]],
-                        character(1))
-    n_matched_trees <- vapply(.res[["matched_studies"]],
-                              function(x) length(x[["matched_trees"]]),
-                              numeric(1))
-    match_tree_ids <- lapply(.res[["matched_studies"]],
-                             function(x) {
-        sapply(x[["matched_trees"]],
-               function(y) y[["nexson_id"]])
-    })
-    # this one doesn't return all of the treeids. confusing, bc trees are what is wanted
-    #tree_str <- vapply(match_tree_ids, limit_trees, character(1))
-    tree_str <- sapply(match_tree_ids, function(x) paste(x, collapse = ", "))
-    res <- data.frame(study_ids, n_matched_trees, match_tree_ids = tree_str,
-                      stringsAsFactors = FALSE)
-    if (detailed) {
-        meta <- summarize_meta(study_ids)
-        # the next bit seems really slow (JWB)
-        res <- merge(meta, res)
-        attr(res, "metadata") <- attr(meta, "metadata")
-    } else {
-        attr(res, "metadata") <- .res
+studies_find_trees <- function(property = NULL, value = NULL, verbose = FALSE,
+                               exact = FALSE, detailed = TRUE, ...) {
+  .res <- .studies_find_trees(
+    property = property, value = value,
+    verbose = verbose, exact = exact, ...
+  )
+  study_ids <- vapply(
+    .res[["matched_studies"]],
+    function(x) x[["ot:studyId"]],
+    character(1)
+  )
+  n_matched_trees <- vapply(
+    .res[["matched_studies"]],
+    function(x) length(x[["matched_trees"]]),
+    numeric(1)
+  )
+  match_tree_ids <- lapply(
+    .res[["matched_studies"]],
+    function(x) {
+      sapply(
+        x[["matched_trees"]],
+        function(y) y[["nexson_id"]]
+      )
     }
-    attr(res, "found_trees") <- stats::setNames(match_tree_ids, study_ids)
-    class(res) <- c("matched_studies", class(res))
-    res
+  )
+  # this one doesn't return all of the treeids. confusing, bc trees are what is wanted
+  # tree_str <- vapply(match_tree_ids, limit_trees, character(1))
+  tree_str <- sapply(match_tree_ids, function(x) paste(x, collapse = ", "))
+  res <- data.frame(study_ids, n_matched_trees,
+    match_tree_ids = tree_str,
+    stringsAsFactors = FALSE
+  )
+  if (detailed) {
+    meta <- summarize_meta(study_ids)
+    # the next bit seems really slow (JWB)
+    res <- merge(meta, res)
+    attr(res, "metadata") <- attr(meta, "metadata")
+  } else {
+    attr(res, "metadata") <- .res
+  }
+  attr(res, "found_trees") <- stats::setNames(match_tree_ids, study_ids)
+  class(res) <- c("matched_studies", class(res))
+  res
 }
 
 
@@ -243,31 +261,33 @@ studies_find_trees <- function(property=NULL, value=NULL, verbose=FALSE,
 ##' }
 get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
                       file_format, file, ...) {
-    object_format <- match.arg(object_format)
-    if (!missing(file)) {
-        if (!missing(file_format)) {
-            file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
-            res <- .get_study(study_id, format = file_format)
-            unlink(file)
-            if (identical(file_format, "json")) {
-                cat(jsonlite::toJSON(res), file=file)
-            } else {
-                cat(res, file=file)
-            }
-            return(invisible(file.exists(file)))
-        } else {
-            stop(sQuote("file_format"), " must be specified.")
-        }
-    } else if (identical(object_format, "phylo")) {
-        file_format <- "newick"
-        res <- .get_study(study_id = study_id, format=file_format, ...)
-        res <- phylo_from_otl(res)
-    } else if (identical(object_format, "nexml")) {
-        file_format <- "nexml"
-        res <- .get_study(study_id = study_id, format = file_format, ...)
-        res <- nexml_from_otl(res)
-    } else stop("Something is very wrong. Contact us.")
-    res
+  object_format <- match.arg(object_format)
+  if (!missing(file)) {
+    if (!missing(file_format)) {
+      file_format <- match.arg(file_format, c("newick", "nexus", "nexml", "json"))
+      res <- .get_study(study_id, format = file_format)
+      unlink(file)
+      if (identical(file_format, "json")) {
+        cat(jsonlite::toJSON(res), file = file)
+      } else {
+        cat(res, file = file)
+      }
+      return(invisible(file.exists(file)))
+    } else {
+      stop(sQuote("file_format"), " must be specified.")
+    }
+  } else if (identical(object_format, "phylo")) {
+    file_format <- "newick"
+    res <- .get_study(study_id = study_id, format = file_format, ...)
+    res <- phylo_from_otl(res)
+  } else if (identical(object_format, "nexml")) {
+    file_format <- "nexml"
+    res <- .get_study(study_id = study_id, format = file_format, ...)
+    res <- nexml_from_otl(res)
+  } else {
+    stop("Something is very wrong. Contact us.")
+  }
+  res
 }
 
 ##' Returns a specific tree from within a study
@@ -314,36 +334,42 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 get_study_tree <- function(study_id = NULL, tree_id = NULL, object_format = c("phylo"),
                            tip_label = c("original_label", "ott_id", "ott_taxon_name"),
                            file_format, file, deduplicate = TRUE, ...) {
-
-    object_format <- match.arg(object_format)
-    tip_label <- match.arg(tip_label)
-    tip_label <- switch(tip_label,
-                        original_labels = "ot:originallabel",
-                        ott_id =  "ot:ottid",
-                        ott_taxon_name = "ot:otttaxonname")
-    if (!missing(file)) {
-        if (!missing(file_format)) {
-            file_format <- match.arg(file_format, c("newick", "nexus", "json"))
-            if (missing(file)) stop("You must specify a file to write your output")
-            res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
-                                   format=file_format, tip_label = tip_label, ...)
-            unlink(file)
-            if (identical(file_format, "json")) {
-                cat(jsonlite::toJSON(res), file=file)
-            } else {
-                cat(res, file=file)
-            }
-            return(invisible(file.exists(file)))
-        } else {
-            stop(sQuote("file_format"), " must be specified.")
-        }
-    } else if (identical(object_format, "phylo")) {
-        file_format <- "newick"
-        res <- .get_study_tree(study_id = study_id, tree_id = tree_id,
-                               format=file_format, tip_label = tip_label, ...)
-        res <- phylo_from_otl(res, dedup = deduplicate)
-    } else stop("Something is very wrong. Contact us.")
-    res
+  object_format <- match.arg(object_format)
+  tip_label <- match.arg(tip_label)
+  tip_label <- switch(tip_label,
+    original_labels = "ot:originallabel",
+    ott_id = "ot:ottid",
+    ott_taxon_name = "ot:otttaxonname"
+  )
+  if (!missing(file)) {
+    if (!missing(file_format)) {
+      file_format <- match.arg(file_format, c("newick", "nexus", "json"))
+      if (missing(file)) stop("You must specify a file to write your output")
+      res <- .get_study_tree(
+        study_id = study_id, tree_id = tree_id,
+        format = file_format, tip_label = tip_label, ...
+      )
+      unlink(file)
+      if (identical(file_format, "json")) {
+        cat(jsonlite::toJSON(res), file = file)
+      } else {
+        cat(res, file = file)
+      }
+      return(invisible(file.exists(file)))
+    } else {
+      stop(sQuote("file_format"), " must be specified.")
+    }
+  } else if (identical(object_format, "phylo")) {
+    file_format <- "newick"
+    res <- .get_study_tree(
+      study_id = study_id, tree_id = tree_id,
+      format = file_format, tip_label = tip_label, ...
+    )
+    res <- phylo_from_otl(res, dedup = deduplicate)
+  } else {
+    stop("Something is very wrong. Contact us.")
+  }
+  res
 }
 
 ##' Retrieve metadata about a study in the Open Tree of Life datastore.
@@ -387,16 +413,16 @@ get_study_tree <- function(study_id = NULL, tree_id = NULL, object_format = c("p
 ##' get_study_year(req)
 ##' }
 get_study_meta <- function(study_id, ...) {
-    res <- .get_study_meta(study_id = study_id, ...)
-    class(res) <- "study_meta"
-    attr(res, "study_id") <- study_id
-    res
+  res <- .get_study_meta(study_id = study_id, ...)
+  class(res) <- "study_meta"
+  attr(res, "study_id") <- study_id
+  res
 }
 
 ##' @export
 print.study_meta <- function(x, ...) {
-    cat("Metadata for OToL study ", attr(x, "study_id"), ". Contents:\n", sep="")
-    cat(paste0("  $nexml$", names(x$nexml)), sep="\n")
+  cat("Metadata for OToL study ", attr(x, "study_id"), ". Contents:\n", sep = "")
+  cat(paste0("  $nexml$", names(x$nexml)), sep = "\n")
 }
 
 ##' Retrieve subtree from a specific tree in the Open Tree of Life data store
@@ -438,40 +464,47 @@ print.study_meta <- function(x, ...) {
 ##' get_study_subtree(study_id="pg_1144", tree_id="tree5800", subtree_id="ingroup", file=nexus_file,
 ##'                   file_format="nexus")
 ##' }
-get_study_subtree <- function(study_id, tree_id, subtree_id, object_format=c("phylo"),
+get_study_subtree <- function(study_id, tree_id, subtree_id, object_format = c("phylo"),
                               tip_label = c("original_label", "ott_id", "ott_taxon_name"),
                               file_format, file, deduplicate = TRUE, ...) {
-    object_format <- match.arg(object_format)
-    tip_label <- match.arg(tip_label)
-    tip_label <- switch(tip_label,
-                        original_labels = "ot:originallabel",
-                        ott_id =  "ot:ottid",
-                        ott_taxon_name = "ot:otttaxonname")
-    if (!missing(file)) {
-        if (!missing(file_format)) {
-            if (missing(file)) stop("You must specify a file to write your output")
-            file_format <- match.arg(file_format, c("newick", "nexus"))
-            res <- .get_study_subtree(study_id = study_id, tree_id = tree_id,
-                                      subtree_id = subtree_id, format=file_format,
-                                      tip_label = tip_label,  ...)
-            unlink(file)
-            cat(res, file=file)
-            return(invisible(file.exists(file)))
-        } else {
-            stop(sQuote("file_format"), " must be specified.")
-        }
-    } else if (identical(object_format, "phylo")) {
-        file_format <- "newick"
-        res <-  .get_study_subtree(study_id = study_id, tree_id = tree_id,
-                                   subtree_id = subtree_id, format=file_format,
-                                   tip_label = tip_label, ...)
-        res <- phylo_from_otl(res, dedup = deduplicate)
-        ## NeXML should be possible for both object_format and file_format but it seems there
-        ## is something wrong with the server at this time (FM - 2015-06-07)
-        ## } else if (identical(object_format, "nexml")) {
-        ##    file_format <- "nexml"
-        ##    res <- .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
-        ##    res <- nexml_from_otl(res)
-    } else stop("Something is very wrong. Contact us.")
-    res
+  object_format <- match.arg(object_format)
+  tip_label <- match.arg(tip_label)
+  tip_label <- switch(tip_label,
+    original_labels = "ot:originallabel",
+    ott_id = "ot:ottid",
+    ott_taxon_name = "ot:otttaxonname"
+  )
+  if (!missing(file)) {
+    if (!missing(file_format)) {
+      if (missing(file)) stop("You must specify a file to write your output")
+      file_format <- match.arg(file_format, c("newick", "nexus"))
+      res <- .get_study_subtree(
+        study_id = study_id, tree_id = tree_id,
+        subtree_id = subtree_id, format = file_format,
+        tip_label = tip_label, ...
+      )
+      unlink(file)
+      cat(res, file = file)
+      return(invisible(file.exists(file)))
+    } else {
+      stop(sQuote("file_format"), " must be specified.")
+    }
+  } else if (identical(object_format, "phylo")) {
+    file_format <- "newick"
+    res <- .get_study_subtree(
+      study_id = study_id, tree_id = tree_id,
+      subtree_id = subtree_id, format = file_format,
+      tip_label = tip_label, ...
+    )
+    res <- phylo_from_otl(res, dedup = deduplicate)
+    ## NeXML should be possible for both object_format and file_format but it seems there
+    ## is something wrong with the server at this time (FM - 2015-06-07)
+    ## } else if (identical(object_format, "nexml")) {
+    ##    file_format <- "nexml"
+    ##    res <- .get_study_subtree(study_id, tree_id, subtree_id, format=file_format)
+    ##    res <- nexml_from_otl(res)
+  } else {
+    stop("Something is very wrong. Contact us.")
+  }
+  res
 }

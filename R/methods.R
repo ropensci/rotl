@@ -17,15 +17,21 @@
 ##' @rdname taxonomy-methods
 ##' @export
 
-tax_rank <- function(tax, ...) { UseMethod("tax_rank") }
+tax_rank <- function(tax, ...) {
+  UseMethod("tax_rank")
+}
 
 ##' @export
 ##' @rdname taxonomy-methods
-ott_id <- function(tax, ...) { UseMethod("ott_id") }
+ott_id <- function(tax, ...) {
+  UseMethod("ott_id")
+}
 
 ##' @export
 ##' @rdname taxonomy-methods
-synonyms <- function(tax, ...) { UseMethod("synonyms") }
+synonyms <- function(tax, ...) {
+  UseMethod("synonyms")
+}
 
 ##' @export
 ##' @rdname taxonomy-methods

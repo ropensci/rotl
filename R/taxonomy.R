@@ -28,9 +28,9 @@
 ##' taxonomy_about()
 ##' }
 ##' @export
-taxonomy_about <- function (...) {
-    res <- .taxonomy_about(...)
-    return(res)
+taxonomy_about <- function(...) {
+  res <- .taxonomy_about(...)
+  return(res)
 }
 
 
@@ -74,21 +74,21 @@ taxonomy_about <- function (...) {
 ##' synonyms(req)
 ##' }
 ##' @export
-taxonomy_taxon_info <- function (ott_ids, include_children = FALSE,
-                                 include_lineage = FALSE,
-                                 include_terminal_descendants = FALSE, ...) {
-    res <- lapply(ott_ids, function(x) {
-        .taxonomy_taxon_info(
-            ott_id = x,
-            include_children = include_children,
-            include_lineage = include_lineage,
-            include_terminal_descendants = include_terminal_descendants,
-            ...
-        )
-    })
-    names(res) <- ott_ids
-    class(res) <- "taxon_info"
-    return(res)
+taxonomy_taxon_info <- function(ott_ids, include_children = FALSE,
+                                include_lineage = FALSE,
+                                include_terminal_descendants = FALSE, ...) {
+  res <- lapply(ott_ids, function(x) {
+    .taxonomy_taxon_info(
+      ott_id = x,
+      include_children = include_children,
+      include_lineage = include_lineage,
+      include_terminal_descendants = include_terminal_descendants,
+      ...
+    )
+  })
+  names(res) <- ott_ids
+  class(res) <- "taxon_info"
+  return(res)
 }
 
 
@@ -142,29 +142,32 @@ taxonomy_taxon_info <- function (ott_ids, include_children = FALSE,
 ##' plot(taxonomy_subtree(ott_id=515698, output_format="phylo"))
 ##' }
 ##' @export
-taxonomy_subtree <- function (ott_id=NULL,
-                              output_format = c("taxa", "newick", "phylo", "raw"),
-                              label_format=NULL, file, ...) {
-    output_format <- match.arg(output_format)
-    res <- .taxonomy_subtree(ott_id = ott_id, label_format = label_format, ...)
-    if (!missing(file) && !identical(output_format, "newick"))
-        warning(sQuote("file"),
-                " argument is ignored, you can only write newick tree strings to a file.")
-    if (identical(output_format, "raw")) {
-        return(res)
-    } else if (identical(output_format, "newick")) {
-        res <- res$newick
-        if (!missing(file)) {
-            unlink(file)
-            cat(res, file = file)
-            invisible(return(file.exists(file)))
-        }
-    } else if (identical(output_format, "phylo")) {
-        res <- phylo_from_otl(res)
-    } else { ## in all other cases use tree_to_labels
-        res <- tree_to_labels(res)
-    }
+taxonomy_subtree <- function(ott_id = NULL,
+                             output_format = c("taxa", "newick", "phylo", "raw"),
+                             label_format = NULL, file, ...) {
+  output_format <- match.arg(output_format)
+  res <- .taxonomy_subtree(ott_id = ott_id, label_format = label_format, ...)
+  if (!missing(file) && !identical(output_format, "newick")) {
+    warning(
+      sQuote("file"),
+      " argument is ignored, you can only write newick tree strings to a file."
+    )
+  }
+  if (identical(output_format, "raw")) {
     return(res)
+  } else if (identical(output_format, "newick")) {
+    res <- res$newick
+    if (!missing(file)) {
+      unlink(file)
+      cat(res, file = file)
+      invisible(return(file.exists(file)))
+    }
+  } else if (identical(output_format, "phylo")) {
+    res <- phylo_from_otl(res)
+  } else { ## in all other cases use tree_to_labels
+    res <- tree_to_labels(res)
+  }
+  return(res)
 }
 
 
@@ -204,10 +207,10 @@ taxonomy_subtree <- function (ott_id=NULL,
 ##' ott_id(req)
 ##' }
 ##' @export
-taxonomy_mrca <- function (ott_ids=NULL, ...) {
-    res <- .taxonomy_mrca(ott_ids = ott_ids, ...)
-    class(res) <- c("taxon_mrca", class(res))
-    return(res)
+taxonomy_mrca <- function(ott_ids = NULL, ...) {
+  res <- .taxonomy_mrca(ott_ids = ott_ids, ...)
+  class(res) <- c("taxon_mrca", class(res))
+  return(res)
 }
 
 
@@ -215,12 +218,12 @@ taxonomy_mrca <- function (ott_ids=NULL, ...) {
 ### methods for taxonomy_taxon_info ---------------------------------------------
 
 taxon_info_method_factory <- function(.f) {
-    function(tax, ...) {
-        res <- lapply(tax, .f)
-        names(res) <- vapply(tax, .tax_unique_name, character(1))
-        res <- add_otl_class(res, .f)
-        res
-    }
+  function(tax, ...) {
+    res <- lapply(tax, .f)
+    names(res) <- vapply(tax, .tax_unique_name, character(1))
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' @export
@@ -259,12 +262,12 @@ flags.taxon_info <- taxon_info_method_factory(.tax_flags)
 ### methods for taxonomy_mrca ---------------------------------------------------
 
 taxon_mrca_method_factory <- function(.f) {
-    function(tax, ...)  {
-        res <- list(.f(tax[["mrca"]]))
-        names(res) <- .tax_unique_name(tax[["mrca"]])
-        res <- add_otl_class(res, .f)
-        res
-    }
+  function(tax, ...) {
+    res <- list(.f(tax[["mrca"]]))
+    names(res) <- .tax_unique_name(tax[["mrca"]])
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' @export
@@ -298,28 +301,32 @@ is_suppressed.taxon_mrca <- taxon_mrca_method_factory(.tax_is_suppressed)
 ### method for extracting higher taxonomy from taxonomy_taxon_info calls  -------
 
 get_lineage <- function(tax) {
-    check_lineage(tax)
-    lg <- lapply(tax[["lineage"]], build_lineage)
-    lg <- do.call("rbind", lg)
-    as.data.frame(lg, stringsAsFactors = FALSE)
+  check_lineage(tax)
+  lg <- lapply(tax[["lineage"]], build_lineage)
+  lg <- do.call("rbind", lg)
+  as.data.frame(lg, stringsAsFactors = FALSE)
 }
 
 build_lineage <- function(x) {
-        c("rank" = .tax_rank(x),
-          "name" = .tax_name(x),
-          "unique_name" = .tax_unique_name(x),
-          "ott_id" = .tax_ott_id(x))
+  c(
+    "rank" = .tax_rank(x),
+    "name" = .tax_name(x),
+    "unique_name" = .tax_unique_name(x),
+    "ott_id" = .tax_ott_id(x)
+  )
 }
 
 check_lineage <- function(tax) {
-    if (!exists("lineage", tax)) {
-        stop("The object needs to be created using ",
-             sQuote("include_lineage=TRUE"))
-    }
+  if (!exists("lineage", tax)) {
+    stop(
+      "The object needs to be created using ",
+      sQuote("include_lineage=TRUE")
+    )
+  }
 }
 
 ##' @export
 ##' @rdname tax_lineage
 tax_lineage.taxon_info <- function(tax, ...) {
-    lapply(tax, get_lineage)
+  lapply(tax, get_lineage)
 }

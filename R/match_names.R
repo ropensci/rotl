@@ -2,65 +2,81 @@
 ## row number in the data frame representing the Open Tree Taxonomy
 ## for a series of matched names.
 check_args_match_names <- function(response, row_number, taxon_name, ott_id) {
-    orig_order <- attr(response, "original_order")
-    if (is.null(orig_order)) {
-        stop(sQuote(substitute(response)), " was not created using ",
-             sQuote("tnrs_match_names"))
-    }
+  orig_order <- attr(response, "original_order")
+  if (is.null(orig_order)) {
+    stop(
+      sQuote(substitute(response)), " was not created using ",
+      sQuote("tnrs_match_names")
+    )
+  }
 
-    if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        stop("You must specify one of ", sQuote("row_number"),
-             sQuote("taxon_name"), " or ", sQuote("ott_id"))
-    } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
-        if (!is.numeric(row_number))
-            stop(sQuote("row_number"), " must be a numeric.")
-        if (!all(row_number %in% orig_order)) {
-            stop(sQuote("row_number"), " is not a valid row number.")
-        }
-        i <- orig_order[row_number]
-    } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
-        if (!is.character(taxon_name))
-            stop(sQuote("taxon_name"), " must be a character.")
-        i <- orig_order[match(tolower(taxon_name), response$search_string)]
-        if (any(is.na(i)))
-            stop("Can't find ", taxon_name)
-    } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
-        if (!check_numeric(ott_id))
-            stop(sQuote("ott_id"), " must look like a number.")
-        i <- orig_order[match(ott_id, response$ott_id)]
-        if (any(is.na(i))) stop("Can't find ", ott_id)
-    } else {
-        stop("You must use only one of ",
-             sQuote("row_number"),
-             sQuote("taxon_name"),
-             " or ", sQuote("ott_id"), ".")
+  if (missing(row_number) && missing(taxon_name) && missing(ott_id)) {
+    stop(
+      "You must specify one of ", sQuote("row_number"),
+      sQuote("taxon_name"), " or ", sQuote("ott_id")
+    )
+  } else if (!missing(row_number) && missing(taxon_name) && missing(ott_id)) {
+    if (!is.numeric(row_number)) {
+      stop(sQuote("row_number"), " must be a numeric.")
     }
+    if (!all(row_number %in% orig_order)) {
+      stop(sQuote("row_number"), " is not a valid row number.")
+    }
+    i <- orig_order[row_number]
+  } else if (missing(row_number) && !missing(taxon_name) && missing(ott_id)) {
+    if (!is.character(taxon_name)) {
+      stop(sQuote("taxon_name"), " must be a character.")
+    }
+    i <- orig_order[match(tolower(taxon_name), response$search_string)]
+    if (any(is.na(i))) {
+      stop("Can't find ", taxon_name)
+    }
+  } else if (missing(row_number) && missing(taxon_name) && !missing(ott_id)) {
+    if (!check_numeric(ott_id)) {
+      stop(sQuote("ott_id"), " must look like a number.")
+    }
+    i <- orig_order[match(ott_id, response$ott_id)]
+    if (any(is.na(i))) stop("Can't find ", ott_id)
+  } else {
+    stop(
+      "You must use only one of ",
+      sQuote("row_number"),
+      sQuote("taxon_name"),
+      " or ", sQuote("ott_id"), "."
+    )
+  }
 
-    if (length(i) > 1)
-        stop("You must supply a single element for each argument.")
-    i
+  if (length(i) > 1) {
+    stop("You must supply a single element for each argument.")
+  }
+  i
 }
 
 match_row_number <- function(response, row_number, taxon_name, ott_id) {
-    ## all the checks on the validity of the arguments are taken care
-    ## by check_args_match_names()
-    if (missing(row_number) && missing(taxon_name) &&
-        missing(ott_id)) {
-        stop("You must specify one of ", sQuote("row_number"), " ",
-             sQuote("taxon_name"), " ", sQuote("ott_id"))
-    } else if (!missing(row_number) && (missing(taxon_name) && missing(ott_id))) {
-        i <- row_number
-    } else if (!missing(taxon_name) && (missing(row_number) && missing(ott_id))) {
-        i <- match(tolower(taxon_name), response[["search_string"]])
-    } else if (!missing(ott_id) && (missing(row_number) && missing(taxon_name))) {
-        i <- match(ott_id, response[["ott_id"]])
-    } else {
-        stop("You must use only one of ", sQuote("row_number"),
-             " ", sQuote("taxon_name"), " ", sQuote("ott_id"))
-    }
-    if (length(i) > 1)
-        stop("You must supply a single element for each argument.")
-    i
+  ## all the checks on the validity of the arguments are taken care
+  ## by check_args_match_names()
+  if (missing(row_number) && missing(taxon_name) &&
+    missing(ott_id)) {
+    stop(
+      "You must specify one of ", sQuote("row_number"), " ",
+      sQuote("taxon_name"), " ", sQuote("ott_id")
+    )
+  } else if (!missing(row_number) && (missing(taxon_name) && missing(ott_id))) {
+    i <- row_number
+  } else if (!missing(taxon_name) && (missing(row_number) && missing(ott_id))) {
+    i <- match(tolower(taxon_name), response[["search_string"]])
+  } else if (!missing(ott_id) && (missing(row_number) && missing(taxon_name))) {
+    i <- match(ott_id, response[["ott_id"]])
+  } else {
+    stop(
+      "You must use only one of ", sQuote("row_number"),
+      " ", sQuote("taxon_name"), " ", sQuote("ott_id")
+    )
+  }
+  if (length(i) > 1) {
+    stop("You must supply a single element for each argument.")
+  }
+  i
 }
 
 ##' Taxonomic names may have different meanings in different taxonomic
@@ -105,18 +121,19 @@ match_row_number <- function(response, row_number, taxon_name, ott_id) {
 ##' @export
 ##' @rdname match_names
 inspect.match_names <- function(response, row_number, taxon_name, ott_id, ...) {
+  i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+  j <- match_row_number(response, row_number, taxon_name, ott_id)
 
-    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-    j <- match_row_number(response, row_number, taxon_name, ott_id)
-
-    if (attr(response, "has_original_match")[j]) {
-        res <- attr(response, "original_response")
-        summary_match <- build_summary_match(res, res_id = i, match_id = NULL,
-                                             initial_creation = FALSE)
-    } else {
-        summary_match <- response[j, ]
-    }
-    clean_tnrs_summary(summary_match)
+  if (attr(response, "has_original_match")[j]) {
+    res <- attr(response, "original_response")
+    summary_match <- build_summary_match(res,
+      res_id = i, match_id = NULL,
+      initial_creation = FALSE
+    )
+  } else {
+    summary_match <- response[j, ]
+  }
+  clean_tnrs_summary(summary_match)
 }
 
 ##' @export
@@ -135,128 +152,143 @@ inspect <- function(response, ...) UseMethod("inspect")
 ##' @importFrom stats update
 update.match_names <- function(object, row_number, taxon_name, ott_id,
                                new_row_number, new_ott_id, ...) {
+  response <- object
+  i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+  j <- match_row_number(response, row_number, taxon_name, ott_id)
 
-    response <- object
-    i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-    j <- match_row_number(response, row_number, taxon_name, ott_id)
+  res <- attr(response, "original_response")
 
-    res <- attr(response, "original_response")
+  if (!attr(response, "has_original_match")[j]) {
+    warning(
+      "There is no match for this name, ",
+      "so there is nothing to replace it with."
+    )
+    return(response)
+  }
 
-    if (!attr(response, "has_original_match")[j]) {
-        warning("There is no match for this name, ",
-                 "so there is nothing to replace it with.")
-        return(response)
+  tmpRes <- res$results[[i]]
+
+  if (missing(row_number)) {
+    if (!missing(taxon_name)) {
+      rnb <- match(tolower(taxon_name), response$search_string)
+    } else if (!missing(ott_id)) {
+      rnb <- match(ott_id, response$ott_id)
     }
+  } else {
+    rnb <- row_number
+  }
 
-    tmpRes <- res$results[[i]]
-
-    if (missing(row_number)) {
-        if (!missing(taxon_name)) {
-            rnb <- match(tolower(taxon_name), response$search_string)
-        } else if (!missing(ott_id)) {
-            rnb <- match(ott_id, response$ott_id)
-        }
-    } else {
-        rnb <- row_number
+  if (missing(new_row_number) && missing(new_ott_id)) {
+    stop(
+      "You must specify either ", sQuote("new_row_number"),
+      " or ", sQuote("new_ott_id")
+    )
+  } else if (!missing(new_row_number) && missing(new_ott_id)) {
+    if (!new_row_number %in% seq_len(length(tmpRes$matches))) {
+      stop(sQuote("new_row_number"), " is not a valid row number.")
     }
+    j <- new_row_number
+  } else if (missing(new_row_number) && !missing(new_ott_id)) {
+    all_ott_id <- sapply(
+      lapply(
+        tmpRes[["matches"]],
+        function(x) x[["taxon"]]
+      ),
+      function(x) .tax_ott_id(x)
+    )
+    j <- match(new_ott_id, all_ott_id)
+    if (any(is.na(j))) stop("Can't find ", new_ott_id)
+  } else {
+    stop(
+      "You must use only one of ", sQuote("new_row_number"),
+      " or ", sQuote("new_ott_id")
+    )
+  }
+  if (length(j) > 1) stop("You must supply a single element for each argument")
 
-    if (missing(new_row_number) && missing(new_ott_id)) {
-        stop("You must specify either ", sQuote("new_row_number"),
-             " or ", sQuote("new_ott_id"))
-    } else if (!missing(new_row_number) && missing(new_ott_id)) {
-        if (! new_row_number %in% seq_len(length(tmpRes$matches)))
-            stop(sQuote("new_row_number"), " is not a valid row number.")
-        j <- new_row_number
-    } else if (missing(new_row_number) && !missing(new_ott_id)) {
-        all_ott_id <- sapply(lapply(tmpRes[["matches"]],
-                                  function(x) x[["taxon"]]),
-                           function(x) .tax_ott_id(x))
-        j <- match(new_ott_id, all_ott_id)
-        if (any(is.na(j))) stop("Can't find ", new_ott_id)
-    } else {
-        stop("You must use only one of ", sQuote("new_row_number"),
-             " or ", sQuote("new_ott_id"))
-    }
-    if (length(j) > 1) stop("You must supply a single element for each argument")
+  summ_match <- summary_row_factory(res, res_id = i, match_id = j)
 
-    summ_match <- summary_row_factory(res, res_id = i, match_id = j)
-
-    response[rnb, ] <- summ_match
-    attr(response, "match_id")[rnb] <- j
-    clean_tnrs_summary(response)
+  response[rnb, ] <- summ_match
+  attr(response, "match_id")[rnb] <- j
+  clean_tnrs_summary(response)
 }
 
 
 ## Access the elements for a given match:
 ## is_synonym, score, nomenclature_code, is_approximate_match, taxon
 get_list_element <- function(response, i, list_name) {
-    list_content <- lapply(response[["results"]][[i]][["matches"]],
-                           function(x) {
-        x[[list_name]]
-    })
-    list_content
+  list_content <- lapply(
+    response[["results"]][[i]][["matches"]],
+    function(x) {
+      x[[list_name]]
+    }
+  )
+  list_content
 }
 
 match_names_method_factory <- function(list_name) {
+  function(tax, row_number, taxon_name, ott_id, ...) {
+    response <- tax
+    res <- attr(response, "original_response")
 
-    function(tax, row_number, taxon_name, ott_id, ...) {
+    no_args <- all(c(
+      missing(row_number), missing(taxon_name),
+      missing(ott_id)
+    ))
 
-        response <- tax
-        res <- attr(response, "original_response")
-
-        no_args <- all(c(missing(row_number), missing(taxon_name),
-                         missing(ott_id)))
-
-        if (no_args) {
-            res_i <- attr(response, "original_order")[attr(response, "has_original_match")]
-            ret <- lapply(res_i, function(i) {
-                get_list_element(res, i, list_name)
-            })
-            names(ret) <- sapply(res_i, function(i) {
-                get_list_element(res, i, "matched_name")[[1]]
-            })
-            ## ret is already in the correct order so we can use a sequence
-            ## to extract the correct element
-            ret <- mapply(function(x, i) {
-                ret[[x]][i]
-            }, seq_along(ret), attr(response, "match_id")[attr(response, "has_original_match")])
-            if (all(sapply(ret, length) == 1)) {
-                ret <- unlist(ret, use.names = TRUE)
-            }
-        } else {
-            i <- check_args_match_names(response, row_number, taxon_name, ott_id)
-            j <- match_row_number(response, row_number, taxon_name, ott_id)
-            if (attr(response, "has_original_match")[j]) {
-                ret <- get_list_element(res, i, list_name)[attr(response, "match_id")[j]]
-            } else {
-                ret <- list(ott_id = NA_character_,
-                            name = response[["search_string"]][j],
-                            unique_name = NA_character_,
-                            rank = NA_character_,
-                            tax_sources = NA_character_,
-                            flags = NA_character_,
-                            synonyms = NA_character_,
-                            is_suppressed = NA_character_)
-                ret <- list(ret)
-            }
-        }
-
-        ret
+    if (no_args) {
+      res_i <- attr(response, "original_order")[attr(response, "has_original_match")]
+      ret <- lapply(res_i, function(i) {
+        get_list_element(res, i, list_name)
+      })
+      names(ret) <- sapply(res_i, function(i) {
+        get_list_element(res, i, "matched_name")[[1]]
+      })
+      ## ret is already in the correct order so we can use a sequence
+      ## to extract the correct element
+      ret <- mapply(function(x, i) {
+        ret[[x]][i]
+      }, seq_along(ret), attr(response, "match_id")[attr(response, "has_original_match")])
+      if (all(sapply(ret, length) == 1)) {
+        ret <- unlist(ret, use.names = TRUE)
+      }
+    } else {
+      i <- check_args_match_names(response, row_number, taxon_name, ott_id)
+      j <- match_row_number(response, row_number, taxon_name, ott_id)
+      if (attr(response, "has_original_match")[j]) {
+        ret <- get_list_element(res, i, list_name)[attr(response, "match_id")[j]]
+      } else {
+        ret <- list(
+          ott_id = NA_character_,
+          name = response[["search_string"]][j],
+          unique_name = NA_character_,
+          rank = NA_character_,
+          tax_sources = NA_character_,
+          flags = NA_character_,
+          synonyms = NA_character_,
+          is_suppressed = NA_character_
+        )
+        ret <- list(ret)
+      }
     }
 
+    ret
+  }
 }
 
 match_names_taxon_method_factory <- function(.f) {
-    function(tax, row_number, taxon_name, ott_id, ...) {
-        extract_tax_list <- match_names_method_factory("taxon")
-        tax_info <- extract_tax_list(tax, row_number = row_number,
-                                     taxon_name = taxon_name,
-                                     ott_id = ott_id)
-        res <- lapply(tax_info, function(x) .f(x))
-        names(res) <- vapply(tax_info, function(x) .tax_unique_name(x), character(1))
-        res <- add_otl_class(res, .f)
-        res
-    }
+  function(tax, row_number, taxon_name, ott_id, ...) {
+    extract_tax_list <- match_names_method_factory("taxon")
+    tax_info <- extract_tax_list(tax,
+      row_number = row_number,
+      taxon_name = taxon_name,
+      ott_id = ott_id
+    )
+    res <- lapply(tax_info, function(x) .f(x))
+    names(res) <- vapply(tax_info, function(x) .tax_unique_name(x), character(1))
+    res <- add_otl_class(res, .f)
+    res
+  }
 }
 
 ##' \code{rotl} provides a collection of functions that allows users

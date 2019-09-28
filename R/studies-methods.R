@@ -33,10 +33,11 @@ list_trees.matched_studies <- function(matched_studies, study_id, ...) {
   if (missing(study_id)) {
     res
   } else {
-    if (is.na(match(study_id, names(res))))
+    if (is.na(match(study_id, names(res)))) {
       stop(sQuote(study_id), " isn't a valid id.")
-    else
+    } else {
       res[[study_id]]
+    }
   }
 }
 
@@ -62,21 +63,21 @@ get_study_year <- function(sm) UseMethod("get_study_year")
 ##' @export
 ##' @rdname get_study_meta
 get_tree_ids.study_meta <- function(sm) {
-    unlist(sm[["nexml"]][["treesById"]][[sm[["nexml"]][["^ot:treesElementOrder"]][[1]]]][["^ot:treeElementOrder"]])
+  unlist(sm[["nexml"]][["treesById"]][[sm[["nexml"]][["^ot:treesElementOrder"]][[1]]]][["^ot:treeElementOrder"]])
 }
 
 ##' @export
 ##' @rdname get_study_meta
 get_publication.study_meta <- function(sm) {
-    pub <- sm[["nexml"]][["^ot:studyPublicationReference"]]
-    attr(pub, "DOI") <- sm[["nexml"]][["^ot:studyPublication"]][["@href"]]
-    pub
+  pub <- sm[["nexml"]][["^ot:studyPublicationReference"]]
+  attr(pub, "DOI") <- sm[["nexml"]][["^ot:studyPublication"]][["@href"]]
+  pub
 }
 
 ##' @export
 ##' @rdname get_study_meta
 candidate_for_synth.study_meta <- function(sm) {
-    unlist(sm[["nexml"]][["^ot:candidateTreeForSynthesis"]])
+  unlist(sm[["nexml"]][["^ot:candidateTreeForSynthesis"]])
 }
 
 
@@ -84,5 +85,5 @@ candidate_for_synth.study_meta <- function(sm) {
 ##' @export
 ##' @rdname get_study_meta
 get_study_year.study_meta <- function(sm) {
-    sm[["nexml"]][["^ot:studyYear"]]
+  sm[["nexml"]][["^ot:studyYear"]]
 }

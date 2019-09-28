@@ -1,3 +1,3 @@
 ###
 library(testthat)
-test_check('rotl')
+test_check("rotl")
