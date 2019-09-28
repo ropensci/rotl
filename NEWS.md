@@ -1,3 +1,9 @@
+## rotl 3.0.10
+
+* Small fixes following updates to the Open Tree of Life API (no visible change
+  for users).
+* Updated documentation to reflect new value in output of `tol_node_info()`.
+
 ## rotl 3.0.9
 
 * Small fixes following updates to the Open Tree of Life API.
