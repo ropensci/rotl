@@ -67,7 +67,7 @@
     }
 
     res <- otl_POST(
-      path = "studies/find_trees/",
+      path = "studies/find_trees",
       body = c(
         req_body,
         verbose = jsonlite::unbox(verbose),
