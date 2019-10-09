@@ -160,12 +160,12 @@ print.study_ids <- function(x, ...) {
 ##' @importFrom stats setNames
 ##' @examples
 ##' \dontrun{
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophila",
 ##'                           detailed=FALSE)
 ##' ## summary of the trees and associated studies that match this criterion
 ##' res
 ##' ## With metadata about the studies (default)
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophila",
 ##'                           detailed=TRUE)
 ##' ## The list of trees for each study that match the search criteria
 ##' list_trees(res)
