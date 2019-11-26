@@ -208,3 +208,19 @@ check_label_format <- function(x) {
     return(FALSE)
   }
 }
+
+# res is an output from .tol_induced_subtree or .tol_subtree
+# returns a list with tree and study ids supporting a subtree
+studies_from_otl <- function(res){
+  if (is.list(res)) {
+    if (!is.null(res$supporting_studies)) {
+        studies <- res$supporting_studies
+    }
+    else {
+        stop("Cannot find supporting studies")
+    }
+  }
+  study_ids <- sapply(stringr::str_split(studies, "@"), '[', 1)
+  trees <- sapply(stringr::str_split(studies, "@"), '[', 2)
+  return(list(study_ids = study_ids, trees = trees))
+}
