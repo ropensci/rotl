@@ -87,3 +87,10 @@ candidate_for_synth.study_meta <- function(sm) {
 get_study_year.study_meta <- function(sm) {
   sm[["nexml"]][["^ot:studyYear"]]
 }
+
+##' @export
+##' @param study_ids is a vector of study ids
+get_publication.vector <- function(study_id){
+  citations <- sapply(study_ids, function(x) rotl::get_publication.study_meta(rotl::get_study_meta(study_id = x)))
+  return(citations)
+}
