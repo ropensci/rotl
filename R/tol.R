@@ -461,16 +461,16 @@ tol_induced_subtree <- function(ott_ids = NULL, node_ids = NULL, label_format = 
     ott_ids = ott_ids, node_ids = node_ids,
     label_format = label_format, ...
   )
+  # print citations
   if(get_citations){
-    citations <- get_publications.vector(studies_from_otl(res)$study_ids)
     if (!missing(file)) {
-      filecit <- paste0(file, "citations.txt")
+      filecit <- paste0(file, "_citations.txt")
     } else {
       filecit <- "citations.txt"
     }
+    citations <- get_publication.vector(studies_from_otl(res)$study_ids)
     unlink(filecit)
-    cat(citations, file = filecit)
-    return(file.exists(filecit))
+    cat(paste(citations, collapse = '\n\n'), file = filecit)
   }
   if (!missing(file)) {
     unlink(file)
