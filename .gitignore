@@ -19,3 +19,4 @@ README.html
 README_files/
 figure/
 .Rproj.user
+*.Rproj
