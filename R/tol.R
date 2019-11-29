@@ -427,7 +427,7 @@ tol_subtree <- function(ott_id = NULL, node_id = NULL, label_format = NULL,
 ##'     (the default).
 ##' @param file If specified, the function will write the subtree to a file in
 ##'     newick format.
-##' @param get_citations Default TRUE. Writes a file of citations of supporting studies for subtree.
+##' @param get_citations Default FALSE. If TRUE, writes a file of citations from studies supporting subtree.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -456,7 +456,7 @@ tol_subtree <- function(ott_id = NULL, node_id = NULL, label_format = NULL,
 ##' }
 ##' @export
 tol_induced_subtree <- function(ott_ids = NULL, node_ids = NULL, label_format = NULL,
-                                file, get_citations = TRUE, ...) {
+                                file, get_citations = FALSE, ...) {
   res <- .tol_induced_subtree(
     ott_ids = ott_ids, node_ids = node_ids,
     label_format = label_format, ...
