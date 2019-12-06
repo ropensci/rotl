@@ -427,7 +427,7 @@ tol_subtree <- function(ott_id = NULL, node_id = NULL, label_format = NULL,
 ##'     (the default).
 ##' @param file If specified, the function will write the subtree to a file in
 ##'     newick format.
-##' @param get_citations Default FALSE. If TRUE, writes a file of citations from studies supporting subtree.
+##' @param write_citations Default FALSE. If TRUE, writes a file of citations from studies supporting subtree.
 ##' @param ... additional arguments to customize the API call (see
 ##'     \code{\link{rotl}} for more information).
 ##'
@@ -456,19 +456,22 @@ tol_subtree <- function(ott_id = NULL, node_id = NULL, label_format = NULL,
 ##' }
 ##' @export
 tol_induced_subtree <- function(ott_ids = NULL, node_ids = NULL, label_format = NULL,
-                                file, get_citations = FALSE, ...) {
+                                file, write_citations = FALSE, ...) {
   res <- .tol_induced_subtree(
     ott_ids = ott_ids, node_ids = node_ids,
     label_format = label_format, ...
   )
   # print citations
-  if(get_citations){
+  if(write_citations){
     if (!missing(file)) {
       filecit <- paste0(file, "_citations.txt")
     } else {
+      # enhance: if file is not provided write to tmp dir
+      # tmpdir <- "temporary file dir"
+      # message(paste("'citations.txt' file has been written to dir", tmpdir))
       filecit <- "citations.txt"
     }
-    citations <- get_publication.vector(studies_from_otl(res)$study_ids)
+    citations <- get_citations(studies_from_otl(res)$study_ids)
     unlink(filecit)
     cat(paste(citations, collapse = '\n\n'), file = filecit)
   }

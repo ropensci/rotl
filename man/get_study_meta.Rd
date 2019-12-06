@@ -31,12 +31,12 @@ get_study_year(sm)
 get_study_meta(study_id, ...)
 }
 \arguments{
+\item{sm}{an object created by \code{get_study_meta}}
+
 \item{study_id}{the study identifier (character)}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
-
-\item{sm}{an object created by \code{get_study_meta}}
 }
 \value{
 named-list containing the metadata associated with the

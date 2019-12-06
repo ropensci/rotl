@@ -34,17 +34,17 @@ tol_node_info(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...)
 \method{tol_lineage}{tol_node}(tax, ...)
 }
 \arguments{
+\item{tax}{an object returned by \code{tol_node_info}.}
+
+\item{...}{additional arguments to customize the API call (see
+?rotl for more information)}
+
 \item{ott_id}{Numeric. The OpenTree taxonomic identifier.}
 
 \item{node_id}{Character. The OpenTree node identifier.}
 
 \item{include_lineage}{Logical (default = FALSE). Whether to return the
 lineage of the node from the synthetic tree.}
-
-\item{...}{additional arguments to customize the API call (see
-?rotl for more information)}
-
-\item{tax}{an object returned by \code{tol_node_info}.}
 }
 \value{
 \code{tol_node_info} returns an invisible list of summary

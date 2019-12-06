@@ -9,6 +9,7 @@ tol_induced_subtree(
   node_ids = NULL,
   label_format = NULL,
   file,
+  write_citations = FALSE,
   ...
 )
 }
@@ -25,6 +26,8 @@ tips in the induced tree.}
 
 \item{file}{If specified, the function will write the subtree to a file in
 newick format.}
+
+\item{write_citations}{Default FALSE. If TRUE, writes a file of citations from studies supporting subtree.}
 
 \item{...}{additional arguments to customize the API call (see
 \code{\link{rotl}} for more information).}
