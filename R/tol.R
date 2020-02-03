@@ -468,7 +468,7 @@ tol_induced_subtree <- function(ott_ids = NULL, node_ids = NULL, label_format = 
     citations <- get_citations(studies_from_otl(res)$study_ids)
     unlink(filecit)
     cat(paste(citations, collapse = '\n\n'), file = filecit)
-    message(paste0("Citations were written to ", filecit, " in dir ", getwd))
+    message(paste0("Citations were written to ", filecit, " in dir ", getwd()))
   }
   #   else {
   #   # enhance: if file is not provided write to tmp dir
