@@ -16,3 +16,5 @@ revdep/
 ^codemeta\.json$
 ^tic.R$
 ^.pre-commit-config.yaml$
+^.*\.Rproj$
+^\.Rproj\.user$

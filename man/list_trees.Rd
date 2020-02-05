@@ -15,10 +15,10 @@ list_trees(matched_studies, ...)
 \item{matched_studies}{an object created by
 \code{studies_find_trees} or \code{studies_find_studies}.}
 
+\item{...}{Currently unused}
+
 \item{study_id}{a \code{study_id} listed in the object returned by
 \code{studies_find_trees}}
-
-\item{...}{Currently unused}
 }
 \value{
 \code{list_trees} returns a list of the tree_ids for each

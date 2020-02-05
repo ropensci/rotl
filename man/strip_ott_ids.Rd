@@ -25,8 +25,8 @@ Strip OTT ids from tip labels
 \dontrun{
 genera <- c("Perdix", "Setophaga", "Cinclus", "Struthio")
 tr <- tol_induced_subtree(ott_ids=c(102710, 285198, 267845, 292466))
-tr$tip.label \%in\% genera
+tr$tip.label %in% genera
 tr$tip.label <- strip_ott_ids(tr$tip.label)
-tr$tip.label \%in\% genera
+tr$tip.label %in% genera
 }
 }
