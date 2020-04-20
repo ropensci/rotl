@@ -170,7 +170,7 @@ testthat_json_test <- function(test_obj, test_name) {
   else {
     response <- make_request(test_obj[[test_name]])
     for (i in 1:length(tests_to_run)) {
-      test_block <- test_obj[[test_name]]$tests[[ tests_to_run[i] ]]
+      test_block <- test_obj[[test_name]]$tests[[tests_to_run[i]]]
       test_fxn <- test_map(tests_to_run[i])
       test_fxn(response, test_block)
     }
