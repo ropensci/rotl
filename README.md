@@ -1,8 +1,8 @@
 
-[![Build
-Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/qr4k9a8wlrjl65rp?svg=true)](https://ci.appveyor.com/project/ropensci/rotl)
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/ropensci/rotl/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rotl/actions)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror
@@ -11,6 +11,8 @@ downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+<!-- badges: end -->
 
 # An R interface to Open Tree API
 
@@ -82,39 +84,51 @@ apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
-    ##   search_string unique_name approximate_match ott_id is_synonym flags
-    ## 1         pongo       Pongo             FALSE 417949      FALSE      
-    ## 2           pan         Pan             FALSE 417957      FALSE      
-    ## 3       gorilla     Gorilla             FALSE 417969      FALSE      
-    ## 4       hoolock     Hoolock             FALSE 712902      FALSE      
-    ## 5          homo        Homo             FALSE 770309      FALSE      
+    ##   search_string unique_name approximate_match ott_id is_synonym          flags
+    ## 1         pongo       Pongo             FALSE 417949      FALSE               
+    ## 2           pan         Pan             FALSE 417957      FALSE sibling_higher
+    ## 3       gorilla     Gorilla             FALSE 417969      FALSE sibling_higher
+    ## 4       hoolock     Hoolock             FALSE 712902      FALSE               
+    ## 5          homo        Homo             FALSE 770309      FALSE sibling_higher
     ##   number_matches
     ## 1              2
-    ## 2              2
+    ## 2              1
     ## 3              1
     ## 4              1
     ## 5              1
 
-Now we can get the tree with just those
-    tips:
+Now we can get the tree with just those tips:
 
 ``` r
 tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names))
 ```
 
-    ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-    ## with labels: Ponginae ott1082538, Hylobatidae ott166544
+    ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+    ## labels: mrcaott83926ott6145147, mrcaott83926ott3607728, mrcaott83926ott3607876,
+    ## mrcaott83926ott3607873, mrcaott83926ott3607687, mrcaott83926ott3607716,
+    ## mrcaott83926ott3607689, mrcaott83926ott3607732, mrcaott770295ott3607719,
+    ## mrcaott770295ott3607692, Ponginae ott1082538, Hylobatidae ott166544
 
 ``` r
 plot(tr)
 ```
 
-![](https://i.imgur.com/KTApZbS.png)<!-- -->
+![](https://i.imgur.com/jksl36f.png)<!-- -->
 
 The code above can be summarized in a single pipe:
 
 ``` r
 library(magrittr)
+```
+
+    ## 
+    ## Attaching package: 'magrittr'
+
+    ## The following objects are masked from 'package:testthat':
+    ## 
+    ##     equals, is_less_than, not
+
+``` r
 ## or expressed as a pipe:
 c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
   tnrs_match_names() %>%
@@ -123,10 +137,13 @@ c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
   plot()
 ```
 
-    ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-    ## with labels: Ponginae ott1082538, Hylobatidae ott166544
+    ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+    ## labels: mrcaott83926ott6145147, mrcaott83926ott3607728, mrcaott83926ott3607876,
+    ## mrcaott83926ott3607873, mrcaott83926ott3607687, mrcaott83926ott3607716,
+    ## mrcaott83926ott3607689, mrcaott83926ott3607732, mrcaott770295ott3607719,
+    ## mrcaott770295ott3607692, Ponginae ott1082538, Hylobatidae ott166544
 
-![](https://i.imgur.com/1TCS3iA.png)<!-- -->
+![](https://i.imgur.com/bjEjZMC.png)<!-- -->
 
 ## Citation and Manuscript
 
@@ -139,7 +156,7 @@ To cite `rotl` in publications pleases use:
 
 You may also want to cite the paper for the Open Tree of Life
 
-> Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and taxonomy
+> Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and taxonomy
 > into a comprehensive tree of life. Proceedings of the National Academy
 > of Sciences 112.41 (2015): 12764-12769 doi:
 > [10.1073/pnas.1423041112](https://doi.org/10.1073/pnas.1423041112)
@@ -162,8 +179,7 @@ available) but most likely the high level functions will not work.
 Instead, you will need to parse the output yourself using the “raw”
 returns from the unexported low-level functions (all prefixed with a
 `.`). For instance to use the `tnrs/match_names` endpoint for `v2` of
-the
-API:
+the API:
 
 ``` r
 rotl:::.tnrs_match_names(c("pan", "pango", "gorilla", "hoolock", "homo"), otl_v = "v2")
@@ -173,7 +189,6 @@ rotl:::.tnrs_match_names(c("pan", "pango", "gorilla", "hoolock", "homo"), otl_v 
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/ropensci/rotl/blob/master/CONDUCT.md). By
-participating in this project you agree to abide by its
-terms.
+participating in this project you agree to abide by its terms.
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
