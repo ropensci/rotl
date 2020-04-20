@@ -226,7 +226,7 @@ test_that("synonyms", {
   expect_true(inherits(tt, "list"))
   expect_equal(
     names(tt),
-    c("Holothuria", "Diadema (genus in Holozoa)", "Fromia")
+    c("Holothuria", "Diadema", "Fromia")
   )
 })
 
@@ -267,7 +267,7 @@ test_that("synonyms", {
   expect_true(inherits(tt, "list"))
   expect_equal(
     names(tt),
-    c("Holothuria", "Diadema (genus in Holozoa)", "Fromia")
+    c("Holothuria", "Diadema", "Fromia")
   )
 })
 
@@ -358,13 +358,14 @@ test_that("error message if wrong new ott id provided", {
 
 test_that("it works correctly when providing a new row number", {
   skip_on_cran()
-  new_rsp <- update(rsp,
+  new_rsp <- update(
+    rsp,
     row_number = 2,
     new_row_number = 2
   )
   expect_equal(
     new_rsp[new_rsp$search_string == "diadema", "ott_id"],
-    631176L
+    4024672
   )
 })
 

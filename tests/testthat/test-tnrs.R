@@ -78,5 +78,5 @@ test_that("tnrs_infer_context", {
   tic <- tnrs_infer_context(c("Felis", "Leo"))
   expect_equal(tic[["context_name"]], "Mammals")
   expect_equal(tic[["context_ott_id"]], 244265)
-  expect_equal(tic[["ambiguous_names"]][[1]], "leo")
+  expect_equal(tic[["ambiguous_names"]][[1]], "Leo")
 })

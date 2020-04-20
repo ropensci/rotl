@@ -1,4 +1,3 @@
-
 ##' Match taxonomic names to the Open Tree Taxonomy.
 ##'
 ##' Accepts one or more taxonomic names and returns information about
@@ -88,7 +87,9 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
   )
 
   check_tnrs(res)
+
   match_ids <- lowest_ott_id(res)
+
   if (!identical(length(res[["results"]]), length(match_ids))) {
     stop(
       "The number of matches and the number of 'results' elements should",
@@ -98,43 +99,56 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
 
   summary_match <- mapply(
     function(rid, mid) {
-      build_summary_match(res, res_id = rid, match_id = mid, initial_creation = TRUE)
-    }, seq_along(res[["results"]]), match_ids,
+      build_summary_match(
+        res,
+        res_id = rid,
+        match_id = mid,
+        initial_creation = TRUE
+      )
+    },
+    seq_along(res[["results"]]),
+    match_ids,
     SIMPLIFY = FALSE
   )
+
   ## add taxon names with no maches
-  summary_match <- add_unmatched_names(summary_match, res)
   summary_match <- do.call("rbind", summary_match)
+  summary_match <- as.data.frame(summary_match, stringsAsFactors = FALSE)
 
   summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
 
   ## reorder to match original query
-  match_ids <- c(match_ids, rep(NA_integer_, sum(is.na(summary_match$ott_id))))
-  ordr <- match(tolower(names), summary_match$search_string)
+  ordr <- match(tolower(names), tolower(summary_match$search_string))
   stopifnot(identical(length(match_ids), length(ordr)))
 
   summary_match <- summary_match[ordr, ]
   match_ids <- match_ids[ordr]
 
-
-  attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
-  rownames(summary_match) <- NULL
-  attr(summary_match, "original_response") <- res
-  attr(summary_match, "match_id") <- match_ids
-  attr(summary_match, "has_original_match") <-
-    !is.na(summary_match[["number_matches"]])
-  class(summary_match) <- c("match_names", "data.frame")
-  clean_tnrs_summary(summary_match)
-}
-
-clean_tnrs_summary <- function(summary_match) {
   summary_match[["approximate_match"]] <-
     convert_to_logical(summary_match[["approximate_match"]])
   summary_match[["is_synonym"]] <-
     convert_to_logical(summary_match[["is_synonym"]])
   summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
-  summary_match[["ott_id"]] <- as.integer(summary_match[["ott_id"]])
-  summary_match[["number_matches"]] <- as.integer(summary_match[["number_matches"]])
+
+  has_original_match <- !is.na(summary_match[["number_matches"]])
+
+  json_coords <- data.frame(
+    search_string = names,
+    original_order = as.numeric(rownames(summary_match)),
+    match_id = match_ids,
+    has_original_match = has_original_match,
+    row.names = seq_along(names),
+    stringsAsFactors = FALSE
+  )
+
+  attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
+  attr(summary_match, "original_response") <- res
+  attr(summary_match, "match_id") <- match_ids
+  attr(summary_match, "has_original_match") <- has_original_match
+  attr(summary_match, "json_coords") <- json_coords
+
+  class(summary_match) <- c("match_names", "data.frame")
+  rownames(summary_match) <- NULL
   summary_match
 }
 
@@ -148,11 +162,22 @@ convert_to_logical <- function(x) {
 }
 
 check_tnrs <- function(req) {
-  if (length(req$results) < 1) {
-    stop("No matches for any of the provided taxa")
+  test_zero_match <- vapply(
+    seq_len(length(req[["results"]])),
+    function(i) is.null(req[["results"]][[i]][["matches"]]),
+    logical(1)
+  )
+
+  if (all(test_zero_match)) {
+    stop("No matches for any of the provided taxa", call. = FALSE)
   }
-  if (length(req[["unmatched_names"]]) > 0) {
-    warning(paste(req$unmatched_names, collapse = ", "), " are not matched")
+  no_match <- req[["unmatched_names"]]
+
+  if (any(vapply(no_match, length, integer(1)) > 0)) {
+    warning(
+      paste(unlist(no_match), collapse = ", "), " are not matched",
+      call. = FALSE
+    )
   }
 }
 
@@ -183,6 +208,10 @@ build_summary_match <- function(res, res_id, match_id = NULL, initial_creation) 
     if (is.null(match_id)) {
       match_id <- seq_len(length(res[["results"]][[rid]][["matches"]]))
     }
+    if (identical(length(match_id), 0L) ||
+      is.null(res[["results"]][[rid]][["matches"]])) {
+      return(build_empty_row(tolower(res[["results"]][[rid]][["name"]])))
+    }
     res <- lapply(match_id, function(mid) {
       summary_row_factory(res, rid, mid)
     })
@@ -207,7 +236,7 @@ build_summary_match <- function(res, res_id, match_id = NULL, initial_creation) 
   summary_match <- do.call("rbind", summary_row)
   summary_match <- data.frame(summary_match, stringsAsFactors = FALSE)
   names(summary_match) <- c(names(tnrs_columns), "number_matches")
-  summary_match
+  clean_tnrs_summary(summary_match)
 }
 
 ##' @importFrom stats setNames
@@ -220,24 +249,17 @@ build_empty_row <- function(x) {
   no_match_row
 }
 
-add_unmatched_names <- function(summary_row, res) {
-  ## Add potential unmatched names
-  if (length(res[["unmatched_names"]])) {
-    no_match <- lapply(res[["unmatched_names"]], build_empty_row)
-    summary_row <- c(summary_row, no_match)
-  }
-  summary_row
-}
-
-
 lowest_ott_id <- function(rsp) {
   vapply(seq_along(rsp[["results"]]), function(x) {
     .r <- build_summary_match(
       res = rsp, res_id = x, match_id = NULL,
       initial_creation = TRUE
     )
+
     .r <- .r[(!as.logical(.r[["is_synonym"]])) &
+      !is.na(.r[["flags"]]) &
       .r[["flags"]] == "", ]
+
     if (nrow(.r) > 0) {
       which.min(.r[["ott_id"]])
     } else {
@@ -247,6 +269,17 @@ lowest_ott_id <- function(rsp) {
 }
 
 
+clean_tnrs_summary <- function(summary_match) {
+  summary_match[["approximate_match"]] <-
+    convert_to_logical(summary_match[["approximate_match"]])
+  summary_match[["is_synonym"]] <-
+    convert_to_logical(summary_match[["is_synonym"]])
+  summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
+  summary_match[["ott_id"]] <- as.integer(summary_match[["ott_id"]])
+  summary_match[["number_matches"]] <-
+    as.integer(summary_match[["number_matches"]])
+  summary_match
+}
 
 ##' This function returns a list of pre-defined taxonomic contexts
 ##' (i.e. clades) which can be used to limit the scope of tnrs

@@ -70,7 +70,7 @@ test_that("taxonomy_taxon tax_rank method", {
     names(tax_rank(tax_info)),
     c(
       "Actinopyga", "Acanthaster",
-      "Diadema (genus in Holozoa)"
+      "Garrettia (genus in Opisthokonta)"
     )
   )
   expect_equal(
@@ -89,12 +89,12 @@ test_that("taxonomy_taxon ott_taxon_name method", {
     names(tax_name(tax_info)),
     c(
       "Actinopyga", "Acanthaster",
-      "Diadema (genus in Holozoa)"
+      "Garrettia (genus in Opisthokonta)"
     )
   )
   expect_equal(
     unlist(unname(tax_name(tax_info))),
-    c("Actinopyga", "Acanthaster", "Diadema")
+    c("Actinopyga", "Acanthaster", "Garrettia")
   )
 })
 
@@ -108,7 +108,7 @@ test_that("taxonomy_taxon synonyms method", {
     names(synonyms(tax_info)),
     c(
       "Actinopyga", "Acanthaster",
-      "Diadema (genus in Holozoa)"
+      "Garrettia (genus in Opisthokonta)"
     )
   )
   expect_true(all(c("Diamema", "Centrechinus") %in%
@@ -125,7 +125,7 @@ test_that("taxonomy_taxon is_suppressed method", {
     names(is_suppressed(tax_info)),
     c(
       "Actinopyga", "Acanthaster",
-      "Diadema (genus in Holozoa)"
+      "Garrettia (genus in Opisthokonta)"
     )
   )
   expect_equal(
@@ -144,7 +144,7 @@ test_that("taxonomy_taxon flags method", {
     names(flags(tax_info)),
     c(
       "Actinopyga", "Acanthaster",
-      "Diadema (genus in Holozoa)"
+      "Garrettia (genus in Opisthokonta)"
     )
   )
   expect_equal(
@@ -279,7 +279,7 @@ test_that("taxonomy subtree returns valid internal node names", {
   tt <- taxonomy_subtree(515698, output_format = "taxa")
   expect_true(inherits(tt, "list"))
   expect_equal(length(tt), 2)
-  expect_equal(length(tt$tip_label), 14)
+  expect_equal(length(tt$tip_label), 32)
   expect_equal(length(tt$edge_label), 2)
 })
 
@@ -298,8 +298,8 @@ test_that("taxonomy subtree works if taxa has only 1 descendant", {
 ############################################################################
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-  tax_mrca <- taxonomy_mrca(ott_id = c(515698, 590452, 643717))
-  tax_mrca_mono <- taxonomy_mrca(ott_id = c(79623, 962377))
+  tax_mrca <- taxonomy_mrca(ott_ids = c(515698, 590452, 643717))
+  tax_mrca_mono <- taxonomy_mrca(ott_ids = c(79623, 962377))
 }
 
 test_that("taxonomic most recent common ancestor", {
@@ -469,6 +469,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 test_that("test is_in_tree", {
   skip_on_cran()
   in_tree <- is_in_tree(ot_ids)
-  expect_equal(sum(in_tree), 2)
+  expect_equal(sum(in_tree), 4)
   expect_true(all(names(in_tree) %in% spp))
 })
