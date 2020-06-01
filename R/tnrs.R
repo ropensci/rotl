@@ -209,7 +209,7 @@ build_summary_match <- function(res, res_id, match_id = NULL, initial_creation) 
       match_id <- seq_len(length(res[["results"]][[rid]][["matches"]]))
     }
     if (identical(length(match_id), 0L) ||
-      is.null(res[["results"]][[rid]][["matches"]])) {
+      is.null(res[["results"]][[res_id]][["matches"]][match_id][[1]])) {
       return(build_empty_row(tolower(res[["results"]][[rid]][["name"]])))
     }
     res <- lapply(match_id, function(mid) {
