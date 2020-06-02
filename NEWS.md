@@ -1,3 +1,17 @@
+## rotl 3.0.10.9000
+
+### Other changes
+
+* When none of the names provided to `tnrs_match_names` had a match in the Open
+  Tree of Life, an error was thrown and nothing was returned. To make the
+  behavior of the function more consistent with other situations, when none of
+  the names provided have a match, a tibble is returned and a warning is issued.
+
+### Bug Fix
+
+* When attempting to match a name that did not exist in the tree, an error was
+  thrown (bug #128, PR #129, @daijiang)
+
 ## rotl 3.0.10
 
 * Small fixes following updates to the Open Tree of Life API (no visible change

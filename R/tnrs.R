@@ -162,15 +162,6 @@ convert_to_logical <- function(x) {
 }
 
 check_tnrs <- function(req) {
-  test_zero_match <- vapply(
-    seq_len(length(req[["results"]])),
-    function(i) is.null(req[["results"]][[i]][["matches"]]),
-    logical(1)
-  )
-
-  if (all(test_zero_match)) {
-    stop("No matches for any of the provided taxa", call. = FALSE)
-  }
   no_match <- req[["unmatched_names"]]
 
   if (any(vapply(no_match, length, integer(1)) > 0)) {
