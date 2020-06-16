@@ -22,7 +22,7 @@ get_study_tree(
 
 \item{object_format}{the class of the object to be returned
 (default and currently only possible value \code{phylo} from
-the \code{\link[ape]{ape}} package).}
+the \code{ape} package).}
 
 \item{tip_label}{the format of the tip
 labels. \dQuote{\code{original_label}} (default) returns the

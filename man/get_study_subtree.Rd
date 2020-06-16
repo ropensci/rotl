@@ -26,7 +26,7 @@ get_study_subtree(
 
 \item{object_format}{the class of the object returned by the
 function (default, and currently only possibility \code{phylo}
-from the \code{\link[ape]{ape}} package)}
+from the \code{ape} package)}
 
 \item{tip_label}{the format of the tip
 labels. \dQuote{\code{original_label}} (default) returns the

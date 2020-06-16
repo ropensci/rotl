@@ -38,7 +38,7 @@ Returns the trees associated with a given study
 }
 \details{
 If \code{file_format} is missing, the function returns an object
-of the class \code{phylo} from the \code{\link[ape]{ape}} package
+of the class \code{phylo} from the \code{ape} package
 (default), or an object of the class \code{nexml} from the
 \code{RNeXML} package.
 

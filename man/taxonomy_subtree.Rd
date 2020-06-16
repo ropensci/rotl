@@ -42,7 +42,7 @@ If the \code{file} argument is missing: \itemize{
     subtree for the \code{ott_id} provided. }
 
     \item{\dQuote{\code{phylo}}} { an object of the class
-    \code{phylo} from the \code{\link[ape]{ape}} package. }
+    \code{phylo} from the \code{ape} package. }
 
     \item{\dQuote{\code{raw}}} { the direct output from the API,
     i.e., a list with an element named \sQuote{newick} that
