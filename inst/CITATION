@@ -31,10 +31,10 @@ c(
         year    = "2019",
         version = "12.3",
         publisher = "Zenodo",
-        doi         = "10.5281/zenodo.3937742",
-        url         = "https://doi.org/10.5281/zenodo.3937742",
+        doi         = "10.5281/zenodo.3937741",
+        url         = "https://doi.org/10.5281/zenodo.3937741",
         textVersion = 
-            paste("OpenTree et al. "Open Tree of Life Synthetic Tree"
-                   doi:0.5281/zenodo.3937741">https://doi.org/10.5281/zenodo.3937741")
+            paste("OpenTree et al. Open Tree of Life Synthetic Tree. 
+                   doi:0.5281/zenodo.39377411")
     )
 )
