@@ -10,14 +10,13 @@
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -237,10 +236,9 @@
       "sameAs": "https://CRAN.R-project.org/package=rncl"
     }
   ],
-  "contIntegration": "https://travis-ci.org/ropensci/rotl",
-  "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
+  "contIntegration": "https://codecov.io/github/ropensci/rotl?branch=master",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "203.722KB",
+  "fileSize": "693.482KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -264,7 +262,7 @@
       ],
       "name": "{rotl}: an R package to interact with the Open Tree of Life data",
       "identifier": "10.1111/2041-210X.12593",
-      "paginiation": "1476-1481",
+      "pagination": "1476-1481",
       "@id": "https://doi.org/10.1111/2041-210X.12593",
       "sameAs": "https://doi.org/10.1111/2041-210X.12593",
       "isPartOf": {
@@ -395,7 +393,7 @@
       ],
       "name": "Synthesis of phylogeny and taxonomy into a comprehensive tree of life",
       "identifier": "10.1073/pnas.1423041112",
-      "paginiation": "12764-12769",
+      "pagination": "12764-12769",
       "@id": "https://doi.org/10.1073/pnas.1423041112",
       "sameAs": "https://doi.org/10.1073/pnas.1423041112",
       "isPartOf": {
@@ -415,8 +413,8 @@
   "relatedLink": ["https://codemeta.github.io/codemetar", "https://CRAN.R-project.org/package=rotl"],
   "review": {
     "@type": "Review",
-    "url": "https://github.com/ropensci/onboarding/issues/17",
-    "provider": "http://ropensci.org"
+    "url": "https://github.com/ropensci/software-review/issues/17",
+    "provider": "https://ropensci.org"
   },
   "developmentStatus": "https://www.repostatus.org/#active",
   "contributor": {},

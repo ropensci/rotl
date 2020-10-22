@@ -48,7 +48,7 @@ provides. The documentation of the API is available at:
 
 
     This package was started during the Open Tree of Life
-    \href{http://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/}{Hackathon}
+    \href{https://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/}{Hackathon}
     organized by OpenTree, the NESCent Hackathon Interoperability
     Phylogenetic group, and Arbor.
 }

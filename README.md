@@ -4,10 +4,10 @@
 [![R build
 status](https://github.com/ropensci/rotl/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rotl/actions)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
-[![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
+[![](https://www.r-pkg.org/badges/version/rotl)](https://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
-[![](https://badges.ropensci.org/17_status.svg)](https://github.com/ropensci/onboarding/issues/17)
+downloads](https://cranlogs.r-pkg.org/badges/rotl)](https://www.r-pkg.org/pkg/rotl)
+[![](https://badges.ropensci.org/17_status.svg)](https://github.com/ropensci/software-review/issues/17)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -18,7 +18,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 `rotl` is an R package to interact with the Open Tree of Life data APIs.
 It was initially developed as part of the [NESCENT/OpenTree/Arbor
-hackathon](http://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/).
+hackathon](https://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/).
 
 Client libraries to interact with the Open Tree of Life API also exists
 for [Python](https://github.com/OpenTreeOfLife/pyopentree) and
@@ -113,7 +113,7 @@ tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names))
 plot(tr)
 ```
 
-![](https://i.imgur.com/jksl36f.png)<!-- -->
+![](https://i.imgur.com/5Fdb927.png)<!-- -->
 
 The code above can be summarized in a single pipe:
 
@@ -143,7 +143,7 @@ c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     ## mrcaott83926ott3607689, mrcaott83926ott3607732, mrcaott770295ott3607719,
     ## mrcaott770295ott3607692, Ponginae ott1082538, Hylobatidae ott166544
 
-![](https://i.imgur.com/bjEjZMC.png)<!-- -->
+![](https://i.imgur.com/43LgNKf.png)<!-- -->
 
 ## Citation and Manuscript
 
@@ -191,4 +191,4 @@ Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/ropensci/rotl/blob/master/CONDUCT.md). By
 participating in this project you agree to abide by its terms.
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
