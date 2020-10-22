@@ -1,0 +1,12 @@
+pandoc: '2.2'
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  data_mashups: data_mashups.html
+  meta-analysis: meta-analysis.html
+  rotl: rotl.html
+last_built: 2020-10-22T09:25Z
+urls:
+  reference: https://ropensci.github.io/rotl/reference
+  article: https://ropensci.github.io/rotl/articles
+
