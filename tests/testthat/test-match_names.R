@@ -409,7 +409,7 @@ test_that("flags with no arguments", {
   expect_equal(length(flags_rsp), 5)
   expect_equivalent(
     sapply(flags_rsp, length),
-    c(1, 2, 2, 0, 0)
+    c(2, 3, 3, 0, 0)
   )
 })
 
@@ -418,7 +418,7 @@ test_that("flags with row number", {
   flags_rsp <- flags(rsp, 1)
   expect_true(inherits(flags_rsp, "list"))
   expect_equal(length(flags_rsp), 1)
-  expect_equal(length(flags_rsp[[1]]), 1)
+  expect_equal(length(flags_rsp[[1]]), 2)
   expect_true(inherits(flags_rsp[[1]], "character"))
   expect_equal(names(flags_rsp), tax_rsp[1])
 })
@@ -428,7 +428,7 @@ test_that("flags with taxon name", {
   flags_rsp <- flags(rsp, taxon_name = "Tyrannosaurus")
   expect_true(inherits(flags_rsp, "list"))
   expect_equal(length(flags_rsp), 1)
-  expect_equal(length(flags_rsp[[1]]), 1)
+  expect_equal(length(flags_rsp[[1]]), 2)
   expect_true(inherits(flags_rsp[[1]], "character"))
   expect_equal(names(flags_rsp), tax_rsp[1])
 })
@@ -438,7 +438,7 @@ test_that("flags with ott id", {
   flags_rsp <- flags(rsp, ott_id = 664348)
   expect_true(inherits(flags_rsp, "list"))
   expect_equal(length(flags_rsp), 1)
-  expect_equal(length(flags_rsp[[1]]), 1)
+  expect_equal(length(flags_rsp[[1]]), 2)
   expect_true(inherits(flags_rsp[[1]], "character"))
   expect_equal(names(flags_rsp), tax_rsp[1])
 })

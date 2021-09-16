@@ -1,3 +1,11 @@
+## rotl 3.0.11.900 (development version)
+
+* The default argument `context_name` for the function `tnrs_match_names` was
+  changed from `NULL` to `All life`. This changes is made to address what could
+  lead to unexpected results. Previously, the context was inferred based on the
+  first match when several names were provided (see #134 reported by @LunaSare,
+  and https://github.com/OpenTreeOfLife/feedback/issues/528)/
+
 ## rotl 3.0.11
 
 ### Other changes

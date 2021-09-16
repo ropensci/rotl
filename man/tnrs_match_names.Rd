@@ -6,7 +6,7 @@
 \usage{
 tnrs_match_names(
   names = NULL,
-  context_name = NULL,
+  context_name = "All life",
   do_approximate_matching = TRUE,
   ids = NULL,
   include_suppressed = FALSE,
@@ -14,36 +14,34 @@ tnrs_match_names(
 )
 }
 \arguments{
-\item{names}{taxon names to be queried. Currently limited to
-10,000 names for exact matches and 2,500 names for approximate
-matches (character vector)}
+\item{names}{taxon names to be queried. Currently limited to 10,000 names
+for exact matches and 2,500 names for approximate matches (character
+vector)}
 
-\item{context_name}{name of the taxonomic context to be searched
-(length-one character vector). Must match (case sensitive) one
-of the values returned by \code{\link{tnrs_contexts}}.}
+\item{context_name}{name of the taxonomic context to be searched (length-one
+character vector or \code{NULL}). Must match (case sensitive) one of the
+values returned by \code{\link{tnrs_contexts}}. Default to "All life".}
 
-\item{do_approximate_matching}{A logical indicating whether or not
-to perform approximate string (a.k.a. \dQuote{fuzzy})
-matching. Using \code{FALSE} will greatly improve
-speed. Default, however, is \code{TRUE}.}
+\item{do_approximate_matching}{A logical indicating whether or not to
+perform approximate string (a.k.a. \dQuote{fuzzy}) matching. Using
+\code{FALSE} will greatly improve speed. Default, however, is \code{TRUE}.}
 
-\item{ids}{A vector of ids to use for identifying names. These
-will be assigned to each name in the names array. If ids is
-provided, then ids and names must be identical in length.}
+\item{ids}{A vector of ids to use for identifying names. These will be
+assigned to each name in the names array. If ids is provided, then ids and
+names must be identical in length.}
 
-\item{include_suppressed}{Ordinarily, some quasi-taxa, such as
-incertae sedis buckets and other non-OTUs, are suppressed from
-TNRS results. If this parameter is true, these quasi-taxa are
-allowed as possible TNRS results.}
+\item{include_suppressed}{Ordinarily, some quasi-taxa, such as incertae
+sedis buckets and other non-OTUs, are suppressed from TNRS results. If
+this parameter is true, these quasi-taxa are allowed as possible TNRS
+results.}
 
 \item{...}{additional arguments to customize the API request (see
 \code{\link{rotl}} package documentation).}
 }
 \value{
-A data frame summarizing the results of the query. The
-    original query output is appended as an attribute to the
-    returned object (and can be obtained using \code{attr(object,
-    "original_response")}).
+A data frame summarizing the results of the query. The original
+  query output is appended as an attribute to the returned object (and can
+  be obtained using \code{attr(object, "original_response")}).
 }
 \description{
 Match taxonomic names to the Open Tree Taxonomy.
@@ -81,6 +79,5 @@ function.
 }
 \seealso{
 \code{\link{inspect.match_names}},
-    \code{\link{update.match_names}},
-    \code{\link{synonyms.match_names}}.
+  \code{\link{update.match_names}}, \code{\link{synonyms.match_names}}.
 }
