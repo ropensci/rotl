@@ -43,8 +43,7 @@ history among some of the studied-species.
 
 If we are going to reproduce this analysis, we will first need to gather the
 data. Thankfully, the data is available as supplementary material from the
-publisher's website. We can collect the data from using `fulltext` (with the
-papers DOI as input) and read it into memory with `readxl::read_excel`:
+publisher's website. We provide a copy of this data with the package:
 
 ```{r load-package}
 library(rotl)
@@ -52,13 +51,7 @@ library(rotl)
 
 
 ```{r egg_data}
-## This should work, but Wiley has currently broken the URLs to access the
-## SI.
-## if (require(readxl) && require(fulltext)) {
-## doi <- "10.1111/jeb.12282"
-## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)
-## egg_data <- read_excel(xl_file)
-## } else {
+## This dataset is available from the publisher's study website:
 egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
   stringsAsFactors = FALSE
 )

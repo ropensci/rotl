@@ -37,7 +37,6 @@ Imports:
     rentrez,
     rncl (>= 0.6.0)
 Suggests:
-    fulltext (>= 0.1.6),
     knitr (>= 1.12),
     MCMCglmm,
     phylobase,
