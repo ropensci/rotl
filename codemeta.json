@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -54,19 +54,6 @@
     }
   ],
   "softwareSuggestions": [
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "fulltext",
-      "name": "fulltext",
-      "version": ">= 0.1.6",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=fulltext"
-    },
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
@@ -238,7 +225,7 @@
   ],
   "contIntegration": "https://codecov.io/github/ropensci/rotl?branch=master",
   "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "693.482KB",
+  "fileSize": "504.619KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -277,135 +264,49 @@
       }
     },
     {
-      "@type": "ScholarlyArticle",
-      "datePublished": "2015",
+      "@type": "CreativeWork",
+      "datePublished": "2019",
       "author": [
         {
-          "@type": "Person",
-          "givenName": ["Cody", "E."],
-          "familyName": "Hinchliff"
+          "@type": "Organization",
+          "name": "OpenTreeOfLife"
         },
         {
           "@type": "Person",
-          "givenName": ["Stephen", "A."],
-          "familyName": "Smith"
+          "givenName": "Benjamin",
+          "familyName": "Redelings"
         },
         {
           "@type": "Person",
-          "givenName": ["James", "F."],
-          "familyName": "Allman"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["J.", "Gordon"],
-          "familyName": "Burleigh"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Ruchi",
-          "familyName": "Chaudhary"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Lyndon", "M."],
-          "familyName": "Coghill"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Keith", "A."],
-          "familyName": "Crandall"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Jiabin",
-          "familyName": "Deng"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Bryan", "T."],
-          "familyName": "Drew"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Romina",
-          "familyName": "Gazis"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Karl",
-          "familyName": "Gude"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["David", "S."],
-          "familyName": "Hibbett"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Laura", "A."],
-          "familyName": "Katz"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["H.", "Dail", "Laughinghouse"],
-          "familyName": "IV"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Emily", "Jane"],
-          "familyName": "McTavish"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Peter", "E."],
-          "familyName": "Midford"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Christopher", "L."],
-          "familyName": "Owen"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Richard", "H."],
-          "familyName": "Ree"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Jonathan", "A."],
-          "familyName": "Rees"
-        },
-        {
-          "@type": "Person",
-          "givenName": ["Douglas", "E."],
-          "familyName": "Soltis"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Tiffani",
-          "familyName": "Williams"
+          "givenName": ["Luna", "Luisa", "Sanchez"],
+          "familyName": "Reyes"
         },
         {
           "@type": "Person",
           "givenName": ["Karen", "A."],
           "familyName": "Cranston"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Jim",
+          "familyName": "Allman"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Mark", "T."],
+          "familyName": "Holder"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Emily", "Jane"],
+          "familyName": "McTavish"
         }
       ],
-      "name": "Synthesis of phylogeny and taxonomy into a comprehensive tree of life",
-      "identifier": "10.1073/pnas.1423041112",
-      "pagination": "12764-12769",
-      "@id": "https://doi.org/10.1073/pnas.1423041112",
-      "sameAs": "https://doi.org/10.1073/pnas.1423041112",
-      "isPartOf": {
-        "@type": "PublicationIssue",
-        "issueNumber": "41",
-        "datePublished": "2015",
-        "isPartOf": {
-          "@type": ["PublicationVolume", "Periodical"],
-          "volumeNumber": "112",
-          "name": "Proceedings of the National Academy of Sciences"
-        }
-      }
+      "name": "Open Tree of Life Synthetic Tree",
+      "identifier": "10.5281/zenodo.3937741",
+      "url": "https://doi.org/10.5281/zenodo.3937741",
+      "@id": "https://doi.org/10.5281/zenodo.3937741",
+      "sameAs": "https://doi.org/10.5281/zenodo.3937741"
     }
   ],
   "isPartOf": "https://ropensci.org",
@@ -419,5 +320,6 @@
   "developmentStatus": "https://www.repostatus.org/#active",
   "contributor": {},
   "copyrightHolder": {},
-  "funder": {}
+  "funder": {},
+  "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md"
 }
