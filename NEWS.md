@@ -1,4 +1,4 @@
-## rotl 3.0.12
+# rotl 3.0.12
 
 * The default argument `context_name` for the function `tnrs_match_names` was
   changed from `NULL` to `All life`. This changes is made to address what could
@@ -8,68 +8,68 @@
 * The "Suggest" dependency `fulltext` was removed following its archival from
   CRAN.
 
-## rotl 3.0.11
+# rotl 3.0.11
 
-### Other changes
+## Other changes
 
 * When none of the names provided to `tnrs_match_names` had a match in the Open
   Tree of Life, an error was thrown and nothing was returned. To make the
   behavior of the function more consistent with other situations, when none of
   the names provided have a match, a tibble is returned and a warning is issued.
 
-### Bug Fix
+## Bug Fix
 
 * When attempting to match a name that did not exist in the tree, an error was
   thrown (bug #128, PR #129, @daijiang)
 
-## rotl 3.0.10
+# rotl 3.0.10
 
 * Small fixes following updates to the Open Tree of Life API (no visible change
   for users).
 * Updated documentation to reflect new value in output of `tol_node_info()`.
 
-## rotl 3.0.9
+# rotl 3.0.9
 
 * Small fixes following updates to the Open Tree of Life API.
 
-## rotl 3.0.7
+# rotl 3.0.7
 
 * Minor update to vignette to address change to TNRS endpoint (underscores can't
   be included in the taxon names anymore).
 
-## rotl 3.0.6
+# rotl 3.0.6
 
 * Minor update to address warnings seen on CRAN.
 
-## rotl 3.0.5
+# rotl 3.0.5
 
-### New features
+## New features
 
 * The data types in the data frame returned by `tnrs_match_names` are
   consistent, and remain the same even after using `update()`.
   
-### Other changes
+## Other changes
 
 * Small internal changes that reflect changes in the data structures returned by
   the API.
 
-## rotl 3.0.4
+# rotl 3.0.4
 
-### New features
+## New features
 
 * To improve stability of results across releases of the Open Tree Taxonomy, the
   TNRS match with the lowest OTT id is returned instead of the first one in case
   a name is shared across multiple domains (related to #88)
 * A warning is issued when users attempt to use TNRS on duplicated names.
 
-### Other changes
+## Other changes
 
 * Fix typos and workaround broken API to retrieve supplementary materials in
   vignette.
 
-## rotl 3.0.3
+# rotl 3.0.3
 
-### New features
+## New features
 
 * The function `get_study_subtree` gains the argument `tip_label` to control the
   formatting of the tip labels, #90, reported by @bomeara
@@ -77,12 +77,12 @@
   `ott_id()`), and returns a vector of logical indiicating whether they are
   included in the synthetic tree (workaround #31).
 
-### Bug fixes
+## Bug fixes
 
 * The function `get_study_subtree` ignored the argument `subtree_id`, #89
   reported by @bomeara
 
-### Other chaanges
+## Other chaanges
 
 * `citation("rotl")` now includes the reference to the Open Tree of Life
   publication.
@@ -90,7 +90,7 @@
   the OTL API which returns an HTTP error code 400 when the request for induced
   subtree includes taxa that are not in the synthetic tree (fix #84)
 
-## rotl 3.0.1
+# rotl 3.0.1
 
 * Fix tests and vignette to reflect changes accompanying release 6.1 of the
   synthetic tree
@@ -100,7 +100,7 @@
 
 * Add `CITATION` file with MEE manuscript information (#82)
 
-## rotl 3.0.0
+# rotl 3.0.0
 
 * `rotl` now interacts with v3.0 of the Open Tree of Life APIs. The
   documentation has been updated to reflect the associated changes. More
@@ -108,7 +108,7 @@
   [on their wiki](https://github.com/OpenTreeOfLife/germinator/wiki/Open-Tree-of-Life-Web-APIs).
 
 
-### New features
+## New features
 
 * New methods: `tax_sources`, `is_suppressed`, `tax_rank`, `unique_name`,
   `name`, `ott_id`, for objects returned by `tnrs_match_names()`,
@@ -130,7 +130,7 @@
 * The function `strip_ott_id()` gains the argument `remove_underscores` to remove
   underscores from tips in trees returned by OTL.
 
-### Changes
+## Changes
 
 * Rename method `ott_taxon_name()` to `tax_name()` for consistency.
 
@@ -138,7 +138,7 @@
 
 * Refactor how result of query is checked and parsed (invisible to the user).
 
-### Bug fixes
+## Bug fixes
 
 * Fix bug in `studies_find_studies()`, the arguments `verbose` and `exact` were
   ignored.
@@ -152,7 +152,7 @@
   not work if the query included unmatched taxa.
 
 
-## rotl 0.5.0
+# rotl 0.5.0
 
 * New vignette: `meta-analysis`
 
@@ -191,6 +191,6 @@
 * A more robust approach is used by `get_tree_ids` to identify the tree ids in
   the metadata returned by the API
 
-## rotl 0.4.1
+# rotl 0.4.1
 
 * Initial CRAN release on July, 24th 2015
