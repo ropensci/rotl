@@ -193,7 +193,7 @@ studies_find_trees <- function(property = NULL, value = NULL, verbose = FALSE,
     function(x) {
       sapply(
         x[["matched_trees"]],
-        function(y) y[["nexson_id"]]
+        function(y) y[["ot:treeId"]]
       )
     }
   )
