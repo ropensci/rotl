@@ -19,7 +19,7 @@ opts_knit$set(upload.fun = imgur_upload)
 <!-- badges: end -->
 
 
-# An R interface to Open Tree API
+# rotl: An R interface to Open Tree API <img src="man/figures/logo.svg" align="right" />
 
 `rotl` is an R package to interact with the Open Tree of Life data APIs. It was
 initially developed as part of the

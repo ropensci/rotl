@@ -17,3 +17,4 @@ revdep/
 ^tic.R$
 ^.pre-commit-config.yaml$
 ^\.github$
+^CRAN-SUBMISSION$
