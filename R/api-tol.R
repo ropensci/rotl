@@ -1,11 +1,9 @@
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
-##' @importFrom assertthat is.flag
 ## Summary information about the OpenTree Tree of Life
 .tol_about <- function(include_source_list = FALSE, ...) {
-  if (!assertthat::is.flag(include_source_list)) {
-    stop("Argument ", sQuote("include_ource_list"), " must be of class ", sQuote("logical"))
-  }
+  check_is_flag(include_source_list)
+
   q <- list(include_source_list = jsonlite::unbox(include_source_list))
   res <- otl_POST(path = "tree_of_life/about", body = q, ...)
   res
@@ -16,9 +14,9 @@
 ##' @importFrom httr content
 ## Get summary information about a node in the OpenTree Tree of Life
 .tol_node_info <- function(ott_id = NULL, node_id = NULL, include_lineage = FALSE, ...) {
-  if (!is.logical(include_lineage)) {
-    stop("Argument \'include_lineage\' must be of class \"logical\"")
-  }
+
+  check_is_flag(include_lineage)
+
   if (is.null(ott_id) && is.null(node_id)) {
     stop("Must provide either ", sQuote("ott_id"), " or ", sQuote("node_id"))
   }

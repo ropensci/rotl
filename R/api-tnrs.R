@@ -1,6 +1,5 @@
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
-##' @importFrom assertthat is.string is.flag
 ## Match taxon names
 .tnrs_match_names <- function(names = NULL, context_name = NULL,
                               do_approximate_matching = TRUE,
@@ -26,26 +25,11 @@
       )
     }
   }
-  if (!assertthat::is.flag(do_approximate_matching)) {
-    stop(
-      "Argument ", sQuote("do_approximate_matching"),
-      " must be of class ",
-      sQuote("logical")
-    )
-  }
-  if (!assertthat::is.flag(include_suppressed)) {
-    stop(
-      "Argument ", sQuote("include_deprecated"), " must be of class ",
-      sQuote("logical")
-    )
-  }
+  check_is_flag(do_approximate_matching)
+  check_is_flag(include_suppressed)
+
   if (!is.null(context_name)) {
-    if (!assertthat::is.string(context_name)) {
-      stop(
-        "Argument ", sQuote("context_name"), " must be of class ",
-        sQuote("character")
-      )
-    }
+    check_is_string(context_name)    
     context_name <- jsonlite::unbox(context_name)
   }
 

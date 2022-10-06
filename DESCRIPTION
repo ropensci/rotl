@@ -31,11 +31,11 @@ Depends:
     R (>= 3.1.1)
 Imports:
     ape,
-    assertthat (>= 0.1),
     curl (>= 3.0.0),
     httr,
     jsonlite,
     rentrez,
+    rlang,
     rncl (>= 0.6.0)
 Suggests:
     knitr (>= 1.12),

@@ -8,8 +8,6 @@
 
 ##' @importFrom jsonlite unbox
 ##' @importFrom httr content
-##' @importFrom assertthat is.flag
-##' @importFrom assertthat assert_that
 ## Information about an OpenTree Taxonomy (OTT) taxon
 .taxonomy_taxon_info <- function(ott_id = NULL,
                                  include_children = FALSE,
@@ -22,9 +20,10 @@
     stop("Must only supply one ", sQuote("ott_id"), " argument")
   }
 
-  assertthat::assert_that(assertthat::is.flag(include_children))
-  assertthat::assert_that(assertthat::is.flag(include_lineage))
-  assertthat::assert_that(assertthat::is.flag(include_terminal_descendants))
+  check_is_flag(include_children)
+  check_is_flag(include_lineage)
+  check_is_flag(include_terminal_descendants)
+
   q <- list(
     ott_id = jsonlite::unbox(ott_id),
     include_children = jsonlite::unbox(include_children),
