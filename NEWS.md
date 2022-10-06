@@ -1,3 +1,8 @@
+# rotl 3.0.13
+
+* Make sure that the package fails gracefully when there is no
+  internet connection.
+
 # rotl 3.0.12
 
 * The default argument `context_name` for the function `tnrs_match_names` was
