@@ -1,4 +1,4 @@
-This release addresses the email sent on 2022-09-29 by Prof Brian Ripley
+This release addresses the issues raised in the email sent on 2022-09-29 by Prof Brian Ripley
 
 ## Test environments
 

@@ -1,7 +1,8 @@
-# rotl 3.0.13
+# rotl 3.0.14
 
 * Make sure that the package fails gracefully when there is no
   internet connection.
+* The vignettes are now pre-computed.
 
 # rotl 3.0.12
 
