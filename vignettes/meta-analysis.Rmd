@@ -238,11 +238,14 @@ was left unexplained.
 
 ## What other comparative methods can I use in R?
 
-Here we have demonstrated just one comparative analysis that you might do in R.
-There are an ever-growing number of packages that allow an ever-growing number
-of analysis to performed in R. Some "classics" like ancestral state
-reconstruction,  phylogenetic independent contrasts and lineage through time plots
-are implemented in `ape`. Packages like `phytools`, `caper` and `diversitree`
-provide extensions to these methods.  The [CRAN Phylogenetics Taskview](https://CRAN.R-project.org/view=Phylogenetics)
-gives a good idea of the diversity of packages and analyses that can be
-completed in R.
+Here we have demonstrated just one comparative analysis that you might
+do in R.  There are an ever-growing number of packages that allow an
+ever-growing number of analysis to performed in R. Some "classics"
+like ancestral state reconstruction, phylogenetic independent
+contrasts and lineage through time plots are implemented in
+`ape`. Packages like `phytools`, `caper` and `diversitree` provide
+extensions to these methods.  The [CRAN Phylogenetics
+Taskview](https://github.com/bomeara/PhylogeneticsTaskView/blob/main/Phylogenetics.md)
+gives a good idea of the diversity of packages and analyses that can
+be completed in R (note that this links to a draft of the next version
+of the Taskview as it is currently unavailable from CRAN).
