@@ -12,6 +12,11 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = "fig-vignettes-")
+```
+
+
 ## Combining data from OToL and other sources.
 
 One of the major goals of `rotl` is to help users combine data from other

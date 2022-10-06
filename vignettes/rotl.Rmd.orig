@@ -12,6 +12,10 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = "fig-vignettes-")
+```
+
 `rotl` provides an interface to the Open Tree of Life (OTL) API and allows users
 to query the API, retrieve parts of the Tree of Life and integrate these parts
 with other R packages.

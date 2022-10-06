@@ -12,6 +12,9 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+
+
+
 ## Combining data from OToL and other sources.
 
 One of the major goals of `rotl` is to help users combine data from other
@@ -300,7 +303,7 @@ tr <- tol_induced_subtree(ott_ids = ott_in_tree)
 plot(tr)
 ```
 
-![plot of chunk subtree](figure/subtree-1.png)
+![plot of chunk subtree](fig-vignettes-subtree-1.png)
 
 ### Connect your data to the tips of your tree
 
@@ -363,7 +366,7 @@ And now we can plot the data and the tree together
 plot(tree_data)
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png)
+![plot of chunk unnamed-chunk-1](fig-vignettes-unnamed-chunk-1-1.png)
 
 ## Find external data associated with studies, trees and taxa from Open Tree
 

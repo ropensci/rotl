@@ -12,6 +12,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+
 ## Phylogenetic Comparative Methods
 
 The development of phylogenetic comparative methods has made phylogenies and
@@ -106,7 +108,7 @@ plot(1 / sqrt(egg_data$VZr), egg_data$Zr,
 )
 ```
 
-![plot of chunk eggs_in_a_funnel](figure/eggs_in_a_funnel-1.png)
+![plot of chunk eggs_in_a_funnel](fig-vignettes-eggs_in_a_funnel-1.png)
 
 In order to use this data later on we need to first convert it to a standard
 `data.frame`. We can also convert the `animal` column (the species names) to
@@ -317,7 +319,7 @@ tr <- tol_induced_subtree(ott_id(taxa)[is_in_tree(ott_id(taxa))])
 plot(tr, show.tip.label = FALSE)
 ```
 
-<img src="figure/birds_in_a_tree-1.png" title="plot of chunk birds_in_a_tree" alt="plot of chunk birds_in_a_tree" style="display: block; margin: auto;" />
+<img src="fig-vignettes-birds_in_a_tree-1.png" title="plot of chunk birds_in_a_tree" alt="plot of chunk birds_in_a_tree" style="display: block; margin: auto;" />
 
 There are a few things to note here. First, the tree has no branch lengths.
 At present this is true for the whole of the Open Tree synthetic tree. Some

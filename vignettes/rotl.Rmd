@@ -12,6 +12,8 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+
+
 `rotl` provides an interface to the Open Tree of Life (OTL) API and allows users
 to query the API, retrieve parts of the Tree of Life and integrate these parts
 with other R packages.
@@ -143,7 +145,7 @@ my_tree <- tol_induced_subtree(ott_ids = resolved_names$ott_id)
 plot(my_tree, no.margin = TRUE)
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](fig-vignettes-unnamed-chunk-3-1.png)
 
 
 ## FAQ
@@ -366,7 +368,7 @@ mono_tree <- tol_subtree(ott_id = ott_id(mono_id))
 plot(mono_tree)
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-8](fig-vignettes-unnamed-chunk-8-1.png)
 
 
 ### How do I find trees from studies focused on my favourite taxa?
@@ -666,4 +668,4 @@ tr <- tol_induced_subtree(ott_id(taxa))
 plot(tr)
 ```
 
-![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-16](fig-vignettes-unnamed-chunk-16-1.png)
