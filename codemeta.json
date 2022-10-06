@@ -1,26 +1,24 @@
 {
-  "@context": [
-    "http://purl.org/codemeta/2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "rotl",
-  "description": "An interface to the 'Open Tree of Life' API to retrieve\n    phylogenetic trees, information about studies used to assemble the\n    synthetic tree, and utilities to match taxonomic names to 'Open Tree\n    identifiers'. The 'Open Tree of Life' aims at assembling a\n    comprehensive phylogenetic tree for all named species.",
+  "description": "An interface to the 'Open Tree of Life' API to retrieve phylogenetic trees, information about studies used to assemble the synthetic tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The 'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all named species.",
   "name": "rotl: Interface to the 'Open Tree of Life' API",
+  "relatedLink": "https://codemeta.github.io/codemetar",
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
-    "name": "Central R Archive Network (CRAN)",
+    "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
   "author": [
@@ -141,14 +139,14 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.1.1"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "ape",
       "name": "ape",
@@ -160,20 +158,20 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ape"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
-      "identifier": "assertthat",
-      "name": "assertthat",
-      "version": ">= 0.1",
+      "identifier": "curl",
+      "name": "curl",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=assertthat"
+      "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -185,7 +183,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -197,7 +195,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "rentrez",
       "name": "rentrez",
@@ -209,7 +207,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rentrez"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "rncl",
       "name": "rncl",
@@ -221,11 +219,12 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rncl"
-    }
-  ],
-  "contIntegration": "https://codecov.io/github/ropensci/rotl?branch=master",
-  "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
-  "fileSize": "504.619KB",
+    },
+    "SystemRequirements": null
+  },
+  "isPartOf": "https://ropensci.org",
+  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity"],
+  "fileSize": "847.848KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -308,18 +307,5 @@
       "@id": "https://doi.org/10.5281/zenodo.3937741",
       "sameAs": "https://doi.org/10.5281/zenodo.3937741"
     }
-  ],
-  "isPartOf": "https://ropensci.org",
-  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity", "r", "rstats", "r-package", "taxonomy", "phylogeny", "peer-reviewed"],
-  "relatedLink": ["https://codemeta.github.io/codemetar", "https://CRAN.R-project.org/package=rotl"],
-  "review": {
-    "@type": "Review",
-    "url": "https://github.com/ropensci/software-review/issues/17",
-    "provider": "https://ropensci.org"
-  },
-  "developmentStatus": "https://www.repostatus.org/#active",
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
-  "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md"
+  ]
 }
