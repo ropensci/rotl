@@ -1,0 +1,233 @@
+---
+title: "Connecting data to Open Tree trees"
+author: "David Winter"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
+vignette: >
+  %\VignetteIndexEntry{Connecting data to Open Tree trees}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+
+## Combining data from OToL and other sources.
+
+One of the major goals of `rotl` is to help users combine data from other
+sources with the phylogenetic trees in the Open Tree database. This examples
+document describes some of the ways in which a user might connect data to trees
+from Open Tree.
+
+## Get Open Tree IDs to match your data.
+
+Let's say you have a dataset where each row represents a measurement taken from
+one species, and your goal is to put these measurements in some phylogenetic
+context. Here's a small example: the best estimate of the mutation rate for a
+set of unicellular Eukaryotes along with some other property of those species
+which might explain the mutation rate:
+
+```{r, data}
+csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
+mu <- read.csv(csv_path, stringsAsFactors = FALSE)
+mu
+```
+
+If we want to get a tree for these species we need to start by finding the
+unique ID for each of these species in the Open Tree database. We can use the
+Taxonomic Name Resolution Service (`tnrs`) functions to do this. Before we do
+that we should see if any of the taxonomic contexts, which can be used to narrow
+a search and avoid conflicts between different codes, apply to our group of species:
+
+```{r, context}
+library(rotl)
+tnrs_contexts()
+```
+
+Hmm, none of those groups contain all of our species. In this case we can
+search using the `All life` context and the function `tnrs_match_names`:
+
+```{r, match}
+taxon_search <- tnrs_match_names(names = mu$species, context_name = "All life")
+knitr::kable(taxon_search)
+```
+
+Good, all of our  species are known to Open Tree. Note, though, that one of the names
+is a synonym. _Saccharomyces pombe_ is older name for what is now called
+_Schizosaccharomyces pombe_. As the name suggests, the Taxonomic Name
+Resolution Service is designed to deal with these problems (and similar ones
+like misspellings), but it is always a good idea to check the results of
+`tnrs_match_names` closely to ensure the results are what you expect.
+
+In this case we have a good ID for each of our species so we can move on. Before
+we do that, let's ensure we can match up our original data to the Open Tree
+names and IDs by adding them to our `data.frame`:
+
+```{r, munge}
+mu$ott_name <- unique_name(taxon_search)
+mu$ott_id <- taxon_search$ott_id
+```
+
+## Find a tree with your taxa
+
+Now let's find a tree. There are two possible options here: we can search for
+published studies that include our taxa or we can use the 'synthetic tree' from
+Open Tree. We can try both approaches.
+
+### Published trees
+
+Before we can search for published studies or trees, we should check out the
+list of properties we can use to perform such searches:
+
+```{r, properties}
+studies_properties()
+```
+
+We have `ottIds` for our taxa, so let's use those IDs to search for trees that
+contain them.  Starting with our first species _Tetrahymena thermophila_ we can
+use `studies_find_trees` to do this search.
+
+```{r taxon_count}
+studies_find_trees(property = "ot:ottId", value = as.character(ott_id(taxon_search)[1]))
+```
+
+Well... that's not very promising. We can repeat that process for all of the IDs
+to see if the other species are better represented.
+
+
+```{r, all_taxa_count}
+hits <- lapply(mu$ott_id, studies_find_trees, property = "ot:ottId", detailed = FALSE)
+sapply(hits, function(x) sum(x[["n_matched_trees"]]))
+```
+
+OK, most of our species are not in any of the published trees available. You can
+help fix this sort of problem by [making sure you submit your published trees to
+Open Tree](https://tree.opentreeoflife.org/curator).
+
+### A part of the synthesis tree
+
+Thankfully, we can still use the complete Tree of Life made from the
+combined results of all of the published trees and taxonomies that go into Open
+Tree. The function `tol_induced_subtree` will fetch a tree relating a set of IDs.
+
+Using the default arguments you can get a tree object into your R session:
+
+
+```{r subtree,  fig.width=7, fig.height=4}
+ott_in_tree <- ott_id(taxon_search)[is_in_tree(ott_id(taxon_search))]
+tr <- tol_induced_subtree(ott_ids = ott_in_tree)
+plot(tr)
+```
+
+### Connect your data to the tips of your tree
+
+Now we have a tree for of our species, how can we use the tree and the data
+together?
+
+The package `phylobase` provide an object class called `phylo4d`, which is
+designed to represent a phylogeny and data associated with its tips. In oder to
+get our tree and data into one of these objects we have to make sure the labels
+in the tree and in our data match exactly. That's not quite the case at the
+moment (tree labels have underscores and IDs appended):
+
+```{r, match_names}
+mu$ott_name[1]
+tr$tip.label[4]
+```
+
+`rotl` provides a convienence function `strip_ott_ids` to deal with these.
+
+```{r, sub}
+tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
+tr$tip.label %in% mu$ott_name
+```
+
+Ok, now the tips are together we can make a new dataset. The `phylo4d()`
+functions matches tip labels to the row names of a `data.frame`, so let's make
+a new dataset that contains just the relevant data and has row names to match
+the tree
+
+```{r phylobase}
+library(phylobase)
+mu_numeric <- mu[, c("mu", "pop.size", "genome.size")]
+rownames(mu_numeric) <- mu$ott_name
+tree_data <- phylo4d(tr, mu_numeric)
+```
+And now we can plot the data and the tree together
+
+
+```{r,  fig.width=7, fig.height=5}
+plot(tree_data)
+```
+
+## Find external data associated with studies, trees and taxa from Open Tree
+
+In the above example we looked for a tree that related species in another dataset.
+Now we will go the other way, and try to find data associated with Open Tree records
+in other databases.
+
+### Get external data from a study
+
+Let's imagine you were interested in extending or reproducing the results of a
+published study. If that study is included in Open Tree you can find it via
+`studies_find_studies` or `studies_find_trees` and retrieve the published trees
+with `get_study`. `rotl` will also help you find external. The function
+`study_external_IDs` retrieves the DOI for a given study, and uses that to
+gather some more data:
+
+```{r}
+extra_data <- try(study_external_IDs("pg_1980"), silent = TRUE)
+if (!inherits(extra_data, "try-error")) {
+  extra_data
+}
+```
+
+Here the returned object contains an `external_data_url` (in this case a link to
+the study in Treebase), a pubmed ID for the paper and a vector IDs for the
+NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
+functions to make use of these IDs within R.
+
+As an example, let's use `rentrez` to download the first two DNA seqences and
+print them.
+
+```{r}
+library(rentrez)
+seqs <- try(entrez_fetch(db = "nucleotide", id = extra_data$nucleotide_ids[1:2], rettype = "fasta"), silent = TRUE)
+
+if (inherits(seqs, "try-error")) {
+  cat("NCBI temporarily down.")
+} else {
+  cat(seqs)
+}
+```
+
+You could further process these sequences in R with the function `read.dna` from
+`ape` or save them to disk by specifying a file name with `cat`.
+
+### Find a OTT taxon in another taxonomic database
+
+It is also possible map an Open Tree taxon to a record in another taxonomic
+database. For instance, if we wanted to search for data about one of the tips of
+the sub-tree we fetched in the example above we could do so using
+`taxon_external_IDs`:
+
+```{r}
+Tt_ids <- taxon_external_IDs(mu$ott_id[2])
+Tt_ids
+```
+
+A user could then use `rgbif` to find locality records using the gbif ID or
+`rentrez` to get genetic or bibliometric data about from the NCBI's databases.
+
+
+## What next
+
+The demonstration gets you to the point of visualizing your data in a
+phylogenetic context. But there's a lot more you do with this sort of data in R.
+For instance, you could use packages like `ape`, `caper`, `phytools` and
+`mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could
+gather more data on your species using packages that connect to
+trait databases like `rfishbase`, `AntWeb` or `rnpn` which provides data from
+the US National Phenology Network. You could also use `rentrez` to find genetic
+data for each of your species, and use that data to generate branch lengths for
+the phylogeny.

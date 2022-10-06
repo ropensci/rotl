@@ -1,0 +1,251 @@
+---
+title: "Using the Open Tree synthesis in a comparative analysis"
+author: "David Winter"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
+vignette: >
+  %\VignetteIndexEntry{Using the Open Tree synthesis in a comparative analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Phylogenetic Comparative Methods
+
+The development of phylogenetic comparative methods has made phylogenies and
+important source of data in fields as diverse as ecology, genomic and medicine.
+Comparative  methods can be used to investigate patterns in the evolution of
+traits or the diversification of lineages. In other cases a phylogeny is treated
+as a "nuisance parameter", allowing with the autocorrelation created by the shared
+evolutionary history of the different species included to be controlled for.
+
+In many cases finding a tree that relates the species for which trait data are
+available is a rate-limiting step in such comparative analyses. Here we show
+how the synthetic tree provided by Open Tree of Life (and made available in R via
+`rotl`) can help to fill this gap.
+
+## A phylogenetic meta-analysis
+
+To demonstrate the use of `rotl` in a comparative analysis, we will partially
+reproduce the results of [Rutkowska _et al_ 2014](https://doi.org/10.1111/jeb.12282).
+Very briefly, this study is a meta-analysis summarising the results of multiple
+studies testing for systematic differences in the size of eggs which contain
+male and female offspring. Such a difference might mean that birds invest more
+heavily in one sex than the other.
+
+Because this study involves data from 51 different species, Rutkowska _et al_
+used a phylogenetic comparative approach to account for the shared evolutionary
+history among some of the studied-species.
+
+### Gather the data
+
+If we are going to reproduce this analysis, we will first need to gather the
+data. Thankfully, the data is available as supplementary material from the
+publisher's website. We provide a copy of this data with the package:
+
+```{r load-package}
+library(rotl)
+```
+
+
+```{r egg_data}
+## This dataset is available from the publisher's study website:
+egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
+  stringsAsFactors = FALSE
+)
+## }
+head(egg_data)
+```
+
+The most important variable in this dataset is `Zr`, which is a [normalized
+effect size](https://en.wikipedia.org/wiki/Fisher_transformation) for difference
+,in size between eggs that contain males and females. Values close to zero come
+from studies that found the sex of an egg's inhabitant had little effect in its size,
+while large positive or negative values correspond to studies with substantial
+sex biases (towards males and females respectively). Since this is a
+meta-analysis we should produce the classic [funnel plot](https://en.wikipedia.org/wiki/Funnel_plot)
+with effects-size on the y-axis and precision (the inverse of the sample
+standard error) on the x-axis. Here we calculate precision from the sample
+variance (`Vzr`):
+
+```{r eggs_in_a_funnel, fig.width=6, fig.height=3}
+plot(1 / sqrt(egg_data$VZr), egg_data$Zr,
+  pch = 16,
+  ylab = "Effect size (Zr)",
+  xlab = "Precision (1/SE)",
+  main = "Effect sizes for sex bias in egg size among 51 brid species"
+)
+```
+
+In order to use this data later on we need to first convert it to a standard
+`data.frame`. We can also convert the `animal` column (the species names) to
+lower case, and remove the underscores in their names, which will make it easier to match names later on:
+
+```{r, clean_eggs}
+egg_data <- as.data.frame(egg_data)
+## Convert taxon names to lower case
+egg_data$animal <- tolower(egg_data$animal)
+## Let's remove the underscores (_) from the taxon names
+egg_data$animal <- gsub("_", " ", egg_data$animal)
+```
+### Find the species in OTT
+
+We can use the OTL synthesis tree to relate these species. To do so we first need to
+find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
+Taxonomic Name Resolution Service function `tnrs_match_names`:
+
+```{r birds}
+taxa <- tnrs_match_names(unique(egg_data$animal), context = "Animals")
+head(taxa)
+```
+
+All of these species are in OTT, but a few of them go by different names in the
+Open Tree than we have in our data set. Because the tree `rotl` fetches
+will have Open Tree names, we need to create a named vector that maps the names
+we have for each species to the names Open Tree uses for them:
+
+
+```{r bird_map}
+taxon_map <- structure(taxa$search_string, names = taxa$unique_name)
+```
+
+Now we can use this map to retrieve "data set names" from "OTT names":
+
+
+```{r odd_duck}
+taxon_map["Anser caerulescens"]
+```
+
+### Get a tree
+
+Now we can get the tree. There are really too many tips here to show nicely, so
+we will leave them out of this plot
+
+```{r birds_in_a_tree, fig.width=5, fig.height=5, fig.align='center'}
+tr <- tol_induced_subtree(ott_id(taxa)[is_in_tree(ott_id(taxa))])
+plot(tr, show.tip.label = FALSE)
+```
+
+There are a few things to note here. First, the tree has no branch lengths.
+At present this is true for the whole of the Open Tree synthetic tree. Some
+comparative methods require either branch lengths or an ultrametric tree. Before
+you can use one of those methods you will need to get a tree with branch
+lengths. You could try looking for published trees made available by the Open
+Tree with `studies_find_trees`. Alternatively, you could estimate branch lengths
+from the toplogy of a phylogeny returned by `tol_induced_subtree`, perhaps by
+downloading DNA sequences from the NCBI with `rentrez` or "hanging" the tree on
+nodes of known-age using  penalized likelihood method in `ape::chronos`.
+In this case, we will use only the topology of the tree as input to our
+comparative analysis, so we can skip these steps.
+
+Second, the tip labels contain OTT IDs, which means they will not perfectly
+match the species names in our dataset or the taxon map that we created earlier:
+
+
+```{r tip_lab}
+tr$tip.label[1:4]
+```
+
+Finally, the tree contains node labels for those nodes that match a higher taxonomic
+group, and empty character vectors (`""`) for all other nodes. Some
+comparative methods either do no expect node labels at all, or require all
+labeled nodes to have a unique name (meaning multiple "empty" labels will cause
+and error).
+
+We can deal with all these details easily. `rotl` provides  the convenience
+function `strip_ott_ids` to remove the extra information from the tip labels.
+With the IDs removed, we can use our taxon map to replace the tip labels in the tree
+with the species names from dataset.
+
+
+
+```{r clean_tips}
+otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
+tr$tip.label <- taxon_map[ otl_tips ]
+```
+
+Finally, we can remove the node labels by setting the `node.label` attribute of
+the tree to `NULL`.
+
+```{r remove_nodes}
+tr$node.label <- NULL
+```
+
+```{r match_species_tree}
+egg_data <- egg_data[egg_data$animal %in% tr$tip.label, ]
+```
+
+
+### Perform the meta-analysis
+
+
+Now we have data and a tree, and we know the names in the tree match the ones in
+the data. It's time to do the comparative analysis. Rutkowska _et al_. used `MCMCglmm`, a
+Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis,
+and we will do the same. Of course, to properly analyse these data you would
+take some care in deciding on the appropriate priors to use and inspect the
+results carefully. In this case, we are really interested in using this as a
+demonstration, so we will just run a simple model.
+
+Specifically we sill fit a model where the only variable that might explain the
+values of `Zr` is the random factor `animal`, which corresponds to the
+phylogenetic relationships among species. We also provide `Zvr` as the measurement
+error variance, effectively adding extra weight to the results of more powerful
+studies. Here's how we specify and fit that model with `MCMCglmm`:
+
+
+```{r model}
+set.seed(123)
+if (require(MCMCglmm, quietly = TRUE)) {
+  pr <- list(
+    R = list(V = 1, nu = 0.002),
+    G = list(G1 = list(V = 1, nu = 0.002))
+  )
+
+  model <- MCMCglmm(Zr ~ 1,
+    random = ~animal,
+    pedigree = tr,
+    mev = egg_data$VZr,
+    prior = pr,
+    data = egg_data,
+    verbose = FALSE
+  )
+} else {
+  model <- readRDS(file = system.file("extdata", "mcmcglmm_model.rds", package = "rotl"))
+}
+```
+
+
+Now that we have a result we can find out how much phylogenetic signal exists
+for sex-biased differences in egg-size. In a multi-level model we can use variance
+components to look at this, specifically the proportion of the total variance
+that can be explained by phylogeny is called the phylogenetic reliability, _H_. Let's
+calculate the _H_ for this model:
+
+
+```{r PhyH}
+var_comps <- colMeans(model$VCV)
+var_comps["animal"] / sum(var_comps)
+```
+
+It appears there is almost no phylogenetic signal to the data.
+The relationships among species explain much less that one percent of the total
+variance in the data. If you were wondering,  Rutkowska _et al_. report a similar result,
+even after adding more predictors to their model most of the variance in `Zr`
+was left unexplained.
+
+## What other comparative methods can I use in R?
+
+Here we have demonstrated just one comparative analysis that you might
+do in R.  There are an ever-growing number of packages that allow an
+ever-growing number of analysis to performed in R. Some "classics"
+like ancestral state reconstruction, phylogenetic independent
+contrasts and lineage through time plots are implemented in
+`ape`. Packages like `phytools`, `caper` and `diversitree` provide
+extensions to these methods.  The [CRAN Phylogenetics
+Taskview](https://github.com/bomeara/PhylogeneticsTaskView/blob/main/Phylogenetics.md)
+gives a good idea of the diversity of packages and analyses that can
+be completed in R (note that this links to a draft of the next version
+of the Taskview as it is currently unavailable from CRAN).
