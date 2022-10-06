@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.12
+Version: 3.0.13
 Authors@R: 
     c(person(given = "Francois",
              family = "Michonneau",
@@ -32,6 +32,7 @@ Depends:
 Imports:
     ape,
     assertthat (>= 0.1),
+    curl (>= 3.0.0),
     httr,
     jsonlite,
     rentrez,
@@ -47,8 +48,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.2
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: metadata, ropensci, phylogenetics,
     independant-contrasts, biodiversity
 X-schema.org-relatedLink: https://codemeta.github.io/codemetar
+RoxygenNote: 7.2.1

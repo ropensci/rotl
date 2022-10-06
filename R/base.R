@@ -1,9 +1,12 @@
-otl_url <- function(dev = FALSE) {
+otl_base_url <- function(dev = FALSE) {
   if (dev) {
-    "https://devapi.opentreeoflife.org"
-  } else {
-    "https://api.opentreeoflife.org"
+    return("devapi.opentreeoflife.org")
   }
+  "api.opentreeoflife.org"
+}
+
+otl_url <- function(dev = FALSE) {
+  paste0("https://", otl_base_url(dev))
 }
 
 otl_version <- function(version) {
@@ -14,6 +17,14 @@ otl_version <- function(version) {
   }
 }
 
+##' @importFrom rlang interrupt
+is_otl_online <- function(dev = FALSE) {
+  is_online <- !is.null(curl::nslookup(otl_base_url(dev), error = FALSE))
+  if (!is_online) {
+    message("No internet connection or the Open Tree of Life's API is down.")
+    rlang::interrupt()
+  }
+}
 
 # Take a request object and return list (if JSON) or plain text (if another
 # type)
@@ -43,18 +54,29 @@ otl_check_error <- function(cont) {
 }
 
 ## Check and parse result of query
+##' @importFrom rlang interrupt
 otl_check <- function(req) {
-  if (!req$status_code < 400) {
-    msg <- otl_parse(req)
-    stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+  early_stop <- function(m) {
+    message(m)
+    rlang::interrupt()
   }
-  desc <- otl_parse(req)
-  otl_check_error(desc)
-  desc
+  tryCatch({
+    if (!req$status_code < 400) {
+      msg <- otl_parse(req)
+      stop("HTTP failure: ", req$status_code, "\n", msg, call. = FALSE)
+    }
+    desc <- otl_parse(req)
+    otl_check_error(desc)
+    desc
+  },
+  error = function(e) early_stop(e), 
+  warning = function(w) early_stop(w)
+  )
 }
 
 ##' @importFrom httr GET
 otl_GET <- function(path, url = otl_url(...), otl_v = otl_version(...), ...) {
+  is_otl_online()
   req <- httr::GET(url, path = paste(otl_v, path, sep = "/"), ...)
   otl_check(req)
 }
@@ -62,6 +84,7 @@ otl_GET <- function(path, url = otl_url(...), otl_v = otl_version(...), ...) {
 ##' @importFrom jsonlite toJSON
 ##' @importFrom httr POST
 otl_POST <- function(path, body, url = otl_url(...), otl_v = otl_version(...), ...) {
+  is_otl_online()
   stopifnot(is.list(body))
 
   body_json <- ifelse(length(body), jsonlite::toJSON(body), "")
