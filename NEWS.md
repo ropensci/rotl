@@ -1,3 +1,11 @@
+# rotl 3.0.16
+
+## Breaking change
+
+* `tnrs_match_names` now returns the taxon with the highest matching score
+   instead of the one with the lowest OTT id (issues #127 and #143 reported by
+   @ajrominger).
+
 # rotl 3.0.14
 
 * Make sure that the package fails gracefully when there is no

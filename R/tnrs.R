@@ -85,7 +85,7 @@ tnrs_match_names <- function(names = NULL, context_name = "All life",
 
   check_tnrs(res)
 
-  match_ids <- lowest_ott_id(res)
+  match_ids <- highest_match_score(res)
 
   if (!identical(length(res[["results"]]), length(match_ids))) {
     stop(
@@ -174,6 +174,7 @@ tnrs_columns <- list(
   "search_string" = function(x) x[["search_string"]],
   "unique_name" = function(x) .tax_unique_name(x[["taxon"]]),
   "approximate_match" = function(x) x[["is_approximate_match"]],
+  "score" = function(x) x[["score"]],
   "ott_id" = function(x) .tax_ott_id(x[["taxon"]]),
   "is_synonym" = function(x) x[["is_synonym"]],
   "flags" = function(x) paste(.tax_flags(x[["taxon"]]), collapse = ", ")
@@ -256,10 +257,31 @@ lowest_ott_id <- function(rsp) {
   }, integer(1))
 }
 
+highest_match_score <- function(rsp) {
+  vapply(seq_along(rsp[["results"]]), function(x) {
+    .r <- build_summary_match(
+      res = rsp, res_id = x, match_id = NULL,
+      initial_creation = TRUE
+    )
+
+    .r <- .r[(!as.logical(.r[["is_synonym"]])) &
+               !is.na(.r[["flags"]]) &
+               .r[["flags"]] == "", ]
+
+    if (nrow(.r) > 0) {
+      which.max(.r[["score"]])
+    } else {
+      1L
+    }
+  }, integer(1))
+}
+
+
 
 clean_tnrs_summary <- function(summary_match) {
   summary_match[["approximate_match"]] <-
     convert_to_logical(summary_match[["approximate_match"]])
+  summary_match[["score"]] <- as.numeric(summary_match[["score"]])
   summary_match[["is_synonym"]] <-
     convert_to_logical(summary_match[["is_synonym"]])
   summary_match[["flags"]] <- convert_to_logical(summary_match[["flags"]])
@@ -326,10 +348,10 @@ print.tnrs_contexts <- function(x, ...) {
 ##'     taxonomic meaning in the query.
 ##' @examples
 ##' \dontrun{
-##' res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
-##' }
-##' @export
-tnrs_infer_context <- function(names = NULL, ...) {
-  res <- .tnrs_infer_context(names = names, ...)
-  return(res)
-}
+                                ##' res <- tnrs_infer_context(names=c("Stellula calliope", "Struthio camelus"))
+                                ##' }
+                                ##' @export
+                                tnrs_infer_context <- function(names = NULL, ...) {
+                                  res <- .tnrs_infer_context(names = names, ...)
+                                  return(res)
+                                }
