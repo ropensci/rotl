@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.14
+Version: 3.0.16
 Authors@R: 
     c(person(given = "Francois",
              family = "Michonneau",
