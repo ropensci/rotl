@@ -40,7 +40,7 @@ test_that("object returned by tnrs_match_names have the correct data type", {
   taxa <- tnrs_match_names(birds, do_approximate_matching = FALSE)
   expect_true(is.logical(taxa[["approximate_match"]]))
   expect_true(is.logical(taxa[["is_synonym"]]))
-  expect_equal(taxa[["score"]], 1)
+  expect_equal(sum(taxa[["score"]]), 3)
 })
 
 test_that("tnrs_match_names deals correctly with non-exact matches", {
