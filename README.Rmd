@@ -16,6 +16,7 @@ opts_knit$set(upload.fun = imgur_upload)
 [![](https://badges.ropensci.org/17_status.svg)](https://github.com/ropensci/software-review/issues/17)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
+[![R-CMD-check](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 
