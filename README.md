@@ -1,8 +1,7 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/ropensci/rotl/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/rotl/actions)
+[![R-CMD-check](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](https://www.r-pkg.org/badges/version/rotl)](https://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror
@@ -11,8 +10,6 @@ downloads](https://cranlogs.r-pkg.org/badges/rotl)](https://www.r-pkg.org/pkg/ro
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
-[![R-CMD-check](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # rotl: An R interface to Open Tree API <img src="man/figures/logo.svg" align="right" />
@@ -114,7 +111,7 @@ tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names))
 plot(tr)
 ```
 
-![](https://i.imgur.com/e8ZEinT.png)<!-- -->
+![](https://i.imgur.com/RJRnhLf.png)<!-- -->
 
 The code above can be summarized in a single pipe:
 
@@ -134,7 +131,7 @@ c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     ## mrcaott83926ott3607689, mrcaott83926ott3607732, mrcaott770295ott3607719,
     ## mrcaott770295ott3607692, Ponginae ott1082538, Hylobatidae ott166544
 
-![](https://i.imgur.com/PsrVyAM.png)<!-- -->
+![](https://i.imgur.com/6D6QvGM.png)<!-- -->
 
 ## Citation and Manuscript
 
