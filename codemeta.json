@@ -4,7 +4,7 @@
   "identifier": "rotl",
   "description": "An interface to the 'Open Tree of Life' API to retrieve phylogenetic trees, information about studies used to assemble the synthetic tree, and utilities to match taxonomic names to 'Open Tree identifiers'. The 'Open Tree of Life' aims at assembling a comprehensive phylogenetic tree for all named species.",
   "name": "rotl: Interface to the 'Open Tree of Life' API",
-  "relatedLink": "https://codemeta.github.io/codemetar",
+  "relatedLink": ["https://codemeta.github.io/codemetar", "https://CRAN.R-project.org/package=rotl"],
   "codeRepository": "https://github.com/ropensci/rotl",
   "issueTracker": "https://github.com/ropensci/rotl/issues",
   "license": "https://spdx.org/licenses/BSD-2-Clause",
@@ -235,8 +235,8 @@
     "SystemRequirements": null
   },
   "isPartOf": "https://ropensci.org",
-  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity"],
-  "fileSize": "705.122KB",
+  "keywords": ["metadata", "ropensci", "phylogenetics", "independant-contrasts", "biodiversity", "r", "rstats", "r-package", "taxonomy", "phylogeny", "peer-reviewed"],
+  "fileSize": "763.306KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -319,5 +319,14 @@
       "@id": "https://doi.org/10.5281/zenodo.3937741",
       "sameAs": "https://doi.org/10.5281/zenodo.3937741"
     }
-  ]
+  ],
+  "releaseNotes": "https://github.com/ropensci/rotl/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/rotl/blob/master/README.md",
+  "contIntegration": ["https://github.com/ropensci/rotl/actions", "https://codecov.io/github/ropensci/rotl?branch=master", "https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml"],
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/17",
+    "provider": "https://ropensci.org"
+  }
 }
