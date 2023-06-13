@@ -44,7 +44,7 @@ An invisible list of the MRCA node properties:
     \itemize{
         \item {node_id} {String. The canonical identifier of the node.}
 
-        \item {num_tips} {Numeric. The number of descendent tips.}
+        \item {num_tips} {Numeric. The number of descendant tips.}
 
         \item {taxon} {A list of taxonomic properties. Only returned if
         the queried node is a taxon. (If the node is not a taxon, a

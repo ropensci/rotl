@@ -12,6 +12,7 @@ downloads](https://cranlogs.r-pkg.org/badges/rotl)](https://www.r-pkg.org/pkg/ro
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
+[![R-CMD-check](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # rotl: An R interface to Open Tree API <img src="man/figures/logo.svg" align="right" />
@@ -58,7 +59,7 @@ There are three vignettes:
     `vignette("data_mashups", package="rotl")`.
 
 -   The vignette “Using the Open Tree Synthesis in a comparative
-    analsysis” demonstrates how you can reproduce an analysis of a
+    analysis” demonstrates how you can reproduce an analysis of a
     published paper by downloading the tree they used, and data from the
     supplementary material: `vignette("meta-analysis", package="rotl")`.
 
@@ -84,18 +85,18 @@ apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
-    ##   search_string unique_name approximate_match ott_id is_synonym          flags
-    ## 1         pongo       Pongo             FALSE 417949      FALSE               
-    ## 2           pan         Pan             FALSE 417957      FALSE sibling_higher
-    ## 3       gorilla     Gorilla             FALSE 417969      FALSE sibling_higher
-    ## 4       hoolock     Hoolock             FALSE 712902      FALSE               
-    ## 5          homo        Homo             FALSE 770309      FALSE sibling_higher
-    ##   number_matches
-    ## 1              2
-    ## 2              2
-    ## 3              1
-    ## 4              1
-    ## 5              1
+    ##   search_string unique_name approximate_match score ott_id is_synonym
+    ## 1         pongo       Pongo             FALSE     1 417949      FALSE
+    ## 2           pan         Pan             FALSE     1 417957      FALSE
+    ## 3       gorilla     Gorilla             FALSE     1 417969      FALSE
+    ## 4       hoolock     Hoolock             FALSE     1 712902      FALSE
+    ## 5          homo        Homo             FALSE     1 770309      FALSE
+    ##            flags number_matches
+    ## 1                             2
+    ## 2 sibling_higher              2
+    ## 3 sibling_higher              1
+    ## 4                             1
+    ## 5 sibling_higher              1
 
 Now we can get the tree with just those tips:
 
@@ -113,7 +114,7 @@ tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names))
 plot(tr)
 ```
 
-![](https://i.imgur.com/xTsGAz8.png)<!-- -->
+![](https://i.imgur.com/e8ZEinT.png)<!-- -->
 
 The code above can be summarized in a single pipe:
 
@@ -133,7 +134,7 @@ c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     ## mrcaott83926ott3607689, mrcaott83926ott3607732, mrcaott770295ott3607719,
     ## mrcaott770295ott3607692, Ponginae ott1082538, Hylobatidae ott166544
 
-![](https://i.imgur.com/rQmAgaa.png)<!-- -->
+![](https://i.imgur.com/PsrVyAM.png)<!-- -->
 
 ## Citation and Manuscript
 

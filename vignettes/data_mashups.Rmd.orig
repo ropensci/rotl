@@ -130,7 +130,7 @@ Now we have a tree for of our species, how can we use the tree and the data
 together?
 
 The package `phylobase` provide an object class called `phylo4d`, which is
-designed to represent a phylogeny and data associated with its tips. In oder to
+designed to represent a phylogeny and data associated with its tips. In order to
 get our tree and data into one of these objects we have to make sure the labels
 in the tree and in our data match exactly. That's not quite the case at the
 moment (tree labels have underscores and IDs appended):
@@ -140,7 +140,7 @@ mu$ott_name[1]
 tr$tip.label[4]
 ```
 
-`rotl` provides a convienence function `strip_ott_ids` to deal with these.
+`rotl` provides a convenience function `strip_ott_ids` to deal with these.
 
 ```{r, sub}
 tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
@@ -189,7 +189,7 @@ if (!inherits(extra_data, "try-error")) {
 
 Here the returned object contains an `external_data_url` (in this case a link to
 the study in Treebase), a pubmed ID for the paper and a vector IDs for the
-NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
+NCBI's nucleotide database. The packages `treebase` and `rentrez` provide
 functions to make use of these IDs within R.
 
 As an example, let's use `rentrez` to download the first two DNA seqences and

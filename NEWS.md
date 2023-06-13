@@ -88,7 +88,7 @@
 * The function `get_study_subtree` gains the argument `tip_label` to control the
   formatting of the tip labels, #90, reported by @bomeara
 * The new function `is_in_tree` takes a list of OTT ids (i.e., the output of
-  `ott_id()`), and returns a vector of logical indiicating whether they are
+  `ott_id()`), and returns a vector of logical indicating whether they are
   included in the synthetic tree (workaround #31).
 
 ## Bug fixes
@@ -130,7 +130,7 @@
   `tol_about()`, and `tol_mrca()`. Each of these methods have their own class.
 
 * New method `tax_lineage()` to extract the higher taxonomy from an object
-  returned by `taxonomy_taxon_info()` (initally suggested by Matt Pennell, #57).
+  returned by `taxonomy_taxon_info()` (initially suggested by Matt Pennell, #57).
 
 * New method `tol_lineage()` to extract the nodes towards the root of the tree.
 

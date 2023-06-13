@@ -54,7 +54,7 @@ lineage of the node from the synthetic tree.}
 
     \item {node_id} {String. The canonical identifier of the node.}
 
-    \item {num_tips} {Numeric. The number of descendent tips.}
+    \item {num_tips} {Numeric. The number of descendant tips.}
 
     \item {partial_path_of} {List. The edge below this synthetic tree node
     is compatible with the edge below each of these input tree nodes (one

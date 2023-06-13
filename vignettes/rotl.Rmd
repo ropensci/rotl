@@ -1,7 +1,7 @@
 ---
 title: "How to use rotl?"
 author: "François Michonneau"
-date: "2022-10-06"
+date: "2023-06-13"
 output:
   rmarkdown::html_vignette:
     css: vignette.css
@@ -359,9 +359,9 @@ mono_tree <- tol_subtree(ott_id = ott_id(mono_id))
 ```
 
 ```
-## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Tachyglossus ott16047, Tachyglossus aculeatus ott16038,
-## Ornithorhynchidae ott344066, Ornithorhynchus ott962391
+## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+## labels: Tachyglossus ott16047, Tachyglossus aculeatus ott16038, Ornithorhynchus
+## ott962391, Obdurodon ott3615207, Steropodon ott3615209, Teinolophos ott4119276
 ```
 
 ```r
@@ -534,27 +534,21 @@ tr <- tol_induced_subtree(ott_id(taxa))
 ```
 ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
 ## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
-## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
+## Eutheria (in Deuterostomia) ott683263, mrcaott42ott3607383, mrcaott42ott3607429,
+## mrcaott42ott3607455, mrcaott42ott72667, Boreoeutheria ott5334778, Laurasiatheria
 ## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
 ## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
 ## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sauropsida
-## ott639642, Sauria ott329823, mrcaott246ott4128455, mrcaott246ott4127082,
-## mrcaott246ott4129629, mrcaott246ott4142716, mrcaott246ott4126667,
-## mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216, mrcaott246ott4947920,
-## mrcaott246ott4127428, mrcaott246ott4126230, mrcaott246ott4127421,
-## mrcaott246ott664349, mrcaott246ott4126505, mrcaott246ott4127015,
-## mrcaott246ott4129653, mrcaott246ott4127541, mrcaott246ott4946623,
-## mrcaott246ott4126482, mrcaott246ott4128105, mrcaott246ott4127288,
-## mrcaott246ott4132146, mrcaott246ott3602822, mrcaott246ott4143599,
-## mrcaott246ott3600976, mrcaott246ott4132107, Aves ott81461, Neognathae
-## ott241846, Galliformes ott837585, mrcaott4765ott6520194, mrcaott4765ott109888,
-## mrcaott4765ott75785, mrcaott4765ott104461, mrcaott4765ott151684,
-## mrcaott4765ott54193, mrcaott4765ott49319, mrcaott4765ott3596087,
-## mrcaott4765ott415487, mrcaott4765ott51354, mrcaott4765ott53700,
-## mrcaott4765ott446490, Meleagridinae ott781250, mrcaott49310ott102705,
-## mrcaott49310ott51349, mrcaott49310ott153554, mrcaott153554ott867027,
-## Anseriformes ott241841, mrcaott30843ott714464, Anatidae ott765193,
-## mrcaott30843ott75874, mrcaott30843ott962771, mrcaott30843ott145504,
+## ott639642, Sauria ott329823, mrcaott246ott2982, mrcaott246ott31216,
+## mrcaott246ott3602822, mrcaott246ott4143599, mrcaott246ott3600976,
+## mrcaott246ott4132107, Aves ott81461, Neognathae ott241846, Galliformes
+## ott837585, mrcaott4765ott6520194, mrcaott4765ott109888, mrcaott4765ott75785,
+## mrcaott4765ott104461, mrcaott4765ott151684, mrcaott4765ott54193,
+## mrcaott4765ott49319, mrcaott4765ott3596087, mrcaott4765ott415487,
+## mrcaott4765ott51354, mrcaott4765ott53700, mrcaott4765ott446490, Meleagridinae
+## ott781250, mrcaott49310ott102705, mrcaott49310ott51349, mrcaott49310ott153554,
+## mrcaott153554ott867027, Anseriformes ott241841, mrcaott30843ott714464, Anatidae
+## ott765193, mrcaott30843ott75874, mrcaott30843ott962771, mrcaott30843ott145504,
 ## mrcaott30843ott30847, mrcaott30843ott196654, mrcaott30843ott30845
 ```
 
@@ -589,26 +583,20 @@ tr <- tol_induced_subtree(ott_id(taxa)[in_tree])
 ```
 ## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
 ## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
-## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
+## Eutheria (in Deuterostomia) ott683263, mrcaott42ott3607383, mrcaott42ott3607429,
+## mrcaott42ott3607455, mrcaott42ott72667, Boreoeutheria ott5334778, Laurasiatheria
 ## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
-## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021,
-## Artiodactyla ott622916, mrcaott1548ott21987, Suina ott916745, Suidae
-## ott730008, Sauropsida ott639642, Sauria ott329823, mrcaott246ott4128455,
-## mrcaott246ott4127082, mrcaott246ott4129629, mrcaott246ott4142716,
-## mrcaott246ott4126667, mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216,
-## mrcaott246ott4947920, mrcaott246ott4127428, mrcaott246ott4126230,
-## mrcaott246ott4127421, mrcaott246ott664349, mrcaott246ott4126505,
-## mrcaott246ott4127015, mrcaott246ott4129653, mrcaott246ott4127541,
-## mrcaott246ott4946623, mrcaott246ott4126482, mrcaott246ott4128105,
-## mrcaott246ott4127288, mrcaott246ott4132146, mrcaott246ott3602822,
-## mrcaott246ott4143599, mrcaott246ott3600976, mrcaott246ott4132107, Aves
-## ott81461, Neognathae ott241846, Galloanserae ott5839486, Galliformes
-## ott837585, mrcaott4765ott6520194, mrcaott4765ott109888, mrcaott4765ott75785,
-## mrcaott4765ott104461, mrcaott4765ott151684, mrcaott4765ott54193,
-## mrcaott4765ott49319, mrcaott4765ott3596087, mrcaott4765ott415487,
-## mrcaott4765ott51354, mrcaott4765ott53700, mrcaott4765ott446490, Meleagridinae
-## ott781250, mrcaott49310ott102705, mrcaott49310ott51349, mrcaott49310ott153554,
-## mrcaott153554ott867027
+## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
+## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sauropsida
+## ott639642, Sauria ott329823, mrcaott246ott2982, mrcaott246ott31216,
+## mrcaott246ott3602822, mrcaott246ott4143599, mrcaott246ott3600976,
+## mrcaott246ott4132107, Aves ott81461, Neognathae ott241846, Galloanserae
+## ott5839486, Galliformes ott837585, mrcaott4765ott6520194, mrcaott4765ott109888,
+## mrcaott4765ott75785, mrcaott4765ott104461, mrcaott4765ott151684,
+## mrcaott4765ott54193, mrcaott4765ott49319, mrcaott4765ott3596087,
+## mrcaott4765ott415487, mrcaott4765ott51354, mrcaott4765ott53700,
+## mrcaott4765ott446490, Meleagridinae ott781250, mrcaott49310ott102705,
+## mrcaott49310ott51349, mrcaott49310ott153554, mrcaott153554ott867027
 ```
 
 #### Using the full taxonomic names
@@ -633,20 +621,15 @@ tr <- tol_induced_subtree(ott_id(taxa))
 ```
 
 ```
-## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
-## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
-## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
-## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
-## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
-## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sus
-## ott730021, Sauropsida ott639642, Sauria ott329823, mrcaott246ott4128455,
-## mrcaott246ott4127082, mrcaott246ott4129629, mrcaott246ott4142716,
-## mrcaott246ott4126667, mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216,
-## mrcaott246ott4947920, mrcaott246ott4127428, mrcaott246ott4126230,
-## mrcaott246ott4127421, mrcaott246ott664349, mrcaott246ott4126505,
-## mrcaott246ott4127015, mrcaott246ott4129653, mrcaott246ott4127541,
-## mrcaott246ott4946623, mrcaott246ott4126482, mrcaott246ott4128105,
-## mrcaott246ott4127288, mrcaott246ott4132146, mrcaott246ott3602822,
+## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
+## with labels: Mammalia ott244265, Theria (subclass in Deuterostomia)
+## ott229558, Eutheria (in Deuterostomia) ott683263, mrcaott42ott3607383,
+## mrcaott42ott3607429, mrcaott42ott3607455, mrcaott42ott72667, Boreoeutheria
+## ott5334778, Laurasiatheria ott392223, mrcaott1548ott4697, mrcaott1548ott6790,
+## mrcaott1548ott3607484, mrcaott1548ott4942380, mrcaott1548ott4942547,
+## mrcaott1548ott3021, Artiodactyla ott622916, mrcaott1548ott21987, Suina
+## ott916745, Suidae ott730008, Sus ott730021, Sauropsida ott639642, Sauria
+## ott329823, mrcaott246ott2982, mrcaott246ott31216, mrcaott246ott3602822,
 ## mrcaott246ott4143599, mrcaott246ott3600976, mrcaott246ott4132107, Aves
 ## ott81461, Neognathae ott241846, Galliformes ott837585, mrcaott4765ott6520194,
 ## mrcaott4765ott109888, mrcaott4765ott75785, mrcaott4765ott104461,

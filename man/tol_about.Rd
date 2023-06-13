@@ -53,7 +53,7 @@ An invisible list of synthetic tree summary statistics:
         \itemize{
             \item {node_id} {String. The canonical identifier of the node.}
 
-            \item {num_tips} {Numeric. The number of descendent tips.}
+            \item {num_tips} {Numeric. The number of descendant tips.}
 
             \item {taxon} {A list of taxonomic properties:}
             \itemize{

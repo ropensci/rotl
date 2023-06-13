@@ -1,7 +1,7 @@
 ---
 title: "Connecting data to Open Tree trees"
 author: "David Winter"
-date: "2022-10-06"
+date: "2023-06-13"
 output:
   rmarkdown::html_vignette:
     css: vignette.css
@@ -133,52 +133,52 @@ studies_properties()
 
 ```
 ## $tree_properties
-##  [1] "ot:nearestTaxonMRCAOttId"         "ot:branchLengthTimeUnit"         
-##  [3] "xsi:type"                         "ot:MRCAOttId"                    
-##  [5] "ot:specifiedRoot"                 "ot:nearestTaxonMRCAName"         
-##  [7] "ot:nodeLabelMode"                 "edgeBySourceId"                  
-##  [9] "ntips"                            "ot:MRCAName"                     
-## [11] "tb:quality.tree"                  "tb:type.tree"                    
-## [13] "ot:nodeLabelDescription"          "ot:ottId"                        
-## [15] "ot:outGroupEdge"                  "ot:branchLengthMode"             
-## [17] "ot:ottTaxonName"                  "ot:branchLengthDescription"      
-## [19] "rootedge"                         "ot:nodeLabelTimeUnit"            
-## [21] "ot:unrootedTree"                  "label"                           
-## [23] "tb:ntax.tree"                     "ot:studyId"                      
-## [25] "tb:kind.tree"                     "meta"                            
-## [27] "ot:curatedType"                   "ot:reasonsToExcludeFromSynthesis"
-## [29] "ot:rootNodeId"                    "ot:tag"                          
-## [31] "ot:messages"                      "nodeById"                        
-## [33] "ot:inGroupClade"                 
+##  [1] "ot:specifiedRoot"                 "ot:unrootedTree"                 
+##  [3] "ot:nodeLabelTimeUnit"             "xsi:type"                        
+##  [5] "ot:MRCAName"                      "ot:nodeLabelDescription"         
+##  [7] "ot:nearestTaxonMRCAOttId"         "ot:reasonsToExcludeFromSynthesis"
+##  [9] "ot:curatedType"                   "ot:nearestTaxonMRCAName"         
+## [11] "ot:studyId"                       "ot:nodeLabelMode"                
+## [13] "rootedge"                         "nodeById"                        
+## [15] "tb:type.tree"                     "ot:branchLengthDescription"      
+## [17] "ot:messages"                      "ot:rootNodeId"                   
+## [19] "ot:inGroupClade"                  "ot:ottId"                        
+## [21] "ot:branchLengthMode"              "ot:MRCAOttId"                    
+## [23] "ot:ottTaxonName"                  "tb:quality.tree"                 
+## [25] "tb:kind.tree"                     "ot:outGroupEdge"                 
+## [27] "ntips"                            "edgeBySourceId"                  
+## [29] "label"                            "meta"                            
+## [31] "tb:ntax.tree"                     "ot:tag"                          
+## [33] "ot:branchLengthTimeUnit"         
 ## 
 ## $study_properties
-##  [1] "prism:section"                 "nexmljson"                    
-##  [3] "ot:focalCladeOTTTaxonName"     "treesById"                    
-##  [5] "prism:pageRange"               "ot:agents"                    
-##  [7] "xhtml:license"                 "xmlns"                        
-##  [9] "dc:title"                      "ot:focalClade"                
-## [11] "ot:curatorName"                "prism:volume"                 
-## [13] "prism:startingPage"            "ot:otusElementOrder"          
-## [15] "treebaseId"                    "prism:creationDate"           
-## [17] "tb:identifier.study"           "id"                           
-## [19] "nexml2json"                    "ot:comment"                   
-## [21] "skos:historyNote"              "ot:candidateTreeForSynthesis" 
-## [23] "prism:publicationDate"         "ot:notIntendedForSynthesis"   
-## [25] "prism:endingPage"              "tb:title.study"               
-## [27] "dc:publisher"                  "dc:subject"                   
-## [29] "ntrees"                        "dc:date"                      
-## [31] "ot:studyYear"                  "dcterms:bibliographicCitation"
-## [33] "ot:studyPublication"           "version"                      
-## [35] "prism:doi"                     "skos:changeNote"              
-## [37] "dc:creator"                    "ot:annotationEvents"          
-## [39] "about"                         "prism:publicationName"        
-## [41] "dc:contributor"                "ot:treesElementOrder"         
-## [43] "generator"                     "prism:modificationDate"       
-## [45] "tb:identifier.study.tb1"       "ot:taxonLinkPrefixes"         
-## [47] "ot:studyPublicationReference"  "prism:number"                 
-## [49] "ot:studyId"                    "ot:tag"                       
-## [51] "ot:dataDeposit"                "ot:messages"                  
-## [53] "otusById"
+##  [1] "tb:identifier.study.tb1"       "id"                           
+##  [3] "ot:taxonLinkPrefixes"          "ot:studyYear"                 
+##  [5] "prism:publicationName"         "dc:title"                     
+##  [7] "prism:creationDate"            "xmlns"                        
+##  [9] "skos:changeNote"               "skos:historyNote"             
+## [11] "ot:notIntendedForSynthesis"    "ot:otusElementOrder"          
+## [13] "dc:date"                       "xhtml:license"                
+## [15] "prism:startingPage"            "prism:publicationDate"        
+## [17] "ot:focalCladeOTTTaxonName"     "prism:section"                
+## [19] "prism:pageRange"               "ot:messages"                  
+## [21] "ot:studyPublicationReference"  "ot:curatorName"               
+## [23] "ot:dataDeposit"                "prism:number"                 
+## [25] "ot:agents"                     "dc:publisher"                 
+## [27] "treesById"                     "dcterms:bibliographicCitation"
+## [29] "ot:treesElementOrder"          "prism:modificationDate"       
+## [31] "tb:identifier.study"           "about"                        
+## [33] "ntrees"                        "nexmljson"                    
+## [35] "ot:comment"                    "dc:contributor"               
+## [37] "dc:creator"                    "prism:volume"                 
+## [39] "tb:title.study"                "treebaseId"                   
+## [41] "prism:endingPage"              "generator"                    
+## [43] "version"                       "ot:studyId"                   
+## [45] "ot:candidateTreeForSynthesis"  "otusById"                     
+## [47] "prism:doi"                     "dc:subject"                   
+## [49] "ot:studyPublication"           "ot:focalClade"                
+## [51] "ot:annotationEvents"           "ot:tag"                       
+## [53] "nexml2json"
 ```
 
 We have `ottIds` for our taxa, so let's use those IDs to search for trees that
@@ -230,7 +230,7 @@ studies_find_trees(property = "ot:ottId", value = as.character(ott_id(taxon_sear
 ##            match_tree_ids
 ## 1                   tree1
 ## 2                   tree1
-## 3  tree13, tree10, tree11
+## 3  tree10, tree13, tree11
 ## 4                   tree2
 ## 5                 Tr85317
 ## 6                 Tr60046
@@ -253,7 +253,7 @@ sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 ```
 
 ```
-## [1]  51  51 129  71  17  88
+## [1]  51  51 128  71  17  88
 ```
 
 OK, most of our species are not in any of the published trees available. You can
@@ -289,14 +289,14 @@ tr <- tol_induced_subtree(ott_ids = ott_in_tree)
 ## subkingdom SAR) ott47284, mrcaott295406ott523463, mrcaott295406ott523462,
 ## Amoebozoa ott1064655, mrcaott3973ott15653, mrcaott3973ott26103,
 ## mrcaott26103ott273110, mrcaott26103ott229626, Dictyostelia ott835575,
-## Dictyosteliales ott4008839, Dictyosteliaceae ott4008841, Dictyostelium
-## ott999665, Opisthokonta ott332573, Nucletmycea ott5246132, Fungi ott352914,
-## mrcaott109ott3465, mrcaott109ott67172, mrcaott109ott1423, mrcaott109ott9352,
-## h2007-2 ott5576447, h2007-1 ott5584405, Dikarya ott656316, Saccharomycetales
-## ott4085960, Saccharomycetaceae ott989994, Saccharomyces ott908546,
-## Schizosaccharomycetes ott921286, Schizosaccharomycetidae ott5670481,
-## Schizosaccharomycetales ott508517, Schizosaccharomycetaceae ott990009,
-## Schizosaccharomyces ott990008
+## mrcaott26103ott59686, Dictyosteliales ott4008839, Dictyosteliaceae ott4008841,
+## Dictyostelium ott999665, Opisthokonta ott332573, Nucletmycea ott5246132,
+## Fungi ott352914, mrcaott109ott3465, mrcaott109ott67172, mrcaott109ott1423,
+## mrcaott109ott69881, mrcaott109ott55157, mrcaott109ott9352, h2007-1 ott5584405,
+## Dikarya ott656316, mrcaott235ott1053, Saccharomycetales ott4085960,
+## Saccharomycetaceae ott989994, Saccharomyces ott908546, Schizosaccharomycetes
+## ott921286, Schizosaccharomycetidae ott5670481, Schizosaccharomycetales
+## ott508517, Schizosaccharomycetaceae ott990009, Schizosaccharomyces ott990008
 ```
 
 ```r
@@ -311,7 +311,7 @@ Now we have a tree for of our species, how can we use the tree and the data
 together?
 
 The package `phylobase` provide an object class called `phylo4d`, which is
-designed to represent a phylogeny and data associated with its tips. In oder to
+designed to represent a phylogeny and data associated with its tips. In order to
 get our tree and data into one of these objects we have to make sure the labels
 in the tree and in our data match exactly. That's not quite the case at the
 moment (tree labels have underscores and IDs appended):
@@ -334,7 +334,7 @@ tr$tip.label[4]
 ## [1] "Dictyostelium_discoideum_ott160850"
 ```
 
-`rotl` provides a convienence function `strip_ott_ids` to deal with these.
+`rotl` provides a convenience function `strip_ott_ids` to deal with these.
 
 
 ```r
@@ -401,7 +401,7 @@ if (!inherits(extra_data, "try-error")) {
 
 Here the returned object contains an `external_data_url` (in this case a link to
 the study in Treebase), a pubmed ID for the paper and a vector IDs for the
-NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
+NCBI's nucleotide database. The packages `treebase` and `rentrez` provide
 functions to make use of these IDs within R.
 
 As an example, let's use `rentrez` to download the first two DNA seqences and

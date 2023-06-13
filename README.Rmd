@@ -65,7 +65,7 @@ There are three vignettes:
   with trees from the Open Tree of Life project by typing:
   `vignette("data_mashups", package="rotl")`.
 
-- The vignette "Using the Open Tree Synthesis in a comparative analsysis"
+- The vignette "Using the Open Tree Synthesis in a comparative analysis"
   demonstrates how you can reproduce an analysis of a published paper by
   downloading the tree they used, and data from the supplementary material:
   `vignette("meta-analysis", package="rotl")`.

@@ -58,7 +58,7 @@
 ##'         \itemize{
 ##'             \item {node_id} {String. The canonical identifier of the node.}
 ##'
-##'             \item {num_tips} {Numeric. The number of descendent tips.}
+##'             \item {num_tips} {Numeric. The number of descendant tips.}
 ##'
 ##'             \item {taxon} {A list of taxonomic properties:}
 ##'             \itemize{
@@ -205,7 +205,7 @@ source_list.tol_summary <- .source_list
 ##'     \itemize{
 ##'         \item {node_id} {String. The canonical identifier of the node.}
 ##'
-##'         \item {num_tips} {Numeric. The number of descendent tips.}
+##'         \item {num_tips} {Numeric. The number of descendant tips.}
 ##'
 ##'         \item {taxon} {A list of taxonomic properties. Only returned if
 ##'         the queried node is a taxon. (If the node is not a taxon, a
@@ -527,7 +527,7 @@ strip_ott_ids <- function(tip_labels, remove_underscores = FALSE) {
 ##'
 ##'     \item {node_id} {String. The canonical identifier of the node.}
 ##'
-##'     \item {num_tips} {Numeric. The number of descendent tips.}
+##'     \item {num_tips} {Numeric. The number of descendant tips.}
 ##'
 ##'     \item {partial_path_of} {List. The edge below this synthetic tree node
 ##'     is compatible with the edge below each of these input tree nodes (one
