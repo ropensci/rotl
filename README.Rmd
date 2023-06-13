@@ -10,7 +10,7 @@ opts_knit$set(upload.fun = imgur_upload)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/rotl/actions/workflows/R-CMD-check.yaml)
-[![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
+[![codecov.io](https://app.codecov.io/github/ropensci/rotl?branch=master)](https://app.codecov.io/github/ropensci/rotl?branch=master)
 [![](https://www.r-pkg.org/badges/version/rotl)](https://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/rotl)](https://www.r-pkg.org/pkg/rotl)
 [![](https://badges.ropensci.org/17_status.svg)](https://github.com/ropensci/software-review/issues/17)
@@ -22,7 +22,7 @@ opts_knit$set(upload.fun = imgur_upload)
 
 `rotl` is an R package to interact with the Open Tree of Life data APIs. It was
 initially developed as part of the
-[NESCENT/OpenTree/Arbor hackathon](https://blog.opentreeoflife.org/2014/06/11/apply-for-tree-for-all-a-hackathon-to-access-opentree-resources/).
+NESCENT/OpenTree/Arbor hackathon.
 
 Client libraries to interact with the Open Tree of Life API also exists for
 [Python](https://github.com/OpenTreeOfLife/pyopentree)
