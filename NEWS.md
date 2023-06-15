@@ -1,4 +1,4 @@
-# rotl 3.0.16
+# rotl 3.1.0
 
 ## Breaking change
 
