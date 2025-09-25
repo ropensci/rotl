@@ -33,68 +33,68 @@ tol_about(include_source_list = FALSE, ...)
 \value{
 An invisible list of synthetic tree summary statistics:
 
-\itemize{
+\describe{
 
-    \item {date_created} {String. The creation date of the tree.}
+    \item{date_created}{String. The creation date of the tree.}
 
-    \item {num_source_studies} {Integer. The number of studies
+    \item{num_source_studies}{Integer. The number of studies
     (publications)used as sources.}
 
-    \item {num_source_trees} {The number of trees used as sources
+    \item{num_source_trees}{The number of trees used as sources
     (may be >1 tree per study).}
 
-    \item {taxonomy_version} {The Open Tree Taxonomy version used
+    \item{taxonomy_version}{The Open Tree Taxonomy version used
     as a source.}
 
-    \item {filtered_flags} {List. Taxa with these taxonomy flags were
+    \item{filtered_flags}{List. Taxa with these taxonomy flags were
     not used in construction of the tree.}
 
-    \item {root} {List. Describes the root node:}
-        \itemize{
-            \item {node_id} {String. The canonical identifier of the node.}
+    \item{root}{List. Describes the root node:}
+        \describe{
+            \item{node_id}{String. The canonical identifier of the node.}
 
-            \item {num_tips} {Numeric. The number of descendant tips.}
+            \item{num_tips}{Numeric. The number of descendant tips.}
 
-            \item {taxon} {A list of taxonomic properties:}
-            \itemize{
-                \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ott_id).}
+            \item{taxon}{A list of taxonomic properties:}
+            \describe{
+                \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ott_id).}
 
-                \item {name} {String. The taxonomic name of the queried node.}
+                \item{name}{String. The taxonomic name of the queried node.}
 
-                \item {unique_name} {String. The string that uniquely
+                \item{unique_name}{String. The string that uniquely
                 identifies the taxon in OTT.}
 
-                \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+                \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 
-                \item {tax_sources} {List. A list of identifiers for taxonomic
+                \item{tax_sources}{List. A list of identifiers for taxonomic
                 sources, such as other taxonomies, that define taxa judged
                 equivalent to this taxon.}
             }
         }
 
-    \item {source_list} {List. Present only if
+    \item{source_list}{List. Present only if
     \code{include_source_list} is \code{TRUE}. The sourceid
     ordering is the precedence order for synthesis, with
     relationships from earlier trees in the list having priority
     over those from later trees in the list. See
     \code{source_id_map} below for study details.}
 
-    \item {source_id_map} {Named list of lists. Present only if
+    \item{source_id_map}{Named list of lists. Present only if
     \code{include_source_list} is \code{TRUE}. Names correspond to
     the \sQuote{sourceids} used in \code{source_list}
     above. Source trees will have the following properties:}
 
-        \itemize{
-            \item {git_sha} {String. The git SHA identifying a particular source
+        \describe{
+            \item{git_sha}{String. The git SHA identifying a particular source
             version.}
 
-            \item {tree_id} {String. The tree id associated with the study id used.}
+            \item{tree_id}{String. The tree id associated with the study id used.}
 
-            \item {study_id} {String. The study identifier. Will typically include
+            \item{study_id}{String. The study identifier. Will typically include
             a prefix ("pg_" or "ot_").}
         }
 
-    \item {synth_id} {The unique string for this version of the tree.}
+    \item{synth_id}{The unique string for this version of the tree.}
 }
 }
 \description{

@@ -5,7 +5,7 @@
 \alias{list_trees.matched_studies}
 \title{List trees ids in objects returned by
 \code{\link{studies_find_studies}} and
-\code{\link{studies_find_trees}}.}
+\code{\link{studies_find_trees}}}
 \usage{
 list_trees(matched_studies, ...)
 

@@ -50,33 +50,33 @@ lineage of the node from the synthetic tree.}
 \code{tol_node_info} returns an invisible list of summary
     information about the queried node:
 
-\itemize{
+\describe{
 
-    \item {node_id} {String. The canonical identifier of the node.}
+    \item{node_id}{String. The canonical identifier of the node.}
 
-    \item {num_tips} {Numeric. The number of descendant tips.}
+    \item{num_tips}{Numeric. The number of descendant tips.}
 
-    \item {partial_path_of} {List. The edge below this synthetic tree node
+    \item{partial_path_of}{List. The edge below this synthetic tree node
     is compatible with the edge below each of these input tree nodes (one
     per tree). Each returned element is reported as sourceid:nodeid.}
 
-   \item {query} { The node id that resolved to this node. This can differ
+   \item{query}{ The node id that resolved to this node. This can differ
    from the node_id field if the query id is not canonical. }
 
-    \item {taxon} {A list of taxonomic properties. Only returned if
+    \item{taxon}{A list of taxonomic properties. Only returned if
     the queried node is a taxon. Each source has:}
 
-        \itemize{
-            \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+        \describe{
+            \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ottID).}
 
-            \item {name} {String. The taxonomic name of the queried node.}
+            \item{name}{String. The taxonomic name of the queried node.}
 
-            \item {unique_name} {String. The string that uniquely
+            \item{unique_name}{String. The string that uniquely
             identifies the taxon in OTT.}
 
-            \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+            \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 
-            \item {tax_sources} {List. A list of identifiers for taxonomic
+            \item{tax_sources}{List. A list of identifiers for taxonomic
             sources, such as other taxonomies, that define taxa judged
             equivalent to this taxon.}
         }
@@ -85,17 +85,17 @@ lineage of the node from the synthetic tree.}
     synthesis source trees. All properties involve sourceid keys and
     nodeid values (see \code{source_id_map} below).
 
-    \item {supported_by} {List. Input tree nodes (one per tree) that support
+    \item{supported_by}{List. Input tree nodes (one per tree) that support
     this synthetic tree node. Each returned element is reported as
     sourceid:nodeid.}
 
-    \item {terminal} {List. Input tree nodes (one per tree) that are
+    \item{terminal}{List. Input tree nodes (one per tree) that are
     equivalent to this synthetic tree node (via an exact mapping, or the
     input tree terminal may be the only terminal descended from this
     synthetic tree node. Each returned element is reported as
     sourceid:nodeid.}
 
-    \item {conflicts_with} {Named list of lists. Names correspond to
+    \item{conflicts_with}{Named list of lists. Names correspond to
     sourceid keys. Each list contains input tree node ids (one or more per
     tree) that conflict with this synthetic node.}
   }

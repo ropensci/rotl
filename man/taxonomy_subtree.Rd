@@ -30,21 +30,21 @@ function. Ignored unless \code{output_format} is set to
 \code{\link{rotl}} package documentation).}
 }
 \value{
-If the \code{file} argument is missing: \itemize{
+If the \code{file} argument is missing: \describe{
 
-    \item{\dQuote{\code{taxa}}} { a list of the taxa names
+    \item{\dQuote{\code{taxa}}}{ a list of the taxa names
     (species) in slot \code{tip_label}, and higher-level taxonomy
     (e.g., families, genera) in slot \code{edge_label}, descending
     from the taxa corresponding to the \code{ott_id} provided. }
 
-    \item{\dQuote{\code{newick}}} { a character vector containing
+    \item{\dQuote{\code{newick}}}{ a character vector containing
     the newick formatted string corresponding to the taxonomic
     subtree for the \code{ott_id} provided. }
 
-    \item{\dQuote{\code{phylo}}} { an object of the class
+    \item{\dQuote{\code{phylo}}}{ an object of the class
     \code{phylo} from the \code{ape} package. }
 
-    \item{\dQuote{\code{raw}}} { the direct output from the API,
+    \item{\dQuote{\code{raw}}}{ the direct output from the API,
     i.e., a list with an element named \sQuote{newick} that
     contains the subtree as a newick formatted string. }
 

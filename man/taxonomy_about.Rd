@@ -12,19 +12,19 @@ taxonomy_about(...)
 }
 \value{
 A list with the following properties:
-\itemize{
+\describe{
 
-    \item {weburl} {String. The release page for this version
+    \item{weburl}{String. The release page for this version
     of the taxonomy.}
 
-    \item {author} {String. The author string.}
+    \item{author}{String. The author string.}
 
-    \item {name} {String. The name of the taxonomy.}
+    \item{name}{String. The name of the taxonomy.}
 
-    \item {source} {String. The full identifying information for
+    \item{source}{String. The full identifying information for
     this version of the taxonomy.}
 
-    \item {version} {String. The version number of the taxonomy.}
+    \item{version}{String. The version number of the taxonomy.}
 }
 }
 \description{

@@ -38,19 +38,19 @@ be found (numeric).}
 function}
 }
 \value{
-\itemize{
+\describe{
 
-    \item{\code{taxonomy_mrca}} { returns a list about the
+    \item{\code{taxonomy_mrca}}{ returns a list about the
     taxonomic information relating to the MRCA for the ott_ids
     provided. }
 
-    \item{\code{tax_rank}} { returns a character vector of the
+    \item{\code{tax_rank}}{ returns a character vector of the
     taxonomic rank for the MRCA. }
 
-    \item{\code{tax_name}} { returns a character vector the
+    \item{\code{tax_name}}{ returns a character vector the
     Open Tree Taxonomy name for the MRCA. }
 
-    \item{\code{ott_id}} { returns a numeric vector of the ott id
+    \item{\code{ott_id}}{ returns a numeric vector of the ott id
     for the MRCA. }
 
 }
