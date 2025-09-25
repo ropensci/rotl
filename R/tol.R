@@ -38,68 +38,68 @@
 ##'
 ##' @return An invisible list of synthetic tree summary statistics:
 ##'
-##' \itemize{
+##' \describe{
 ##'
-##'     \item {date_created} {String. The creation date of the tree.}
+##'     \item{date_created}{String. The creation date of the tree.}
 ##'
-##'     \item {num_source_studies} {Integer. The number of studies
+##'     \item{num_source_studies}{Integer. The number of studies
 ##'     (publications)used as sources.}
 ##'
-##'     \item {num_source_trees} {The number of trees used as sources
+##'     \item{num_source_trees}{The number of trees used as sources
 ##'     (may be >1 tree per study).}
 ##'
-##'     \item {taxonomy_version} {The Open Tree Taxonomy version used
+##'     \item{taxonomy_version}{The Open Tree Taxonomy version used
 ##'     as a source.}
 ##'
-##'     \item {filtered_flags} {List. Taxa with these taxonomy flags were
+##'     \item{filtered_flags}{List. Taxa with these taxonomy flags were
 ##'     not used in construction of the tree.}
 ##'
-##'     \item {root} {List. Describes the root node:}
-##'         \itemize{
-##'             \item {node_id} {String. The canonical identifier of the node.}
+##'     \item{root}{List. Describes the root node:}
+##'         \describe{
+##'             \item{node_id}{String. The canonical identifier of the node.}
 ##'
-##'             \item {num_tips} {Numeric. The number of descendant tips.}
+##'             \item{num_tips}{Numeric. The number of descendant tips.}
 ##'
-##'             \item {taxon} {A list of taxonomic properties:}
-##'             \itemize{
-##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ott_id).}
+##'             \item{taxon}{A list of taxonomic properties:}
+##'             \describe{
+##'                 \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ott_id).}
 ##'
-##'                 \item {name} {String. The taxonomic name of the queried node.}
+##'                 \item{name}{String. The taxonomic name of the queried node.}
 ##'
-##'                 \item {unique_name} {String. The string that uniquely
+##'                 \item{unique_name}{String. The string that uniquely
 ##'                 identifies the taxon in OTT.}
 ##'
-##'                 \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'                 \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 ##'
-##'                 \item {tax_sources} {List. A list of identifiers for taxonomic
+##'                 \item{tax_sources}{List. A list of identifiers for taxonomic
 ##'                 sources, such as other taxonomies, that define taxa judged
 ##'                 equivalent to this taxon.}
 ##'             }
 ##'         }
 ##'
-##'     \item {source_list} {List. Present only if
+##'     \item{source_list}{List. Present only if
 ##'     \code{include_source_list} is \code{TRUE}. The sourceid
 ##'     ordering is the precedence order for synthesis, with
 ##'     relationships from earlier trees in the list having priority
 ##'     over those from later trees in the list. See
 ##'     \code{source_id_map} below for study details.}
 ##'
-##'     \item {source_id_map} {Named list of lists. Present only if
+##'     \item{source_id_map}{Named list of lists. Present only if
 ##'     \code{include_source_list} is \code{TRUE}. Names correspond to
 ##'     the \sQuote{sourceids} used in \code{source_list}
 ##'     above. Source trees will have the following properties:}
 ##'
-##'         \itemize{
-##'             \item {git_sha} {String. The git SHA identifying a particular source
+##'         \describe{
+##'             \item{git_sha}{String. The git SHA identifying a particular source
 ##'             version.}
 #'
-##'             \item {tree_id} {String. The tree id associated with the study id used.}
+##'             \item{tree_id}{String. The tree id associated with the study id used.}
 ##'
-##'             \item {study_id} {String. The study identifier. Will typically include
+##'             \item{study_id}{String. The study identifier. Will typically include
 ##'             a prefix ("pg_" or "ot_").}
 ##'         }
 ##'
-##'     \item {synth_id} {The unique string for this version of the tree.}
+##'     \item{synth_id}{The unique string for this version of the tree.}
 ##' }
 ##' @seealso \code{\link{source_list}} to explore the list of studies
 ##'     used in the synthetic tree (see example).
@@ -198,30 +198,30 @@ source_list.tol_summary <- .source_list
 ##'
 ##' @return An invisible list of the MRCA node properties:
 ##'
-##' \itemize{
+##' \describe{
 ##'
-##'     \item {mrca} {List of node properties.}
+##'     \item{mrca}{List of node properties.}
 ##'
-##'     \itemize{
-##'         \item {node_id} {String. The canonical identifier of the node.}
+##'     \describe{
+##'         \item{node_id}{String. The canonical identifier of the node.}
 ##'
-##'         \item {num_tips} {Numeric. The number of descendant tips.}
+##'         \item{num_tips}{Numeric. The number of descendant tips.}
 ##'
-##'         \item {taxon} {A list of taxonomic properties. Only returned if
+##'         \item{taxon}{A list of taxonomic properties. Only returned if
 ##'         the queried node is a taxon. (If the node is not a taxon, a
 ##'         \code{nearest_taxon} list is returned (see below)).}
 ##'
-##'             \itemize{
-##'                 \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'             \describe{
+##'                 \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ottID).}
 ##'
-##'                 \item {name} {String. The taxonomic name of the queried node.}
+##'                 \item{name}{String. The taxonomic name of the queried node.}
 ##'
-##'                 \item {unique_name} {String. The string that uniquely
+##'                 \item{unique_name}{String. The string that uniquely
 ##'                 identifies the taxon in OTT.}
 ##'
-##'                 \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'                 \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 ##'
-##'                \item {tax_sources} {List. A list of identifiers for taxonomic
+##'                \item{tax_sources}{List. A list of identifiers for taxonomic
 ##'                 sources, such as other taxonomies, that define taxa judged
 ##'                 equivalent to this taxon.}
 ##'             }
@@ -231,54 +231,54 @@ source_list.tol_summary <- .source_list
 ##'         nodeid values (see \code{source_id_map} below) Not all properties are
 ##'         are present for every node.
 ##'
-##'         \item {partial_path_of} {List. The edge below this synthetic tree node
+##'         \item{partial_path_of}{List. The edge below this synthetic tree node
 ##'         is compatible with the edge below each of these input tree nodes (one
 ##'         per tree). Each returned element is reported as sourceid:nodeid.}
 ##'
-##'         \item {supported_by} {List. Input tree nodes (one per tree) that support
+##'         \item{supported_by}{List. Input tree nodes (one per tree) that support
 ##'         this synthetic tree node. Each returned element is reported as
 ##'         sourceid:nodeid.}
 ##'
-##'         \item {terminal} {List. Input tree nodes (one per tree) that are equivalent
+##'         \item{terminal}{List. Input tree nodes (one per tree) that are equivalent
 ##'         to this synthetic tree node (via an exact mapping, or the input tree
 ##'         terminal may be the only terminal descended from this synthetic tree node.
 ##'         Each returned element is reported as sourceid:nodeid.}
 ##'
-##'         \item {conflicts_with} {Named list of lists. Names correspond to
+##'         \item{conflicts_with}{Named list of lists. Names correspond to
 ##'         sourceid keys. Each list contains input tree node ids (one or more per tree)
 ##'         that conflict with this synthetic node.}
 ##'     }
 ##'
-##'     \item {nearest_taxon} {A list of taxonomic properties of the nearest rootward
+##'     \item{nearest_taxon}{A list of taxonomic properties of the nearest rootward
 ##'     taxon node to the MRCA node. Only returned if the MRCA node is a not taxon
 ##'     (otherwise the \code{taxon} list above is returned).}
 ##'
-##'         \itemize{
-##'             \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'         \describe{
+##'             \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ottID).}
 ##'
-##'             \item {name} {String. The taxonomic name of the queried node.}
+##'             \item{name}{String. The taxonomic name of the queried node.}
 ##'
-##'             \item {unique_name} {String. The string that uniquely
+##'             \item{unique_name}{String. The string that uniquely
 ##'             identifies the taxon in OTT.}
 ##'
-##'             \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'             \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 ##'
-##'            \item {tax_sources} {List. A list of identifiers for taxonomic
+##'            \item{tax_sources}{List. A list of identifiers for taxonomic
 ##'             sources, such as other taxonomies, that define taxa judged
 ##'             equivalent to this taxon.}
 ##'         }
 ##'
-##'     \item {source_id_map} {Named list of lists. Names correspond to the
+##'     \item{source_id_map}{Named list of lists. Names correspond to the
 ##'     sourceid keys used in the support/conflict properties of the \code{mrca}
 ##'     list above. Source trees will have the following properties:}
 ##'
-##'         \itemize{
-##'             \item {git_sha} {The git SHA identifying a particular source
+##'         \describe{
+##'             \item{git_sha}{The git SHA identifying a particular source
 ##'             version.}
 ##'
-##'             \item {tree_id} {The tree id associated with the study id used.}
+##'             \item{tree_id}{The tree id associated with the study id used.}
 ##'
-##'             \item {study_id} {The study identifier. Will typically include
+##'             \item{study_id}{The study identifier. Will typically include
 ##'             a prefix ("pg_" or "ot_").}
 ##'         }
 ##'     The only sourceid that does not correspond to a source tree is the taxonomy,
@@ -523,33 +523,33 @@ strip_ott_ids <- function(tip_labels, remove_underscores = FALSE) {
 ##' @return \code{tol_node_info} returns an invisible list of summary
 ##'     information about the queried node:
 ##'
-##' \itemize{
+##' \describe{
 ##'
-##'     \item {node_id} {String. The canonical identifier of the node.}
+##'     \item{node_id}{String. The canonical identifier of the node.}
 ##'
-##'     \item {num_tips} {Numeric. The number of descendant tips.}
+##'     \item{num_tips}{Numeric. The number of descendant tips.}
 ##'
-##'     \item {partial_path_of} {List. The edge below this synthetic tree node
+##'     \item{partial_path_of}{List. The edge below this synthetic tree node
 ##'     is compatible with the edge below each of these input tree nodes (one
 ##'     per tree). Each returned element is reported as sourceid:nodeid.}
 ##'
-##'    \item {query} { The node id that resolved to this node. This can differ
+##'    \item{query}{ The node id that resolved to this node. This can differ
 ##'    from the node_id field if the query id is not canonical. }
 ##'
-##'     \item {taxon} {A list of taxonomic properties. Only returned if
+##'     \item{taxon}{A list of taxonomic properties. Only returned if
 ##'     the queried node is a taxon. Each source has:}
 ##'
-##'         \itemize{
-##'             \item {ott_id} {Numeric. The OpenTree Taxonomy ID (ottID).}
+##'         \describe{
+##'             \item{ott_id}{Numeric. The OpenTree Taxonomy ID (ottID).}
 ##'
-##'             \item {name} {String. The taxonomic name of the queried node.}
+##'             \item{name}{String. The taxonomic name of the queried node.}
 ##'
-##'             \item {unique_name} {String. The string that uniquely
+##'             \item{unique_name}{String. The string that uniquely
 ##'             identifies the taxon in OTT.}
 ##'
-##'             \item {rank} {String. The taxonomic rank of the taxon in OTT.}
+##'             \item{rank}{String. The taxonomic rank of the taxon in OTT.}
 ##'
-##'             \item {tax_sources} {List. A list of identifiers for taxonomic
+##'             \item{tax_sources}{List. A list of identifiers for taxonomic
 ##'             sources, such as other taxonomies, that define taxa judged
 ##'             equivalent to this taxon.}
 ##'         }
@@ -558,17 +558,17 @@ strip_ott_ids <- function(tip_labels, remove_underscores = FALSE) {
 ##'     synthesis source trees. All properties involve sourceid keys and
 ##'     nodeid values (see \code{source_id_map} below).
 ##'
-##'     \item {supported_by} {List. Input tree nodes (one per tree) that support
+##'     \item{supported_by}{List. Input tree nodes (one per tree) that support
 ##'     this synthetic tree node. Each returned element is reported as
 ##'     sourceid:nodeid.}
 ##'
-##'     \item {terminal} {List. Input tree nodes (one per tree) that are
+##'     \item{terminal}{List. Input tree nodes (one per tree) that are
 ##'     equivalent to this synthetic tree node (via an exact mapping, or the
 ##'     input tree terminal may be the only terminal descended from this
 ##'     synthetic tree node. Each returned element is reported as
 ##'     sourceid:nodeid.}
 ##'
-##'     \item {conflicts_with} {Named list of lists. Names correspond to
+##'     \item{conflicts_with}{Named list of lists. Names correspond to
 ##'     sourceid keys. Each list contains input tree node ids (one or more per
 ##'     tree) that conflict with this synthetic node.}
 ##'   }

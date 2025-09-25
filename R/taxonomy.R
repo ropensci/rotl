@@ -9,19 +9,19 @@
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
 ##' @return A list with the following properties:
-##' \itemize{
+##' \describe{
 ##'
-##'     \item {weburl} {String. The release page for this version
+##'     \item{weburl}{String. The release page for this version
 ##'     of the taxonomy.}
 ##'
-##'     \item {author} {String. The author string.}
+##'     \item{author}{String. The author string.}
 ##'
-##'     \item {name} {String. The name of the taxonomy.}
+##'     \item{name}{String. The name of the taxonomy.}
 ##'
-##'     \item {source} {String. The full identifying information for
+##'     \item{source}{String. The full identifying information for
 ##'     this version of the taxonomy.}
 ##'
-##'     \item {version} {String. The version number of the taxonomy.}
+##'     \item{version}{String. The version number of the taxonomy.}
 ##' }
 ##' @examples
 ##' \dontrun{
@@ -112,21 +112,21 @@ taxonomy_taxon_info <- function(ott_ids, include_children = FALSE,
 ##' @param file the file name where to save the output of the
 ##'     function. Ignored unless \code{output_format} is set to
 ##'     \dQuote{\code{phylo}}.
-##' @return If the \code{file} argument is missing: \itemize{
+##' @return If the \code{file} argument is missing: \describe{
 ##'
-##'     \item{\dQuote{\code{taxa}}} { a list of the taxa names
+##'     \item{\dQuote{\code{taxa}}}{ a list of the taxa names
 ##'     (species) in slot \code{tip_label}, and higher-level taxonomy
 ##'     (e.g., families, genera) in slot \code{edge_label}, descending
 ##'     from the taxa corresponding to the \code{ott_id} provided. }
 ##'
-##'     \item{\dQuote{\code{newick}}} { a character vector containing
+##'     \item{\dQuote{\code{newick}}}{ a character vector containing
 ##'     the newick formatted string corresponding to the taxonomic
 ##'     subtree for the \code{ott_id} provided. }
 ##'
-##'     \item{\dQuote{\code{phylo}}} { an object of the class
+##'     \item{\dQuote{\code{phylo}}}{ an object of the class
 ##'     \code{phylo} from the \code{ape} package. }
 ##'
-##'     \item{\dQuote{\code{raw}}} { the direct output from the API,
+##'     \item{\dQuote{\code{raw}}}{ the direct output from the API,
 ##'     i.e., a list with an element named \sQuote{newick} that
 ##'     contains the subtree as a newick formatted string. }
 ##'
@@ -183,19 +183,19 @@ taxonomy_subtree <- function(ott_id = NULL,
 ##'     function
 ##' @param ... additional arguments to customize the API request (see
 ##'     \code{\link{rotl}} package documentation).
-##' @return \itemize{
+##' @return \describe{
 ##'
-##'     \item{\code{taxonomy_mrca}} { returns a list about the
+##'     \item{\code{taxonomy_mrca}}{ returns a list about the
 ##'     taxonomic information relating to the MRCA for the ott_ids
 ##'     provided. }
 ##'
-##'     \item{\code{tax_rank}} { returns a character vector of the
+##'     \item{\code{tax_rank}}{ returns a character vector of the
 ##'     taxonomic rank for the MRCA. }
 ##'
-##'     \item{\code{tax_name}} { returns a character vector the
+##'     \item{\code{tax_name}}{ returns a character vector the
 ##'     Open Tree Taxonomy name for the MRCA. }
 ##'
-##'     \item{\code{ott_id}} { returns a numeric vector of the ott id
+##'     \item{\code{ott_id}}{ returns a numeric vector of the ott id
 ##'     for the MRCA. }
 ##'
 ##' }

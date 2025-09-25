@@ -3,7 +3,7 @@
 
 ##' List trees ids in objects returned by
 ##' \code{\link{studies_find_studies}} and
-##' \code{\link{studies_find_trees}}.
+##' \code{\link{studies_find_trees}}
 ##'
 ##' \code{list_trees} returns all trees associated with a particular
 ##' study when used on an object returned by
