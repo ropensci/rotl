@@ -43,29 +43,27 @@ named-list containing the metadata associated with the
     study requested
 }
 \description{
-Retrieve metadata about a study in the Open Tree of Life datastore.
+Retrieve metadata about a study in the Open Tree of Life datastore
 }
 \details{
 \code{get_study_meta} returns a long list of attributes for the
 studies that are contributing to the synthetic tree. To help with
 the extraction of relevant information from this list, several
-helper functions exists: \itemize{
+helper functions exists: \describe{
 
-  \item {get_tree_ids} { The identifiers of the trees
-  associated with the study }
+  \item{get_tree_ids}{The identifiers of the trees
+  associated with the study.}
 
-  \item {get_publication} { The citation information of the
+  \item{get_publication}{The citation information of the
   publication for the study. The DOI (or URL) for the study is
   available as an attribute to the returned object (i.e.,
-  \code{attr(object, "DOI")} ) }.
+  \code{attr(object, "DOI")} ).}
 
-  \item {candidate_for_synth} { The identifier of the tree(s) from
+  \item{candidate_for_synth}{The identifier of the tree(s) from
   the study used in the synthetic tree. This is a subset of the
-  result of \code{get_tree_ids}.
+  result of \code{get_tree_ids}.}
 
-  \item {get_study_year} { The year of publication of the study. }
-
-  }
+  \item{get_study_year}{The year of publication of the study.}
 }
 }
 \examples{
