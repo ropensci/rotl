@@ -15,15 +15,15 @@
 ##'     All functions that use API end points can take 2 arguments to
 ##'     customize the API call and are passed as \code{...} arguments.
 ##'
-##'     \itemize{
+##'     \describe{
 ##'
-##'     \item{ \code{otl_v} } { This argument controls which version
+##'     \item{ \code{otl_v}}{This argument controls which version
 ##'     of the API your call is using. The default value for this
 ##'     argument is a call to the non-exported function
 ##'     \code{otl_version()} which returns the current version of the
 ##'     Open Tree of Life APIs (v2).}
 ##'
-##'     \item{ \code{dev_url} } { This argument controls whether to use
+##'     \item{ \code{dev_url}}{This argument controls whether to use
 ##'     the development version of the API. By default, \code{dev_url}
 ##'     is set to \code{FALSE}, using \code{dev_url = TRUE} in your
 ##'     function calls will use the development version.}
@@ -44,6 +44,5 @@
 ##'     Interoperability Phylogenetic group, and Arbor.
 ##'
 ##' @name rotl
-##' @docType package
 ##' @import ape
 NULL
