@@ -38,7 +38,7 @@ study_external_IDs <- function(study_id) {
     external_data_url = data_deposit
   )
   if (!is.null(pmid)) {
-    # res$popset_ids <- entrez_link(dbfrom = "pubmed", db = "popset", id = pmid)[["links"]][["pubmed_popset"]]
+    res$popset_ids <- entrez_link(dbfrom = "pubmed", db = "popset", id = pmid)[["links"]][["pubmed_popset"]]
     res$nucleotide_ids <- entrez_link(dbfrom = "pubmed", db = "nuccore", id = pmid)[["links"]][["pubmed_nuccore"]]
   }
   structure(res, class = c("study_external_data", "list"), id = study_id)
