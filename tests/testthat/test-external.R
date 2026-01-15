@@ -32,6 +32,7 @@ test_that("We can handle studies with missing external IDs", {
 
 test_that("The print functions for external data objects work", {
   skip_on_cran()
+  skip("NCBI seems to be down")
   missing_data <- study_external_IDs("ot_91")
   expect_output(print(all_data), "External data identifiers for study")
   expect_output(print(missing_data), "External data identifiers for study")
