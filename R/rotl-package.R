@@ -45,4 +45,5 @@
 ##'
 ##' @name rotl
 ##' @import ape
+"_PACKAGE"
 NULL
