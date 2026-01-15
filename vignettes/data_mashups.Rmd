@@ -1,7 +1,7 @@
 ---
 title: "Connecting data to Open Tree trees"
 author: "David Winter"
-date: "2023-06-13"
+date: "2026-01-15"
 output:
   rmarkdown::html_vignette:
     css: vignette.css
@@ -31,7 +31,7 @@ set of unicellular Eukaryotes along with some other property of those species
 which might explain the mutation rate:
 
 
-```r
+``` r
 csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
 mu <- read.csv(csv_path, stringsAsFactors = FALSE)
 mu
@@ -54,7 +54,7 @@ that we should see if any of the taxonomic contexts, which can be used to narrow
 a search and avoid conflicts between different codes, apply to our group of species:
 
 
-```r
+``` r
 library(rotl)
 tnrs_contexts()
 ```
@@ -82,21 +82,21 @@ Hmm, none of those groups contain all of our species. In this case we can
 search using the `All life` context and the function `tnrs_match_names`:
 
 
-```r
+``` r
 taxon_search <- tnrs_match_names(names = mu$species, context_name = "All life")
 knitr::kable(taxon_search)
 ```
 
 
 
-|search_string             |unique_name               |approximate_match | ott_id|is_synonym |flags | number_matches|
-|:-------------------------|:-------------------------|:-----------------|------:|:----------|:-----|--------------:|
-|tetrahymena thermophila   |Tetrahymena thermophila   |FALSE             | 180195|FALSE      |      |              1|
-|paramecium tetraurelia    |Paramecium tetraurelia    |FALSE             | 568130|FALSE      |      |              1|
-|chlamydomonas reinhardtii |Chlamydomonas reinhardtii |FALSE             |  33153|FALSE      |      |              1|
-|dictyostelium discoideum  |Dictyostelium discoideum  |FALSE             | 160850|FALSE      |      |              1|
-|saccharomyces cerevisiae  |Saccharomyces cerevisiae  |FALSE             | 356221|FALSE      |      |              1|
-|saccharomyces pombe       |Schizosaccharomyces pombe |FALSE             | 990004|TRUE       |      |              1|
+|search_string             |unique_name               |approximate_match | score| ott_id|is_synonym |flags | number_matches|
+|:-------------------------|:-------------------------|:-----------------|-----:|------:|:----------|:-----|--------------:|
+|tetrahymena thermophila   |Tetrahymena thermophila   |FALSE             |     1| 180195|FALSE      |      |              1|
+|paramecium tetraurelia    |Paramecium tetraurelia    |FALSE             |     1| 568130|FALSE      |      |              1|
+|chlamydomonas reinhardtii |Chlamydomonas reinhardtii |FALSE             |     1|  33153|FALSE      |      |              1|
+|dictyostelium discoideum  |Dictyostelium discoideum  |FALSE             |     1| 160850|FALSE      |      |              1|
+|saccharomyces cerevisiae  |Saccharomyces cerevisiae  |FALSE             |     1| 356221|FALSE      |      |              1|
+|saccharomyces pombe       |Schizosaccharomyces pombe |FALSE             |     1| 990004|TRUE       |      |              1|
 
 Good, all of our  species are known to Open Tree. Note, though, that one of the names
 is a synonym. _Saccharomyces pombe_ is older name for what is now called
@@ -110,7 +110,7 @@ we do that, let's ensure we can match up our original data to the Open Tree
 names and IDs by adding them to our `data.frame`:
 
 
-```r
+``` r
 mu$ott_name <- unique_name(taxon_search)
 mu$ott_id <- taxon_search$ott_id
 ```
@@ -127,58 +127,26 @@ Before we can search for published studies or trees, we should check out the
 list of properties we can use to perform such searches:
 
 
-```r
+``` r
 studies_properties()
 ```
 
 ```
 ## $tree_properties
-##  [1] "ot:specifiedRoot"                 "ot:unrootedTree"                 
-##  [3] "ot:nodeLabelTimeUnit"             "xsi:type"                        
-##  [5] "ot:MRCAName"                      "ot:nodeLabelDescription"         
-##  [7] "ot:nearestTaxonMRCAOttId"         "ot:reasonsToExcludeFromSynthesis"
-##  [9] "ot:curatedType"                   "ot:nearestTaxonMRCAName"         
-## [11] "ot:studyId"                       "ot:nodeLabelMode"                
-## [13] "rootedge"                         "nodeById"                        
-## [15] "tb:type.tree"                     "ot:branchLengthDescription"      
-## [17] "ot:messages"                      "ot:rootNodeId"                   
-## [19] "ot:inGroupClade"                  "ot:ottId"                        
-## [21] "ot:branchLengthMode"              "ot:MRCAOttId"                    
-## [23] "ot:ottTaxonName"                  "tb:quality.tree"                 
-## [25] "tb:kind.tree"                     "ot:outGroupEdge"                 
-## [27] "ntips"                            "edgeBySourceId"                  
-## [29] "label"                            "meta"                            
-## [31] "tb:ntax.tree"                     "ot:tag"                          
-## [33] "ot:branchLengthTimeUnit"         
+##  [1] "ot:specifiedRoot"                 "ot:unrootedTree"                  "ot:nodeLabelTimeUnit"             "xsi:type"                         "ot:MRCAName"                      "ot:nodeLabelDescription"          "ot:nearestTaxonMRCAOttId"        
+##  [8] "ot:reasonsToExcludeFromSynthesis" "ot:curatedType"                   "ot:nearestTaxonMRCAName"          "ot:studyId"                       "ot:nodeLabelMode"                 "rootedge"                         "nodeById"                        
+## [15] "tb:type.tree"                     "ot:branchLengthDescription"       "ot:messages"                      "ot:rootNodeId"                    "ot:inGroupClade"                  "ot:ottId"                         "ot:branchLengthMode"             
+## [22] "ot:MRCAOttId"                     "ot:ottTaxonName"                  "tb:quality.tree"                  "tb:kind.tree"                     "ot:outGroupEdge"                  "ntips"                            "edgeBySourceId"                  
+## [29] "label"                            "meta"                             "tb:ntax.tree"                     "ot:tag"                           "ot:branchLengthTimeUnit"         
 ## 
 ## $study_properties
-##  [1] "tb:identifier.study.tb1"       "id"                           
-##  [3] "ot:taxonLinkPrefixes"          "ot:studyYear"                 
-##  [5] "prism:publicationName"         "dc:title"                     
-##  [7] "prism:creationDate"            "xmlns"                        
-##  [9] "skos:changeNote"               "skos:historyNote"             
-## [11] "ot:notIntendedForSynthesis"    "ot:otusElementOrder"          
-## [13] "dc:date"                       "xhtml:license"                
-## [15] "prism:startingPage"            "prism:publicationDate"        
-## [17] "ot:focalCladeOTTTaxonName"     "prism:section"                
-## [19] "prism:pageRange"               "ot:messages"                  
-## [21] "ot:studyPublicationReference"  "ot:curatorName"               
-## [23] "ot:dataDeposit"                "prism:number"                 
-## [25] "ot:agents"                     "dc:publisher"                 
-## [27] "treesById"                     "dcterms:bibliographicCitation"
-## [29] "ot:treesElementOrder"          "prism:modificationDate"       
-## [31] "tb:identifier.study"           "about"                        
-## [33] "ntrees"                        "nexmljson"                    
-## [35] "ot:comment"                    "dc:contributor"               
-## [37] "dc:creator"                    "prism:volume"                 
-## [39] "tb:title.study"                "treebaseId"                   
-## [41] "prism:endingPage"              "generator"                    
-## [43] "version"                       "ot:studyId"                   
-## [45] "ot:candidateTreeForSynthesis"  "otusById"                     
-## [47] "prism:doi"                     "dc:subject"                   
-## [49] "ot:studyPublication"           "ot:focalClade"                
-## [51] "ot:annotationEvents"           "ot:tag"                       
-## [53] "nexml2json"
+##  [1] "tb:identifier.study.tb1"       "id"                            "ot:taxonLinkPrefixes"          "ot:studyYear"                  "prism:publicationName"         "dc:title"                      "prism:creationDate"            "xmlns"                        
+##  [9] "skos:changeNote"               "skos:historyNote"              "ot:notIntendedForSynthesis"    "ot:otusElementOrder"           "dc:date"                       "xhtml:license"                 "prism:startingPage"            "prism:publicationDate"        
+## [17] "ot:focalCladeOTTTaxonName"     "prism:section"                 "prism:pageRange"               "ot:messages"                   "ot:studyPublicationReference"  "ot:curatorName"                "ot:dataDeposit"                "prism:number"                 
+## [25] "ot:agents"                     "dc:publisher"                  "treesById"                     "dcterms:bibliographicCitation" "ot:treesElementOrder"          "prism:modificationDate"        "tb:identifier.study"           "about"                        
+## [33] "ntrees"                        "nexmljson"                     "ot:comment"                    "dc:contributor"                "dc:creator"                    "prism:volume"                  "tb:title.study"                "treebaseId"                   
+## [41] "prism:endingPage"              "generator"                     "version"                       "ot:studyId"                    "ot:candidateTreeForSynthesis"  "otusById"                      "prism:doi"                     "dc:subject"                   
+## [49] "ot:studyPublication"           "ot:focalClade"                 "ot:annotationEvents"           "ot:tag"                        "nexml2json"
 ```
 
 We have `ottIds` for our taxa, so let's use those IDs to search for trees that
@@ -186,59 +154,35 @@ contain them.  Starting with our first species _Tetrahymena thermophila_ we can
 use `studies_find_trees` to do this search.
 
 
-```r
+``` r
 studies_find_trees(property = "ot:ottId", value = as.character(ott_id(taxon_search)[1]))
 ```
 
 ```
-##    study_ids n_trees                       tree_ids candidate study_year
-## 1    ot_1587       1                          tree1                 2015
-## 2    ot_1589       1                          tree1                 2015
-## 3    ot_2037       4 tree10, tree11, tree12, tree13                 2018
-## 4     ot_409       2                   tree1, tree2     tree2       2015
-## 5     ot_564       1                        Tr85317   Tr85317       2015
-## 6     ot_579       1                        Tr60046                 2013
-## 7     ot_700       1                          tree1     tree1       2016
-## 8      ot_73       1                          tree1     tree1       2013
-## 9     ot_766       1                        Tr85440                 2015
-## 10    ot_767       1                          tree1     tree1       2016
-## 11     ot_87       1                        Tr64119   Tr64119       2014
-##                                                                                                                                    title
-## 1  'Phylogenomic analyses reveal subclass Scuticociliatia as the sister group of subclass Hymenostomatia within class Oligohymenophorea'
-## 2  'Phylogenomic analyses reveal subclass Scuticociliatia as the sister group of subclass Hymenostomatia within class Oligohymenophorea'
-## 3                                                                                                                                       
-## 4                                                                         Tree of life reveals clock-like speciation and diversification
-## 5     'The alveolate translation initiation factor 4E family reveals a custom toolkit for translational control in core dinoflagellates'
-## 6                                       'Convergent evolution of heat-inducibility during subfunctionalization of the Hsp70 gene family'
-## 7                                                                                                       'A new view of the tree of life'
-## 8                                           Deep relationships of Rhizaria revealed by phylogenomics: A farewell to Haeckel’s Radiolaria
-## 9                                                                                 'Bacterial proteins pinpoint a single eukaryotic root'
-## 10                 'Untangling the early diversification of eukaryotes: a phylogenomic study of the evolutionary origins of Centrohelida
-## 11                        'Dinoflagellate phylogeny revisited: Using ribosomal proteins to resolve deep branching dinoflagellate clades'
-##                                        study_doi n_matched_trees
-## 1  http://dx.doi.org/10.1016/j.ympev.2015.05.007               1
-## 2  http://dx.doi.org/10.1016/j.ympev.2015.05.007               1
-## 3    http://dx.doi.org/10.1038/s41586-018-0708-8               3
-## 4        http://dx.doi.org/10.1093/molbev/msv037               1
-## 5    http://dx.doi.org/10.1186/s12862-015-0301-9               1
-## 6      http://dx.doi.org/10.1186/1471-2148-13-49               1
-## 7   http://dx.doi.org/10.1038/nmicrobiol.2016.48               1
-## 8  http://dx.doi.org/10.1016/j.ympev.2012.12.011               1
-## 9      http://dx.doi.org/10.1073/pnas.1420657112               1
-## 10      http://dx.doi.org/10.1098/rspb.2015.2802               1
-## 11 http://dx.doi.org/10.1016/j.ympev.2013.10.007               1
-##            match_tree_ids
-## 1                   tree1
-## 2                   tree1
-## 3  tree10, tree13, tree11
-## 4                   tree2
-## 5                 Tr85317
-## 6                 Tr60046
-## 7                   tree1
-## 8                   tree1
-## 9                 Tr85440
-## 10                  tree1
-## 11                Tr64119
+##    study_ids n_trees                       tree_ids candidate study_year                                                                                                                                 title                                     study_doi
+## 1    ot_1587       1                          tree1                 2015 'Phylogenomic analyses reveal subclass Scuticociliatia as the sister group of subclass Hymenostomatia within class Oligohymenophorea' http://dx.doi.org/10.1016/j.ympev.2015.05.007
+## 2    ot_1589       1                          tree1                 2015 'Phylogenomic analyses reveal subclass Scuticociliatia as the sister group of subclass Hymenostomatia within class Oligohymenophorea' http://dx.doi.org/10.1016/j.ympev.2015.05.007
+## 3    ot_2037       4 tree10, tree11, tree12, tree13                 2018                                                                                                                                         http://dx.doi.org/10.1038/s41586-018-0708-8
+## 4     ot_409       2                   tree1, tree2     tree2       2015                                                                        Tree of life reveals clock-like speciation and diversification       http://dx.doi.org/10.1093/molbev/msv037
+## 5     ot_564       1                        Tr85317   Tr85317       2015    'The alveolate translation initiation factor 4E family reveals a custom toolkit for translational control in core dinoflagellates'   http://dx.doi.org/10.1186/s12862-015-0301-9
+## 6     ot_579       1                        Tr60046                 2013                                      'Convergent evolution of heat-inducibility during subfunctionalization of the Hsp70 gene family'     http://dx.doi.org/10.1186/1471-2148-13-49
+## 7     ot_700       1                          tree1     tree1       2016                                                                                                      'A new view of the tree of life'  http://dx.doi.org/10.1038/nmicrobiol.2016.48
+## 8      ot_73       1                          tree1     tree1       2013                                          Deep relationships of Rhizaria revealed by phylogenomics: A farewell to Haeckel’s Radiolaria http://dx.doi.org/10.1016/j.ympev.2012.12.011
+## 9     ot_766       1                        Tr85440                 2015                                                                                'Bacterial proteins pinpoint a single eukaryotic root'     http://dx.doi.org/10.1073/pnas.1420657112
+## 10    ot_767       1                          tree1     tree1       2016                 'Untangling the early diversification of eukaryotes: a phylogenomic study of the evolutionary origins of Centrohelida      http://dx.doi.org/10.1098/rspb.2015.2802
+## 11     ot_87       1                        Tr64119   Tr64119       2014                        'Dinoflagellate phylogeny revisited: Using ribosomal proteins to resolve deep branching dinoflagellate clades' http://dx.doi.org/10.1016/j.ympev.2013.10.007
+##    n_matched_trees         match_tree_ids
+## 1                1                  tree1
+## 2                1                  tree1
+## 3                3 tree10, tree13, tree11
+## 4                1                  tree2
+## 5                1                Tr85317
+## 6                1                Tr60046
+## 7                1                  tree1
+## 8                1                  tree1
+## 9                1                Tr85440
+## 10               1                  tree1
+## 11               1                Tr64119
 ##  [ reached 'max' / getOption("max.print") -- omitted 16 rows ]
 ```
 
@@ -247,13 +191,13 @@ to see if the other species are better represented.
 
 
 
-```r
+``` r
 hits <- lapply(mu$ott_id, studies_find_trees, property = "ot:ottId", detailed = FALSE)
 sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 ```
 
 ```
-## [1]  51  51 128  71  17  88
+## [1]  51  51 128  71  18  89
 ```
 
 OK, most of our species are not in any of the published trees available. You can
@@ -270,36 +214,22 @@ Using the default arguments you can get a tree object into your R session:
 
 
 
-```r
+``` r
 ott_in_tree <- ott_id(taxon_search)[is_in_tree(ott_id(taxon_search))]
 tr <- tol_induced_subtree(ott_ids = ott_in_tree)
 ```
 
 ```
-## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
-## labels: mrcaott2ott276, mrcaott2ott142555, mrcaott2ott1551, mrcaott2ott7623,
-## Chloroplastida ott361838, Chlorophyta ott979501, mrcaott185ott42071,
-## mrcaott185ott1426, mrcaott1426ott1544, mrcaott1544ott8659, mrcaott1544ott15345,
-## mrcaott1544ott9282, mrcaott9389ott818260, mrcaott9389ott23557,
-## mrcaott23557ott527099, mrcaott148ott902, SAR ott5246039, Alveolata ott266751,
-## Ciliophora (phylum in subkingdom SAR) ott302424, Intramacronucleata
-## ott340382, mrcaott1546ott1671, Conthreep ott5248773, mrcaott1671ott16129,
-## Peniculia ott1002116, Paramecium (genus in subkingdom SAR) ott568126,
-## mrcaott11752ott13570, Hymenostomatia ott5257367, Tetrahymena (genus in
-## subkingdom SAR) ott47284, mrcaott295406ott523463, mrcaott295406ott523462,
-## Amoebozoa ott1064655, mrcaott3973ott15653, mrcaott3973ott26103,
-## mrcaott26103ott273110, mrcaott26103ott229626, Dictyostelia ott835575,
-## mrcaott26103ott59686, Dictyosteliales ott4008839, Dictyosteliaceae ott4008841,
-## Dictyostelium ott999665, Opisthokonta ott332573, Nucletmycea ott5246132,
-## Fungi ott352914, mrcaott109ott3465, mrcaott109ott67172, mrcaott109ott1423,
-## mrcaott109ott69881, mrcaott109ott55157, mrcaott109ott9352, h2007-1 ott5584405,
-## Dikarya ott656316, mrcaott235ott1053, Saccharomycetales ott4085960,
-## Saccharomycetaceae ott989994, Saccharomyces ott908546, Schizosaccharomycetes
-## ott921286, Schizosaccharomycetidae ott5670481, Schizosaccharomycetales
-## ott508517, Schizosaccharomycetaceae ott990009, Schizosaccharomyces ott990008
+## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with labels: mrcaott2ott276, mrcaott2ott142555, mrcaott2ott1551, mrcaott2ott7623, Chloroplastida ott361838, Chlorophyta ott979501, mrcaott185ott42071, mrcaott185ott1426, mrcaott1426ott1544,
+## mrcaott1544ott8659, mrcaott1544ott15345, mrcaott1544ott9282, mrcaott9389ott818260, mrcaott9389ott23557, mrcaott23557ott527099, mrcaott148ott902, SAR ott5246039, Alveolata ott266751, Ciliophora (phylum in subkingdom SAR) ott302424, Intramacronucleata ott340382,
+## mrcaott1546ott1671, Conthreep ott5248773, mrcaott1671ott16129, Peniculia ott1002116, Paramecium (genus in subkingdom SAR) ott568126, mrcaott11752ott13570, Hymenostomatia ott5257367, Tetrahymena (genus in subkingdom SAR) ott47284, mrcaott295406ott523463,
+## mrcaott295406ott523462, mrcaott3973ott4738988, Amoebozoa ott1064655, mrcaott3973ott15653, mrcaott3973ott26103, mrcaott26103ott273110, mrcaott26103ott229626, Dictyostelia ott835575, mrcaott26103ott59686, Dictyosteliales ott4008839, Dictyosteliaceae ott4008841,
+## Dictyostelium ott999665, mrcaott42ott240665, Opisthokonta ott332573, Nucletmycea ott5246132, Fungi ott352914, mrcaott109ott3465, mrcaott109ott67172, mrcaott109ott1423, mrcaott109ott9352, h2007-2 ott5576447, h2007-1 ott5584405, Dikarya ott656316,
+## mrcaott235ott3445, saccharomyceta ott1098854, Saccharomycotina ott971714, Saccharomycetes (class in h2007-2) ott989999, Saccharomycetales ott4085960, Saccharomycetaceae ott989994, Saccharomyces ott908546, Schizosaccharomycetes ott921286, Schizosaccharomycetidae
+## ott5670481, Schizosaccharomycetales ott508517, Schizosaccharomycetaceae ott990009, Schizosaccharomyces ott990008
 ```
 
-```r
+``` r
 plot(tr)
 ```
 
@@ -317,7 +247,7 @@ in the tree and in our data match exactly. That's not quite the case at the
 moment (tree labels have underscores and IDs appended):
 
 
-```r
+``` r
 mu$ott_name[1]
 ```
 
@@ -326,7 +256,7 @@ mu$ott_name[1]
 ## [1] "Tetrahymena thermophila"
 ```
 
-```r
+``` r
 tr$tip.label[4]
 ```
 
@@ -337,7 +267,7 @@ tr$tip.label[4]
 `rotl` provides a convenience function `strip_ott_ids` to deal with these.
 
 
-```r
+``` r
 tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
 tr$tip.label %in% mu$ott_name
 ```
@@ -352,21 +282,37 @@ a new dataset that contains just the relevant data and has row names to match
 the tree
 
 
-```r
+``` r
 library(phylobase)
+```
+
+```
+## Error in `library()`:
+## ! there is no package called 'phylobase'
+```
+
+``` r
 mu_numeric <- mu[, c("mu", "pop.size", "genome.size")]
 rownames(mu_numeric) <- mu$ott_name
 tree_data <- phylo4d(tr, mu_numeric)
+```
+
+```
+## Error in `phylo4d()`:
+## ! could not find function "phylo4d"
 ```
 And now we can plot the data and the tree together
 
 
 
-```r
+``` r
 plot(tree_data)
 ```
 
-![plot of chunk unnamed-chunk-1](fig-vignettes-unnamed-chunk-1-1.png)
+```
+## Error:
+## ! object 'tree_data' not found
+```
 
 ## Find external data associated with studies, trees and taxa from Open Tree
 
@@ -384,19 +330,18 @@ with `get_study`. `rotl` will also help you find external. The function
 gather some more data:
 
 
-```r
+``` r
 extra_data <- try(study_external_IDs("pg_1980"), silent = TRUE)
-if (!inherits(extra_data, "try-error")) {
-  extra_data
-}
 ```
 
 ```
-## External data identifiers for study 
-##  $doi:  10.1016/j.ympev.2006.04.016 
-##  $pubmed_id:  16762568 
-##  $nucleotide_ids: vector of 58 IDs
-##  $external_data_url http://purl.org/phylo/treebase/phylows/study/TB2:S1575
+## Warning in check_xml_errors(x): Invalid db name specified: popset
+```
+
+``` r
+if (!inherits(extra_data, "try-error")) {
+  extra_data
+}
 ```
 
 Here the returned object contains an `external_data_url` (in this case a link to
@@ -408,7 +353,7 @@ As an example, let's use `rentrez` to download the first two DNA seqences and
 print them.
 
 
-```r
+``` r
 library(rentrez)
 seqs <- try(entrez_fetch(db = "nucleotide", id = extra_data$nucleotide_ids[1:2], rettype = "fasta"), silent = TRUE)
 
@@ -420,59 +365,7 @@ if (inherits(seqs, "try-error")) {
 ```
 
 ```
-## >AM181011.1 Plectroninia neocaledoniense partial 28S rRNA gene, specimen voucher G316300 (Queensland Museum)
-## GCTAGCAAGCGCGTCGGTGGTTCAGCCGGCTGGTCTCGTCGAGTTGTCGGTGTGCGGATCCGAACGGACC
-## GCGGCCGATGGCGTCGGCGGGCAAGCTGTGGTGCACTCTGTCGGCGTGCGCGTCAGCGTCGGTTTCGGCC
-## GGACGACGAGGCGCTCGGGGAAGGTAGCTGGACCGGTCTTCGGTGCAGTGTTATAGCCCTGGGCCGCTGG
-## GTTCGGCGTTTGGGACCGAGGAGAGAGATGATCGCTGCAGCGCCTGTCTCCCTCTCGAGGGGGGCTAGCC
-## AGCCGCTGTTTGGGTGGCGTCACTGGCGGAGGACTGCACGCAGTGCTTCGCCGGTGGTCGTGTCCAGGCG
-## GGCGGTGTGGGTATAGAGGCGCTTAGGACGCTGGCGTCCAAATGGCCGTGCGCGACCCGTCTTGAAACAC
-## GGACCAAGGAGTCTAGCATGTGCGCGAGTCTTAGGGTGTGGAAGCCCTCGGGCGCAATGAAAGTGAAGGG
-## CCGTCGTCTCTCGGGGCTGCGGTGTGAGGTGAGAGCCGTCGCCGTCGGGTGGCGGTGCATCATCGGCCGG
-## TCCATCCTGCTCTCAGGAGGATCTGCGCAAGAGCGTGTTTGCTGGGACCCGAAAGATGGTGAACTATGCC
-## TGAATAGGGTGAAGCCAGAGGAAACTCTGGTGGAGGCTCGTAGCGGTTCTGACGTGCAAATCGATCGTCA
-## AATTTGGGTATAGGGGCGAAAGACTAATCGAACCATCTAGTAGCTGGTTCCCTCCGAAGTTTCCCTCAGG
-## ATAGCTGGAACTCGTCTTGACACAGTTTTATCAGGTAAAGCGAATGATTAGAGGTCTTGGGGGTGAAACA
-## CCCTCAACCTATTCTCAAACTTTAAATAGGTAAGAAGCGCGACTTGCTCAATTGAAGTGGCGCGCAGTGA
-## ATGTGAGTTCCAAGTGGGCCATTTTTGGTAAGCAGAACTGGCGATGCGGGATGAACCGAACGCTCGGTTA
-## AGGTGCCCAAGTCGACGCTCATCAGACCCCAGAAAAGGTGTTGGTCGATATAGACAGCAGGACGGTGGCC
-## ATGGAAGTCGGAATCCGCTAAGGAGTGTGTAACAACTCACCTGCCGAATCAACTAGCCCTGAAAATGGAT
-## GGCGCTCAAGCGTCGCACCTATACCGAGCCGTCGTGGTAAATGCCAGGCCACGACGAGTAGGAGGGCGCG
-## GTGGTCGTGACGCAGCCCTTGGCGCGAGCCTGGGCGAAACGGCCTCCGGTGCAGATCTTGGTGGTAGTAG
-## CAAATATTCAAATGAGAGCTTTGAAGACCGAAGTGGAGAAAGGTTCCATGTGAACAGCAGTTGGACATGG
-## GTTAGTCGATCCTAAGAGATAGGGAAGTTCCGTGTGAAAGTGCGCAATGCGCTTCTGTGCTGCGCGCCTC
-## CTATCGAAAGGGAATCGGGTTAATATTCCCGAACCGGAAGGCGGATATCTCTGGCTCTCGGGTCAGGAGC
-## GGCAACGCAAGCGTACTGCGAGACGTCGGCGGGGGCTCCGGGAAGAGTTGTCTTTTCTTTTTAACGCAGT
-## CGCCATCCCTGGAATCGGTTTGCCCGGAGATAGGGTTGGCTGGCTCGGTAAAGCAGCACACTTCATGTGC
-## TGTCCGGTGCGCTCTCGACGGCCCTTGAAAATCGCAGGTGTGCATCGATTCTCGCATCCGGTCGTACTCA
-## TAACCGCATCAGGTCTCCAAGGT
-## 
-## >AM181010.1 Eilhardia schulzei partial 28S rRNA gene, specimen voucher G316071 (Queensland Museum)
-## GCTAGTAATGTACGTTGGTGGTTCAGCCGGCTAGTCTTGTCGAGTCGTCGTGTGGTGGATCCGACTGGAC
-## CGTCCGCGGTGGTGTCGGCGGGCGAGCTGTGGTGCACTCTACGGACGTGCGCGTCAGCGTCGGTTCTCGA
-## TGGGCGATAAGGTGCGTGGGGGAAGGTGGCTCGGTCCTTGGGAACTGAGTGTTACAGACCCTGGTGCTGG
-## GCTCGTCGTGGGACCGAGGAGAGAGAGAGATGATCGCTGCGGCACCTGCCCCGTTGTCATTTTTCGGGGC
-## TAGCCAGCCGTTTGTCAGGTGTGCGTCGGACGTTGAGGACTGCACGCAGTGCTGGACGTGGAGGCGTGAT
-## CTGATGGCGGTGTGGGCATTAGAGGTGCCTAGGACGCTGGCGTCCAAATGGCCGTGCGCGACCCGTCTTG
-## AAACACGGACCAAGGAGTCTAACATGTGCGCGAGTCTTAGGGTGTGCAAGCCCTCGGGCGCAATGAAAGT
-## GAAGGCTCGGCGGCGCTAGTCGAGCTGAGGTGAGAGCCGTGGCCGTTGCATGTGGCGGCGGCGGCGCATC
-## ATCGGCCGGTCCATCCTGCTCTCAGGGGGATCCGAGCAAGAGCGTATTTGTTGGGACCCGAAAGATGGTG
-## AACTATGCCTGAATAGGGTGAAGCCAGAGGAAACTCTGGTGGAGGCTCGTAGCGATTCTGACGTGCAAAT
-## CGATCGTCAAATTTGGGTATAGGGGCGAAAGACTAATCGAACCATCTAGTAGCTGGTTCCCTCCGAAGTT
-## TCCCTCAGGATAGCTGGAGCTCTTGGACACAGTTTTATCAGGTAAAGCGAATGATCAGAGGTCTTGGGGG
-## TGAAACACCCTCAACCTATTCTCAAACTTTAAATCGGTAAGAAGCGCGACTTGCTGAATTGAAGCCGCGC
-## GCAAGCAATGTGAGTTCCAAGTGGGCCATTTTTGGTAAGCAGAACTGGCGATGCGGGATGAACCGAACGC
-## TGGGTTAAGGTGCCAAAGTCGACGCTCATCAGACCCCAGAAAAGGTGTTGGTTGATATAGACAGCAGGAC
-## GATGGCCATGGAAGTCGGAATCCGCTAAGGAGTGTGTAACAACTCACCTGCCGAATCAACTAGCCCTGAA
-## AATGGATGGCGCTCAAGCGTCGCACCTATACCGGGCCGTCGTCGCAAATGCCAGGCGACGACGAGTAGGA
-## GGGCGCAGTGGTCGTCATGCAGCCCTTGGCGTGAGCCTGGGTCAAACGGCCTCTGGTGCAGATCTTGGTG
-## GTAGTAGCAAATATTCAAATGAGAGCTTTGAAGACCGAAGTGGAGAAAGGTTCCATGTGAACAGCAGTTG
-## GACATGGGTTAGTCGATCCTAAGTGATAGGGGAGCTCCGTATGAAAGTGCGCAATCGGCCCTGCTTGTGT
-## CGCCTTGCGCCACCTATCGAAAGGGAATCGGGTTAATATTCCCGAACCGGAAGGCGGATTTTCTCTGGCT
-## CTCGGGTCAGGAGCGGCAACGCTAGCGAACCGCGAGACGTCGGCGGGGGCTCCGGGAAGAGTTGTCTTTT
-## CTTTTTAACGCAGTCGCCATCCCTGGAATCGGTTTGCCCGGAGATAGGGTTGGCTGGCTCGGTAAAGCAG
-## CACACTTCATGTGCTGTCCGGTGCGCTCTCGACGGCCCTTGAAAATCGCGGCGAGTGTAGTCTGATTTTC
-## GCATCCGTTCGTACTCATAACCGCATCAGGTCTCCAAGGT
+## NCBI temporarily down.
 ```
 
 You could further process these sequences in R with the function `read.dna` from
@@ -486,7 +379,7 @@ the sub-tree we fetched in the example above we could do so using
 `taxon_external_IDs`:
 
 
-```r
+``` r
 Tt_ids <- taxon_external_IDs(mu$ott_id[2])
 Tt_ids
 ```

@@ -264,7 +264,7 @@ genera:
 
 ```{r}
 turducken <- c("Meleagris", "Anas", "Gallus", "Sus")
-taxa <- tnrs_match_names(turducken, context = "Animals")
+taxa <- tnrs_match_names(turducken, context_name = "Animals")
 taxa
 ```
 
@@ -302,7 +302,7 @@ are guaranteed to be monophyletic):
 
 ```{r, fig.width=7, fig.height=4}
 turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus", "Sus scrofa")
-taxa <- tnrs_match_names(turducken_spp, context = "Animals")
+taxa <- tnrs_match_names(turducken_spp, context_name = "Animals")
 tr <- tol_induced_subtree(ott_id(taxa))
 plot(tr)
 ```

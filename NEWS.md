@@ -1,3 +1,7 @@
+# rotl 3.1.1
+
+* Update formatting of the documentation to solve CRAN checks (#148 by @villegar).
+
 # rotl 3.1.0
 
 ## Breaking change

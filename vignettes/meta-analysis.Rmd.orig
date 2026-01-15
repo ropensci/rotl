@@ -101,7 +101,7 @@ find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the
 Taxonomic Name Resolution Service function `tnrs_match_names`:
 
 ```{r birds}
-taxa <- tnrs_match_names(unique(egg_data$animal), context = "Animals")
+taxa <- tnrs_match_names(unique(egg_data$animal), context_name = "Animals")
 head(taxa)
 ```
 
